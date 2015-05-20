@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>36氪 - 内置浏览器</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/app.css" />
+		<style>
+			#loading {
+				width: 30px;
+			}
+			#loading .mui-spinner {
+				position: absolute;
+				top: 12px;
+			}
+		</style>
+	</head>
+
+	<body class="kr-browser">
+		<div class="kr-browser-bar mui-bar mui-bar-standard mui-bar-footer">
+			<div class="mui-pull-left">
+				<a id="historyBack" class="mui-icon mui-icon-arrowleft">&nbsp;</a>
+				<a id="historyForward" class="mui-icon mui-icon-arrowright">&nbsp;</a>
+				<a id="loading" class="mui-icon">
+					<span class="mui-spinner"></span> &nbsp;
+				</a>
+				<a id="reload" class="mui-icon mui-icon-reload mui-hidden">&nbsp;</a>
+			</div>
+			<div class="mui-pull-right">
+				<button id="back" type="button" class="mui-action-back mui-btn">关闭</button>
+			</div>
+		</div>
+		<script type="text/javascript" charset="UTF-8" src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="js/app.js"></script>
+		<script>
+			(function($) {
+				$.plusReady(function() {
+					var browser = plus.webview.getWebviewById('browser');
+					mui.init({
+						beforeback: function() {
+							browser.clear();
+						}
+					});
+					document.getElementById("historyBack").addEventListener('tap', function() {
+						browser.canBack(function(e) {
+							if (e.canBack) {
+								browser.evalJS('window.history.back()');
+							}
+						});
+						return false;
+					});
+					document.getElementById("historyForward").addEventListener('tap', function() {
+						browser.canForward(function(e) {
+							if (e.canForward) {
+								browser.evalJS('window.history.forward()');
+							}
+						});
+						return false;
+					});
+					document.getElementById("reload").addEventListener('tap', function() {
+						reloadClassList.add('mui-hidden');
+						loadingClassList.remove('mui-hidden');
+						browser.reload(true);
+					});
+					var reloadClassList = document.getElementById("reload").classList;
+					var loadingClassList = document.getElementById("loading").classList;
+					document.addEventListener('mui.view.beforeshow', function(e) {
+						if (plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
+							plus.nativeUI.alert('无网络连接!');
+						} else {
+							reloadClassList.add('mui-hidden');
+							loadingClassList.remove('mui-hidden');
+						}
+					});
+					browser && browser.addEventListener('loaded', function() {
+						reloadClassList.remove('mui-hidden');
+						loadingClassList.add('mui-hidden');
+					});
+				});
+			})(mui);
+		</script>
+	</body>
+
+</html>
