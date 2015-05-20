@@ -2,7 +2,7 @@
 这里是使用DCloud公司产品做出的开源项目集锦。
 
 ## 资讯类
-1.[36Kr流应用版](https://github.com/dcloudio/casecode/36Kr)
+1.[36Kr流应用版](https://github.com/dcloudio/casecode/tree/master/36Kr)
 
 
 ## 能力展示类
