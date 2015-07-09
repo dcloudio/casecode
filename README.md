@@ -8,3 +8,5 @@
 ## 能力展示类
 1.[Hello MUI](https://github.com/dcloudio/mui/tree/master/examples/hello-mui)
 
+## 常用模板类
+1.[登录模板](https://github.com/dcloudio/mui/tree/master/examples/login)
