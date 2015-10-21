@@ -8,3 +8,8 @@
 1. 分别全局和当前目录安装 gulp (``` [sudo] npm install gulp [-g] ```)
 2. 安装构建用模块 (``` npm install ```)
 3. 执行 gulp ，执行默认构建任务
+
+# 依赖
+1. [MUI](https://github.com/dcloudio/mui)
+2. [VUE](https://github.com/vuejs/vue)
+3. [jQuery](https://github.com/jquery/jquery)
