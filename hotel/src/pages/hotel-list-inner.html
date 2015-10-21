@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>酒店列表</title>
+		<link href="../mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../styles/default.css" rel="stylesheet" />
+		<link href="../mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+		<style>
+			.hetol-placeholder {
+				width: 75px !important;
+				height: 75px !important;
+			}
+			.mui-table-view-cell {
+				background-color: transparent;
+			}
+			.mui-table-view .mui-media-object {
+				max-width: 75px;
+				height: 75px;
+				line-height: 75px;
+			}
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 0px;
+			}
+			.mui-content {
+				padding-bottom: 50px;
+			}
+			.mui-media-body p {
+				font-size: 12px;
+				padding: 1px 50px 1px 0px;
+				position: relative;
+			}
+			.mui-media-body p span,
+			.mui-media-body p i {
+				padding-right: 8px;
+			}
+			.mui-media-body .hotel-price {
+				position: absolute;
+				right: 0px;
+				font-weight: bold;
+				font-size: 14px;
+				text-align: right;
+			}
+			.mui-media-body .hotel-gift {
+				position: absolute;
+				right: 0px;
+				top: 4px;
+				text-align: right;
+			}
+			.mui-media-body .hotel-away {
+				position: absolute;
+				right: 0px;
+				text-align: right;
+			}
+			::-webkit-scrollbar {
+				width: 0px !important;
+				display: none !important;
+			}
+			.mui-table-view:first-child:before,
+			.mui-table-view-cell:first-child:before {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media" data-url="./hotel-detail.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						北京钓鱼台国宾馆
+						<p class='mui-ellipsis'><span class="hotel-rate hotel-color-blue">4.3分</span><i class="fa fa-wifi"></i><span class="hotel-price hotel-color-orange">￥320</span></p>
+						<p class='mui-ellipsis'>高档型酒店 <i class="fa fa-gift hotel-gift"></i></p>
+						<p class='mui-ellipsis'>公主坟、五棵松、石景山游乐园地区<span class='hotel-away'>7公里</span></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url="./hotel-detail.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						北京钓鱼台国宾馆
+						<p class='mui-ellipsis'><span class="hotel-rate hotel-color-blue">4.3分</span><i class="fa fa-wifi"></i><span class="hotel-price hotel-color-orange">￥320</span></p>
+						<p class='mui-ellipsis'>高档型酒店 <i class="fa fa-gift hotel-gift"></i></p>
+						<p class='mui-ellipsis'>公主坟、五棵松、石景山游乐园地区<span class='hotel-away'>7公里</span></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url="./hotel-detail.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						北京钓鱼台国宾馆
+						<p class='mui-ellipsis'><span class="hotel-rate hotel-color-blue">4.3分</span><i class="fa fa-wifi"></i><span class="hotel-price hotel-color-orange">￥320</span></p>
+						<p class='mui-ellipsis'>高档型酒店 <i class="fa fa-gift hotel-gift"></i></p>
+						<p class='mui-ellipsis'>公主坟、五棵松、石景山游乐园地区<span class='hotel-away'>7公里</span></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url="./hotel-detail.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						北京钓鱼台国宾馆
+						<p class='mui-ellipsis'><span class="hotel-rate hotel-color-blue">4.3分</span><i class="fa fa-wifi"></i><span class="hotel-price hotel-color-orange">￥320</span></p>
+						<p class='mui-ellipsis'>高档型酒店 <i class="fa fa-gift hotel-gift"></i></p>
+						<p class='mui-ellipsis'>公主坟、五棵松、石景山游乐园地区<span class='hotel-away'>7公里</span></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url="./hotel-detail.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						北京钓鱼台国宾馆
+						<p class='mui-ellipsis'><span class="hotel-rate hotel-color-blue">4.3分</span><i class="fa fa-wifi"></i><span class="hotel-price hotel-color-orange">￥320</span></p>
+						<p class='mui-ellipsis'>高档型酒店 <i class="fa fa-gift hotel-gift"></i></p>
+						<p class='mui-ellipsis'>公主坟、五棵松、石景山游乐园地区<span class='hotel-away'>7公里</span></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url="./hotel-detail.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						北京钓鱼台国宾馆
+						<p class='mui-ellipsis'><span class="hotel-rate hotel-color-blue">4.3分</span><i class="fa fa-wifi"></i><span class="hotel-price hotel-color-orange">￥320</span></p>
+						<p class='mui-ellipsis'>高档型酒店 <i class="fa fa-gift hotel-gift"></i></p>
+						<p class='mui-ellipsis'>公主坟、五棵松、石景山游乐园地区<span class='hotel-away'>7公里</span></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url="./hotel-detail.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						北京钓鱼台国宾馆
+						<p class='mui-ellipsis'><span class="hotel-rate hotel-color-blue">4.3分</span><i class="fa fa-wifi"></i><span class="hotel-price hotel-color-orange">￥320</span></p>
+						<p class='mui-ellipsis'>高档型酒店 <i class="fa fa-gift hotel-gift"></i></p>
+						<p class='mui-ellipsis'>公主坟、五棵松、石景山游乐园地区<span class='hotel-away'>7公里</span></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url="./hotel-detail.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						北京钓鱼台国宾馆
+						<p class='mui-ellipsis'><span class="hotel-rate hotel-color-blue">4.3分</span><i class="fa fa-wifi"></i><span class="hotel-price hotel-color-orange">￥320</span></p>
+						<p class='mui-ellipsis'>高档型酒店 <i class="fa fa-gift hotel-gift"></i></p>
+						<p class='mui-ellipsis'>公主坟、五棵松、石景山游乐园地区<span class='hotel-away'>7公里</span></p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<footer class="hotel-footer">
+			<ul class="hotel-footer-menu hotel-footer-menu-c4">
+				<li data-url='./query-filter.html'><i class="fa fa-filter"></i>筛选</li>
+				<li data-url='./area-filter.html'><i class="fa fa-map-marker"></i>位置区域</li>
+				<li data-event="tap>setPriceFilter"><i class="fa fa-cny"></i>价格/星级</li>
+				<li data-event="tap>pickWelcomeDegree"><i class="fa fa-arrow-down"></i>欢迎度</li>
+			</ul>
+		</footer>
+		<script src="../mui/js/mui.min.js"></script>
+		<script src="../mui/js/mui.picker.min.js"></script>
+		<script src="../libs/ems.js" data-main='./hotel-list-inner.js'></script>
+	</body>
+
+</html>

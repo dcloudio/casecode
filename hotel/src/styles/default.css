@@ -1,0 +1,92 @@
+body {
+	font: 400 14px/1.5 Arial, "Lucida Grande", Verdana, "Microsoft YaHei", hei !important;
+}
+h5 {
+	padding: 0px 8px;
+}
+.hotel-color-gray {
+	color: #999 !important;
+}
+.hotel-color-blue {
+	color: #099FDE !important;
+}
+.hotel-color-orange {
+	color: #ff9a14 !important;
+}
+.hotel-header,
+.mui-title,
+.hotel-header .mui-icon {
+	background-color: #099fde;
+	color: #fff;
+}
+.hotel-btn-main {
+	color: #FFF;
+	font-size: 18px;
+	background-color: #ff9a14;
+	border: solid 1px #ff9a14;
+	padding: 9px;
+}
+.hotel-footer {
+	position: fixed;
+	border: solid 1px #ddd;
+	background-color: #eee;
+	/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
+	
+	left: 0px;
+	bottom: 0px;
+	height: 51px;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+.hotel-footer-menu {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+	font-size: 0px;
+}
+.hotel-footer-menu li {
+	list-style-type: none;
+	display: inline-block;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	margin: 0px;
+	padding: 10px;
+	font-size: 10px;
+	position: relative;
+	color: #888;
+}
+.hotel-footer-menu li:active {
+	color: #333;
+}
+.hotel-footer-menu li i.fa {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	font-weight: 100;
+	font-size: 18px;
+	left: 50%;
+	margin-left: -8px;
+	top: 8px;
+	display: block;
+}
+.hotel-footer-menu li:first-child {
+	border-left: none;
+}
+.hotel-footer-menu-c4 li {
+	width: 25%;
+}
+.hotel-footer-menu-c6 li {
+	width: 16.5%;
+}
+.hotel-bar-away {
+	font-size: 12px;
+	z-index: 1000;
+	padding: 4px 0 4px 10px;
+	line-height: 24px;
+	min-height: 33px;
+	color: #555;
+	width: 100%;
+}

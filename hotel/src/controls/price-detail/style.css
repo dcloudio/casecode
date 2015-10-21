@@ -1,0 +1,44 @@
+.price-detail{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top:0px;
+	z-index: 99;
+	background-color: rgba(0,0,0,0.85);
+	-webkit-transition: .5s;
+	display: none;
+}
+.price-detail.active{
+	display: block;
+}
+.price-detail-info{
+	height: 140px;
+	position: absolute;
+	left: 0px;
+	width: 100%;
+	top:50%;
+	margin-top: -70px;
+	padding: 10px;
+}
+.price-detail-info .right{
+	position: absolute;
+	right: 0px;
+}
+.price-detail-info p{
+	color: #fff;
+}
+.price-detail-info p span{
+	margin-right: 10px;
+}
+.price-detail h5{
+	padding: 0px;
+	margin: 0px;
+	color:#fff;
+	font-size: 18px;
+	margin-bottom:10px;
+}
+.price-detail-info p.ln1{
+	border-bottom: solid 1px #eee;
+	padding-bottom: 8px
+}

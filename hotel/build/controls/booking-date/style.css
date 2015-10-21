@@ -1,0 +1,7 @@
+/**
+ * ctrip - ctrip hotel
+ * @version v0.0.1
+ * @link http://www.dcloud.io
+ * @license MIT
+ */
+.booking-date{position:fixed;height:200px;bottom:0;left:0;width:100%;padding:17px 10px 10px;box-sizing:border-box;background-color:#efefef;-webkit-transition:.3s;-webkit-transform:translateY(200px);z-index:999999;box-shadow:0 -5px 7px 0 rgba(0,0,0,.1)}.booking-date.active{-webkit-transform:translateY(0)}.booking-date .btn-wraper{padding-top:8px;margin-top:5px;border-top:dotted 1px #ddd}.booking-date .mui-table-view{margin-bottom:10px}.booking-date .mui-input-row{font-size:15px}.booking-date .mui-input-row label{padding-left:0}.booking-date .mui-numbox{width:83px;background-color:#bbb;margin-right:0!important}.booking-date .mui-numbox input{visibility:hidden}.booking-date .mui-input-row .description{position:absolute;font-size:9pt;height:22px;line-height:22px;top:50%;margin-top:-11px;right:35px}.booking-date .mui-input-row .ct-fixed-area{position:absolute;top:0;right:0;width:60px;height:100%;text-align:center}

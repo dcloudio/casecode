@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>酒店列表</title>
+		<link href="../mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../styles/default.css" rel="stylesheet" />
+		<style>
+			.hotel-bar-away {
+				position: relative;
+			}
+			.hotel-bar-away:after {
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				left: 0;
+				height: 1px;
+				content: '';
+				background-color: #c8c7cc;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hotel-header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">酒店列表</h1>
+		</header>
+		<div class="mui-content">
+			<div class="hotel-bar-away">距离: 北京(市中心)</div>
+		</div>
+		<script src="../mui/js/mui.min.js"></script>
+		<script src="../libs/ems.js" data-main='./hotel-list.js'></script>
+	</body>
+
+</html>

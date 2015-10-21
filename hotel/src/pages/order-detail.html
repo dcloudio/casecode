@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单信息</title>
+		<link href="../mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../styles/default.css" rel="stylesheet" />
+		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+		<style>
+			i.mui-media-object {
+				color: #ccc;
+				font-size: 18px;
+			}
+			.hotel-right {
+				position: absolute;
+				right: 0px;
+			}
+			.hotel-right-padded {
+				position: absolute;
+				right: 20px;
+			}
+			.hotel-right-text {
+				position: absolute;
+				font-size: 14px;
+				height: 16px;
+				line-height: 16px;
+				right: 40px;
+				top: 50%;
+				margin-top: -8px;
+			}
+			.hotel-bar-order-info {
+				position: relative;
+				padding: 10px;
+			}
+			.hotel-tips {
+				margin: 10px;
+				font-size: 10px;
+				background-color: #fff;
+				padding: 8px;
+				border-radius: 3px;
+			}
+			.hotel-order-action {
+				margin: 0px;
+				padding: 0px 10px;
+				position: relative;
+				text-align: center;
+				color: #666;
+				height: 45px;
+				font-size: 0px;
+			}
+			.hotel-order-action li {
+				background-color: #fff;
+				border: solid 1px #c8c7cc;
+				border-left: none;
+				display: inline-block;
+				padding: 10px 7px;
+				margin: 0px;
+				width: 33.3%;
+				font-size: 11px;
+				text-align: center;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			.hotel-order-action li:first-child {
+				border-left: solid 1px #c8c7cc;
+			}
+			.hotel-order-action li:active {
+				border: solid 1px #099fde;
+				color: #099fde;
+			}
+			.mui-table-view {
+				margin-bottom: 15px;
+			}
+			.hotel-costomer-btn {
+				margin-bottom: 20px;
+				padding: 10px;
+				font-size: 14px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hotel-header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">订单信息</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li class="mui-input-row mui-table-view-cell">
+					<a>
+						总金额
+						<span class="hotel-right-padded hotel-color-orange ">￥320</span>
+					</a>
+				</li>
+				<li class="mui-input-row mui-table-view-cell">
+					<a>
+						订单状态
+						<span class="hotel-right-padded">已确认</span>
+					</a>
+				</li>
+				<li class="mui-input-row mui-table-view-cell">
+					<a>
+						订单编号
+						<span class="hotel-right-padded">1479483143</span>
+					</a>
+				</li>
+				<li class="mui-input-row mui-table-view-cell">
+					<a>
+						预订日期
+						<span class="hotel-right-padded">2015-09-22</span>
+					</a>
+				</li>
+				<li class="mui-input-row mui-table-view-cell">
+					<a>
+						支付方式
+						<span class="hotel-right-padded">到店付款</span>
+					</a>
+				</li>
+				<li class="mui-input-row mui-table-view-cell">
+					<a>
+						担保情况
+						<span class="hotel-right-padded">未担保</span>
+					</a>
+				</li>
+			</ul>
+			<ul class="hotel-order-action">
+				<li>点评酒店</li>
+				<li data-url='./booking.html'>修改订单</li>
+				<li data-event='tap>cancelOrder'>取消订单</li>
+			</ul>
+			<p class="hotel-tips">暂时无法办理订单延住，请于入住日次日起办理或重新预订。</p>
+			<ul class="mui-table-view">
+				<li class="mui-input-row mui-table-view-cell">
+					<a class="mui-navigate-right" data-url='./hotel-detail.html'>
+						北京阳光之城度假酒店
+					</a>
+				</li>
+				<li class="mui-input-row mui-table-view-cell">
+					<a class="mui-navigate-right">
+						普通大床房(前台现付) 1间
+						<span class="hotel-right-text">房间信息</span>
+					</a>
+				</li>
+				<li class="mui-input-row mui-table-view-cell">
+					<a>
+						入住时间
+						<span class="hotel-right-padded">2015-09-23</span>
+					</a>
+				</li>
+				<li class="mui-input-row mui-table-view-cell">
+					<a>
+						最晚到店时间
+						<span class="hotel-right-padded">22:00</span>
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<i class="fa fa-map-marker mui-media-object mui-pull-left"></i>
+					<div class="mui-media-body mui-navigate-right">
+						西客站南广场东侧
+						<p>点击在地图中查看</p>
+						<span class="hotel-color-blue hotel-right-text">地图</span>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<i class="fa fa-phone mui-media-object mui-pull-left"></i>
+					<div class="mui-media-body mui-navigate-right">
+						010-88888888
+						<p>点击拨打电话</p>
+						<span class="hotel-color-blue hotel-right-text">联系酒店</span>
+					</div>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-input-row mui-table-view-cell">
+					<a>
+						入住人
+						<span class="hotel-right-padded">崔红保</span>
+					</a>
+				</li>
+				<li class="mui-input-row mui-table-view-cell">
+					<a>
+						联系电话
+						<span class="hotel-right-padded">18610495959</span>
+					</a>
+				</li>
+				<li class="mui-input-row mui-table-view-cell">
+					<a>
+						特殊要求
+						<span class="hotel-right-padded">无</span>
+					</a>
+				</li>
+			</ul>
+			<div class="mui-content-padded">
+				<button class="hotel-costomer-btn mui-btn-block">联系客服</button>
+			</div>
+		</div>
+		<script src="../mui/js/mui.min.js"></script>
+		<script src="../libs/ems.js" data-main='./order-detail.js'></script>
+	</body>
+
+</html>

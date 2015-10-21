@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>酒店预定</title>
+	<link href="../mui/css/mui.min.css" rel="stylesheet" />
+	<link href="../mui/css/mui.picker.min.css" rel="stylesheet" />
+	<link href="../styles/default.css" rel="stylesheet" />
+	<style>
+		h5 {
+			padding: 8px;
+		}
+		
+		.mui-content {
+			padding-bottom: 44px;
+		}
+		
+		.mui-table-view {
+			margin-bottom: 20px;
+		}
+		
+		.mui-table-view-cell .hotel-right-text {
+			position: absolute;
+			font-size: 14px;
+			height: 16px;
+			line-height: 16px;
+			right: 40px;
+			top: 50%;
+			margin-top: -8px;
+		}
+		
+		.mui-input-row>label {
+			padding: 0px 15px;
+			line-height: 40px;
+		}
+		
+		.mui-input-row>input {
+			font-size: 14px;
+		}
+		
+		.hotel-tips {
+			margin: 10px;
+			font-size: 10px;
+			background-color: #fff;
+			padding: 8px;
+			border-radius: 3px;
+		}
+		
+		.hotel-bar-submit {
+			position: fixed;
+			bottom: 0px;
+			left: 0px;
+			right: 0px;
+			background: #FF9913;
+			height: 44px;
+			line-height: 44px;
+			padding: 0px 140px 0px 15px;
+			color: #fff;
+			font-size: 16px;
+		}
+		
+		.hotel-submit-btn {
+			position: absolute;
+			width: 80px;
+			background-color: #ff7d13;
+			text-align: center;
+			right: 0px;
+			color: #fff;
+		}
+		
+		.hotel-pay-detail {
+			position: absolute;
+			width: 60px;
+			text-align: center;
+			right: 80px;
+			color: #fff;
+		}
+		
+		.hotel-pay-detail .mui-icon {
+			font-size: 18px;
+			line-height: 44px;
+		}
+	</style>
+</head>
+
+<body>
+	<header class="mui-bar mui-bar-nav hotel-header">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">酒店预定</h1>
+	</header>
+	<div class="mui-content">
+		<h5>北京布提克精品酒店</h5>
+		<ul class="mui-table-view mui-input-group">
+			<li class="mui-table-view-cell mui-input-row" data-event='tap>setBookingDate'>
+				<a class="mui-navigate-right">
+					<span style="margin-right: 20px;">入住 9月20日</span>
+					<span>离店 9月22日</span>
+					<span class="hotel-color-blue hotel-right-text">修改</span>
+				</a>
+			</li>
+			<li class="mui-input-row">
+				<label>高级间</label>
+				<div class="mui-numbox" data-numbox-min='1'>
+					<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+					<input class="mui-numbox-input" type="number" value="1" />
+					<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+				</div>
+			</li>
+			<li class="mui-input-row">
+				<label>入住人</label>
+				<input id='account' type="text" class="mui-input-clear mui-input" placeholder="姓名，每间只需填写1人">
+			</li>
+			<li class="mui-input-row">
+				<label>境内手机</label>
+				<input id='account' type="number" class="mui-input-clear mui-input" placeholder="用于接收通知">
+			</li>
+			<li class="mui-input-row mui-table-view-cell" data-event="tap>setArrivalTime">
+				<a class="mui-navigate-right">
+						到店时间
+						<span class="hotel-right-text">23点前</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell"  data-event="tap>setRequirement">
+				<a class="mui-navigate-right">
+						特殊要求
+						<span class="hotel-right-text">无要求</span>
+					</a>
+			</li>
+			<li class="mui-table-view-cell"  data-event="tap>setInvoice">
+				<a class="mui-navigate-right">
+						发票
+						<span class="hotel-right-text">不需要</span>
+					</a>
+			</li>
+		</ul>
+		<p class="hotel-tips">订单提交后我们将先进行预授权操作，订单确认后再操作扣款。该订单确认后不可被取消修改，若未入住或取消修改，我们将收取您首日房费RMB 365。</p>
+		<p class="hotel-tips">目前北京全城禁烟，酒店均为无烟房。</p>
+	</div>
+	<div class="hotel-bar-submit">
+		<span>总额</span>
+		<strong>￥365</strong>
+		<span class="hotel-pay-detail" data-event="tap>showPriceDetail">明细<i class="mui-icon mui-icon-arrowright"></i></span>
+		<span class="hotel-submit-btn" data-url="./booking-done.html">预定</span>
+	</div>
+	<script src="../mui/js/mui.min.js"></script>
+	<script src="../mui/js/mui.picker.min.js"></script>
+	<script src="../libs/ems.js" data-main='./booking.js'></script>
+</body>
+
+</html>

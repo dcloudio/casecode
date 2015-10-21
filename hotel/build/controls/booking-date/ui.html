@@ -1,0 +1,24 @@
+<div class="booking-date">
+	<ul class="mui-table-view">
+		<li data-event='tap>pickeDate' class="mui-table-view-cell mui-input-row">
+			<a class="mui-navigate-right">
+				{{beginDate | date}} 
+				<span class="description"><span class="ct-color-gray">周{{beginDate | week}}</span> 入住</span>
+			</a>
+		</li>
+		<li class="mui-table-view-cell mui-input-row">
+			<label>
+				住 {{dayNum}} 晚 <span class="description" style="right: 105px;text-align: right;">
+							<span class="ct-color-gray">{{endDate | date}}(周{{endDate | week}})</span> 离店</span>
+			</label>
+			<div class="mui-numbox" data-numbox-min='1'>
+				<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+				<input data-event='change>changeDayNum' class="mui-numbox-input" type="number" value="1" />
+				<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+			</div>
+		</li>
+	</ul>
+	<div class="btn-wraper">
+		<button type="button" data-event='tap>ok' class="mui-btn mui-btn-block mui-btn-warning ct-btn-main">确定</button>
+	</div>
+</div>

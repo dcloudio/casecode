@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>酒店评价</title>
+		<link href="../mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../styles/default.css" rel="stylesheet" />
+		<style>
+			.mui-table-view {
+				margin-bottom: 20px;
+			}
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 0px;
+			}
+			/*tab*/
+			
+			.hotel-tab-btn-area {
+				margin: 0px;
+				padding: 0px;
+				font-size: 0px;
+				position: relative;
+				background-color: #fafafa;
+			}
+			.hotel-tab-btn-area li {
+				display: inline-block;
+				padding: 10px;
+				width: 33.3%;
+				text-align: center;
+				margin: 0px;
+				font-size: 14px;
+				position: relative;
+				color: #777;
+			}
+			.hotel-tab-btn-area li.active {
+				color: #099FDE !important;
+			}
+			.hotel-tab-btn-area li.active:after {
+				content: '';
+				position: absolute;
+				height: 2px;
+				background: #099fde;
+				left: 0px;
+				right: 0px;
+				bottom: 0px;
+			}
+			/*totle*/
+			
+			.hotel-rate-info {
+				height: 64px;
+				background-color: #fff;
+				position: relative;
+				padding-left: 75px;
+			}
+			.hotel-rate-info:before {
+				content: '';
+				position: absolute;
+				height: 1px;
+				background: #c8c7cc;
+				left: 0px;
+				right: 0px;
+				top: 0px;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+			}
+			.hotel-rate-info:after {
+				content: '';
+				position: absolute;
+				height: 1px;
+				background: #c8c7cc;
+				left: 0px;
+				right: 0px;
+				bottom: 0px;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+			}
+			.hotel-rate-total {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				width: 75px;
+				height: 100%;
+				text-align: center;
+				padding: 10px 0px;
+				color: #888;
+				font-size: 12px;
+			}
+			.hotel-rate-total .hotel-color-blue {
+				font-size: 16px;
+			}
+			.hotel-rate-total:after {
+				content: '';
+				position: absolute;
+				width: 1px;
+				background: #c8c7cc;
+				top: 0px;
+				right: 0px;
+				bottom: 0px;
+				-webkit-transform: scaleX(.5);
+				transform: scaleX(.5);
+			}
+			.hotel-rate-group {
+				height: 100%;
+				font-size: 0px;
+			}
+			.hotel-rate-group>div {
+				width: 50%;
+				height: 50%;
+				display: inline-block;
+				font-size: 12px;
+				line-height: 32px;
+				padding: 0px 8px;
+			}
+			/**/
+			
+			.hotel-type {
+				margin: 0px 0px 10px 0px;
+				padding: 0px 10px;
+				position: relative;
+				text-align: center;
+				color: #aaa;
+			}
+			.hotel-type li {
+				background-color: #fff;
+				border: solid 1px #c8c7cc;
+				display: inline-block;
+				padding: 7px;
+				width: 32%;
+				font-size: 11px;
+				text-align: center;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			.hotel-type li.active {
+				border: solid 1px #099fde;
+				color: #099fde;
+			}
+			/*list*/
+			
+			.hotel-comment-list .hotel-rate {
+				font-size: 22px;
+				font-weight: bold;
+			}
+			.hotel-comment-list p {
+				margin-top: 5px;
+				color: #555;
+			}
+			.hotel-comment-list .hotel-form {
+				color: #aaa;
+				font-size: 12px;
+				margin-left: 8px;
+			}
+			/*processbar*/
+			
+			.hotel-processbar {
+				display: inline-block;
+				background-color: #ccc;
+				width: 50px;
+				height: 10px;
+				vertical-align: middle;
+				margin-bottom: 2.5px;
+				position: relative;
+			}
+			.hotel-processbar-val {
+				position: absolute;
+				background-color: #099fde;
+				height: 100%;
+				display: inline-block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hotel-header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">酒店评价</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="hotel-tab-btn-area">
+				<li class="active">全部(5917)</li>
+				<li>推荐(5675)</li>
+				<li>不推荐(242)</li>
+			</ul>
+			<dl class="hotel-rate-info">
+				<div class="hotel-rate-total">
+					<div class="hotel-color-blue">4.8分</div>
+					<div>95%推荐</div>
+				</div>
+				<div class="hotel-rate-group">
+					<div>卫生
+						<span class="hotel-processbar"><span class="hotel-processbar-val" style="width: 80%;"></span></span>
+						4.4
+					</div>
+					<div>环境
+						<span class="hotel-processbar"><span class="hotel-processbar-val" style="width: 60%;"></span></span>
+						4.5
+					</div>
+					<div>服务
+						<span class="hotel-processbar"><span class="hotel-processbar-val" style="width: 90%;"></span></span>
+						4.9
+					</div>
+					<div>设施
+						<span class="hotel-processbar"><span class="hotel-processbar-val" style="width: 70%;"></span></span>
+						4.4
+					</div>
+				</div>
+			</dl>
+			<ul class="hotel-type">
+				<li class="active">商务出差 999+</li>
+				<li>情侣出游 290</li>
+				<li>家庭亲子 767</li>
+				<li>独自旅行 240</li>
+				<li>代人预订 259</li>
+				<li>离火车站近 25</li>
+				<li>客房舒服 139</li>
+				<li>服务不错 268</li>
+				<li>干净卫生 60</li>
+			</ul>
+			<ul class="mui-table-view hotel-comment-list">
+				<li class="mui-table-view-cell mui-media hotel-hotel-info">
+					<div class="mui-media-body">
+						<span class="hotel-rate hotel-color-blue">4.8</span><span class="hotel-color-blue">分</span> <span class="hotel-form">来自 “崔红保”</span>
+						<p>好不容易从机场到了酒店，办理个入住花了近半个小时，房间有点老旧，但空间大，干净整洁。虽处在西客站旁，但房间内还是非常清静,美中不足的是:一、前台服务人的服务意识不强，经过的手续太多，造成前台虽然人多，但办事效率低下。二、所谓的优惠券餐劵，即消费80元减20元，条件苛刻，加之服务人员也没有解释清楚，非要同时消费80才减免20，造成所谓的优惠券有名无实。三、饭店40元的早餐，应该是我认为最值得改进的地方，性价比太差，提供的早点品种较少，而且味道也不敢恭维。四、入住贵店有间房的卫生间淋浴区地漏堵了，下水情况差，只能在浴缸内淋浴。冰箱制冷也基本没效果。</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media hotel-hotel-info">
+					<div class="mui-media-body">
+						<span class="hotel-rate hotel-color-blue">4.8</span><span class="hotel-color-blue">分</span> <span class="hotel-form">来自 “崔红保”</span>
+						<p>好不容易从机场到了酒店，办理个入住花了近半个小时，房间有点老旧，但空间大，干净整洁。虽处在西客站旁，但房间内还是非常清静,美中不足的是:一、前台服务人的服务意识不强，经过的手续太多，造成前台虽然人多，但办事效率低下。二、所谓的优惠券餐劵，即消费80元减20元，条件苛刻，加之服务人员也没有解释清楚，非要同时消费80才减免20，造成所谓的优惠券有名无实。三、饭店40元的早餐，应该是我认为最值得改进的地方，性价比太差，提供的早点品种较少，而且味道也不敢恭维。四、入住贵店有间房的卫生间淋浴区地漏堵了，下水情况差，只能在浴缸内淋浴。冰箱制冷也基本没效果。</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media hotel-hotel-info">
+					<div class="mui-media-body">
+						<span class="hotel-rate hotel-color-blue">4.8</span><span class="hotel-color-blue">分</span> <span class="hotel-form">来自 “崔红保”</span>
+						<p>好不容易从机场到了酒店，办理个入住花了近半个小时，房间有点老旧，但空间大，干净整洁。虽处在西客站旁，但房间内还是非常清静,美中不足的是:一、前台服务人的服务意识不强，经过的手续太多，造成前台虽然人多，但办事效率低下。二、所谓的优惠券餐劵，即消费80元减20元，条件苛刻，加之服务人员也没有解释清楚，非要同时消费80才减免20，造成所谓的优惠券有名无实。三、饭店40元的早餐，应该是我认为最值得改进的地方，性价比太差，提供的早点品种较少，而且味道也不敢恭维。四、入住贵店有间房的卫生间淋浴区地漏堵了，下水情况差，只能在浴缸内淋浴。冰箱制冷也基本没效果。</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<script src="../mui/js/mui.min.js"></script>
+		<script src="../libs/ems.js" data-main='./comment.js'></script>
+	</body>
+
+</html>

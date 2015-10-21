@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>酒店预订，酒店查询，宾馆住宿预订,网上订酒店-【携程旅行】</title>
+		<meta http-equiv="x-dns-prefetch-control" content="on">
+		<link rel="dns-prefetch" href="http://pic.c-ctrip.com">
+		<link rel="dns-prefetch" href="http://res.m.ctrip.com">
+		<link rel="dns-prefetch" href="http://images4.c-ctrip.com">
+		<link rel="dns-prefetch" href="http://webresource.c-ctrip.com">
+		<link rel="dns-prefetch" href="http://webapi.amap.com">
+		<link href="../mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../styles/default.css" rel="stylesheet" />
+		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+		<style>
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 0px;
+			}
+			.mui-input-row {
+				font-size: 19px;
+			}
+			.mui-input-row label {
+				padding-left: 0px;
+			}
+			.mui-numbox {
+				width: 83px;
+				background-color: #bbb;
+				margin-right: 0px !important;
+			}
+			.mui-numbox input {
+				visibility: hidden;
+			}
+			.mui-input-row .description {
+				position: absolute;
+				font-size: 14px;
+				height: 22px;
+				line-height: 22px;
+				top: 50%;
+				margin-top: -11px;
+				right: 35px;
+			}
+			.mui-input-row .ct-fixed-area {
+				position: absolute;
+				top: 0px;
+				right: 0px;
+				width: 60px;
+				height: 100%;
+				text-align: center;
+			}
+			.ct-fixed-area .fa-map-marker {
+				position: absolute;
+				font-size: 22px;
+				top: 50%;
+				right: 20px;
+				margin-top: -11px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav ct-header">
+			<h1 class="mui-title">国内/外酒店</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-input-row" data-url="./city.html">
+					<label>
+						北京
+					</label>
+					<div class="ct-fixed-area">
+						<i class="fa fa-map-marker ct-color-gray"></i>
+					</div>
+				</li>
+				<li data-event='tap>pickeDate' class="mui-table-view-cell mui-input-row">
+					<a class="mui-navigate-right">
+						{{beginDate | date}} 
+						<span class="description"><span class="ct-color-gray">周{{beginDate | week}}</span> 入住</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-input-row">
+					<label>
+						住 {{dayNum}} 晚 <span class="description" style="right: 105px;text-align: right;">
+							<span class="ct-color-gray">{{endDate | date}}(周{{endDate | week}})</span> 离店</span>
+					</label>
+					<div class="mui-numbox" data-numbox-min='1'>
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input data-event='change>changeDayNum' class="mui-numbox-input" type="number" value="1" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-input-row" data-url='./query-keyword.html'>
+					<a class="mui-navigate-right ct-color-gray">
+						关键字/位置/品牌/酒店名
+					</a>
+				</li>
+				<li data-event='tap>setPriceFilter' class="mui-table-view-cell mui-input-row">
+					<a class="mui-navigate-right ct-color-gray">
+					 	{{priceAndStar}}
+					</a>
+				</li>
+			</ul>
+			<div class="mui-content-padded">
+				<button data-url='./hotel-list.html' type="button" class="mui-btn mui-btn-block mui-btn-warning ct-btn-main">查询</button>
+			</div>
+		</div>
+		<script src="../mui/js/mui.min.js"></script>
+		<script src="../mui/js/mui.picker.min.js"></script>
+		<script src="../libs/ems.js" data-main='./index.js'></script>
+	</body>
+
+</html>

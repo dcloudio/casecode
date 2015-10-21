@@ -1,0 +1,7 @@
+/**
+ * ctrip - ctrip hotel
+ * @version v0.0.1
+ * @link http://www.dcloud.io
+ * @license MIT
+ */
+body{font:400 14px/1.5 Arial,"Lucida Grande",Verdana,"Microsoft YaHei",hei!important}h5{padding:0 8px}.ct-color-gray{color:#999!important}.ct-color-blue{color:#099FDE!important}.ct-color-orange{color:#ff9a14!important}.ct-header,.ct-header .mui-icon,.mui-title{background-color:#099fde;color:#fff}.ct-btn-main{color:#FFF;font-size:18px;background-color:#ff9a14;border:1px solid #ff9a14;padding:9px}.ct-footer,.ct-footer-menu{padding:0;width:100%;margin:0}.ct-footer{position:fixed;border:1px solid #ddd;background-color:#eee;left:0;bottom:0;height:51px}.ct-footer-menu{height:100%;font-size:0}.ct-footer-menu li{list-style-type:none;display:inline-block;height:50px;line-height:50px;text-align:center;margin:0;padding:10px;font-size:10px;position:relative;color:#888}.ct-footer-menu li:active{color:#333}.ct-footer-menu li i.fa{position:absolute;width:1pc;height:1pc;font-weight:100;font-size:18px;left:50%;margin-left:-8px;top:8px;display:block}.ct-footer-menu li:first-child{border-left:none}.ct-footer-menu-c4 li{width:25%}.ct-footer-menu-c6 li{width:16.5%}.ct-bar-away{font-size:9pt;z-index:1000;padding:4px 0 4px 10px;line-height:24px;min-height:33px;color:#555;width:100%}

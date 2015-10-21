@@ -1,0 +1,17 @@
+<div class="hotel-price-filter">
+	<legend>价格(单选)</legend>
+	<ul>
+		<li v-repeat="priceRanges" class="{{ value==priceRange.value?'active':'' }}" v-on="tap:pickPriceRange($index)">
+			{{text}}
+		</li> 
+	</ul>
+	<legend>星级(复选)</legend>
+	<ul>
+		<li v-repeat="starTypes" class="{{ value==star.value?'active':'' }}" v-on="tap:pickStar($index)">
+			{{text}}
+		</li> 
+	</ul>
+	<div class="btn-wraper">
+		<button type="button" data-event='tap>ok' class="mui-btn mui-btn-block mui-btn-warning ct-btn-main">确定</button>
+	</div>
+</div>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>酒店信息</title>
+		<link href="../mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../styles/default.css" rel="stylesheet" />
+		<style>
+			.mui-table-view {
+				margin-bottom: 20px;
+			}
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 0px;
+			}
+			.hotel-tab-btn-area {
+				margin: 0px;
+				padding: 0px;
+				font-size: 0px;
+				position: relative;
+			}
+			.hotel-tab-btn-area li {
+				display: inline-block;
+				padding: 10px;
+				width: 50%;
+				text-align: center;
+				margin: 0px;
+				font-size: 14px;
+				position: relative;
+				color: #777;
+			}
+			.hotel-tab-btn-area li.active {
+				color: #099FDE !important;
+			}
+			.hotel-tab-btn-area li.active:after {
+				content: '';
+				position: absolute;
+				height: 2px;
+				background: #099fde;
+				left: 0px;
+				right: 0px;
+				bottom: 0px;
+			}
+			.hotel-right-text {
+				position: absolute;
+				right: 15px;
+				color: #099FDE;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hotel-header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">酒店信息</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media hotel-hotel-info">
+					<div class="mui-media-body">
+						酒店设施
+						<p>
+							有线上网， 公共区域Wifi， 收费停车场， 餐厅， 穿梭机场班车， 会议室， 24小时前台服务， 行李寄存
+						</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media hotel-hotel-info">
+					<div class="mui-media-body">
+						附加选择
+						<p>
+							自助式早餐 ￥40
+						</p>
+					</div>
+				</li>
+			</ul>
+			<ul class="hotel-tab-btn-area">
+				<li class="active">交通信息</li>
+				<li>酒店介绍</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media hotel-hotel-info">
+					<div class="mui-media-body">
+						北京西站、丽泽商务区<span class="hotel-right-text">3.8公里</span>
+						<p>驾车约3.309公里(约8分钟)</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media hotel-hotel-info">
+					<div class="mui-media-body">
+						北京西站、丽泽商务区<span class="hotel-right-text">3.8公里</span>
+						<p>驾车约3.309公里(约8分钟)</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media hotel-hotel-info">
+					<div class="mui-media-body">
+						北京西站、丽泽商务区<span class="hotel-right-text">3.8公里</span>
+						<p>驾车约3.309公里(约8分钟)</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media hotel-hotel-info">
+					<div class="mui-media-body">
+						北京西站、丽泽商务区<span class="hotel-right-text">3.8公里</span>
+						<p>驾车约3.309公里(约8分钟)</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<script src="../mui/js/mui.min.js"></script>
+		<script src="../libs/ems.js" data-main='./hotel-info.js'></script>
+	</body>
+
+</html>
