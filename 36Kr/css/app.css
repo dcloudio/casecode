@@ -39,6 +39,10 @@
 	display: none;
 }
 
+#kr-article-article p img:first-child{
+	display: none;
+}
+
 .kr-article .kr-slider a .mui-slider-title {
 	background: transparent;
 	color: white;

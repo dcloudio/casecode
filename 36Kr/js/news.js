@@ -4,7 +4,7 @@
 	var TIME_UPDATE = 'TIME_UPDATE';
 	var TIME_PUBDATE = 'TIME_PUBDATE';
 	var TIME_UPDATE_SLIDER = 'TIME_UPDATE_SLIDER';
-	var TIME_INTERVAL = 1000 * 60 * 5; //更新间隔(默认十分钟)
+	var TIME_INTERVAL = 1000 * 60 * 10; //更新间隔(默认十分钟)
 	var TIME_INTERVAL_SLIDER = 1000 * 60 * 60; //更新间隔(默认一小时)
 
 	var SLIDER_GUID = 'SLIDER_GUID';
@@ -72,25 +72,41 @@
 	};
 	kr.toggleDownloadWhenWifi = function(whenWifi) {
 		if (whenWifi) {
-			plus.storage.setItem(IMAGE_DOWNLOAD, IMAGE_DOWNLOAD_WHEN_WIFI);
+			localStorage.setItem(IMAGE_DOWNLOAD, IMAGE_DOWNLOAD_WHEN_WIFI);
 		} else {
-			plus.storage.removeItem(IMAGE_DOWNLOAD);
+			localStorage.removeItem(IMAGE_DOWNLOAD);
 		}
 	};
 	kr.isDownloadWhenWifi = function() {
-		return !!plus.storage.getItem(IMAGE_DOWNLOAD);
+		return !!localStorage.getItem(IMAGE_DOWNLOAD);
 	};
 	kr.isDownloadImage = function() {
 		var currentType = plus.networkinfo.getCurrentType();
 		if (currentType === plus.networkinfo.CONNECTION_NONE) {
 			return false;
 		} else if (currentType !== plus.networkinfo.CONNECTION_WIFI) {
-			if (plus.storage.getItem(IMAGE_DOWNLOAD)) {
+			if (localStorage.getItem(IMAGE_DOWNLOAD)) {
 				return false;
 			}
 		}
 		return true;
 	};
+
+	kr.isDownloadImageAsync = function(callback) {
+		callback = callback || mui.noop;
+		mui.plusReady(function() {
+			var currentType = plus.networkinfo.getCurrentType();
+			if (currentType === plus.networkinfo.CONNECTION_NONE) {
+				callback(false);
+			} else if (currentType !== plus.networkinfo.CONNECTION_WIFI) {
+				if (localStorage.getItem(IMAGE_DOWNLOAD)) {
+					callback(false);
+				}
+			}
+			callback(true);
+		});
+	};
+
 	kr.clearCache = function() {
 		plus.nativeUI.showWaiting('正在删除缓存...');
 		kr.deleteNews(function() {
@@ -106,10 +122,10 @@
 				plus.nativeUI.closeWaiting();
 			});
 			//通知首页重新拉取最新
-			plus.storage.removeItem(TIME_UPDATE); //移除上次更新时间
-			plus.storage.removeItem(TIME_PUBDATE); //移除最新的feed更新时间
-			plus.storage.removeItem(TIME_UPDATE_SLIDER); //移除上次slider更新时间
-			plus.storage.removeItem(SLIDER_GUID); //移除上次slider的guid
+			localStorage.removeItem(TIME_UPDATE); //移除上次更新时间
+			localStorage.removeItem(TIME_PUBDATE); //移除最新的feed更新时间
+			localStorage.removeItem(TIME_UPDATE_SLIDER); //移除上次slider更新时间
+			localStorage.removeItem(SLIDER_GUID); //移除上次slider的guid
 			plus.webview.getWebviewById("news").evalJS('getFeed("true")');
 		}, function() {});
 	};
@@ -119,30 +135,36 @@
 		return plus.downloader.createDownload(imgUrl, {
 			filename: url
 		}, function(download, status) {
+			if (status != '200') {
+				return successCallback(null);
+			}
 			successCallback(download.filename);
 		});
 	};
 	kr.getSlider = function(isLocal, successCallback) {
+		//若缓存本地，则直接显示
 		if (isLocal === true) {
-			successCallback(plus.storage.getItem(SLIDER_GUID));
+			successCallback(localStorage.getItem(SLIDER_GUID));
 			return;
 		}
 		successCallback = successCallback || isLocal;
+		//当前没有网络，显示本地缓存
 		if (plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
-			successCallback(plus.storage.getItem(SLIDER_GUID));
+			successCallback(localStorage.getItem(SLIDER_GUID));
 			return;
 		}
-		var update = parseFloat(plus.storage.getItem(TIME_UPDATE_SLIDER));
+		var update = parseFloat(localStorage.getItem(TIME_UPDATE_SLIDER));
+		//屏蔽频繁刷新，若尚未过期，则直接显示本地缓存
 		if (update && (update + TIME_INTERVAL_SLIDER) > Date.parse(new Date())) {
-			successCallback(plus.storage.getItem(SLIDER_GUID));
+			successCallback(localStorage.getItem(SLIDER_GUID));
 			return;
 		}
 		$.getJSON(SLIDER_URL, function(response) {
 			if (response) {
-				plus.storage.setItem(SLIDER_GUID, response.guid);
-				plus.storage.setItem(TIME_UPDATE_SLIDER, Date.parse(new Date()) + ''); //本地更新时间
+				localStorage.setItem(SLIDER_GUID, response.guid);
+				localStorage.setItem(TIME_UPDATE_SLIDER, Date.parse(new Date()) + ''); //本地更新时间
 				kr.getNewsByGuid(response.guid, function(item) {
-					if (!item) { //首页封面不存在，新增
+					if (!item) { //首页封面DB中未存储，insert
 						response.pubDate = Date.parse(response.pubDate);
 						if (response.cover) {
 							response.description = response.description.replace('<img src="' + response.cover + '" alt=""/>', '');
@@ -153,18 +175,27 @@
 						], function() {
 							successCallback(response);
 						}, function() {
+							//TODO 存储失败的回调，有待商榷
 							successCallback(response);
 						});
-					} else { //返回本地存储的
+					} else {
+						//db中已存储，直接返回本地存储
 						successCallback(item);
 					}
 				});
 			} else {
-				successCallback(plus.storage.getItem(SLIDER_GUID));
+				//请求失败，直接显示本地缓存
+				successCallback(localStorage.getItem(SLIDER_GUID));
 			}
 		});
 	};
+	/**
+	 * 通过rss获取新闻数据
+	 * @param {Function} successCallback
+	 * @param {Function} errorCallback
+	 */
 	kr.getFeed = function(successCallback, errorCallback) {
+		//若没有网络，则显示之前缓存数据，并给与提示
 		if (plus.networkinfo.getCurrentType() === plus.networkinfo.CONNECTION_NONE) {
 			plus.nativeUI.toast('似乎已断开与互联网的连接', {
 				verticalAlign: 'top'
@@ -172,38 +203,40 @@
 			successCallback(false);
 			return;
 		}
-		var update = parseFloat(plus.storage.getItem(TIME_UPDATE));
+		//避免频繁刷新，默认最短刷新间隔为10分钟
+		var update = parseFloat(localStorage.getItem(TIME_UPDATE));
 		if (update && (update + TIME_INTERVAL) > Date.parse(new Date())) {
-//			console.log('时间间隔内不请求远程(' + (TIME_INTERVAL - (Date.parse(new Date()) - update)) / 1000 + '秒后)');
 			successCallback(false);
 			return;
 		}
 		$.getFeed(FEED_URL, function(feed) {
 			if (feed.items) {
 				var news = [];
-				var pubDate = parseFloat(plus.storage.getItem(TIME_PUBDATE));
+				var pubDate = parseFloat(localStorage.getItem(TIME_PUBDATE));
 				$.each(feed.items, function(index, item) {
 					if (pubDate && pubDate >= Date.parse(item.pubDate)) {
 						return false;
 					}
 					var matches = item.description.match(REGEX_SRC);
 					var cover = '';
-					if (matches && matches.length === 2) {
+					if (matches && matches.length === 2 && (matches[1].toLowerCase().indexOf(".png") || matches[1].toLowerCase().indexOf(".jpg"))) {
 						cover = matches[1];
-//						console.log("match:"+cover);
 						item.description = item.description.replace('<img src="' + cover + '" alt=""/>', '');
 						news.push([item.title, item.author, item.link, item.guid, cover, Date.parse(item.pubDate), item.description]);
-					}else{
+					} else {
 						//没有匹配到缩略图，找服务器临时抓取
-						mui.getJSON('http://demo.dcloud.net.cn/36kr/cover.php',{appid:'36Kr',url:item.link},function (response) {
-							if(response.status==1){
+						mui.getJSON('http://demo.dcloud.net.cn/36kr/cover.php', {
+							appid: '36Kr',
+							url: item.link
+						}, function(response) {
+							if (response.status == 1) {
 								cover = response.url;
 								news.push([item.title, item.author, item.link, item.guid, cover, Date.parse(item.pubDate), item.description]);
 							}
 						})
 					}
 					//屏蔽iOS客户端推广消息
-//					item.description = item.description.replace('<a href="http://www.36kr.com/p/201073.html?ref=kr_post_feed">36氪官方iOS应用正式上线，支持『一键下载36氪报道的移动App』和『离线阅读』</a> <a href="https://itunes.apple.com/cn/app/36ke/id593394038?l=en&mt=8" target="_blank">立即下载！</a>', '');
+					//					item.description = item.description.replace('<a href="http://www.36kr.com/p/201073.html?ref=kr_post_feed">36氪官方iOS应用正式上线，支持『一键下载36氪报道的移动App』和『离线阅读』</a> <a href="https://itunes.apple.com/cn/app/36ke/id593394038?l=en&mt=8" target="_blank">立即下载！</a>', '');
 				});
 				news.reverse();
 				if (news.length > 0) {
@@ -216,8 +249,8 @@
 					successCallback(false);
 				}
 			}
-			plus.storage.setItem(TIME_PUBDATE, Date.parse(feed.pubDate) + ''); //订阅发布时间
-			plus.storage.setItem(TIME_UPDATE, Date.parse(new Date()) + ''); //本地更新时间
+			localStorage.setItem(TIME_PUBDATE, Date.parse(feed.pubDate) + ''); //订阅发布时间
+			localStorage.setItem(TIME_UPDATE, Date.parse(new Date()) + ''); //本地更新时间
 		}, function(xhr) {
 			errorCallback && errorCallback();
 		});

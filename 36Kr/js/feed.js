@@ -8,7 +8,7 @@
 			if (childNodes) {
 				var childNode = childNodes[0];
 				if (childNode) {
-					value = childNode.nodeValue;
+					value = childNode.wholeText || childNode.nodeValue;
 				}
 			}
 		}
@@ -58,14 +58,18 @@
 		return feed;
 	};
 	$.getFeed = function(url, success, error) {
+		error = error || $.noop;
 		$.ajax({
 			type: "get",
 			url: url,
 			dataType: 'xml',
 			success: function(response) {
+				if (!response) {
+					return error();
+				}
 				success(parseFeed(response));
 			},
-			error: error || $.noop
+			error: error
 		});
 	};
 })(mui);

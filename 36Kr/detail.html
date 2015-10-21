@@ -54,7 +54,7 @@
 		<div id="footer" class="kr-article-bar mui-bar mui-bar-standard mui-bar-footer">
 			<a id="back" class="mui-action-back mui-icon mui-icon-arrowleft mui-pull-left" style="padding: 10px;margin-left: -10px;"></a>
 			<div class="mui-pull-right">
-				<a id="share" class="mui-icon mui-icon-upload" href="javascript:;">&nbsp;</a>
+				<a id="share" class="mui-icon mui-icon-upload" href="javascript:;"></a>
 			</div>
 		</div>
 		<div class="mui-content">
@@ -120,6 +120,7 @@
 				var regex = /\((.*)\)/;
 				html5sql.openDatabase("kr", "36Kr", 5 * 1024 * 1024);
 				document.addEventListener('mui.view.beforeshow', function(event) {
+					//if (!event.detail.guid) return;
 					if (event.detail.$$type === 'back') {
 						setTimeout(function() {
 							document.body.classList.remove('kr-overlay');
@@ -127,12 +128,13 @@
 						return;
 					}
 					document.body.classList.add('kr-overlay');
-					kr.getNewsByGuid(event.detail.guid, function(news) {
+					//console.log("id:" + event.detail.guid);
+					kr.getNewsByGuid(decodeURIComponent(event.detail.guid), function(news) {
 						guid = event.detail.guid;
 						coverEl.querySelector('img').src = news.image || 'img/blank_big.jpg';
 						titleEl.innerText = news.title;
-						console.log("news 222:"+JSON.stringify(news));
-						var author = news.author;
+						//console.log("news aaa:" + JSON.stringify(news));
+						var author = news.author || '';
 						var matches = author.match(regex);
 						if (matches && matches.length === 2) {
 							author = matches[1];
