@@ -15,4 +15,4 @@
 3. [jQuery](https://github.com/jquery/jquery)
 
 # 截图
-![image{320x640}](https://raw.githubusercontent.com/dcloudio/casecode/master/screenshots/hotel.png)
+<img src="https://raw.githubusercontent.com/dcloudio/casecode/master/screenshots/hotel.png" width="320"/>
