@@ -13,3 +13,6 @@
 1. [MUI](https://github.com/dcloudio/mui)
 2. [VUE](https://github.com/vuejs/vue)
 3. [jQuery](https://github.com/jquery/jquery)
+
+# 截图
+[image](https://raw.githubusercontent.com/dcloudio/casecode/master/screenshots/hotel.png)
