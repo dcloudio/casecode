@@ -16,4 +16,4 @@
 
 
 ## 软件截图
-![image](https://raw.githubusercontent.com/dcloudio/casecode/master/screenshots/36kr.png)
+<img src="https://raw.githubusercontent.com/dcloudio/casecode/master/screenshots/36kr.png" width="320" />
