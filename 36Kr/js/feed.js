@@ -1,20 +1,5 @@
 (function($) {
-	//暂时无用
-	var getNodeValue = function(xmlObj, tagName) {
-		var value = "";
-		var nodes = xmlObj.getElementsByTagName(tagName);
-		if (nodes && nodes.length) {
-			var childNodes = nodes[0].childNodes;
-			if (childNodes) {
-				var childNode = childNodes[0];
-				if (childNode) {
-					value = childNode.wholeText || childNode.nodeValue;
-				}
-			}
-		}
-		return value;
-	};
-	var parseFeed = function(xmlObj) {
+	var parseFeed = function(dstList) {
 		var feed = {
 			title: '',
 			link: '',
@@ -23,38 +8,19 @@
 			language: '',
 			items: []
 		};
-		if (xmlObj) {
-			feed.title = getNodeValue(xmlObj, "title");
-			feed.link = getNodeValue(xmlObj, "link");
-			feed.pubDate = getNodeValue(xmlObj, "pubDate");
-			feed.description = getNodeValue(xmlObj, "description");
-			feed.language = getNodeValue(xmlObj, "language");
-			var itemsXml = xmlObj.getElementsByTagName('item');
-			var items = [];
-			var itemXml = {};
-			var item = {};
-			for (var i = 0, len = itemsXml.length; i < len; i++) {
-				itemXml = itemsXml[i];
-				item = {
-					title: '',
-					author: '',
-					pubDate: '',
-					link: '',
-					guid: '',
-					description: ''
-				};
-				if (itemXml) {
-					item.title = getNodeValue(itemXml, "title");
-					item.author = getNodeValue(itemXml, "author");
-					item.pubDate = getNodeValue(itemXml, "pubDate");
-					item.link = getNodeValue(itemXml, "link");
-					item.guid = getNodeValue(itemXml, "guid");
-					item.description = getNodeValue(itemXml, "description");
-				}
-				items.push(item);
-			}
-			feed.items = items;
-		}
+		dstList.forEach(function(srcItem) {
+			feed.items.push({
+				post_id: srcItem.post_id,
+				title: srcItem.title,
+				author: srcItem.author_name,
+				pubDate: srcItem.published_at,
+				link: "http://36kr.com/p/" + srcItem.post_id + ".html",
+				cover: srcItem.cover,
+				guid: srcItem.id.toString(),
+				description: srcItem.content
+			});
+		});
+		//feed.items = items;
 		return feed;
 	};
 	$.getFeed = function(url, success, error) {
@@ -62,7 +28,7 @@
 		$.ajax({
 			type: "get",
 			url: url,
-			dataType: 'xml',
+			dataType: 'json',
 			success: function(response) {
 				if (!response) {
 					return error();

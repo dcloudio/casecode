@@ -4,6 +4,7 @@
 	var TIME_UPDATE = 'TIME_UPDATE';
 	var TIME_PUBDATE = 'TIME_PUBDATE';
 	var TIME_UPDATE_SLIDER = 'TIME_UPDATE_SLIDER';
+	var LAST_ID = "LAST_ID";
 	var TIME_INTERVAL = 1000 * 60 * 10; //更新间隔(默认十分钟)
 	var TIME_INTERVAL_SLIDER = 1000 * 60 * 60; //更新间隔(默认一小时)
 
@@ -20,7 +21,7 @@
 	var DIR_IMAGE = "_doc/image/news/";
 
 	var SLIDER_URL = 'http://demo.dcloud.net.cn/36kr/slider.json';
-	var FEED_URL = 'http://www.36kr.com/feed';
+	var FEED_URL = 'http://spider.dcloud.net.cn/api/news'; //'http://www.36kr.com/feed';
 	var SQL_TABLE = 'DROP TABLE IF EXISTS kr_news;CREATE TABLE kr_news (guid TEXT PRIMARY KEY, title TEXT,author TEXT,link TEXT,cover TEXT,image TEXT,pubDate INTEGER,description TEXT);';
 	var SQL_SELECT = 'SELECT guid,title,author,pubDate,cover,image FROM kr_news WHERE pubDate < ? ORDER BY pubDate DESC LIMIT ?;';
 	var SQL_INSERT = 'INSERT INTO kr_news(title,author,link,guid,cover,pubDate,description) VALUES(?,?,?,?,?,?,?);';
@@ -126,12 +127,12 @@
 			localStorage.removeItem(TIME_PUBDATE); //移除最新的feed更新时间
 			localStorage.removeItem(TIME_UPDATE_SLIDER); //移除上次slider更新时间
 			localStorage.removeItem(SLIDER_GUID); //移除上次slider的guid
+			localStorage.removeItem(LAST_ID);
 			plus.webview.getWebviewById("news").evalJS('getFeed("true")');
 		}, function() {});
 	};
 	kr.downloadImage = function(name, imgUrl, successCallback, errorCallback) {
-		var url = DIR_IMAGE + name.substr(-2) + "/" +
-			name + (imgUrl.substring(imgUrl.lastIndexOf('.'), imgUrl.length - 7));
+		var url = DIR_IMAGE + name + ".png";
 		return plus.downloader.createDownload(imgUrl, {
 			filename: url
 		}, function(download, status) {
@@ -203,40 +204,19 @@
 			successCallback(false);
 			return;
 		}
-		//避免频繁刷新，默认最短刷新间隔为10分钟
-		var update = parseFloat(localStorage.getItem(TIME_UPDATE));
-		if (update && (update + TIME_INTERVAL) > Date.parse(new Date())) {
-			successCallback(false);
-			return;
-		}
-		$.getFeed(FEED_URL, function(feed) {
+		//		//避免频繁刷新，默认最短刷新间隔为10分钟
+		//		var update = parseFloat(localStorage.getItem(TIME_UPDATE));
+		//		if (update && (update + TIME_INTERVAL) > Date.parse(new Date())) {
+		//			successCallback(false);
+		//			return;
+		//		}
+		var lastId = localStorage.getItem(LAST_ID) || '';
+		$.getFeed(FEED_URL + '?lastId=' + lastId, function(feed) {
 			if (feed.items) {
 				var news = [];
 				var pubDate = parseFloat(localStorage.getItem(TIME_PUBDATE));
 				$.each(feed.items, function(index, item) {
-					if (pubDate && pubDate >= Date.parse(item.pubDate)) {
-						return false;
-					}
-					var matches = item.description.match(REGEX_SRC);
-					var cover = '';
-					if (matches && matches.length === 2 && (matches[1].toLowerCase().indexOf(".png") || matches[1].toLowerCase().indexOf(".jpg"))) {
-						cover = matches[1];
-						item.description = item.description.replace('<img src="' + cover + '" alt=""/>', '');
-						news.push([item.title, item.author, item.link, item.guid, cover, Date.parse(item.pubDate), item.description]);
-					} else {
-						//没有匹配到缩略图，找服务器临时抓取
-						mui.getJSON('http://demo.dcloud.net.cn/36kr/cover.php', {
-							appid: '36Kr',
-							url: item.link
-						}, function(response) {
-							if (response.status == 1) {
-								cover = response.url;
-								news.push([item.title, item.author, item.link, item.guid, cover, Date.parse(item.pubDate), item.description]);
-							}
-						})
-					}
-					//屏蔽iOS客户端推广消息
-					//					item.description = item.description.replace('<a href="http://www.36kr.com/p/201073.html?ref=kr_post_feed">36氪官方iOS应用正式上线，支持『一键下载36氪报道的移动App』和『离线阅读』</a> <a href="https://itunes.apple.com/cn/app/36ke/id593394038?l=en&mt=8" target="_blank">立即下载！</a>', '');
+					news.push([item.title, item.author, item.link, item.guid, item.cover, Date.parse(item.pubDate), item.description]);
 				});
 				news.reverse();
 				if (news.length > 0) {
@@ -247,6 +227,9 @@
 					});
 				} else {
 					successCallback(false);
+				}
+				if (feed.items[0]) {
+					localStorage.setItem(LAST_ID, feed.items[0].guid);
 				}
 			}
 			localStorage.setItem(TIME_PUBDATE, Date.parse(feed.pubDate) + ''); //订阅发布时间

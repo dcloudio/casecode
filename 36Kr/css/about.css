@@ -1745,7 +1745,7 @@ only screen and (min-resolution: 1.3dppx) {
 }
 @media screen and (max-width: 48em) {
 	.container {
-		margin-top: 30px
+		margin-top: 15px
 	}
 }
 #article-single .container {
@@ -2237,7 +2237,7 @@ a:visited .new {
 .content-wrapper-single {
 	max-width: 700px;
 	margin: 0 auto;
-	padding: 0 30px
+	padding: 0 20px
 }
 #article-single .single-post {
 	margin-top: 30px

@@ -42,6 +42,12 @@
 				background-color: #efeff4;
 				border: none;
 			}
+			.mui-scroll {
+				position: absolute;
+				z-index: 1;
+				width: 100%;
+				-webkit-transform: none;
+				｝
 		</style>
 	</head>
 
@@ -124,6 +130,7 @@
 					clearNewsList();
 					mui.plusReady(function() {
 						getFeed();
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh();
 					});
 				} else {
 					//非第一次，直接从本地数据库中读取
@@ -219,8 +226,8 @@
 						divEl.innerHTML = news_item(processNews(news.item(i)));
 						newsEl.insertBefore(divEl.firstElementChild, newsEl.firstElementChild);
 					}
-					mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
 				}
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
 			};
 			/**
 			 * 更新顶部图片轮播内容
@@ -244,7 +251,7 @@
 						kr.isDownloadImageAsync(function(yes) {
 							if (!yes) return;
 							(function(news) {
-								news.id = news.guid.substring(news.guid.lastIndexOf('/') + 1, news.guid.length - 5);
+								news.id = news.guid; //.substring(news.guid.lastIndexOf('/') + 1, news.guid.length - 5);
 								var cover = news.cover.replace('!heading', '!slider');
 								addDownloadImage(news.id, cover, function(src) {
 									kr.updateNews(news.guid, src); //更新数据库
@@ -332,7 +339,7 @@
 
 			function processNews(news) {
 				var news = mui.extend({}, news); //需要clone出来一个新对象，旧对象无法赋值修改
-				news.id = news.guid.substring(news.guid.lastIndexOf('/') + 1, news.guid.length - 5);
+				news.id = news.guid; //.substring(news.guid.lastIndexOf('/') + 1, news.guid.length - 5);
 				news.humanize = kr.humanize(Date.now() - news.pubDate);
 				if (!news.image && news.cover) {
 					kr.isDownloadImageAsync(function(yes) {
