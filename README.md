@@ -6,6 +6,7 @@
 ## 资讯类
 1. [36Kr流应用版](https://github.com/dcloudio/casecode/tree/master/36Kr)   
 2. [JFinal社区](http://git.oschina.net/20110516/jfbbs_mui)
+3. [开发者新闻APP](https://github.com/xland/DeveloperNews)
 
 ## 工具类
 1. [滴石](http://git.oschina.net/uikoo9/uikoo9-dishi)
