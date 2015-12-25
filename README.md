@@ -8,6 +8,9 @@
 2. [JFinal社区](http://git.oschina.net/20110516/jfbbs_mui)
 3. [开发者新闻APP](https://github.com/xland/DeveloperNews)
 
+## 电商类
+1. [灰狐E3](https://github.com/huihoo/e3-h5)  
+
 ## 工具类
 1. [滴石](http://git.oschina.net/uikoo9/uikoo9-dishi)
 
