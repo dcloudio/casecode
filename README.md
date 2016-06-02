@@ -13,6 +13,7 @@
 
 ## 工具类
 1. [滴石](http://git.oschina.net/uikoo9/uikoo9-dishi)
+2. [卉卉打卡](https://github.com/0312birdzhang/huihuisignin)
 
 ## 能力展示类
 1. [Hello MUI](https://github.com/dcloudio/mui/tree/master/examples/hello-mui)
