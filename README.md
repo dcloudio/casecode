@@ -23,8 +23,5 @@
 1. [登录模板](https://github.com/dcloudio/mui/tree/master/examples/login)
 2. [酒店预定](https://github.com/dcloudio/casecode/tree/master/hotel)
 
-## 通用组件类
-1. [H5下拉刷新组件库](https://github.com/dailc/pullToRefresh-h5-iscroll)
-
 ## 脚手架类
 1. [rayapp开发框架](https://github.com/dailc/hybrid_dcloud_rayapp)
