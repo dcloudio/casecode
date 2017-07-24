@@ -4,10 +4,9 @@
 注意，所有开源项目并不是全部托管在当前工程下，点击如下开源项目，会自动跳转到对应代码托管地址。
 
 ## 资讯类
-1. [新闻阅读器](https://github.com/dcloudio/casecode/tree/master/reader)   
-2. [JFinal社区](http://git.oschina.net/20110516/jfbbs_mui)
-3. [开发者新闻APP](https://github.com/xland/DeveloperNews)
-4. [红旅动漫](https://github.com/tomoya92/hltmapp-mui)
+1. [新闻阅读器](https://github.com/dcloudio/casecode/tree/master/reader)   
+2. [开发者新闻APP](https://github.com/xland/DeveloperNews)
+3. [红旅动漫](https://github.com/tomoya92/hltmapp-mui)
 
 ## 电商类
 1. [灰狐E3](https://github.com/huihoo/e3-h5)  
