@@ -5,7 +5,9 @@
       "css/mui.min.css",
       "html/tab-webview-subpage-about.html",
       "fonts/mui.ttf",
-      "fonts/iconfont.ttf"
+      "fonts/iconfont.ttf",
+      "js/util.js",
+      "html/tab-webview-subpage-chat.html"
     ],
     "refer": [
       "html/tab-webview-subpage-setting.html",
@@ -39,7 +41,8 @@
   "html/tab-webview-subpage-about.html": {
     "resources": [
       "css/mui.min.css",
-      "js/mui.min.js"
+      "js/mui.min.js",
+      "js/util.js"
     ],
     "refer": []
   },
