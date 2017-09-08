@@ -4,7 +4,7 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "H52221B8C",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"id": "mui_template_nativetab",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "nativeObj模式底部选项卡",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0",/*应用版本名称*/
@@ -428,10 +428,11 @@
 					"css/mui.min.css",
 					"html/tab-webview-subpage-about.html",
 					"fonts/mui.ttf",
-					"fonts/iconfont.ttf"
+					"fonts/iconfont.ttf",
+					"html/tab-webview-subpage-chat.html",
+					"js/util.js"
 				],
 				"refer": [
-					"html/tab-webview-subpage-chat.html",
 					"html/tab-webview-subpage-contact.html",
 					"html/new-webview.html"
 				],
@@ -462,7 +463,8 @@
 			"html/tab-webview-subpage-about.html": {
 				"resources": [
 					"css/mui.min.css",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"js/util.js"
 				],
 				"refer": [],
 				"priority": 0
