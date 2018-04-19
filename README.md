@@ -7,6 +7,7 @@
 1. [新闻阅读器](https://github.com/dcloudio/casecode/tree/master/reader)   
 2. [开发者新闻APP](https://github.com/xland/DeveloperNews)
 3. [红旅动漫](https://github.com/tomoya92/hltmapp-mui)
+4. [闪读看书](https://github.com/zuiyuewentian/Mui_ReadBook)
 
 ## 电商类
 1. [灰狐E3](https://github.com/huihoo/e3-h5)  
