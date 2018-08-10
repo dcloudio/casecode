@@ -12,12 +12,15 @@
 ## 电商类
 1. [灰狐E3](https://github.com/huihoo/e3-h5)  
 
+## 社交类
+1.[卡牌对战](https://github.com/EasyTuan/mui-kidApp)：基于 MUI 构建一个具有 90 +页面的APP应用
+
 ## 工具类
 1. [滴石](http://git.oschina.net/uikoo9/uikoo9-dishi)
 2. [卉卉打卡](https://github.com/0312birdzhang/huihuisignin)
 
 ## 能力展示类
-1. [Hello MUI](https://github.com/dcloudio/mui/tree/master/examples/hello-mui)
+1. [Hello MUI](https://github.com/dcloudio/mui/tree/master/examples/hello-mui)：展示mui的基础控件、通用模板等
 
 ## 常用模板类
 1. [登录模板](https://github.com/dcloudio/mui/tree/master/examples/login)
