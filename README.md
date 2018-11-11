@@ -20,11 +20,16 @@
 2. [卉卉打卡](https://github.com/0312birdzhang/huihuisignin)
 
 ## 能力展示类
-1. [Hello MUI](https://github.com/dcloudio/mui/tree/master/examples/hello-mui)：展示mui的基础控件、通用模板等
+1. [Hello uni-app](https://github.com/dcloudio/uni-app/tree/master/examples/hello-uniapp)：展示uni-app的组件、API、模板等
+2. [Hello MUI](https://github.com/dcloudio/mui/tree/master/examples/hello-mui)：展示mui的基础控件、通用模板等
+
 
 ## 常用模板类
-1. [登录模板](https://github.com/dcloudio/mui/tree/master/examples/login)
-2. [酒店预定](https://github.com/dcloudio/casecode/tree/master/hotel)
+1. [登录模板](https://github.com/dcloudio/mui/tree/master/examples/login) 基于mui项目的登录模板
+2. [登录模板](https://github.com/dcloudio/uni-app/tree/master/examples/login-template) 基于uni-app项目的登录模板
+3. [酒店预定](https://github.com/dcloudio/casecode/tree/master/hotel) 
+4. [图片App](https://github.com/dcloudio/uni-app/tree/master/examples/image-template) 使用uni-app开发的图片App模版，包含单列图、双列图，图片分类，图片轮播、预览、下载，图片分享、收藏，设置桌面背景图等功能
+
 
 ## 脚手架类
 1. [rayapp开发框架](https://github.com/dailc/hybrid_dcloud_rayapp)
