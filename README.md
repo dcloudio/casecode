@@ -14,6 +14,7 @@
 
 ## 社交类
 1.[卡牌对战](https://github.com/EasyTuan/mui-kidApp)：基于 MUI 构建一个具有 90 +页面的APP应用
+2.[剑指题解](https://github.com/swordCodePractice/InternetQuestionBank)：基于 Uniapp&Unicloud 社交题库小程序
 
 ## 工具类
 1. [滴石](http://git.oschina.net/uikoo9/uikoo9-dishi)
