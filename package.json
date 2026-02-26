@@ -1,0 +1,26 @@
+{
+  "name": "casecode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "subtree:pull:hello-uni-app-x": "git subtree pull --prefix=hello-uni-app-x hello-uni-app-x alpha --squash -m \"chore: update hello-uni-app-x\"",
+    "subtree:pull:hello-uni-id-pages-x": "git subtree pull --prefix=hello-uni-id-pages-x hello-uni-id-pages-x dev --squash -m \"chore: update hello-uni-id-pages-x\"",
+    "subtree:pull:hello-uts": "git subtree pull --prefix=hello-uts hello-uts alpha --squash -m \"chore: update hello-uts\"",
+    "subtree:pull:hello-uvue": "git subtree pull --prefix=hello-uvue hello-uvue alpha --squash -m \"chore: update hello-uvue\"",
+    "subtree:pull:hellounicloud": "git subtree pull --prefix=hellounicloud hellounicloud main --squash -m \"chore: update hellounicloud\"",
+    "subtree:pull:uni-ai-x": "git subtree pull --prefix=uni-ai-x uni-ai-x master --squash -m \"chore: update uni-ai-x\"",
+    "subtree:pull": "npm run subtree:pull:hello-uni-app-x && npm run subtree:pull:hello-uni-id-pages-x && npm run subtree:pull:hello-uts && npm run subtree:pull:hello-uvue && npm run subtree:pull:hellounicloud && npm run subtree:pull:uni-ai-x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcloudio/casecode.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dcloudio/casecode/issues"
+  },
+  "homepage": "https://github.com/dcloudio/casecode#readme"
+}
