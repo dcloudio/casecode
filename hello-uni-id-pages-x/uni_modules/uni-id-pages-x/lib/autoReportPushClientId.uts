@@ -1,0 +1,29 @@
+//同步客户端push_clientid至device表
+const uniIdCo = uniCloud.importObject('uni-id-co', {
+  customUI: true
+})
+const reportPushClientId = () => {
+  uni.getPushClientId({
+    success: function (e) {
+      // console.log(e)
+      const pushClientId = e.cid
+      uniIdCo.setPushCid({
+        pushClientId
+      })
+      .then(res => {
+        // console.log('getPushClientId', res);
+      })
+    },
+    fail(e) {
+      // console.log(e)
+    }
+  } as GetPushClientIdOptions)
+}
+export default reportPushClientId;
+
+
+// console.log('已导入 autoReportPushClientId 模块，将再重新登录会 token 续期后自动将客户端上报到服务端');
+uniCloud.onRefreshToken((_) => {
+  // console.log('onRefreshToken');
+  reportPushClientId()
+})

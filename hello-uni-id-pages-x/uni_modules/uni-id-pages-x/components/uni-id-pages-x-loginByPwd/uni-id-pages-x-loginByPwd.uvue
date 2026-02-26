@@ -1,0 +1,162 @@
+<template>
+  <view class="form">
+    <text class="pwd-login-title">账号密码登录</text>
+    <uni-id-pages-x-input class="my-input" title="账号" placeholder="请输入手机号/用户名/邮箱" v-model="username" ref="username"></uni-id-pages-x-input>
+    <uni-id-pages-x-input class="my-input" title="密码" v-model="password" :password="true" ref="password"></uni-id-pages-x-input>
+    <!-- 同意隐私政策协议 -->
+    <uni-id-pages-x-agreements class="agreements-box" ref="agreements" scope="login"/>
+    <button class="uni-btn" :type="password.length > 0 && username.length >0 ? 'primary' : 'default' " @click="loginByPwd">登录</button>
+  </view>
+
+  <view class="link-group">
+    <text class="link" @click="toRetrievePwd">忘记密码</text>
+    <text class="link" @click="toRegister">注册账号</text>
+  </view>
+
+  <!-- 多次登录错误时，获取登录时专用的图形验证码 （悬浮） -->
+  <uni-popup-captcha ref="popup-captcha" scene="login-by-pwd" v-model="loginCaptcha" title="请输入验证码"></uni-popup-captcha>
+</template>
+
+<script>
+	const uniIdCo = uniCloud.importObject("uni-id-co", { customUI: true })
+	import { state } from '@/uni_modules/uni-id-pages-x/store.uts';
+	import { loginSuccess } from '@/uni_modules/uni-id-pages-x/common/common.uts';
+	export default {
+		name: "uni-id-pages-x-loginByPwd",
+		data() {
+			return {
+				username: "",
+				password: "",
+				needCaptcha: false,
+				loginCaptcha: ""
+			}
+		},
+		mounted() {
+			setTimeout(() => {
+				(this.$refs['username'] as UniIdPagesXInputComponentPublicInstance).setFocus(true);
+			}, 300)
+		},
+		methods: {
+			showPopupCaptcha(callback : () => void) {
+				(this.$refs["agreements"] as UniIdPagesXAgreementsComponentPublicInstance).showPopupAgreements(callback)
+			},
+			loginByPwd() {
+				if (this.username.length == 0) {
+					(this.$refs['username'] as UniIdPagesXInputComponentPublicInstance).setFocus(true);
+					return uni.showToast({
+						title: '请输入手机号/用户名/邮箱',
+						icon: 'none',
+						duration: 3000
+					});
+				}
+				if (this.password.length == 0) {
+					(this.$refs['password'] as UniIdPagesXInputComponentPublicInstance).setFocus(true);
+					return uni.showToast({
+						title: '请输入密码',
+						icon: 'none',
+						duration: 3000
+					});
+				}
+				if (this.needCaptcha && this.loginCaptcha.length != 4) {
+					(this.$refs['popup-captcha'] as UniPopupCaptchaComponentPublicInstance).open(() => {
+						this.loginByPwd()
+					});
+					return uni.showToast({
+						title: '请输入验证码',
+						icon: 'none',
+						duration: 3000
+					});
+				}
+
+				const data : UTSJSONObject = {
+					"password": this.password,
+					"captcha": this.loginCaptcha
+				}
+
+				let keyName = 'username'
+				if (/^1\d{10}$/.test(this.username)) {
+					keyName = "mobile"
+				} else if (/@/.test(this.username)) {
+					keyName = "email"
+				}
+				data.set(keyName, this.username)
+
+				console.log('data',data);
+
+				if (state.pendingAgreements) {
+					this.showPopupCaptcha(() => {
+						if (!state.pendingAgreements) {
+							this.loginByPwd()
+						}
+					})
+					return
+				}
+
+				uni.showLoading({
+					title: '登录中',
+					mask: false
+				});
+				uniIdCo.login(data)
+					.finally(() : void => {
+						uni.hideLoading()
+						this.loginCaptcha = ""
+					})
+					.then((e:UTSJSONObject) => {
+						console.log('uniIdCo.login res',e);
+						loginSuccess(e)
+					})
+					.catch((err : any | null) : void => {
+						const error = err as UniCloudError
+						console.error(error)
+						console.error(error.code)
+						if (error.code == 'uni-id-captcha-required') {
+							this.needCaptcha = true;
+							//登录失败，自动重新获取验证码
+							(this.$refs['popup-captcha'] as UniPopupCaptchaComponentPublicInstance).open(() => {
+								this.loginByPwd()
+							});
+						} else {
+							uni.showToast({
+								title: error.message,
+								icon: 'none',
+								duration: 3000
+							});
+						}
+					})
+			},
+			toRegister() {
+				uni.navigateTo({
+					url: "/uni_modules/uni-id-pages-x/pages/register/register"
+				})
+			},
+			toRetrievePwd() {
+				let url = "/uni_modules/uni-id-pages-x/pages/retrieve/retrieve"
+				if (/^1\d{10}$/.test(this.username)) {
+					url += "?mobile=" + this.username
+				} else if (/@/.test(this.username)) {
+					url += "?email=" + this.username
+				}
+				uni.navigateTo({ url })
+			},
+		}
+	}
+</script>
+<style lang="scss" scoped>
+	.pwd-login-title {
+		font-size: 14px;
+		font-weight: 700;
+	}
+
+	.link-group {
+		flex-direction: row;
+		width: 600rpx;
+		margin-left: 75rpx;
+		margin-top: 15px;
+		justify-content: space-between;
+	}
+
+	.link-group .link {
+		color: #083679;
+		font-size: 12px;
+	}
+</style>

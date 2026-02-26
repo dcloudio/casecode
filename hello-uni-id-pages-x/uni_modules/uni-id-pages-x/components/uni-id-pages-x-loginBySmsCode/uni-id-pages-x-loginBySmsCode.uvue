@@ -1,0 +1,97 @@
+<template>
+  <view>
+    <text class="tip">未注册的账号验证通过后将自动注册</text>
+
+    <view class="form">
+      <!-- 获取验证码组件（输入手机号码+发送短信验证码所需的图形验证码，获得短信验证码） -->
+      <uni-id-pages-x-smsCode ref="smsCode" @input="smsCodeInput" ></uni-id-pages-x-smsCode>
+      <!-- 同意隐私政策协议 -->
+      <uni-id-pages-x-agreements class="agreements-box" ref="agreements" scope="login"/>
+      <button class="uni-btn" type="primary" @click="sendSmsCode">获取手机验证码</button>
+    </view>
+
+    <!-- 多次登录错误时，获取登录时专用的图形验证码 （悬浮） -->
+    <uni-popup-captcha ref="captcha" scene="login-by-sms" v-model="captcha" title="请输入验证码"></uni-popup-captcha>
+  </view>
+</template>
+
+<script>
+	import { loginSuccess } from '@/uni_modules/uni-id-pages-x/common/common.uts';
+	const uniIdCo = uniCloud.importObject("uni-id-co", { "customUI": true })
+	export default {
+		name: "uni-id-pages-x-loginBySmsCode",
+		data() {
+			return {
+				captcha: "",
+				smsCodeRef: null as null | UniIdPagesXSmsCodeComponentPublicInstance
+			}
+		},
+		mounted() {
+			this.smsCodeRef = (this.$refs["smsCode"] as UniIdPagesXSmsCodeComponentPublicInstance)
+      uni.$on('uni-id-pages-x-loginBySmsCode-showPopupCaptcha',(callback : () => void)=>{
+        this.showPopupCaptcha(callback)
+      })
+		},
+    unmounted() {
+      uni.$off('uni-id-pages-x-loginBySmsCode-showPopupCaptcha')
+    },
+		methods: {
+			sendSmsCode() {
+				this.smsCodeRef!.$callMethod('sendSmsCode',true);
+			},
+			smsCodeInput(param : UTSJSONObject) {
+				// console.log('smsCodeInput param', param);
+				const mobile = param.getString("mobile") as string;
+				const code = param.getString("code") as string;
+				if (mobile.length == 11 && code.length == 6) {
+					this.login(param)
+				}
+			},
+			showPopupCaptcha(callback : () => void) {
+				(this.$refs["agreements"] as UniIdPagesXAgreementsComponentPublicInstance).showPopupAgreements(callback)
+			},
+			login(param : UTSJSONObject) {
+				uni.showLoading({ "title": "登录中" })
+				uniIdCo.loginBySms(param)
+					.finally(() : void => {
+						uni.hideLoading()
+					})
+					.then((e : UTSJSONObject) : void => {
+						// console.log(e);
+						this.smsCodeRef!.$callMethod("hideCodeInput");
+						uni.showToast({
+							title: '登录成功',
+							icon: 'none'
+						});
+						loginSuccess(e)
+						this.smsCodeRef!.$callMethod('clearCodeInput')
+					})
+					.catch((err : any | null) : void => {
+						const error = err as UniCloudError
+						console.error(error)
+						console.error(error.code)
+						if (["uni-id-captcha-required", "uni-captcha-verify-fail"].includes(error.code as string)) {
+							(this.$refs["captcha"] as UniPopupCaptchaComponentPublicInstance).open(() => {
+								this.login(param)
+							});
+						} else {
+							uni.showToast({
+								title: error.message,
+								icon: 'none',
+								mask: false
+							});
+							this.smsCodeRef!.$callMethod('clearCodeInput')
+							this.captcha = ""
+						}
+					})
+			}
+		}
+	}
+</script>
+
+<style>
+	.tip {
+		font-size: 12px;
+		padding: 0 0 5px 10px;
+	}
+</style>

@@ -1,0 +1,114 @@
+import { loginSuccess } from '@/uni_modules/uni-id-pages-x/common/common.uts';
+// 导入配置
+import config from '@/uni_modules/uni-id-pages-x/config.uts'
+const loginTypes = config.getArray<string>('loginTypes');
+
+// import {servicesList,Services} from '@/uni_modules/uni-id-pages-x/lib/servicesList.uts';
+// type Buttons = {
+//   provider:string,
+//   iconPath:string
+// }
+// const buttonsList:Buttons[] = []
+// servicesList.forEach(services=>{
+//   let buttons:Buttons = {
+//     "provider": "apple",
+//     "iconPath": "/static/apple.png" // 图标路径仅支持本地图片
+//   }
+//   buttonsList.push(buttons)
+// })
+
+// #ifdef APP && uniVersion >= 3.98
+
+export default class Univerify {
+  verify(fullScreen : boolean) {
+    const univerifyManager = uni.getUniverifyManager();
+    // 校验预登录是否有效
+    const isPreLoginValid = univerifyManager.isPreLoginValid();
+    if (isPreLoginValid) {
+      // 预登录有效，执行登录
+      this.login(fullScreen);
+    } else {
+      // 预登录无效，执行预登录
+      univerifyManager.preLogin({
+        success() {
+          console.log("pre login success");
+          this.login(fullScreen);
+        },
+        fail(err) {
+          console.error("pre login fail => " + JSON.stringify(err));
+          // 当前页面不是登录页面时，一键登录不可用，且还存在一键登录以外的登录方式，就跳转至此登录方式
+          const pages = getCurrentPages()
+          const currentPage = pages[pages.length - 1]
+          const loginPageRoute = "uni_modules/uni-id-pages-x/pages/login/login"
+          if(currentPage.route === loginPageRoute){
+            uni.showModal({
+              title: '预登录失败',
+              content: JSON.parseObject(err.cause?.cause?.message ?? "")?.getString("errorDesc") ?? err.errMsg,
+              showCancel: false
+            });
+          }else{
+            // 获取除一键登录以外的登录方式
+            let otherLoginTypes = loginTypes?.filter((type:string):Boolean => type != 'univerify')
+            if(currentPage.route != loginPageRoute && otherLoginTypes!.length > 0){
+              const type = otherLoginTypes[0]
+              uni.navigateTo({
+                url: "/" + loginPageRoute + "?type=" + type,
+                fail(err){
+                  console.log('err',err)
+                  uni.showModal({
+                    content: err.errMsg,
+                    showCancel: false
+                  });
+                },
+                success(){
+                  console.warn("一键登录不可用，已自动切换登录方式，type:" + type)
+                }
+              })
+            }
+          }
+        }
+      });
+    }
+  }
+  login(fullScreen : boolean) {
+    const univerifyManager = uni.getUniverifyManager();
+    univerifyManager.login({
+      // 登录页样式
+      univerifyStyle: {
+        fullScreen: fullScreen,
+        backgroundColor: "#FFFFFF",
+        loginBtnText: "一键登录",
+        logoPath: "/static/logo.png",
+        // buttons:{
+        //   "iconWidth": "45px", // 图标宽度（高度等比例缩放） 默认值：45px
+        //   "list":buttonsList
+        // }
+      },
+      success(res) {
+        console.log("login success => " + JSON.stringify(res));
+        // 云函数取号
+        const uniIdCo = uniCloud.importObject("uni-id-co")
+        uniIdCo.loginByUniverify({
+          access_token: res.accessToken, // 客户端一键登录接口返回的access_token
+          openid: res.openId // 客户端一键登录接口返回的openid
+        }).then(res => {
+          console.log('res',res)
+          loginSuccess(res)
+          univerifyManager.close();
+        }).catch(err => {
+          console.error(JSON.stringify(err));
+          // 关闭登录页
+          univerifyManager.close();
+        });
+      },
+      fail(err) {
+        console.error("login fail => " + err);
+        // uni.showToast({
+        //   title: "登录失败",
+        //   icon: "error"
+        // });
+      }
+    });
+  }
+}
+// #endif

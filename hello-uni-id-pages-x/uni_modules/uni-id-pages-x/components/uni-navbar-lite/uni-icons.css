@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "UniIconsLight"; 
+  src: url('./uniicons.ttf') format('truetype');
+}
+
+.uni-icons {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+}
+
+.uniui-back:before {
+  content: "\e600";
+}
+

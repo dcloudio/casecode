@@ -1,0 +1,100 @@
+<template>
+	<uni-popup ref="popup">
+		<view class="dialog-box">
+			<text class="title">{{title}}</text>
+			<input class="input" ref="input" type="text" v-model="value" cursor-spacing="210" />
+			<view class="btn-group">
+				<text class="btn" @click="cancel">取消</text>
+				<text class="btn confirm" @click="confirm">确认</text>
+			</view>
+		</view>
+	</uni-popup>
+</template>
+
+<script>
+	let confirmCallBack = (_ : string) : void => {}// console.log('未传入回调函数，value：', value)
+	export default {
+		emits: ["confirm","cancel"],
+		data() {
+			return {
+				title: "默认标题" as string,
+				value: "" as string
+			}
+		},
+		methods: {
+			open(param : UTSJSONObject, callback : (value : string) => void) : void {
+				// console.log('param', param);
+				this.title = (param.getString("title") as string);
+				let value = param.getString("value")
+				if (value != null) {
+					this.value = value
+				}
+				confirmCallBack = callback;
+				(this.$refs['popup'] as UniPopupComponentPublicInstance).open();
+				this.$nextTick(() => {
+					(this.$refs['input'] as UniElement).focus()
+				})
+			},
+			cancel() {
+				(this.$refs['popup'] as UniPopupComponentPublicInstance).close();
+				this.value = "";
+				this.$emit('cancel')
+			},
+			confirm() {
+				if (this.value.length > 0) {
+					this.$emit('confirm', this.value)
+					confirmCallBack(this.value);
+					(this.$refs['popup'] as UniPopupComponentPublicInstance).close();
+					this.value = "";
+				} else {
+					uni.showToast({
+						title: '不能为空',
+						icon: 'none'
+					});
+				}
+			}
+		}
+	}
+</script>
+
+<style>
+	.dialog-box {
+		background-color: #FFF;
+		width: 600rpx;
+		border-radius: 5px;
+	}
+
+	.dialog-box .title {
+		font-weight: 700;
+		font-size: 16px;
+		text-align: center;
+		margin-top: 15px;
+	}
+
+	.dialog-box .input {
+		border: 1px solid #eee;
+		border-radius: 5px;
+		margin: 10px 20px;
+		height: 38px;
+		padding: 0 30rpx;
+	}
+
+	.dialog-box .btn-group {
+		border-top: 1px solid #eee;
+		flex-direction: row;
+		justify-content: space-around;
+	}
+
+	.dialog-box .btn-group .btn {
+		flex: 1;
+		text-align: center;
+		color: #666;
+		height: 45px;
+		line-height: 45px;
+	}
+
+	.dialog-box .btn-group .btn.confirm {
+		color: #115ff7;
+		border-left: solid 1px #eee;
+	}
+</style>

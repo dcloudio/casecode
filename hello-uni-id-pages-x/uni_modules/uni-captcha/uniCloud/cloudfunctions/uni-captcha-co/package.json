@@ -1,0 +1,14 @@
+{
+    "name": "uni-captcha-co",
+    "dependencies": {
+        "uni-captcha": "file:..\/common\/uni-captcha",
+        "uni-config-center": "file:..\/..\/..\/..\/uni-config-center\/uniCloud\/cloudfunctions\/common\/uni-config-center"
+    },
+    "extensions": {
+        "uni-cloud-jql": {}
+    },
+    "origin-plugin-dev-name": "uni-captcha",
+    "origin-plugin-version": "0.7.5",
+    "plugin-dev-name": "uni-captcha",
+    "plugin-version": "0.8.2"
+}

@@ -1,0 +1,8 @@
+/.hbuilderx/
+/node_modules/
+**/node_modules/**
+/unpackage/
+/vue.config.js
+.DS_Store
+.idea
+package-lock.json
