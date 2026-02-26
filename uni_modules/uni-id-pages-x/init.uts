@@ -1,0 +1,182 @@
+// 导入 autoReportPushClientId 模块，将再重新登录会 token 续期后自动将客户端上报到服务端
+// import reportPushClientId from '@/uni_modules/uni-id-pages-x/lib/autoReportPushClientId.uts'
+
+// 导入配置
+import config from '@/uni_modules/uni-id-pages-x/config.uts'
+import {state} from '@/uni_modules/uni-id-pages-x/store.uts';
+
+// uni-id的云对象
+const uniIdCo = uniCloud.importObject('uni-id-co', {
+  customUI: true
+})
+// 用户配置的登录方式、是否打开调试模式
+const configLoginTypes = config.getArray<string>('loginTypes');
+const loginTypes = configLoginTypes == null ? [] as string[] : configLoginTypes;
+
+const debug = config.getBoolean('debug') as boolean;
+
+// #ifdef APP && uniVersion >= 3.98
+import Univerify from '@/uni_modules/uni-id-pages-x/lib/Univerify.uts'
+// #endif
+
+
+export default async function () {
+  // 有打开调试模式的情况下
+  if (debug) {
+    // 1. 检查本地uni-id-pages中配置的登录方式，服务器端是否已经配置正确。否则提醒并引导去配置
+    // 调用云对象，获取服务端已正确配置的登录方式
+    uniIdCo.getSupportedLoginType().then((res:UTSJSONObject)=>{
+      // console.log('7777res',res)
+      let supportedLoginType = res.getArray<string>('supportedLoginType')
+      // console.log('supportedLoginType: ',supportedLoginType);
+      if(supportedLoginType == null){
+        supportedLoginType = []
+      }
+      // 登录方式，服务端和客户端的映射关系
+      const data:UTSJSONObject = {
+        "univerify": 'univerify',
+        "username": 'username-password',
+        "weixin": 'weixin',
+        "qq": 'qq',
+        "xiaomi": 'xiaomi',
+        "sinaweibo": 'sinaweibo',
+        "taobao": 'taobao',
+        "facebook": 'facebook',
+        "google": 'google',
+        "alipay": 'alipay',
+        "apple": 'apple',
+        "weixinMobile": 'weixin'
+      };
+      // 遍历客户端配置的登录方式，与服务端比对。并在错误时抛出错误提示
+      // const list = loginTypes?.filter((type:string):boolean =>type != 'smsCode')
+      // ?.filter((type:string):boolean =>{
+      //   let currentType = data.getString(type);
+      //   if(currentType == null){
+      //     currentType = ""
+      //   }
+      //   return supportedLoginType?.includes(currentType) != true
+      // })
+      const list:Array<string> = [];
+      // console.log('loginTypes: ',loginTypes);
+      for (let i = 0; i < loginTypes.length; i++) {
+        const type = loginTypes[i];
+        if (type != 'smsCode') {
+          let currentType = data.getString(type);
+          if (currentType === null) {
+            currentType = '';
+          }
+          if (!supportedLoginType.includes(currentType)) {
+            list.push(type);
+          }
+        }
+      }
+      if (list.length != 0) {
+        console.error(
+      		`错误：前端启用的登录方式:${list.join('，')};没有在服务端完成配置。配置文件路径："/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json"`
+        )
+      }
+    })
+  }
+
+  // #ifdef APP && uniVersion >= 3.98
+  // 如果uni-id-pages配置的登录功能有一键登录，有则执行预登录（异步）
+  if (loginTypes.includes('univerify')) {
+    const myUniverify = new Univerify()
+    const univerifyManager = uni.getUniverifyManager();
+    univerifyManager.preLogin({
+      success() {
+        // console.log("pre login success");
+      },
+      fail(err) {
+        console.error("pre login fail => " + JSON.stringify(err));
+      }
+    });
+
+    let lastLoginType: string = ''
+    const handleInterceptor = (geturl:string)=>{
+      if (geturl.indexOf("/uni_modules/uni-id-pages-x/pages/login/login") == 0) {
+        let url = decodeURIComponent(geturl)
+        let param:UTSJSONObject = {};
+        // 获取链接后面的参数部分
+        let urlSplit = url!.split('?')
+        let type = '';
+        if(urlSplit.length > 1){
+          let keyValuePairs = urlSplit[1].split('&'); // 将参数按&分隔为键值对数组
+          // console.log('keyValuePairs: ',keyValuePairs);
+          keyValuePairs.forEach(keyValuePair => {
+            let [key, value] = keyValuePair.split('='); // 将键值对按等号分隔为键和值
+            param[key] = value;
+          });
+          if(typeof param["type"] == 'string'){
+            type = param["type"] as string
+          }
+        }
+        lastLoginType = type
+        if(type == ''){
+          type = loginTypes[0];
+        }
+      }
+    }
+
+    const openMyUniverify = ()=>{
+      if(lastLoginType == "univerify"){
+        myUniverify.verify(true)
+        console.log('第一优先级是一键登录（且可用），就直接调用一键登录，不打开登录页面');
+      }
+    }
+
+    uni.addInterceptor('navigateTo',{
+      invoke:(e:NavigateToOptions)=>{
+        handleInterceptor(e.url)
+      },
+      success: (_ : NavigateToSuccess)=> {
+        openMyUniverify()
+      },
+      fail: (err : NavigateToFail)=> {
+        console.log('拦截 navigateTo 接口 fail 返回参数为：', err)
+      }
+    })
+
+    uni.addInterceptor('redirectTo',{
+      invoke:(e:RedirectToOptions)=>{
+        handleInterceptor(e.url)
+      },
+      success: (_ : RedirectToSuccess)=> {
+        openMyUniverify()
+      },
+      fail: (err : RedirectToFail)=> {
+        console.log('拦截 redirectTo 接口 fail 返回参数为：', err)
+      }
+    })
+  }
+
+  // #endif
+
+  // // 3. 绑定clientDB错误事件
+  // // clientDB对象
+  // const db = uniCloud.database()
+  // db.on('error', onDBError)
+  // // clientDB的错误提示
+  // function onDBError ({
+  //   code, // 错误码详见https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=returnvalue
+  //   message
+  // }) {
+  //   // console.error('onDBError', {code,message});
+  // }
+  // // 解绑clientDB错误事件
+  // // db.off('error', onDBError)
+
+
+  // needLogin相关代码-start（此代码仅为版本兼容提示使用，如已知晓可删除）
+  if(config['needLogin'] != null){
+    const tipText = "uni-id-pages x v1.0.4+ 不再支持配置项config.needLogin，请升级HBuilderX 版本为3.99+，使用更强大 uni-id-router替代。详情查看：https://uniapp.dcloud.net.cn/uniCloud/uni-id/summary.html#uni-id-router"
+    console.error(tipText)
+    uni.showModal({
+      content: tipText,
+      showCancel: false,
+      confirmText:"知道了"
+    });
+  }
+  // needLogin相关代码-end
+
+}

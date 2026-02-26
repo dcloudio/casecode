@@ -1,0 +1,240 @@
+<template>
+	<view class="agreements-root" v-if="agreements.length != 0">
+		<template v-if="needAgreements">
+			<checkbox-group @change="setAgree" class="checkbox-group">
+        <checkbox class="checkbox" :checked="!pendingAgreements" value="agreement">
+          <text class="text">同意</text>
+        </checkbox>
+			</checkbox-group>
+			<view class="content">
+				<view class="agreements-item" v-for="(agreement,index) in agreements" :key="index">
+					<text class="agreement text" @click="navigateTo(index)">{{agreement.title}}</text>
+					<text class="text and" v-if="hasAnd(index)" space="nbsp"> 和 </text>
+				</view>
+			</view>
+		</template>
+
+		<!-- 弹出式 -->
+		<uni-popup ref="popup">
+			<view class="popup-content">
+				<view class="popup-header">
+					<uni-id-pages-x-icons :size="18"  color="#E6A23C" type="advert" />
+					<text class="popup-title">请先阅读并同意</text>
+				</view>
+				<view class="content">
+					<view class="agreements-item" v-for="(agreement,index) in agreements" :key="index">
+						<text class="agreement popup-text" @click="navigateTo(index)">{{agreement.title}}</text>
+						<text class="popup-text and" v-if="hasAnd(index)" space="nbsp"> 和 </text>
+					</view>
+				</view>
+				<view class="btn-group">
+					<text class="btn" @click="cancel">取消</text>
+					<text class="btn confirm" @click="confirm">同意</text>
+				</view>
+			</view>
+		</uni-popup>
+	</view>
+</template>
+
+<script>
+  import config from '@/uni_modules/uni-id-pages-x/config.uts';
+  import {state} from '@/uni_modules/uni-id-pages-x/store.uts';
+  type Agreement = {url:string,title:string};
+  let confirmCallBack = ():void=>{} //console.log('未传入回调函数，value：')
+  export default {
+    name: "uni-id-pages-x-agreements",
+    computed: {
+    	agreements():Agreement[]{
+        const agreements = config.getJSON('agreements')
+    		if(agreements === null){
+    			return []
+    		}else{
+          return [
+          	{
+          		"url":agreements.getString('serviceUrl') as string,
+          		"title":"用户服务协议"
+          	},
+          	{
+          		"url":agreements.getString('privacyUrl') as string,
+          		"title":"隐私政策条款"
+          	}
+          ] as Agreement[]
+        }
+    	},
+      pendingAgreements():boolean{
+        return state.pendingAgreements
+      }
+    },
+    props: {
+      scope: {
+        type: String,
+        default: "login"
+      },
+    },
+    data() {
+      return {
+        needAgreements:true,
+        popupComponent:null as null | UniPopupComponentPublicInstance
+      }
+    },
+    mounted() {
+
+      const scopeList = config.getArray<string>('agreements.scopeList')
+      if(scopeList == null){
+        this.needAgreements = false
+      }else{
+        this.needAgreements = scopeList.includes(this.scope)
+      }
+      state.pendingAgreements = this.needAgreements;
+
+      this.popupComponent = (this.$refs['popup'] as UniPopupComponentPublicInstance)
+      // this.showPopupAgreements(()=>{
+      //   console.log('showPopupAgreements after');
+      // })
+      uni.$on("uni-id-pages-x-agreements-shake",()=>{
+        // console.log('弹出申请同意隐私协议的框');
+        (this.$refs['popup-box'] as INode).style.setProperty("top",0)
+      })
+    },
+    methods: {
+      hasAnd(index:number) : boolean{
+      	return this.agreements.length - 1 > index
+      },
+      navigateTo(index:number){
+        const title = this.agreements[index].title
+        const url = this.agreements[index].url
+        uni.navigateTo({
+          "url":"/uni_modules/uni-id-pages-x/pages/common/webview/webview?url="+url+"&title="+title,
+          fail:e=>{
+            console.error(e);
+          }
+        })
+      },
+      setAgree(event: CheckboxGroupChangeEvent){
+        state.pendingAgreements =  event.detail.value.length == 0
+      },
+      showPopupAgreements(callback: () => void){
+        confirmCallBack = callback;
+        this.popupComponent!.open()
+      },
+      cancel(){
+        state.pendingAgreements = true;
+        this.popupComponent!.close()
+      },
+      confirm(){
+        state.pendingAgreements = false;
+        // console.log('state.pendingAgreements',state.pendingAgreements);
+        confirmCallBack();
+        this.popupComponent!.close()
+      }
+    },
+  }
+</script>
+
+<style lang="scss" scoped>
+	.agreements-root {
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		margin-left: -9px;
+	}
+
+  .checkbox-group {
+    transform: scale(0.6);
+    margin-left: -6px;
+    margin-right: -18px;
+    /* #ifdef WEB */
+    margin-right: -30px;
+    /* #endif */
+    padding-right: 10px;
+    .checkbox {
+      margin-left: 5px;
+      padding-right: 15px;
+      .text {
+        margin-left: 8px;
+        margin-right: 10px;
+        transform: scale(1.8);
+      	color: #8a8f8b;
+      	font-size: 12px;
+        line-height: 24px;
+      }
+    }
+
+    /* #ifdef MP-WEIXIN */
+    // 解决微信小程序中外层有transform: scale内层再设置transform: scale无效的问题
+    .checkbox {
+      padding-right: 40px;
+      .text {
+        position: absolute;
+        margin-right: 0;
+        top: 0;
+      }
+    }
+    /* #endif */
+  }
+
+	.agreements-item {
+		flex-direction: row;
+	}
+
+	.popup-text{
+		line-height: 30px;
+		font-size:14px;
+	}
+
+	.agreement {
+		color: #04498c;
+		/* #ifdef WEB */
+		cursor: pointer;
+		/* #endif */
+	}
+
+	.content {
+		padding: 5px 0;
+		flex-wrap: wrap;
+		flex-direction: row;
+	}
+
+	.popup-content {
+		background-color: #FFF;
+		padding-bottom: 0;
+		border-radius: 10px;
+		width: 600rpx;
+    padding: 15px;
+    padding-bottom: 0;
+	}
+	.popup-header {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding-top: 5px;
+	}
+	.popup-title {
+		font-size: 16px;
+		// text-align: center;
+		margin: 15px 0;
+		padding-left: 5px;
+		// color: #E6A23C;
+	}
+
+	.popup-content .btn-group {
+		border-top: 1px solid #eee;
+		flex-direction: row;
+		justify-content: space-around;
+		margin-top: 10px;
+	}
+
+	.popup-content .btn-group .btn {
+		flex: 1;
+		text-align: center;
+		color: #666;
+		height: 45px;
+		line-height: 45px;
+		font-size: 14px;
+	}
+
+	.popup-content .btn-group .btn.confirm {
+		color: #115ff7;
+		border-left: solid 1px #eee;
+	}
+</style>
