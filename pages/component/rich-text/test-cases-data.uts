@@ -1,0 +1,223 @@
+/**
+ * rich-text 测试用例数据
+ *
+ * 测试分类：
+ * - P0: 核心解析功能
+ * - P1: 基础文本元素
+ * - P2: 复杂结构元素
+ * - P3: CSS样式解析
+ * - P4: 边界与异常
+ * - P5: 图片测试（网络图片）
+ * - P6: 不支持的HTML标签
+ * - P7: 不支持的CSS
+ */
+
+// ========== 类型定义 ==========
+export type TestCase = {
+	id : string;       // 用例ID，如 "P0-01"
+	name : string;     // 用例名称
+	html : string;     // HTML 内容
+	expected : string; // 预期结果描述
+}
+
+export type TestGroup = {
+	id : string;       // 分组ID，如 "P0"
+	name : string;     // 分组名称
+	cases : TestCase[];
+}
+
+// 网络测试图片
+const TEST_IMAGE_URL = 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni@2x.png'
+const TEST_IMAGE_SMALL = 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app-x/component/button/mix-button-mini.png'
+
+// ========== 测试数据 ==========
+export const TEST_GROUPS : TestGroup[] = [
+	// P0 - 核心解析功能
+	{
+		id: 'P0',
+		name: 'P0 - 核心解析功能',
+		cases: [
+			{ id: 'P0-01', name: '无Body标签', html: '<p>hello</p>', expected: '正常解析整个内容' },
+			{ id: 'P0-02', name: '&符号转义', html: '<p>A & B</p>', expected: '显示 A & B' },
+			{ id: 'P0-03', name: '已转义实体', html: '<p>&amp; &lt; &gt;</p>', expected: '显示 & < >' },
+			{ id: 'P0-04', name: '自闭标签br', html: '<p>line1<br>line2</p>', expected: '两行显示' },
+			{ id: 'P0-05', name: '自闭标签img', html: '<p><img src="' + TEST_IMAGE_SMALL + '" width="50">text</p>', expected: '图片+文本' },
+			{ id: 'P0-06', name: '自闭标签hr', html: '<p>above</p><hr><p>below</p>', expected: '显示水平线' },
+		] as TestCase[]
+	} as TestGroup,
+
+	// P1 - 基础文本元素
+	{
+		id: 'P1',
+		name: 'P1 - 基础文本元素',
+		cases: [
+			{ id: 'P1-01', name: '加粗 b', html: '<p><b>bold text</b></p>', expected: '粗体显示' },
+			{ id: 'P1-02', name: '加粗 strong', html: '<p><strong>bold text</strong></p>', expected: '粗体显示' },
+			{ id: 'P1-03', name: '斜体 i', html: '<p><i>italic text</i></p>', expected: '斜体显示' },
+			{ id: 'P1-04', name: '斜体 em', html: '<p><em>italic text</em></p>', expected: '斜体显示' },
+			{ id: 'P1-05', name: '下划线 u', html: '<p><u>underline text</u></p>', expected: '显示下划线' },
+			{ id: 'P1-06', name: '删除线 del', html: '<p><del>deleted text</del></p>', expected: '显示删除线' },
+			{ id: 'P1-07', name: '删除线 s', html: '<p><s>strike text</s></p>', expected: '显示删除线' },
+			{ id: 'P1-08', name: '嵌套格式', html: '<p><b><i>bold and italic</i></b></p>', expected: '粗斜体显示' },
+			{ id: 'P1-09', name: '标题h1-h6', html: '<h1>H1</h1><h2>H2</h2><h3>H3</h3><h4>H4</h4><h5>H5</h5><h6>H6</h6>', expected: 'H1最大，H6最小' },
+			{ id: 'P1-10', name: '代码 code', html: '<p><code>code text</code></p>', expected: '等宽字体' },
+			{ id: 'P1-11', name: '大字 big', html: '<p><big>bigger text</big></p>', expected: '字号增大' },
+			{ id: 'P1-12', name: '小字 small', html: '<p><small>smaller text</small></p>', expected: '字号减小' },
+		] as TestCase[]
+	} as TestGroup,
+
+	// P2 - 复杂结构元素
+	{
+		id: 'P2',
+		name: 'P2 - 复杂结构元素',
+		cases: [
+			{ id: 'P2-01', name: '无序列表', html: '<ul><li>Item A</li><li>Item B</li><li>Item C</li></ul>', expected: '显示列表符号' },
+			{ id: 'P2-02', name: '嵌套列表', html: '<ul><li>Level 1<ul><li>Level 2-A</li><li>Level 2-B</li></ul></li></ul>', expected: '二级缩进' },
+			{ id: 'P2-03', name: '基础表格', html: '<table><tr><td>Cell A</td><td>Cell B</td></tr></table>', expected: '两列显示' },
+			{ id: 'P2-04', name: '表头th', html: '<table><tr><th>Header</th></tr><tr><td>Data</td></tr></table>', expected: '表头加粗' },
+			{ id: 'P2-05', name: '多行表格', html: '<table><tr><td>1-1</td><td>1-2</td><td>1-3</td></tr><tr><td>2-1</td><td>2-2</td><td>2-3</td></tr><tr><td>3-1</td><td>3-2</td><td>3-3</td></tr></table>', expected: '正确布局' },
+			{ id: 'P2-06', name: '链接a', html: '<p><a href="http://example.com">Link Text</a></p>', expected: '链接颜色+可点击' },
+			{ id: 'P2-07', name: '图片img基础', html: '<p><img src="' + TEST_IMAGE_URL + '" width="100" height="100"></p>', expected: '显示图片' },
+			{ id: 'P2-08', name: '代码块pre', html: '<pre><code>function test() {\n    return 1;\n}</code></pre>', expected: '保留空格和换行' },
+			{ id: 'P2-09', name: '引用块', html: '<blockquote>This is a quote</blockquote>', expected: '引用样式' },
+			{ id: 'P2-10', name: 'div嵌套', html: '<div><div><p>nested text</p></div></div>', expected: '正常显示' },
+		] as TestCase[]
+	} as TestGroup,
+
+	// P3 - CSS样式解析
+	{
+		id: 'P3',
+		name: 'P3 - CSS样式解析',
+		cases: [
+			{ id: 'P3-01', name: '颜色hex', html: '<p style="color:#ff0000">red text</p>', expected: '红色文字' },
+			{ id: 'P3-02', name: '颜色rgba', html: '<p style="color:rgba(0,255,0,0.5)">green text</p>', expected: '半透明绿色' },
+			{ id: 'P3-03', name: '颜色名称', html: '<p style="color:blue">blue text</p>', expected: '蓝色文字' },
+			{ id: 'P3-04', name: '背景色', html: '<p style="background-color:#eeeeee">background text</p>', expected: '灰色背景' },
+			{ id: 'P3-05', name: '字号', html: '<p style="font-size:24px">big text</p>', expected: '24px字号' },
+			{ id: 'P3-06', name: '行高', html: '<p style="line-height:2">tall line<br>second line</p>', expected: '2倍行高' },
+			{ id: 'P3-07', name: 'padding单值', html: '<p style="padding:10px;background:#ddd">padded text</p>', expected: '四边10px' },
+			{ id: 'P3-08', name: 'padding双值', html: '<p style="padding:10px 20px;background:#ddd">padded text</p>', expected: '上下10 左右20' },
+			{ id: 'P3-09', name: 'padding四值', html: '<p style="padding:5px 10px 15px 20px;background:#ddd">padded text</p>', expected: '上5右10下15左20' },
+			{ id: 'P3-10', name: '圆角', html: '<p style="border-radius:10px;background:#ddd;padding:10px">rounded</p>', expected: '圆角背景' },
+			{ id: 'P3-11', name: '绝对定位', html: '<div style="position:relative;height:100px;background:#eee"><span style="position:absolute;top:10px;left:10px">abs</span></div>', expected: '绝对定位显示' },
+			{ id: 'P3-12', name: '样式继承', html: '<div style="color:red"><p>inherited color</p></div>', expected: 'p继承红色' },
+		] as TestCase[]
+	} as TestGroup,
+
+	// P4 - 边界与异常
+	{
+		id: 'P4',
+		name: 'P4 - 边界与异常',
+		cases: [
+			{ id: 'P4-01', name: '空内容', html: '<p></p><p>after empty</p>', expected: '不崩溃，空行' },
+			{ id: 'P4-02', name: '未闭合标签', html: '<p>unclosed text', expected: '正常显示或容错' },
+			{ id: 'P4-03', name: '错误嵌套', html: '<b><i>wrong nesting</b></i>', expected: '不崩溃' },
+			{ id: 'P4-04', name: '未知标签', html: '<unknown>unknown tag</unknown>', expected: '作为文本显示' },
+			{ id: 'P4-05', name: '超长文本', html: '<p>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>', expected: '正常渲染' },
+			{ id: 'P4-06', name: '特殊字符', html: '<p>中文 English 123 emoji</p>', expected: '正确显示' },
+			{ id: 'P4-07', name: '多个&符号', html: '<p>A & B & C & D</p>', expected: '显示 A & B & C & D' },
+			{ id: 'P4-08', name: '空属性', html: '<p style="">empty style</p>', expected: '正常显示' },
+			{ id: 'P4-09', name: '无效样式', html: '<p style="color:invalid">invalid color</p>', expected: '使用默认样式' },
+			{ id: 'P4-10', name: '混合内容', html: '<p>中文 English 123 ABC abc</p>', expected: '正确显示' },
+		] as TestCase[]
+	} as TestGroup,
+
+	// P5 - 图片测试（网络图片）
+	{
+		id: 'P5',
+		name: 'P5 - 图片测试',
+		cases: [
+			{ id: 'P5-01', name: '图片基础', html: '<p><img src="' + TEST_IMAGE_URL + '"></p>', expected: '显示图片' },
+			{ id: 'P5-02', name: '图片指定宽度', html: '<p><img src="' + TEST_IMAGE_URL + '" width="100"></p>', expected: '100px宽' },
+			{ id: 'P5-03', name: '图片指定高度', html: '<p><img src="' + TEST_IMAGE_URL + '" height="50"></p>', expected: '50px高' },
+			{ id: 'P5-04', name: '图片指定宽高', html: '<p><img src="' + TEST_IMAGE_URL + '" width="120" height="80"></p>', expected: '120x80' },
+			{ id: 'P5-05', name: '图片与文字混排', html: '<p>文字前<img src="' + TEST_IMAGE_SMALL + '" width="30">文字后</p>', expected: '图片在文字中间' },
+			{ id: 'P5-06', name: '多张图片', html: '<p><img src="' + TEST_IMAGE_URL + '" width="40"><img src="' + TEST_IMAGE_SMALL + '" width="40"></p>', expected: '多个图片并排' },
+			{ id: 'P5-07', name: '图片alt属性', html: '<p><img src="https://not-exist.example.com/img.png" alt="图片不存在"></p>', expected: '加载失败时显示alt' },
+			{ id: 'P5-08', name: '图片样式宽度', html: '<p><img src="' + TEST_IMAGE_URL + '" style="width:80px"></p>', expected: '通过style设置宽度' },
+			{ id: 'P5-09', name: '图片在div中', html: '<div style="background:#eee;padding:10px"><img src="' + TEST_IMAGE_URL + '" width="60"></div>', expected: '图片在灰色背景div中' },
+			{ id: 'P5-10', name: '图片链接', html: '<a href="http://example.com"><img src="' + TEST_IMAGE_URL + '" width="50"></a>', expected: '可点击的图片链接' },
+		] as TestCase[]
+	} as TestGroup,
+
+	// P6 - 不支持的HTML标签
+	{
+		id: 'P6',
+		name: 'P6 - 不支持的HTML标签',
+		cases: [
+			{ id: 'P6-01', name: 'ol有序列表', html: '<ol><li>First</li><li>Second</li></ol>', expected: '不崩溃，可能无序号' },
+			{ id: 'P6-02', name: 'span', html: '<p><span>span text</span></p>', expected: '文本正常显示' },
+			{ id: 'P6-03', name: 'script标签', html: '<script>script tag</script><p>safe</p>', expected: '必须忽略，不执行' },
+			{ id: 'P6-04', name: 'style标签', html: '<style>style tag</style><p>not red</p>', expected: '必须忽略' },
+		] as TestCase[]
+	} as TestGroup,
+
+	// P7 - 不支持的CSS
+	{
+		id: 'P7',
+		name: 'P7 - 不支持的CSS',
+		cases: [
+			{ id: 'P7-01', name: 'margin', html: '<p style="margin:20px;background:#ddd">margin text</p>', expected: '可能无效果' },
+			{ id: 'P7-02', name: 'border', html: '<p style="border:1px solid red">border text</p>', expected: '可能无边框' },
+			{ id: 'P7-03', name: 'display none', html: '<p style="display:none">hidden</p><p>visible</p>', expected: '可能仍显示' },
+		] as TestCase[]
+	} as TestGroup,
+] as TestGroup[]
+
+// ========== 辅助函数 ==========
+
+/**
+ * 获取所有用例ID列表
+ */
+export function getAllCaseIds() : string[] {
+	const ids : string[] = []
+	for (let i = 0; i < TEST_GROUPS.length; i++) {
+		const group = TEST_GROUPS[i]
+		for (let j = 0; j < group.cases.length; j++) {
+			ids.push(group.cases[j].id)
+		}
+	}
+	return ids
+}
+
+/**
+ * 根据ID查找用例
+ */
+export function findCaseById(caseId : string) : TestCase | null {
+	for (let i = 0; i < TEST_GROUPS.length; i++) {
+		const group = TEST_GROUPS[i]
+		for (let j = 0; j < group.cases.length; j++) {
+			if (group.cases[j].id == caseId) {
+				return group.cases[j]
+			}
+		}
+	}
+	return null
+}
+
+/**
+ * 获取用例的组索引和用例索引
+ * 返回 [groupIndex, caseIndex]，未找到返回 [-1, -1]
+ */
+export function findCaseIndex(caseId : string) : number[] {
+	for (let gi = 0; gi < TEST_GROUPS.length; gi++) {
+		const group = TEST_GROUPS[gi]
+		for (let ci = 0; ci < group.cases.length; ci++) {
+			if (group.cases[ci].id == caseId) {
+				return [gi, ci]
+			}
+		}
+	}
+	return [-1, -1]
+}
+
+/**
+ * 获取总用例数量
+ */
+export function getTotalCaseCount() : number {
+	let count = 0
+	for (let i = 0; i < TEST_GROUPS.length; i++) {
+		count += TEST_GROUPS[i].cases.length
+	}
+	return count
+}
