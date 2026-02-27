@@ -1,0 +1,150 @@
+import {MarkdownToken} from '@/uni_modules/uni-cmark'
+class TreeToList {
+    br = "\n" as string
+    // 哪些类型不需要处理
+    noProcessTypes = ['code_block', 'table'] as string[]
+    uicon(code: string) {
+        // #ifdef APP
+        // 将字符串分割成 Unicode 编码的字符
+        let codes = code.split('%u');
+        // 遍历字符数组
+        let chars = codes.map(code => {
+            // 转换为十六进制
+            let hexCode = parseInt(code, 16);
+            // 将 UTF-16 编码转换为字符
+            return String.fromCharCode(hexCode);
+        });
+        // 将字符数组转换成字符串
+        return chars.join('');
+        // #endif
+        // #ifndef APP
+        return unescape(`%u${code}`) as string
+        // #endif
+    }
+    // 获取叶子节点
+    getLeafNodes(items: MarkdownToken[], parent: MarkdownToken): MarkdownToken[] {
+        const list: MarkdownToken[] = []
+        items.forEach((item: MarkdownToken, index: number) => {
+            if (this.noProcessTypes.includes(item.type!) ) {
+                list.push(item)
+                return
+            }
+            // 设置节点属性
+            item.start = parent.start ?? 1
+            item.depth = parent.depth ?? 0
+            item.deepIndex = (parent.deepIndex ?? 0) + 1
+            item.ordered = parent.ordered ?? 0
+            if (item.href == null) item.href = parent.href ?? ''
+            if (item.checked == 0) item.checked = parent.checked ?? 0
+            if (item.uniqueId == null) item.uniqueId = parent.uniqueId + "_" + index
+            if (parent.type == 'list'){
+                item.orderedIndex = index
+            } else {
+                item.orderedIndex =  parent.orderedIndex ?? 0
+            }
+    
+            // 设置 class 默认值为 type
+            item.className = item.type
+            // 继承父节点的 class
+            if (parent.className != null) {
+                parent.className.split(' ').forEach((classItem: string) => {
+                    if (item.className == null) {
+                        item.className = classItem
+                    } else if (!item.className.includes(classItem)) {
+                        item.className = item.className + ' ' + classItem
+                    }
+                })
+            }
+            // 设置深度
+            if (item.depth > 0) {
+                item.className = (item.className == null ? '' : item.className + ' ') + 'depth-' + item.depth
+            }
+            
+            if (parent.type == 'list'){
+                // 插入换行
+                const newItem: MarkdownToken = {
+                    type: 'text',
+                    className: 'list-item-br',
+                    text: "\n"
+                }
+                list.push(newItem)
+                // 插入 list item 缩进的空格
+                if (item.deepIndex > 0) {
+                    // 根据 orderedIndex 的值，插入对应的空格
+                    const newItem: MarkdownToken = {
+                        type: 'text',
+                        text: " ".repeat(item.deepIndex  * 2)
+                    }			
+                    list.push(newItem)
+                }
+                if (item.type == 'tasklist') {
+                    const newItem: MarkdownToken = {
+                        type: 'text',
+                        text: (item.checked == 1 ? this.uicon('e607') : this.uicon('e608') )+ ' ',
+                        className: 'uni-ai-icon list-item-index task' + (item.checked == 1 ? ' checked' : '')
+                    }			
+                    list.push(newItem)
+                } else if (item.ordered == 0) {
+                    const newItem: MarkdownToken = {
+                        type: 'text',
+                        text: this.uicon("ec1e"),
+                        className: 'uni-ai-icon list-item-index unordered'
+                    }
+                    list.push(newItem)
+                }
+                // 插入索引
+                if (item.ordered == 1) {
+                    const newItem: MarkdownToken = {
+                        type: 'text',
+                        text: item.orderedIndex + 1 + '. ',
+                        className: 'list-item-index'
+                    }
+                    list.push(newItem)
+                }
+            }
+            // 拿到子节点
+            const nextItems = item.tokens != null && (item.tokens as MarkdownToken[]).length > 0 ? item.tokens : item.items != null && item.items.length > 0 ? item.items : []
+            if (nextItems.length > 0) {
+                let nextList = this.getLeafNodes(nextItems, item)
+                list.push(...nextList)
+            } else {
+                list.push(item)
+            }
+        });
+        return list
+    }
+    markTreeToList(listToken: MarkdownToken): MarkdownToken[][] {
+        const type = listToken.type!
+        let lists: MarkdownToken[];
+        if (this.noProcessTypes.includes(type)) {
+            return [[listToken]]
+        } else {
+            lists = this.getLeafNodes(listToken.items?.slice() ?? listToken.tokens?.slice() ?? [listToken],listToken)
+        }
+        // 为了更好的性能，将连续的 text 合并，定义假设条件：所有连续的项类型是一致的，不同类型需要新建一项存放
+        const tokenListArr: MarkdownToken[][] = []
+        const listsLength = lists.length
+        for (let i = 0; i < listsLength; i++) {
+            const item = lists[i]
+            const prevItemType: string | null = i > 0 ? lists[i - 1].type : null
+            // 当前项和前一项的类型不一致，则将当前元素添加到新的数组中
+            if (
+                (item.type != prevItemType || (item.type == null && prevItemType == null))
+                && !(prevItemType == 'code' && item.type == 'text')
+                && !(prevItemType == 'text' && item.type == 'code')
+            ) {
+                tokenListArr.push([])
+            }
+            const lastItem = tokenListArr[tokenListArr.length - 1]!
+            // console.log('lastItem', lastItem, item, item.type, prevItemType)
+            // 每一项的第一项不能是换行
+            if (lastItem.length != 0 || item.className != 'list-item-br') {
+                lastItem.push(item)
+            }
+        }
+        // console.log('tokenListArr', type, tokenListArr)
+        return tokenListArr
+    }
+}
+
+export default new TreeToList()

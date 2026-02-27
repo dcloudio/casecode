@@ -1,0 +1,9 @@
+{
+  "deploymentTarget": "13",
+  "validArchitectures": [
+    "arm64"
+  ],
+  "frameworks": [
+    "Frameworks/scopeparser4ios.xcframework"
+  ]
+}

@@ -1,0 +1,91 @@
+<!-- 网络链接内容展示页（uni-id-pages-x中用于展示隐私政策协议内容） -->
+<template>
+	<view class="nav-bar">
+		<view class="nav-bar-left">
+			<uni-icons type="left" size="20" color="#000" @click="back"></uni-icons>
+		</view>
+		<text class="nav-bar-title">{{title}}</text>
+		<view class="nav-bar-right">
+			<!-- #ifdef APP -->
+			<uni-icons type="refresh" size="20" color="#000" @click="refresh"></uni-icons>
+			<!-- #endif -->
+		</view>
+	</view>
+	<web-view class="web-view" v-if="url.length != 0" @load="webviewLoad" @error="webviewError" :src="url" id="webview"></web-view>
+</template>
+
+<script lang="uts" setup>
+	const url = ref<string>("")
+	const title = ref<string>("")
+	
+	onLoad((param) => {
+		const urlParam = param["url"] as string;
+		title.value = (param["title"] ?? urlParam) as string;
+		if (urlParam.substring(0, 4) != 'http') {
+			uni.showModal({
+				title: "错误",
+				content: '不是一个有效的网站链接,' + '"' + urlParam + '"',
+				showCancel: false,
+				confirmText: "知道了",
+				complete: () => {
+					uni.navigateBack()
+				}
+			});
+			title.value = "页面路径错误"
+		} else {
+			url.value = urlParam;
+		}
+		if (title.value.length != 0) {
+			uni.setNavigationBarTitle({ title: title.value });
+		}
+	})
+	
+	const webviewLoad = (event: UniWebViewLoadEvent) => {
+	}
+	
+	const webviewError = (event: UniWebViewErrorEvent) => {
+		console.log('webviewError', event);
+	}
+	
+	const back = () => {
+		uni.navigateBack()
+	}
+	
+	// #ifdef APP
+	const refresh = () => {
+		uni.createWebviewContext('webview')?.reload()
+	}
+	// #endif
+</script>
+<style lang="scss">
+	/* 蒸汽模式：仅单层 class */
+	.nav-bar {
+		flex-direction: row;
+		padding: 10px;
+		/* #ifndef WEB */
+		padding-top: env(safe-area-inset-top);
+		/* #endif */
+		justify-content: space-between;
+		border-bottom: 1px solid #ccc;
+	}
+
+	.nav-bar-left,
+	.nav-bar-right {
+		width: 25px;
+		align-items: center;
+	}
+
+	.nav-bar-title {
+		width: 50%;
+		text-overflow: ellipsis;
+		text-align: center;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+
+	.web-view {
+		width: 750rpx;
+		flex: 1;
+		height: 100%;
+	}
+</style>

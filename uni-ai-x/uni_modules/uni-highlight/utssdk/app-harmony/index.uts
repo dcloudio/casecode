@@ -1,0 +1,154 @@
+import { addGrammar, resetStackHandle, destroyStackHandle, tokenizeLine } from 'scopeparser'
+import { HighLighterOptions, HighLighter, CreateHighLighterRes, ILineTokens, IToken } from '../interface.uts'
+
+
+
+export class lineTokens {
+	constructor(readonly tokens : IToken[]) { }
+}
+
+
+interface KtToken {
+	start : number; // byte offset
+	end : number;   // byte offset
+	token : string;
+}
+
+
+function codePointToUtf8Bytes(cp : number) : number {
+	if (cp <= 0x7F) return 1;
+	if (cp <= 0x7FF) return 2;
+	if (cp <= 0xFFFF) return 3;
+	return 4;
+}
+
+function mapByteOffsetsToCharOffsets(text : string, tokens : KtToken[]) : KtToken[] {
+	const byteToChar : Map<number, number> = new Map();
+	let byteIndex = 0;
+	let charIndex = 0;
+
+	for (let i = 0; i < text.length; i++) {
+		const codePoint = text.codePointAt(i);
+		if (codePoint === undefined || codePoint === null) {
+			continue;
+		}
+
+		const utf8Length = codePointToUtf8Bytes(codePoint);
+		for (let j = 0; j < utf8Length; j++) {
+			byteToChar.set(byteIndex, charIndex);
+			byteIndex++;
+		}
+
+		// 如果是代理对（surrogate pair），需要跳过两个 code units
+		if (codePoint > 0xFFFF) {
+			i++; // 跳过低位 surrogate
+		}
+
+		charIndex++;
+	}
+
+	return tokens.map((tok) : KtToken => {
+		const startChar = byteToChar.get(tok.start) ?? 0;
+		const endChar = (byteToChar.get(tok.end - 1) ?? (charIndex - 1)) + 1;
+
+		return {
+			start: startChar,
+			end: endChar,
+			token: tok.token
+		};
+	});
+}
+
+export async function createHighLighter(options : HighLighterOptions) : Promise<CreateHighLighterRes> {
+	const languages = options.languages;
+	const langMap : Map<string, string> = new Map();
+	// const grammar = await new MainActivity()
+	UTSJSONObject.keys(languages).forEach(key => {
+		try {
+			let jsonStr = JSON.stringify(languages[key])
+			langMap.set(key, jsonStr)
+		} catch {
+
+		}
+	})
+
+	let fns : CreateHighLighterRes = {
+
+		async tokenizeFullText(langId : string, fullCodeText : string) : Promise<ILineTokens[]> {
+			let tmlStr = langMap.get(langId)
+			if (tmlStr === null) return []
+			let handle = addGrammar(langId, tmlStr)
+			const text = fullCodeText.split(/\r\n|\r|\n/);
+			let res : ILineTokens[] = []
+			for (let i = 0; i < text.length; i++) {
+				const line = text[i] + "\n";
+				const lineTokens : string = await tokenizeLine(handle, langId, line);
+				
+				if (lineTokens === null) return []
+				const tokens : IToken[] = []
+				// console.log(line, '----', lineTokens)
+
+				let lineTokensJson : KtToken[] | null = JSON.parse<KtToken[]>(lineTokens)
+				if (lineTokensJson !== null) {
+					let nLineTokens = mapByteOffsetsToCharOffsets(line, lineTokensJson)
+					nLineTokens?.forEach((item : KtToken) => {
+						const iToken = new IToken(item.start, item.end, item.token.split(" "))
+						tokens.push(iToken)
+
+					})
+					let nTokens : ILineTokens = new ILineTokens(tokens)
+					res.push(nTokens)
+				}
+			}
+
+			resetStackHandle(handle)
+			return res
+		},
+		async tokenizeLine(langId : string, lineText : string, state : any) : Promise<ILineTokens | null> {
+			let tmlStr = langMap.get(langId)
+			if (tmlStr === null) return null
+			let handle = addGrammar(langId, tmlStr)
+			let res : ILineTokens | null = null
+
+			const lineTokens : string = await tokenizeLine(handle, langId, lineText);
+
+			if (lineTokens === null) return null
+
+			const tokens : IToken[] = []
+
+			let lineTokensJson : KtToken[] | null = JSON.parse<KtToken[]>(lineTokens)
+
+			if (lineTokensJson !== null) {
+				let nLineTokens = mapByteOffsetsToCharOffsets(lineText, lineTokensJson)
+				nLineTokens?.forEach((item : KtToken) => {
+					// console.log(item.start)
+					const iToken = new IToken(item.start, item.end, item.token.split(" "))
+					tokens.push(iToken)
+
+				})
+				let nTokens : ILineTokens = new ILineTokens(tokens)
+				res = nTokens
+			}
+
+			return res
+		}
+
+	}
+
+	return fns
+
+}
+
+
+export class CreateHighLighter {
+	uniCodeHighlighter: Promise<CreateHighLighterRes>
+	constructor(options : HighLighterOptions) {
+		this.uniCodeHighlighter = createHighLighter(options)
+	}
+	async tokenizeFullText(langId : string, fullCodeText : string) : Promise<ILineTokens[]>{
+		return (await this.uniCodeHighlighter).tokenizeFullText(langId, fullCodeText)
+	}
+	async tokenizeLine(langId : string, lineText : string, state : any) : Promise<ILineTokens | null> {
+		return (await this.uniCodeHighlighter).tokenizeLine(langId, lineText, state)
+	}
+}

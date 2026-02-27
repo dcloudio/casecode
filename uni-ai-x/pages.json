@@ -1,0 +1,40 @@
+{
+	"pages": [
+		// {
+		// 	"path" : "pages/test-cmark/test-cmark",
+		// 	"style" : 
+		// 	{
+		// 		"navigationBarTitleText" : "uni-cmark 测试"
+		// 	}
+		// },
+		{
+			"path" : "uni_modules/uni-ai-x/pages/index/index",
+			"style" : 
+			{
+				"navigationStyle" : "custom",
+				"navigationBarTitleText" : "uni-ai x"
+			}
+		},
+		{
+			"path" : "uni_modules/uni-ai-x/pages/common/webview/webview",
+			"style" : 
+			{
+				"navigationStyle" : "custom"
+			}
+		},
+		{
+			"path" : "uni_modules/uni-ai-x/pages/select-text/select-text",
+			"style" : 
+			{
+				"navigationBarTitleText" : "选择文本"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app x",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {}
+}
