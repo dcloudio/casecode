@@ -1,0 +1,125 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["appid", "platform", "version", "url", "contents", "type"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "记录id,自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"trim": "both",
+			"description": "应用的AppID",
+			"label": "AppID",
+			"componentForEdit": {
+				"name": "uni-easyinput",
+				"props": {
+					"disabled": true
+				}
+			}
+		},
+		"name": {
+			"bsonType": "string",
+			"trim": "both",
+			"description": "应用名称",
+			"label": "应用名称",
+			"componentForEdit": {
+				"name": "uni-easyinput",
+				"props": {
+					"disabled": true
+				}
+			}
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "更新标题",
+			"label": "更新标题"
+		},
+		"contents": {
+			"bsonType": "string",
+			"description": "更新内容",
+			"label": "更新内容",
+			"componentForEdit": {
+				"name": "textarea"
+			},
+			"componentForShow": {
+				"name": "textarea",
+				"props": {
+					"disabled": true
+				}
+			}
+		},
+		"platform": {
+			"bsonType": "array",
+			"enum": [{
+				"value": "Android",
+				"text": "安卓"
+			}, {
+				"value": "iOS",
+				"text": "苹果"
+			}],
+			"description": "更新平台，Android || iOS || [Android, iOS]",
+			"label": "平台"
+		},
+		"type": {
+			"bsonType": "string",
+			"enum": [{
+				"value": "native_app",
+				"text": "原生App安装包"
+			}, {
+				"value": "wgt",
+				"text": "Wgt资源包"
+			}],
+			"description": "安装包类型，native_app || wgt",
+			"label": "安装包类型"
+		},
+		"version": {
+			"bsonType": "string",
+			"description": "当前包版本号，必须大于当前线上发行版本号",
+			"label": "版本号"
+		},
+		"min_uni_version": {
+			"bsonType": "string",
+			"description": "原生App最低版本",
+			"label": "原生App最低版本"
+		},
+		"url": {
+			"bsonType": "string",
+			"description": "可下载安装包地址",
+			"label": "包地址"
+		},
+		"stable_publish": {
+			"bsonType": "bool",
+			"description": "是否上线发行",
+			"label": "上线发行"
+		},
+		"is_silently": {
+			"bsonType": "bool",
+			"description": "是否静默更新",
+			"label": "静默更新",
+			"defaultValue": false
+		},
+		"is_mandatory": {
+			"bsonType": "bool",
+			"description": "是否强制更新",
+			"label": "强制更新",
+			"defaultValue": false
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"label": "上传时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			},
+			"componentForEdit": {
+				"name": "uni-dateformat"
+			}
+		}
+	}
+}
