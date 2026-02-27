@@ -1,0 +1,38 @@
+[
+	{
+		"IndexName": "device_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{
+					"Name": "device_id",
+					"Direction": "1"
+				}
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "oaid",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{
+					"Name": "oaid",
+					"Direction": "1"
+				}
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "imei",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{
+					"Name": "imei",
+					"Direction": "1"
+				}
+			],
+			"MgoIsUnique": false
+		}
+	}
+]

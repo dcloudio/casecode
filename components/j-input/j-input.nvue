@@ -1,0 +1,130 @@
+<template>
+	<view>
+		<view class="input-box">
+			<uni-icons :type="leftIcon" size="30" :color="leftIconColor"></uni-icons>
+			<view class="right-box">
+				<text v-if="c_value" class="tip-title">{{subTitle}}</text>
+				<view class="input-content">
+					<input v-model="c_value" class="input" :style="{'height':changeHeight}"
+						:type="type" :maxlength="maxlength"
+						:placeholder="placeholder?placeholder:subTitle"/>
+					<uni-icons v-if="c_value&&clearIcon" @click="clearc_value" type="clear" size="18" color="#C0C0C0"></uni-icons>
+				</view>
+			</view>
+			<uni-icons v-if="rightIcon" type="arrowright" size="20" color="#C0C0C0"></uni-icons>
+		</view>
+	</view>
+</template>
+<script>
+	import uniIcons from "@/components/uni-icons/uni-icons.vue"
+	export default {
+	    components: {uniIcons},
+		mounted() {
+		},
+		watch: {
+			c_value(c_value, oldValue) {
+				console.log(c_value);
+				this.$emit('update:value',c_value)
+			},
+			value:{
+				handler(value){
+					this.c_value = value
+				},
+				immediate:true
+			}
+		},
+		data() {
+			return {
+				c_value:"c_value"
+			};
+		},
+		props: {
+			leftIcon: {
+				type: String,
+				default: "contact"
+			},
+			leftIconColor: {
+				type: String,
+				default: "#999999"
+			},
+			rightIcon: {
+				type: Boolean,
+				default(){
+					return false
+				}
+			},
+			subTitle: {
+				type: String,
+				default(){
+					return "小标题"
+				}
+			},
+			value: {
+				default(){
+					return ""
+				}
+			},
+			type: {
+				type: String,
+				default(){
+					return "number"
+				}
+			},
+			placeholder: {
+				type: String,
+				default(){
+					return ""
+				}
+			},
+			maxlength: {
+				type: String,
+				default(){
+					return "32"
+				}
+			},
+			clearIcon: {
+				type: Boolean,
+				default(){
+					return true
+				}
+			},
+		},
+		computed:{
+			changeHeight(){
+				return this.c_value? "30px":"50px"
+			}
+		},
+		methods:{
+			clearc_value(){
+				this.c_value = ""
+			}
+		}
+	}
+</script>
+<style>
+.input-box{
+	width:750rpx;
+	padding:20rpx;
+	flex-direction: row;
+	align-items: center;
+	background-color:#FFFFFF;
+}
+.right-box{
+	width:600rpx;
+	padding-left:20rpx;
+	margin-right:10rpx;
+}
+.tip-title{
+	font-size:26rpx;
+	color:#999999;
+}
+.input-content{
+	flex-direction: row;
+	align-items: center;
+}
+.input{
+	flex:1;
+	font-size:30rpx;
+}
+
+</style>

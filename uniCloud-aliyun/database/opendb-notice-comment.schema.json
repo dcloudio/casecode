@@ -1,0 +1,47 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read":  "doc.state == 1 || auth.uid == doc.user_id || 'AUDITOR' in auth.role",
+		"create": "auth.uid != null",
+		"update": "(auth.uid == doc.user_id && 'up_comment' in action) || 'AUDITOR' in auth.role",
+		"delete": "auth.uid == doc.user_id"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+    "notice_id": {
+    	"description": "通知的id",
+      "foreignKey": "opendb-notice._id"
+    },
+		"text": {
+			"bsonType": "string",
+			"validateFunction": "word_filter"
+		},
+		"user_id": {
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
+		"ip": {
+			"forceDefaultValue": {
+				"$env": "clientIP"
+			}
+		},
+		"create_time": {
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"state": {
+			"bsonType": "int",
+			"defaultValue":0,
+			"permission":{
+				"write":"'AUDITOR' in auth.role"
+			}
+		}
+	}
+}

@@ -1,0 +1,15 @@
+{
+    "name": "uni-cloud-s2s",
+    "version": "1.0.1",
+    "description": "",
+    "keywords": [],
+    "author": "DCloud",
+    "main": "index.js",
+    "dependencies": {
+        "uni-config-center": "file:..\/..\/..\/..\/..\/uni-config-center\/uniCloud\/cloudfunctions\/common\/uni-config-center"
+    },
+    "origin-plugin-dev-name": "uni-cloud-s2s",
+    "origin-plugin-version": "1.0.1",
+    "plugin-dev-name": "uni-cloud-s2s",
+    "plugin-version": "1.0.1"
+}
