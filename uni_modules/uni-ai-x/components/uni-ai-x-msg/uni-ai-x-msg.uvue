@@ -1,0 +1,203 @@
+<template>
+	<view class="msg-root" :class="[`ui-theme-${uiTheme}`]">
+		<image class="msg-root-avatar" src="@/uni_modules/uni-ai-x/static/uni-chat-logo.png"/>
+		<text v-if="msg.error_msg != null" class="msg-root-error-msg">{{msg.error_msg}}</text>
+		<template v-else>
+			<view class="msg-root-think-content" v-if="msg.thinkContent != null && msg.thinkContent!.length > 0">
+				<view class="msg-root-think-content-header" @click="changeThinkContent">
+					<text class="msg-root-think-content-title">深度思考 &nbsp;</text>
+					<uni-icons :type="hideThinkContent ? 'down' : 'up'" size="14" color="#888"></uni-icons>
+				</view>
+				<view class="msg-root-think-content-text-box" :class="hideThinkContent ? 'msg-root-think-content-text-box-hide' : ''">
+					<text class="msg-root-think-content-text">{{msg.thinkContent}}</text>
+				</view>
+			</view>
+			<template v-for="(item, index) in msg.markdownElList" :key="index">
+				<view v-if="item.type == 'block_quote'" class="msg-root-block-quote-box">
+					<uni-ai-text-md v-for="(blockQuote, i) in item.datasList" :key="i" :datas="blockQuote" :itemType="item.type"/>
+				</view>
+				<template v-else v-for="(datas, i) in item.datasList" :key="i">
+					<template v-for="(data, k) in datas" :key="k" v-if="['table', 'code_block', 'math', 'thematic_break', 'block_quote'].includes(item.type)">
+						<uni-ai-msg-table class="msg-root-table-box" v-if="item.type == 'table'" :table-node="data" />
+						<uni-ai-msg-code class="msg-root-code-box" v-else-if="item.type == 'code_block'" :codeTokens="data.codeTokens ?? []"  :codeText="data.text" :language="data.lang" :href="data.href" />
+						<katex-el v-else-if="item.type == 'math'" :html="data.html" :href="data.href" :width="data.width" :height="data.height" />
+						<view v-else-if="item.type == 'thematic_break'" class="msg-root-hr-box"></view>
+					</template>
+					<uni-ai-text-md v-else :datas="datas" :itemType="item.type" :key="item.uniqueId"/>
+				</template>
+		   </template>
+		   <template v-if="isLastAiMsg && msg.body == ''">
+				<text v-if="state == 'stop'" class="msg-root-stop-text">回答被终止</text>
+				<text v-if="state == 'none'" class="msg-root-need-try">错误：未回复</text>
+				<uni-rotate-icon v-if="state == 'processing'" class="msg-root-loging-icon" />
+			</template>
+		</template>
+		<msg-tool-bar v-if="!isLastAiMsg || state == 'stop' || (state != 'processing' && msg.rendered)" :msg="msg" />
+	</view>
+</template>
+
+<script lang="uts" setup>
+	import {uniAi, MsgItem, uiTheme} from '@/uni_modules/uni-ai-x/sdk'
+	import { MarkdownToken} from '@/uni_modules/uni-cmark';
+	import { MarkdownToken as IToken } from '@/uni_modules/uni-cmark'
+	import msgToolBar from '@/uni_modules/uni-ai-x/components/msg-tool-bar.uvue'
+	
+	type UniAiXMsgProps = {
+		msg: MsgItem
+	}
+	
+	const props = defineProps<UniAiXMsgProps>()
+	
+	const msg = ref<MsgItem>(props.msg as MsgItem)
+	
+	const emit = defineEmits<{
+		'changeThinkContent': [hideThinkContent: boolean]
+	}>()
+	
+	const runTime = ref<number>(0)
+	const parseLock = ref<boolean>(false)
+	const lastParseLineCodeText = ref<string>('')
+	const hideThinkContent = ref<boolean>(false)
+	const readyParseMdIndex = ref<number>(0)
+	const parseMdIndex = ref<number>(0)
+	
+	const state = computed<string>(() => {
+		return uniAi.currentChat!.state
+	})
+	
+	const isLastAiMsg = computed<boolean>(() => {
+		return uniAi.lastAiMsg?._id == msg.value._id
+	})
+	
+	watch((): string => {
+		return msg.value.body
+	}, async (msgBody: string) => {
+		if (msgBody.length == 0) {
+			readyParseMdIndex.value = 0
+			parseMdIndex.value = 0
+			parseLock.value = false
+		}
+		if (state.value == 'processing') {
+		} else {
+		}
+	})
+	
+	watch(state, (state: string) => {
+		if (state == 'completed' || state == 'stop') {
+		}
+	})
+	
+	const changeThinkContent = () => {
+		hideThinkContent.value = !hideThinkContent.value
+		emit('changeThinkContent', hideThinkContent.value)
+	}
+</script>
+
+<style lang="scss">
+@import '@/uni_modules/uni-ai-x/static/css/variables.scss';
+/* #ifdef WEB */
+.msg-root * {
+	// 所有文字可以被选中
+	user-select: text;
+}
+/* #endif */
+/* 蒸汽模式：仅单层 class */
+.msg-root {
+	flex-direction: row;
+	flex-wrap: wrap;
+	background-color: var(--bg-primary);
+	padding: 0 45px;
+	min-height: 45px;
+}
+
+.msg-root-avatar {
+	position: absolute;
+	top: 0;
+	left: 10px;
+	width: 25px;
+	height: 25px;
+	padding: 3px;
+	border-radius: 50px;
+	border: 1px solid var(--border-secondary);
+}
+
+.msg-root-think-content-header {
+	flex-direction: row;
+}
+
+.msg-root-think-content-title {
+	color: var(--text-tertiary);
+}
+
+.msg-root-think-content-text-box {
+	margin-top: 10px;
+	border-left: 3px solid var(--bg-tertiary);
+	padding-left: 10px;
+	width: 100%;
+	margin: 5px 0;
+}
+
+.msg-root-think-content-text-box-hide {
+	margin-top: 0;
+	height: 0;
+}
+
+.msg-root-think-content-text {
+	text-align: left;
+	color: var(--text-tertiary);
+}
+
+.msg-root-error-msg,
+.msg-root-stop-text,
+.msg-root-need-try {
+	text-align: left;
+	width: 100%;
+}
+
+.msg-root-error-msg {
+	color: var(--error);
+	font-size: 14px;
+	line-height: 26px;
+}
+
+.msg-root-loging-icon {
+	margin-top: 10px;
+	width: 16px;
+	height: 16px;
+}
+
+.msg-root-stop-text {
+	color: var(--text-disabled);
+	font-size: 14px;
+	padding: 10px 0;
+}
+
+.msg-root-need-try {
+	color: var(--error);
+	font-size: 14px;
+	padding: 10px;
+}
+
+.msg-root-table-box,
+.msg-root-code-box,
+.msg-root-hr-box,
+.msg-root-think-content,
+.msg-root-block-quote-box {
+	width: 100%;
+	margin: 5px 0;
+}
+
+.msg-root-hr-box {
+	height: 1px;
+	background: var(--border-primary);
+	margin: 10px 0;
+}
+
+.msg-root-block-quote-box {
+	border-left: 4px solid var(--border-primary);
+	width: 100%;
+	padding: 5px;
+	background: var(--bg-secondary);
+	margin-bottom: 10px;
+}
+</style>

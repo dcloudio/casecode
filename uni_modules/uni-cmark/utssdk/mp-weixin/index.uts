@@ -1,0 +1,75 @@
+// 导入类型定义
+import type { MarkdownToken, ParseMdRes } from '../interface.uts';
+
+// 重新导出类型供外部使用
+export * from '../interface.uts'
+
+// 导入WASM加载器
+import cmarkLoader from './cmark-gfm-loader.js';
+
+// 全局模块变量
+let globalModule: any = null;
+let isInitialized: boolean = false;
+let isInitializing: boolean = false;
+
+// 主函数：markdown 转 JSON - 返回解析后的对象数组
+export function md2json(markdown: string): ParseMdRes {
+  try {
+    // 检查模块是否已初始化
+    if (!isInitialized || !globalModule) {
+      throw new Error('WebAssembly module not initialized. Call initCmark() first.');
+    }
+
+    // 调用WASM加载器的md2json函数
+    const result = cmarkLoader.md2json(markdown);
+    
+    const parseMdRes: ParseMdRes = {
+      data: result.data,
+      errorMsg: result.errorMsg || ''
+    };
+    
+    return parseMdRes;
+  } catch (error) {
+    console.error('Error in md2json:', error);
+    return {
+      data: [],
+      errorMsg: error instanceof Error ? error.message : 'Unknown error'
+    };
+  }
+}
+
+// 初始化函数 - 加载并初始化 WebAssembly 模块
+export async function initCmark(): Promise<void> {
+  // 如果已经初始化，直接返回
+  if (isInitialized) {
+    return;
+  }
+  
+  // 如果正在初始化，等待完成
+  if (isInitializing) {
+    console.log('WebAssembly module is initializing, waiting...');
+    // 等待初始化完成
+    while (isInitializing && !isInitialized) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    return;
+  }
+  
+  try {
+    isInitializing = true;
+    // console.log('Loading CmarkGfm WebAssembly module for mp-weixin...');
+
+    // 加载WASM模块
+    globalModule = await cmarkLoader.loadWASM({});
+    
+    // console.log('CmarkGfm WebAssembly module initialized successfully for mp-weixin');
+    isInitialized = true;
+  } catch (error) {
+    console.error('Error initializing CmarkGfm WebAssembly module:', error);
+    globalModule = null;
+    isInitialized = false;
+    throw error;
+  } finally {
+    isInitializing = false;
+  }
+}

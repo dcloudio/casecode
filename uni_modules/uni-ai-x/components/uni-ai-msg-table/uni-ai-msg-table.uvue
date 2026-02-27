@@ -1,0 +1,119 @@
+<template>
+	<view class="uni-ai-msg-table" :class="[`ui-theme-${uiTheme}`]">
+		<scroll-view class="uni-ai-msg-table-table-box" direction="horizontal" :show-scrollbar="isHorizontalScroll"
+			:style="{width: tableWrapperWidth + 'px'}">
+			<view v-for="(row, rowIndex) in tableData" :key="rowIndex" class="uni-ai-msg-table-table-row">
+				<template v-for="(cell, cellIndex) in row.tokens" :key="cellIndex">
+					<text class="uni-ai-msg-table-cell" :style="{width: columnWidths[cellIndex] + 'px', 'text-align': tableAligns[cellIndex]}">
+						<text v-for="(cellItem, cellItemIndex) in cell.tokens" :key="cellItemIndex"
+							:class="(rowIndex == 0 ? 'uni-ai-msg-table-header-text' : 'uni-ai-msg-table-cell-text') + (cellItem.type != null ? ' uni-ai-msg-table-cell-text-' + cellItem.type : '')"
+							>{{ cellItem.text }}</text>
+					</text>
+				</template>
+			</view>
+		</scroll-view>
+	</view>
+</template>
+
+<script lang="uts" setup>
+	import { uiTheme } from '@/uni_modules/uni-ai-x/sdk';
+	import { MarkdownToken, Align } from '@/uni_modules/uni-cmark'
+	const props = defineProps<{ tableNode : MarkdownToken }>()
+	
+	const tableAligns = computed(() : Align[] => {
+		return (props.tableNode as MarkdownToken)?.align ?? ['left', 'left', 'left']
+	})
+
+	const columnWidths = ref<number[]>([])
+	// 表格数据
+	const tableData = ref<MarkdownToken[]>([])
+	// 计算表格总宽度（像素值）
+	const tableWidth = ref<number>(0)
+	watch(() : MarkdownToken => props.tableNode as MarkdownToken, (tableNode : MarkdownToken) => {
+		tableData.value = tableNode.tokens ?? []
+		// 拿到所有表格宽度
+		const _columnWidths : number[] = []
+		// 总列数
+		const columnCount = tableData.value[0].tokens?.length ?? 0
+		for (let i = 0; i < columnCount; i++) {
+			const _columnWidth : number = tableData.value.map((row) : number => row.tokens?.[i].width ?? 0).reduce((max, width) => Math.max(max, width), 0)
+			_columnWidths.push(Math.min(_columnWidth + 16, 300))
+		}
+		columnWidths.value = _columnWidths
+		tableWidth.value = columnWidths.value.reduce((sum, width) => sum + width, 0)
+	}, { immediate: true })
+
+	const maxTableWidth = ref(0)
+	onMounted(() => {
+		const proxy = getCurrentInstance()?.proxy
+		function setMaxTableWidth() {
+			uni.createSelectorQuery().in(proxy).select('.uni-ai-msg-table')
+				.boundingClientRect().exec((ret) => {
+					if (ret.length == 0) return
+					maxTableWidth.value = (ret[0] as NodeInfo).width!
+				})
+		}
+		// 设置表格最大宽度
+		setMaxTableWidth()
+		//#ifdef H5
+		window.addEventListener('resize', () => { setMaxTableWidth() })
+		//#endif
+	})
+	// 是否需要横向滚动
+	const isHorizontalScroll = computed(() => {
+		return tableWidth.value > maxTableWidth.value
+	})
+	// table-box 的宽度，如果tableWidth大于屏幕宽度，则设置为屏幕宽度，否则设置为tableWidth
+	const tableWrapperWidth = computed(() => {
+		return isHorizontalScroll.value ? maxTableWidth.value : tableWidth.value
+	})
+</script>
+
+<style lang="scss">
+	// 引用scss
+	@import '@/uni_modules/uni-ai-x/components/uni-ai-text-md/uni-ai-text-md.scss';
+	/* 蒸汽模式：仅单层 class */
+	.uni-ai-msg-table {
+		width: 100% !important;
+		margin-bottom: 10px;
+	}
+
+	.uni-ai-msg-table-table-box {
+		width: 100% !important;
+		background-color: #ffffff;
+		margin: 16px 0;
+	}
+
+	.uni-ai-msg-table-table-row {
+		flex-direction: row;
+		border-bottom: 1px solid #e0e0e0;
+		background-color: #ffffff;
+		align-self: flex-start;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.uni-ai-msg-table-cell {
+		flex-shrink: 0;
+		padding: 12px 8px;
+		min-height: 48px;
+		line-height: 1.4;
+		height: 100%;
+	}
+
+	.uni-ai-msg-table-header-text {
+		font-size: 14px;
+		font-weight: bold;
+		color: #333333;
+	}
+
+	.uni-ai-msg-table-cell-text {
+		font-size: 13px;
+		color: #666666;
+	}
+
+	.uni-ai-msg-table-cell-text-code {
+		padding: 1px 5px;
+		border-radius: 10px;
+	}
+</style>

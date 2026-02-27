@@ -1,0 +1,209 @@
+// 导入类型定义
+import type { MarkdownToken, ParseMdRes } from '../interface.uts';
+
+// 重新导出类型供外部使用
+export * from '../interface.uts'
+
+// WebAssembly 模块接口定义
+declare interface CmarkGfmModule {
+  ccall: (funcName: string, returnType: string, argTypes: string[], args: any[]) => any;
+  cwrap: (funcName: string, returnType: string, argTypes: string[]) => (...args: any[]) => any;
+  _md2json: (markdownPtr: number) => number;
+  _malloc: (size: number) => number;
+  _free: (ptr: number) => void;
+  HEAPU8: Uint8Array;
+  onRuntimeInitialized?: () => void;
+  calledRun?: boolean;
+  wasmBinaryFile?: string;
+  locateFile?: (path: string, prefix?: string) => string;
+}
+
+// 全局模块变量
+let globalModule: CmarkGfmModule | null = null;
+let isInitializing: boolean = false;
+let isInitialized: boolean = false;
+// 主函数：markdown 转 JSON - 返回解析后的对象数组
+export function md2json(markdown: string): ParseMdRes {
+  try {
+    // 检查模块是否已初始化
+    if (!isInitialized || !globalModule || !globalModule.calledRun) {
+      throw new Error('WebAssembly module not initialized. Call initCmark() first.');
+    }
+
+    // 将 markdown 字符串转换为 UTF-8 字节数组
+    const markdownBytes = stringToUtf8Bytes(markdown);
+
+    // 分配内存并写入数据
+    const markdownPtr = globalModule._malloc(markdownBytes.length + 1);
+    globalModule.HEAPU8.set(markdownBytes, markdownPtr);
+    globalModule.HEAPU8[markdownPtr + markdownBytes.length] = 0; // 空字符结束
+
+    try {
+      // 调用 C 函数
+      const resultPtr = globalModule.ccall('md2json', 'number', ['number'], [markdownPtr]);
+
+      if (resultPtr === 0) {
+        throw new Error('Failed to convert markdown to JSON');
+      }
+
+      // 读取结果字符串
+      const resultBytes: number[] = [];
+      let currentPtr: number = resultPtr;
+      let byte = globalModule.HEAPU8[currentPtr];
+      while (byte !== 0) {
+        resultBytes.push(byte);
+        currentPtr++;
+        byte = globalModule.HEAPU8[currentPtr];
+      }
+
+      const jsonString = utf8BytesToString(resultBytes);
+
+      // 释放 C 侧的内存
+      globalModule.ccall('free_output_buffer', '', [], []);
+
+      // 解析 JSON 字符串为对象数组
+      const result = JSON.parse(jsonString) as MarkdownToken[];;
+			const parseMdRes: ParseMdRes = {
+				data: result,
+				errorMsg: ''
+			}
+			return parseMdRes
+    } finally {
+      // 释放输入内存
+      globalModule._free(markdownPtr);
+    }
+  } catch (error) {
+    console.error('Error in md2json:', error);
+    throw error;
+  }
+}
+
+// 加载 WebAssembly 文件
+async function loadWasmFile(): Promise<ArrayBuffer> {
+  return new Promise((resolve, reject) => {
+    uni.request({
+      url: './uni_modules/uni-cmark/utssdk/web/cmark-gfm-md2json.wasm',
+      method: 'GET',
+      responseType: 'arraybuffer',
+      success: (res) => {
+        // console.log('WebAssembly file loaded successfully');
+        resolve(res.data as ArrayBuffer);
+      },
+      fail: (err) => {
+        console.error('Failed to load WebAssembly file:', err);
+        reject(err);
+      }
+    });
+  });
+}
+
+// 初始化函数 - 加载并初始化 WebAssembly 模块
+export async function initCmark(): Promise<void> {
+  // 如果已经初始化，直接返回
+  if (isInitialized) {
+    // console.log('WebAssembly module already initialized');
+    return;
+  }
+  
+  // 如果正在初始化，等待完成
+  if (isInitializing) {
+    console.log('WebAssembly module is initializing, waiting...');
+    // 等待初始化完成
+    while (isInitializing && !isInitialized) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    return;
+  }
+  
+  try {
+    isInitializing = true;
+    // console.log('Loading CmarkGfm WebAssembly module...');
+
+    // 加载 WASM 文件
+    const wasmBinary = await loadWasmFile();
+
+    // 动态导入生成的 JS 文件
+    const moduleFactory = await import('./cmark-gfm-md2json.js');
+
+    // 创建模块实例
+    globalModule = await moduleFactory.default({
+      wasmBinary: wasmBinary,
+      locateFile: (path: string, prefix?: string) => {
+        return `./uni_modules/uni-cmark/utssdk/web/${path}`;
+      }
+    });
+
+    // console.log('CmarkGfm WebAssembly module initialized successfully');
+    isInitialized = true;
+  } catch (error) {
+    console.error('Error initializing CmarkGfm WebAssembly module:', error);
+    globalModule = null;
+    isInitialized = false;
+    throw error;
+  } finally {
+    isInitializing = false;
+  }
+}
+
+// 导出类型定义
+export type { CmarkGfmModule };
+
+// 辅助函数：将字符串转换为 UTF-8 字节数组
+function stringToUtf8Bytes(str: string): number[] {
+  const bytes: number[] = [];
+  for (let i = 0; i < str.length; i++) {
+    const charCode = str.charCodeAt(i);
+    if (charCode < 0x80) {
+      bytes.push(charCode);
+    } else if (charCode < 0x800) {
+      bytes.push(0xc0 | (charCode >> 6));
+      bytes.push(0x80 | (charCode & 0x3f));
+    } else if (charCode < 0xd800 || charCode >= 0xe000) {
+      bytes.push(0xe0 | (charCode >> 12));
+      bytes.push(0x80 | ((charCode >> 6) & 0x3f));
+      bytes.push(0x80 | (charCode & 0x3f));
+    } else {
+      // 代理对 (surrogate pair)
+      i++;
+      const nextCharCode = str.charCodeAt(i);
+      const codePoint = 0x10000 + (((charCode & 0x3ff) << 10) | (nextCharCode & 0x3ff));
+      bytes.push(0xf0 | (codePoint >> 18));
+      bytes.push(0x80 | ((codePoint >> 12) & 0x3f));
+      bytes.push(0x80 | ((codePoint >> 6) & 0x3f));
+      bytes.push(0x80 | (codePoint & 0x3f));
+    }
+  }
+  return bytes;
+}
+
+// 辅助函数：将 UTF-8 字节数组转换为字符串
+function utf8BytesToString(bytes: number[]): string {
+  let str = '';
+  let i = 0;
+  while (i < bytes.length) {
+    const byte1 = bytes[i++];
+    if (byte1 < 0x80) {
+      str += String.fromCharCode(byte1);
+    } else if (byte1 < 0xe0) {
+      const byte2 = bytes[i++];
+      str += String.fromCharCode(((byte1 & 0x1f) << 6) | (byte2 & 0x3f));
+    } else if (byte1 < 0xf0) {
+      const byte2 = bytes[i++];
+      const byte3 = bytes[i++];
+      str += String.fromCharCode(((byte1 & 0x0f) << 12) | ((byte2 & 0x3f) << 6) | (byte3 & 0x3f));
+    } else {
+      const byte2 = bytes[i++];
+      const byte3 = bytes[i++];
+      const byte4 = bytes[i++];
+      let codePoint = (((byte1 & 0x07) << 18) | ((byte2 & 0x3f) << 12) | ((byte3 & 0x3f) << 6) | (byte4 & 0x3f));
+      if (codePoint > 0xffff) {
+        codePoint -= 0x10000;
+        str += String.fromCharCode(0xd800 + (codePoint >> 10));
+        str += String.fromCharCode(0xdc00 + (codePoint & 0x3ff));
+      } else {
+        str += String.fromCharCode(codePoint);
+      }
+    }
+  }
+  return str;
+}

@@ -1,0 +1,75 @@
+import utils from '@/uni_modules/uni-ai-x/sdk/utils.uts'
+type OnMsgFn = (e : UTSJSONObject) => void
+class ProxyWeb {
+	isInit : boolean = false
+	private webviewContext : WebviewContext | null = null
+	callbackMap : Map<string, OnMsgFn> = new Map()
+	constructor() {
+		// #ifdef WEB
+		window.addEventListener('message', (event) => {
+			if (event.data?.data?.name == 'postMessage') {
+				this.emitMsg(event.data.data.arg)
+			}
+		}, false)
+		// #endif
+	}
+	callMethod(param : UTSJSONObject, callback : OnMsgFn) {
+		// 先判断 isInit 是否为 true
+		if (this.isInit == false) {
+			// console.log('isInit false , wait 1s')
+			setTimeout(() => {
+				this.callMethod(param, callback)
+			}, 1000)
+			return
+		}
+		// console.log('callMethod', param)
+		const requestId = Date.now() + Math.random().toString(36).substring(2, 15)
+		param['requestId'] = requestId
+		const key = (param['action'] as string) + '_callback_' + requestId
+		this.callbackMap.set(key, callback)
+
+		// #ifdef APP-ANDROID
+		const code = `onMessage(${encodeURIComponent(JSON.stringify(param))})`;
+		// #endif
+		// #ifndef APP-ANDROID
+		const code = `onMessage("${encodeURIComponent(JSON.stringify(param))}")`;
+		// #endif
+		// console.log('code', code)
+		/* #ifdef APP */
+		this.webviewContext?.evalJS(code)
+			/* #endif */
+			/* #ifdef WEB */
+			(this.webviewContext as any)?.contentWindow.eval(code)
+		/* #endif */
+	}
+	init(webviewContext : WebviewContext) {
+		this.webviewContext = webviewContext
+	}
+	onWebMsg(e : UniWebViewMessageEvent) {
+		// console.log('onWebMsg', e)
+		const event = e.detail.data[0] as UTSJSONObject
+		const action = event['action'] as string
+		const param = event['param'] as UTSJSONObject
+		this.emitMsg({
+			action,
+			param
+		})
+	}
+	emitMsg(res : UTSJSONObject) {
+		if (res['action'] == 'DOMContentLoaded_callback') {
+			this.isInit = true
+			return
+		}
+		const funName = res['action']! as string
+		// console.log('funName', funName)
+		const callback = this.callbackMap.get(funName)
+		if (callback == null) {
+			console.error('callback is null', funName)
+			return
+		}
+		utils.uniGetDispatcher('io',()=>{
+			callback(res['param'] as UTSJSONObject)
+		})
+	}
+}
+export default new ProxyWeb()

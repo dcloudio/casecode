@@ -1,0 +1,20 @@
+stages:
+  - review
+
+variables:
+  GITLAB_TOKEN: $GITLAB_ACCESS_TOKEN
+  GIT_STRATEGY: fetch
+  CODE_REVIEW_REPO: "http://git.dcloud.io/web_team/uni-ai-code-review.git"
+  CODE_REVIEW_BRANCH: "main"
+
+code_review:
+  stage: review
+  image: node:22
+  script:
+    - echo "从远程仓库拉取评审代码..."
+    - git clone --depth=1 --branch=${CODE_REVIEW_BRANCH} ${CODE_REVIEW_REPO} ${CI_PROJECT_DIR}/.ai-review-code
+    - cd ${CI_PROJECT_DIR}/.ai-review-code/code-review
+    - node index.js
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "main" && $CI_COMMIT_BRANCH != "master"

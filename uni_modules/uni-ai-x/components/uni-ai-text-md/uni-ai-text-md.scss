@@ -1,0 +1,71 @@
+.text {
+	color: var(--text-primary);
+	// line-height: 1.5; // TODO：解决 text 嵌套会重叠文本的问题
+	white-space: normal;
+	/* #ifndef APP */
+	word-break: break-all;
+	max-width: 100%;
+	/* #endif */
+}
+.strong {
+	font-weight: bold;
+}
+
+.em {
+	font-style: italic;
+}
+
+.del {
+	text-decoration-line: line-through;
+	color: var(--text-tertiary);
+}
+
+.space {
+	height: 10px;
+}
+.link {
+	color: var(--accent-primary)!important;
+	// #ifdef WEB
+	cursor: pointer;
+	&:hover {
+		opacity: 0.8;
+	}
+	// #endif
+}
+.linebreak {
+	width: 100%;
+	height: 0;
+}
+.paragraph-box {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.space-box {
+	height: 15px;
+}
+
+.code {
+	color: var(--text-secondary);
+	background-color: var(--bg-secondary);
+	padding: 2px 4px;
+	border-radius: 5px;
+	font-size: 14px;
+}
+
+.thematic_break {
+	height: 1px;
+	background: var(--border-primary);
+	margin: 10px 0;
+}
+
+.strikethrough {
+	// 删除线
+	text-decoration-line: line-through;
+	color: var(--text-tertiary);
+}
+.bold_italic {
+	/* 加粗且斜体 */
+	font-weight: bold;
+	font-style: italic;
+}

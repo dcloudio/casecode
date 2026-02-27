@@ -1,0 +1,35 @@
+<template>
+	<view class="add-chat-box" v-if="msgListLength > 1">
+		<add-chat size="16">
+			<text class="add-chat-box-text">开启新对话</text>
+		</add-chat>
+	</view>
+</template>
+
+<script lang="uts" setup>
+	import addChat from './add-chat.uvue'
+	import uniAi from '@/uni_modules/uni-ai-x/sdk';
+	
+	const msgListLength = computed<number>(() => {
+		return uniAi.currentChat?.msgList.length ?? 0
+	})
+</script>
+
+<style lang="scss">
+.add-chat-box {
+	flex-direction: row;
+	justify-content: center;
+	padding: 5px 10px;
+	margin: 5px auto;
+	margin-top: 0;
+	border: 1px solid var(--border-secondary);
+	border-radius: 30px;
+	background-color: var(--bg-primary);
+}
+
+.add-chat-box-text {
+	font-size: 14px;
+	margin-left: 2px;
+	color: var(--text-secondary);
+}
+</style>

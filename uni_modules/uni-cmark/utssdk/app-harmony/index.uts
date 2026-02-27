@@ -1,0 +1,59 @@
+/**
+ * app-harmony/index.uts
+ * 侦探调试 - 步骤4: 完整调用所有函数
+ * 目的：验证完整功能不闪退
+ */
+
+// 导入接口类型定义
+import { ParseMdRes, MarkdownToken } from '../interface.uts'
+
+// 步骤4：导入 native 模块
+import cmark from 'libcmark.so'
+
+/**
+ * Markdown 转 JSON 函数
+ * 步骤4: 真实调用 cmark.md2json()
+ */
+export function md2json(markdown: string): ParseMdRes {
+  try {
+    // console.log('🔍 [步骤4-侦探] md2json 被调用')
+    // console.log('🔍 [步骤4-侦探] 输入长度:', markdown.length)
+    // console.log('🔍 [步骤4-侦探] 准备真实调用 cmark.md2json()...')
+
+    // 真实调用 md2json 函数
+    const jsonString: string = cmark.md2json(markdown)
+    // console.log('🔍 [步骤4-侦探] ✅ cmark.md2json() 返回:', jsonString.substring(0, 100))
+
+    const jsonArray = JSON.parseArray<MarkdownToken>(jsonString) as MarkdownToken[]
+
+    // console.log('🔍 [步骤4-侦探] ===== ✅ md2json 完整调用成功！token 数量:', jsonArray.length, '=====')
+    return {
+      data: jsonArray,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('🔍 [步骤4-侦探] ===== ❌ md2json 调用失败:', e, '=====')
+    return {
+      data: [],
+      errorMsg: e.toString()
+    }
+  }
+}
+
+/**
+ * 初始化 cmark-gfm 库
+ * 步骤4: 真实调用 cmark.initCmark()
+ */
+export async function initCmark() {
+  try {
+    // console.log('🔍 [步骤4-侦探] ===== initCmark 被调用 =====')
+    // console.log('🔍 [步骤4-侦探] 准备真实调用 cmark.initCmark()...')
+
+    // 真实调用初始化函数
+    cmark.initCmark()
+
+    // console.log('🔍 [步骤4-侦探] ===== ✅ cmark.initCmark() 调用成功！=====')
+  } catch (e) {
+    // console.error('🔍 [步骤4-侦探] ===== ❌ cmark.initCmark() 调用失败:', e, '=====')
+  }
+}

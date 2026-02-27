@@ -1,0 +1,322 @@
+<template>
+	<view class="uni-code-msg-root" :class="[`ui-theme-${uiTheme}`, language == 'mermaid' ? 'uni-code-msg-root-mermaid' : '']">
+		<view class="uni-code-msg-code-header">
+			<view class="uni-code-msg-mermaid-switch" v-if="language == 'mermaid'">
+				<text class="uni-code-msg-mermaid-item" :class="showMermaidImage ? 'uni-code-msg-mermaid-item-active' : ''" @click="showMermaidImage = true">图表</text>
+				<text class="uni-code-msg-mermaid-item" :class="!showMermaidImage ? 'uni-code-msg-mermaid-item-active' : ''" @click="showMermaidImage = false">代码</text>
+			</view>
+			<template v-if="!showMermaidImage">
+				<text class="uni-code-msg-language">{{language}}</text>
+				<view class="uni-code-msg-copy-btn" @click="copyCode">
+					<uni-ai-icon class="uni-code-msg-copy-icon" code="e60c" size="12" color="var(--text-primary)"/>
+					<text class="uni-code-msg-copy-text">复制代码</text>
+				</view>
+			</template>
+		</view>
+		<view v-if="language == 'mermaid' && showMermaidImage" class="uni-code-msg-mermaid-image-box">
+			<!-- #ifdef uniVersion < 4.81 && APP-IOS || MP-WEIXIN -->
+				<!-- #ifdef MP-WEIXIN -->
+				<text class="uni-code-msg-not-support-tip">小程序端不支持图表渲染</text>
+				<!-- #endif -->
+				<!-- #ifndef MP-WEIXIN -->
+				<text class="uni-code-msg-not-support-tip">当前 HBuilderX 版本低于 4.81，暂不支持图表渲染</text>
+				<!-- #endif -->
+			<!-- #endif -->
+			<template v-for="(mermaidInfo, i) in mermaidInfos" :key="i">
+				<image @click="previewMermaidImage" class="uni-code-msg-mermaid-image" mode="aspectFit" 
+					v-if="mermaidInfo.renderd" :src="mermaidInfo.href" :style="{opacity: mermaidInfo.show ? 1 : 0}"
+				/>
+			</template>
+		</view>
+		<scroll-view v-else class="uni-code-msg-code-scroll-view" direction="horizontal" :style="{height: scrollViewHeight}">
+			<text v-if="props.codeTokens.length == 0" class="uni-code-msg-origin-code" :style="{width: maxLineWidth}">{{codeText}}</text>
+			<text v-else class="uni-code-msg-line" v-for="(tokens,index) in props.codeTokens" :key="index" :style="{width: maxLineWidth}">
+				<text v-for="token in tokens" :key="token.uniqueId" :class="'uni-code-msg-line-code uni-code-msg-code-' + (token.className ?? '')">{{token.text}}</text>
+			</text>
+		</scroll-view>
+	</view>
+</template>
+
+<script lang="uts" setup>
+import { MarkdownToken as IToken } from '@/uni_modules/uni-cmark'
+import {uiTheme} from '@/uni_modules/uni-ai-x/sdk';
+
+type UniAiMsgCodeProps = {
+	codeText?: string
+	codeTokens?: IToken[][]
+	language?: string
+	href?: string
+}
+
+const props = withDefaults(defineProps<UniAiMsgCodeProps>(), {
+	codeText: `
+	import App from './App.uvue'
+	// 注释：这是注释的内容
+	import { createSSRApp } from 'vue'
+	export function createApp() {
+		const app = createSSRApp(App)
+		return {
+			app
+		}
+	}
+`,
+	codeTokens: () => [] as IToken[][],
+	language: 'text',
+	href: null
+})
+
+type Mermaid = {
+	href: string
+	show: boolean
+	renderd: boolean
+}
+const mermaidInfos = reactive<Mermaid[]>([])
+watch((): string | null => props.href, (href: string | null) => {
+	if (href == null) return
+	const index = mermaidInfos.length
+	const mermaid: Mermaid = {
+		href,
+		renderd: true,
+		show: index == 0 ? true : false
+	}
+	mermaidInfos.push(mermaid)
+	if (index != 0) {
+		setTimeout(() => {
+			mermaidInfos[index].show = true
+			mermaidInfos[index - 1].renderd = false
+		}, 300)
+	}
+}, {immediate: true})
+
+const tokens = ref<Array<IToken>>([])
+const tokensLines = ref<IToken[][]>([])
+const maxLineWidth = ref<string>('')
+const showMermaidImage = ref<boolean>(false)
+
+watch((): string => props.language, (language: string) => {
+	showMermaidImage.value = language == 'mermaid'
+	//#ifdef uniVersion < 4.81 && APP-IOS || MP-WEIXIN
+	showMermaidImage.value = false
+	//#endif
+}, {immediate: true})
+
+//#ifdef uniVersion < 4.81
+let lastDiffLineIndex = 0
+let lastMaxLineSize = 0
+watch((): string => props.codeText, (codeText: string) => {
+	let isAndroidOrWeb: boolean = false
+	// #ifdef APP-ANDROID || WEB
+	isAndroidOrWeb = true
+	// #endif
+	if (!isAndroidOrWeb || (props.codeTokens.length == 0 && codeText.length > 0)) {
+		const codeTextLines = codeText.split('\n')
+		for (let i = lastDiffLineIndex; i < codeTextLines.length; i++) {
+			const lineSize = codeTextLines[i].length
+			if (maxLineWidth.value == '' || lastMaxLineSize < lineSize) {
+				lastMaxLineSize = lineSize
+				maxLineWidth.value = `${lastMaxLineSize * 16}px`
+			} else {
+				// console.log(lineSize,'小于', lastMaxLineSize)
+			}
+		}
+		lastDiffLineIndex = codeTextLines.length - 1
+	}
+	tokensLines.value = props.codeTokens
+}, {immediate: true})
+// #endif
+// #ifdef uniVersion >= 4.81 || MP-WEIXIN
+maxLineWidth.value = 'auto'
+// #endif
+
+const scrollViewHeight = computed<string>(() => `${props.codeText.split('\n').length * 22 + (props.codeTokens.length == 0 ? 16 : 0)}px`)
+
+const copyCode = () => {
+	uni.setClipboardData({
+		data: props.codeText,
+		success: () => {
+			uni.showToast({
+				title: '代码已复制到剪贴板',
+				icon: 'success'
+			})
+		},
+		fail: () => {
+			uni.showToast({
+				title: '复制失败',
+				icon: 'none'
+			})
+		}
+	})
+}
+
+const previewMermaidImage = () => {
+	if (props.href != null) {
+		uni.previewImage({
+			urls: [props.href]
+		})
+	}
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/uni_modules/uni-ai-x/static/css/variables.scss';
+@font-face {
+	// #ifdef WEB
+	font-display: swap;
+	// #endif
+	font-family: CodeFontFamily;
+	// #ifndef MP-WEIXIN
+	src: url('/uni_modules/uni-ai-x/static/font/FiraCode-Regular.ttf') format('truetype');
+	// #endif
+}
+// 浅色主题类
+.ui-theme-light {
+  /* 代码高亮颜色 - 浅色主题 */
+  --code-keyword: #1a237e;
+  --code-string: #b71c1c;
+  --code-comment: #757575;
+  --code-meta: #ad1457;
+  --code-storage: #1976d2;
+  --code-entity: #00897b;
+  --code-support: #00897b;
+  --code-constant: #388e3c;
+  --code-variable: #1565c0;
+  --code-punctuation: #333;
+  --code-function: #fbc02d;
+}
+
+// 深色主题类
+.ui-theme-dark {
+  /* 代码高亮颜色 - 深色主题 */
+  --code-keyword: #4fc1ff;
+  --code-string: #ff8a80;
+  --code-comment: #81c784;
+  --code-meta: #e1bee7;
+  --code-storage: #4fc1ff;
+  --code-entity: #80deea;
+  --code-support: #80deea;
+  --code-constant: #81d4fa;
+  --code-variable: #b3e5fc;
+  --code-punctuation: #f5f5f5;
+  --code-function: #fff59d;
+}
+.uni-code-msg-root {
+	width: 100%;
+	margin-bottom: 5px;
+	background-color: var(--bg-secondary);
+	border-radius: 6px;
+	border: 1px solid var(--border-color);
+}
+
+.uni-code-msg-code-header {
+	width: 100%;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 4px 10px;
+	background-color: var(--bg-tertiary);
+}
+
+.uni-code-msg-mermaid-switch {
+	flex-direction: row;
+	border-radius: 6px;
+	padding: 2px 0;
+	background-color: var(--border-color);
+}
+
+.uni-code-msg-mermaid-item {
+	padding: 4px 10px;
+	margin: 0 1px;
+	border-radius: 6px;
+	font-size: 12px;
+	color: var(--text-secondary);
+}
+
+.uni-code-msg-mermaid-item-active {
+	background-color: var(--bg-primary);
+	color: var(--text-primary);
+}
+
+.uni-code-msg-language {
+	font-size: 12px;
+	color: var(--text-primary);
+}
+
+.uni-code-msg-copy-btn {
+	flex-direction: row;
+	align-items: center;
+	padding: 2px 4px;
+	border-radius: 4px;
+}
+
+.uni-code-msg-copy-text {
+	font-size: 10px;
+	color: var(--text-primary);
+	margin-left: 2px;
+}
+
+.uni-code-msg-mermaid-image-box {
+	height: 400px;
+	background-color: #FFF;
+	align-items: center;
+}
+
+.uni-code-msg-not-support-tip {
+	font-size: 12px;
+	color: var(--warning-color);
+	margin-top: 10px;
+}
+
+.uni-code-msg-mermaid-image {
+	position: absolute;
+	top: 0;
+	height: 100%;
+}
+
+.uni-code-msg-code-scroll-view {
+	padding: 8px 0;
+	height: auto;
+	width: 100%;
+	transition: height 0.2s linear;
+}
+
+.uni-code-msg-line,
+.uni-code-msg-origin-code {
+	padding: 0 15px;
+}
+
+.uni-code-msg-line {
+	height: 22px;
+	white-space: nowrap;
+	align-self: flex-start;
+}
+
+.uni-code-msg-line-code {
+	white-space: nowrap;
+	font-family: CodeFontFamily;
+	font-size: 14px;
+	color: var(--text-primary);
+}
+
+.uni-code-msg-code-keyword { color: var(--code-keyword); }
+.uni-code-msg-code-string { color: var(--code-string); }
+.uni-code-msg-code-comment { color: var(--code-comment); }
+.uni-code-msg-code-meta { color: var(--code-meta); }
+.uni-code-msg-code-storage { color: var(--code-storage); }
+.uni-code-msg-code-entity { color: var(--code-entity); }
+.uni-code-msg-code-support { color: var(--code-support); }
+.uni-code-msg-code-constant { color: var(--code-constant); }
+.uni-code-msg-code-variable { color: var(--code-variable); }
+.uni-code-msg-code-punctuation { color: var(--code-punctuation); }
+.uni-code-msg-code-function { color: var(--code-function); }
+
+.uni-code-msg-origin-code {
+	color: var(--text-primary);
+	height: 100%;
+	font-size: 14px;
+	align-self: flex-start;
+	line-height: 22px;
+	font-family: CodeFontFamily;
+	overflow: visible;
+}
+
+</style>
