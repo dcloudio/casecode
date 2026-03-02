@@ -44,6 +44,11 @@
           check getAndroidActivity
         </button>
         <!-- #endif -->
+        <!-- #ifdef APP -->
+        <button class="uni-common-mt" @click="checkTakeSnapshot">
+          check takeSnapshot
+        </button>
+        <!-- #endif -->
       </view>
       <!-- #ifndef MP -->
       <page-head title="currentPageStyle"></page-head>
@@ -99,6 +104,7 @@
     PageStyleArray: PageStyleItem[];
     currentPageStyle: UTSJSONObject;
     testing: boolean;
+    checkSnapshotResult: boolean;
   }
 
   const data = reactive({
@@ -106,7 +112,8 @@
     pages: [] as string[],
     PageStyleArray: PageStyleArray,
     currentPageStyle: {},
-    testing: false
+    testing: false,
+    checkSnapshotResult: false
   } as DataType)
 
   const pageStyleText = computed(() : string => {
@@ -296,6 +303,33 @@
     return res
   }
 
+  const checkTakeSnapshot = () => {
+    const page = getCurrentPage()
+    let callBackNum = 0
+    page.takeSnapshot({
+      success: (res) => {
+        console.log('check takeSnapshot success', res)
+        uni.showToast({ title: 'check success' })
+        callBackNum++
+        if(callBackNum == 2){
+          data.checkSnapshotResult = true
+        }
+      },
+      fail: (err) => {
+        console.log('check takeSnapshot fail', err)
+        uni.showToast({ title: 'check fail', icon: 'error' })
+        callBackNum--
+      },
+      complete: (info) => {
+        console.log('check takeSnapshot complete', info)
+        callBackNum++
+        if(callBackNum == 2){
+          data.checkSnapshotResult = true
+        }
+      }
+    })
+  }
+
   defineExpose({
     data,
     pageStyleText,
@@ -313,7 +347,8 @@
     checkGetHTMLElement,
     checkQuerySelector,
     checkQuerySelectorAll,
-    checkGetAndroidActivity
+    checkGetAndroidActivity,
+    checkTakeSnapshot
   })
 </script>
 

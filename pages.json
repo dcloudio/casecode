@@ -2410,6 +2410,12 @@
 					"style": {
 						"navigationBarTitleText": "测试文件管理类直接操作Static"
 					}
+				},
+				{
+					"path": "rename-issue-26433",
+					"style": {
+						"navigationBarTitleText": "rename-api-issue-26433"
+					}
 				}
 				// #endif
 			]
