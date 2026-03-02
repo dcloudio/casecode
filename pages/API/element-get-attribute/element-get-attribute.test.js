@@ -7,6 +7,7 @@ describe('test element-get-attribute', () => {
   const isApp = isAndroid || isIos
   const isWeb = platformInfo.startsWith('web')
   const isMP = platformInfo.startsWith('mp')
+  const isHarmony = platformInfo.startsWith('harmony')
   const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
   beforeAll(async () => {
@@ -36,6 +37,16 @@ describe('test element-get-attribute', () => {
       expect(propertyValueData).toEqual(propertyValue);
     }
   });
+
+  //暂时仅处理android平台和鸿蒙平台
+  if(isAndroid || isHarmony) {
+		it('check getScrollViewStyleMarginTop', async () => {
+			await page.waitFor(1000)
+		  const marginTop = await page.callMethod('getScrollViewStyleMarginTop')
+			console.log("getScrollViewStyleMarginTop", marginTop)
+		  expect(marginTop).toEqual("15");
+		})
+	}
 
   it('getBoundingClientRectSync', async () => {
     await page.callMethod("getBoundingClientRectAsyncChild");

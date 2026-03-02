@@ -170,6 +170,14 @@
     }
   }
 
+  //scrollView元素获取class中的margin-top属性值 仅自动化测试使用
+  function getScrollViewStyleMarginTop() : string {
+    if (scrollViewRef.value != null) {
+      return scrollViewRef.value.style.getPropertyValue("margin-top")
+    }
+    return ""
+  }
+
   const handleGetScaledViewSize = () => {
     const element = uni.getElementById("scaledView")
     if (element != null) {
@@ -192,7 +200,8 @@
     getPropertyValue,
     getBoundingClientRectAsyncChild,
     scrollTo,
-    handleGetScaledViewSize
+    handleGetScaledViewSize,
+    getScrollViewStyleMarginTop
   })
 
 </script>
