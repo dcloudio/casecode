@@ -10,7 +10,9 @@
     "subtree:pull:hello-uvue": "git subtree pull --prefix=hello-uvue hello-uvue alpha --squash -m \"chore: update hello-uvue\"",
     "subtree:pull:hellounicloud": "git subtree pull --prefix=hellounicloud hellounicloud main --squash -m \"chore: update hellounicloud\"",
     "subtree:pull:uni-ai-x": "git subtree pull --prefix=uni-ai-x uni-ai-x master --squash -m \"chore: update uni-ai-x\"",
-    "subtree:pull": "npm run subtree:pull:hello-uni-app-x && npm run subtree:pull:hello-uni-id-pages-x && npm run subtree:pull:hello-uts && npm run subtree:pull:hello-uvue && npm run subtree:pull:hellounicloud && npm run subtree:pull:uni-ai-x"
+    "subtree:pull:share-fission-client": "git subtree pull --prefix=share-fission-client share-fission-client main --squash -m \"chore: update share-fission-client\"",
+    "subtree:pull:share-fission-admin": "git subtree pull --prefix=share-fission-admin share-fission-admin master --squash -m \"chore: update share-fission-admin\"",
+    "subtree:pull": "npm run subtree:pull:hello-uni-app-x && npm run subtree:pull:hello-uni-id-pages-x && npm run subtree:pull:hello-uts && npm run subtree:pull:hello-uvue && npm run subtree:pull:hellounicloud && npm run subtree:pull:uni-ai-x && npm run subtree:pull:share-fission-client && npm run subtree:pull:share-fission-admin"
   },
   "repository": {
     "type": "git",

@@ -14,4 +14,6 @@ DCloud 示例项目合集，包含 uni-app、uni-app x、uniCloud、UTS 等多�
 | [hello-uvue](./hello-uvue) | uvue 的 Vue 语法测试工程 | [https://github.com/dcloudio/hello-uvue](https://github.com/dcloudio/hello-uvue) |
 | [hellounicloud](./hellounicloud) | uniCloud 示例项目 | [https://github.com/dcloudio/hellounicloud](https://github.com/dcloudio/hellounicloud) |
 | [uni-ai-x](./uni-ai-x) | uni-ai x，开源的全平台原生云端一体 AI 聊天套件 | [https://github.com/dcloudio/uni-ai-x](https://github.com/dcloudio/uni-ai-x) |
+| [share-fission-client](./share-fission-client) | 基于uni-ad的社交裂变项目模板（client端） | [https://github.com/dcloudio/share-fission-client.git](https://github.com/dcloudio/share-fission-client.git) |
+| [share-fission-admin](./share-fission-admin) | 基于uni-ad的社交裂变项目模板（admin端）| [https://github.com/dcloudio/share-fission-admin.git](https://github.com/dcloudio/share-fission-admin.git) |
 | [uni-app](./uni-app) | DCloud 开源项目集锦 | — |
