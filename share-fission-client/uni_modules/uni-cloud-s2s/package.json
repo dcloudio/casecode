@@ -1,0 +1,82 @@
+{
+  "id": "uni-cloud-s2s",
+  "displayName": "uni-cloud-s2s公共模块",
+  "version": "1.0.1",
+  "description": "用于解决uniCloud服务空间与传统服务器通讯时互相信任的问题",
+  "keywords": [
+    "安全通讯",
+    "服务器请求云函数",
+    "云函数请求服务器"
+],
+  "repository": "",
+"engines": {
+  },
+  "dcloudext": {
+    "type": "unicloud-template-function",
+    "sale": {
+      "regular": {
+        "price": 0
+      },
+      "sourcecode": {
+        "price": 0
+      }
+    },
+    "contact": {
+      "qq": ""
+    },
+    "declaration": {
+      "ads": "无",
+      "data": "无",
+      "permissions": "无"
+    },
+    "npmurl": ""
+  },
+  "uni_modules": {
+    "dependencies": [],
+    "encrypt": [],
+    "platforms": {
+      "cloud": {
+        "tcb": "y",
+        "aliyun": "y"
+      },
+      "client": {
+        "Vue": {
+          "vue2": "u",
+          "vue3": "u"
+        },
+        "App": {
+          "app-vue": "u",
+          "app-nvue": "u"
+        },
+        "H5-mobile": {
+          "Safari": "u",
+          "Android Browser": "u",
+          "微信浏览器(Android)": "u",
+          "QQ浏览器(Android)": "u"
+        },
+        "H5-pc": {
+          "Chrome": "u",
+          "IE": "u",
+          "Edge": "u",
+          "Firefox": "u",
+          "Safari": "u"
+        },
+        "小程序": {
+          "微信": "u",
+          "阿里": "u",
+          "百度": "u",
+          "字节跳动": "u",
+          "QQ": "u",
+          "钉钉": "u",
+          "快手": "u",
+          "飞书": "u",
+          "京东": "u"
+        },
+        "快应用": {
+          "华为": "u",
+          "联盟": "u"
+        }
+      }
+    }
+  }
+}

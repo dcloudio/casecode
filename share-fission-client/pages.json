@@ -1,0 +1,278 @@
+{
+	"pages": [{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/ucenter/ucenter",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/uni-agree/uni-agree",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"popGesture": "none"
+				}
+			}
+		}, {
+			"path": "pages/ucenter/settings/settings",
+			"style": {
+				"navigationBarTitleText": "设置"
+			}
+		},
+		{
+			"path": "pages/ucenter/distribution-invite/distribution-invite",
+			"style": {
+				"navigationBarTitleText": "分销推荐"
+			}
+		},
+		{
+			"path": "pages/ucenter/my-team/my-team",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/ucenter/withdraw/withdraw",
+			"style": {
+				"navigationBarTitleText": "积分提现"
+			}
+		},
+		{
+			"path": "pages/ucenter/points-record/points-record",
+			"style": {
+				"navigationBarTitleText": "积分记录",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/ucenter/withdraw-record/withdraw-record",
+			"style": {
+				"navigationBarTitleText": "提现记录"
+			}
+		},
+		{
+			"path": "pages/ucenter/points-mall/points-mall",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/ucenter/product-detail/product-detail",
+			"style": {
+				"navigationBarTitleText": "商品详情"
+			}
+		},
+		{
+			"path": "pages/ucenter/exchange-order/exchange-order",
+			"style": {
+				"navigationBarTitleText": "兑换记录"
+			}
+		}
+		// #ifdef APP
+		, {
+			"path": "pages/ucenter/about/about",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"type": "share"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
+			"style": {
+				"disableScroll": true,
+				"app-plus": {
+					"backgroundColorTop": "transparent",
+					"background": "transparent",
+					"titleNView": false,
+					"scrollIndicator": false,
+					"popGesture": "none",
+					"animationType": "fade-in",
+					"animationDuration": 200
+
+				}
+			}
+		}
+		// #endif
+	],
+	"subPackages": [{
+			"root": "uni_modules/uni-feedback",
+			"pages": [{
+				"path": "pages/opendb-feedback/opendb-feedback",
+				"style": {
+					"navigationBarTitleText": "意见反馈",
+					"enablePullDownRefresh": false
+				}
+			}]
+		},
+		{
+			"root": "uni_modules/uni-id-pages/pages",
+			"pages": [{
+					"path": "userinfo/userinfo",
+					"style": {
+						"navigationBarTitleText": "个人资料"
+					}
+				},
+				{
+					"path": "userinfo/realname-verify/realname-verify",
+					"style": {
+						"enablePullDownRefresh": false,
+						"navigationBarTitleText": "实名认证"
+					}
+				},
+				{
+					"path": "login/login-withoutpwd"
+				},
+				{
+					"path": "login/login-withpwd"
+				},
+				{
+					"path": "userinfo/deactivate/deactivate",
+					"style": {
+						"navigationBarTitleText": "注销账号"
+					}
+				},
+				{
+					"path": "userinfo/bind-mobile/bind-mobile",
+					"style": {
+						"navigationBarTitleText": "绑定手机号码"
+					}
+				},
+				{
+					"path": "login/login-smscode",
+					"style": {
+						"navigationBarTitleText": "手机验证码登录"
+					}
+				},
+				{
+					"path": "register/register",
+					"style": {
+						"navigationBarTitleText": "注册"
+					}
+				},
+				{
+					"path": "retrieve/retrieve",
+					"style": {
+						"navigationBarTitleText": "重置密码"
+					}
+				}, {
+					"path": "common/webview/webview",
+					"style": {
+						"enablePullDownRefresh": false,
+						"navigationBarTitleText": ""
+					}
+				}, {
+					"path": "userinfo/change_pwd/change_pwd",
+					"style": {
+						"enablePullDownRefresh": false,
+						"navigationBarTitleText": "修改密码"
+					}
+				}, {
+					"path": "register/register-by-email",
+					"style": {
+						"navigationBarTitleText": "邮箱验证码注册"
+					}
+				}, {
+					"path": "retrieve/retrieve-by-email",
+					"style": {
+						"navigationBarTitleText": "通过邮箱重置密码"
+					}
+				},
+				{
+					"path": "userinfo/set-pwd/set-pwd",
+					"style": {
+						"enablePullDownRefresh": false,
+						"navigationBarTitleText": "设置密码"
+					}
+				}
+				// #ifdef H5
+				,
+				{
+					"path": "userinfo/cropImage/cropImage"
+				},
+				{
+					"path": "register/register-admin",
+					"style": {
+						"enablePullDownRefresh": false,
+						"navigationBarTitleText": "注册管理员账号"
+					}
+				}
+				// #endif
+			]
+		}
+	],
+	"globalStyle": {
+		// #ifdef H5
+		"h5": {
+			"titleNView": false
+		},
+		// #endif
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "share-fission",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F8F8F8",
+		"enablePullDownRefresh": false,
+		// "maxWidth":375,
+		"rpxCalcMaxDeviceWidth": 375,
+		"rpxCalcBaseDeviceWidth": 375
+		// "rpxCalcIncludeWidth":0
+	},
+	"condition": {
+		"list": [{
+				"path": "pages/list/detail"
+			}, {
+				"path": "pages/list/list"
+			},
+			{
+				"path": "pages/ucenter/settings/settings"
+			}
+		],
+		"current": 1
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#007AFF",
+		"borderStyle": "black",
+		"backgroundColor": "#FFFFFF",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/tabbar/index.png",
+			"selectedIconPath": "static/tabbar/index_active.png",
+			"text": "猜谜语"
+		}, {
+			"pagePath": "pages/ucenter/points-mall/points-mall",
+			"iconPath": "static/tabbar/mall.png",
+			"selectedIconPath": "static/tabbar/mall_active.png",
+			"text": "积分商城"
+		}, {
+			"pagePath": "pages/ucenter/my-team/my-team",
+			"iconPath": "static/tabbar/grid.png",
+			"selectedIconPath": "static/tabbar/grid_active.png",
+			"text": "我的团队"
+		}, {
+			"pagePath": "pages/ucenter/ucenter",
+			"iconPath": "static/tabbar/me.png",
+			"selectedIconPath": "static/tabbar/me_active.png",
+			"text": "我的"
+		}]
+	},
+	"uniIdRouter": {
+		"loginPage": "uni_modules/uni-id-pages/pages/login/login-withpwd",
+		"needLogin": [
+			"/uni_modules/uni-id-pages/pages/userinfo/userinfo"
+		],
+		"resToLogin": true
+	}
+}

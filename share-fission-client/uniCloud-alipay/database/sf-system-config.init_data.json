@@ -1,0 +1,12 @@
+[{
+	"_id": "main",
+	"ad_score_base": 30,
+	"ad_score_rate": 1000,
+	"ad_score_self_rate": 0.5,
+	"ad_score_l1_rate": 0.25,
+	"ad_score_l2_rate": 0.25,
+	"ad_daily_limit": 10,
+	"withdrawal_fee_rate": 0.2,
+	"withdrawal_min_score": 1000,
+	"update_time": 1735689600000
+}]

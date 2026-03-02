@@ -1,0 +1,74 @@
+[
+    {
+        "IndexName": "user_id",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "user_id",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "device_id",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "device_id",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "ip",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "ip",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "username",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "username",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "mobile",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "mobile",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "email",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "email",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    }
+]

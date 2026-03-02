@@ -1,0 +1,22 @@
+[{
+		"IndexName": "role_id_",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{
+				"Name": "role_id",
+				"Direction": "1"
+			}],
+			"MgoIsUnique": true
+		}
+	},
+	{
+		"IndexName": "permission",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{
+				"Name": "permission",
+				"Direction": "1",
+				"Type": "array"
+			}],
+			"MgoIsUnique": false
+		}
+	}
+]

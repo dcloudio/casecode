@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Edit",
+      "Write",
+      "Read",
+      "mcp__chrome__puppeteer_navigate",
+      "mcp__chrome__puppeteer_evaluate",
+      "mcp__chrome__puppeteer_screenshot",
+      "mcp__chrome__puppeteer_click",
+      "mcp__chrome__puppeteer_fill",
+      "WebSearch",
+      "WebFetch(domain:gist.github.com)",
+      "mcp__chrome__puppeteer_hover",
+      "Skill(webpage-screenshot)"
+    ]
+  },
+  "permission-mode": "bypassPermissions",
+  "full-throttle": true,
+  "capabilities": {
+    "terminal": {
+      "policy": "allow"
+    },
+    "file_edit": {
+      "policy": "allow"
+    },
+    "file_create": {
+      "policy": "allow"
+    },
+    "file_delete": {
+      "policy": "allow"
+    }
+  }
+}

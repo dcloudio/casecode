@@ -1,0 +1,22 @@
+{
+	"bsonType": "object",
+	"required": ["value", "expired"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"value": {
+			"description": "值"
+		},
+		"expired": {
+			"description": "过期时间",
+			"bsonType": "timestamp"
+		}
+	}
+}

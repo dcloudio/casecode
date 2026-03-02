@@ -1,0 +1,14 @@
+{
+    "name": "uni-open-bridge",
+    "dependencies": {
+        "uni-open-bridge-common": "file:..\/common\/uni-open-bridge-common",
+        "uni-config-center": "file:..\/..\/..\/..\/uni-config-center\/uniCloud\/cloudfunctions\/common\/uni-config-center"
+    },
+    "extensions": {
+        "uni-cloud-jql": {}
+    },
+    "origin-plugin-dev-name": "uni-starter",
+    "origin-plugin-version": "2.2.14",
+    "plugin-dev-name": "uni-starter",
+    "plugin-version": "2.2.14"
+}

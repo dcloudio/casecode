@@ -1,0 +1,379 @@
+{
+	"bsonType": "object",
+	"required": [
+			"appid",
+			"name"
+	],
+	"permission": {
+	"read": "'READ_OPENDB_APP_LIST' in auth.permission",
+	"create": "'CREATE_OPENDB_APP_LIST' in auth.permission",
+	"update": "'UPDATE_OPENDB_APP_LIST' in auth.permission",
+	"delete": "'DELETE_OPENDB_APP_LIST' in auth.permission"
+	},
+	"properties": {
+			"_id": {
+					"description": "ID，系统自动生成"
+			},
+			"appid": {
+					"bsonType": "string",
+					"description": "应用的AppID",
+					"label": "AppID",
+					"componentForEdit": {
+							"name": "uni-easyinput",
+							"props": {
+									":disabled": true
+							}
+					}
+			},
+			"app_type": {
+				"bsonType": "int",
+				"defaultValue": 0,
+				"description": "应用类型，0：uni-app 1：uni-app x",
+				"enum": [{
+						"text": "uni-app",
+						"value": 0
+					},
+					{
+						"text": "uni-app x",
+						"value": 1
+					}
+				],
+				"title": "应用类型"
+			},
+			"name": {
+					"bsonType": "string",
+					"description": "应用名称",
+					"label": "应用名称",
+					"componentForEdit": {
+							"name": "uni-easyinput",
+							"props": {
+									":disabled": true
+							}
+					}
+			},
+			"description": {
+					"bsonType": "string",
+					"description": "应用描述",
+					"label": "应用描述",
+					"componentForEdit": {
+							"name": "textarea"
+					},
+					"componentForShow": {
+							"name": "textarea",
+							"props": {
+									":disabled": true
+							}
+					}
+			},
+			"creator_uid": {
+					"description": "创建者的user_id，创建者必然是用户，不随应用转让而改变",
+					"bsonType": "string"
+			},
+			"owner_type": {
+					"bsonType": "int",
+					"description": "应用当前归属者类型，1：个人，2：企业"
+			},
+			"owner_id": {
+					"bsonType": "string",
+					"description": "应用当前归属者的id，user_id or enterprise_id"
+			},
+			"managers": {
+					"bsonType": "array",
+					"description": "应用管理员ID列表"
+			},
+			"members": {
+					"bsonType": "array",
+					"description": "团队成员ID列表"
+			},
+			"icon_url": {
+					"bsonType": "string",
+					"trim": "both",
+					"description": "应用图标链接",
+					"label": "应用图标"
+			},
+			"introduction": {
+					"bsonType": "string",
+					"trim": "both",
+					"description": "应用简介",
+					"label": "应用简介",
+					"componentForEdit": {
+							"name": "uni-easyinput",
+							"props": {
+									"disabled": true
+							}
+					}
+			},
+			"screenshot": {
+					"bsonType": "array",
+					"description": "应用截图",
+					"label": "应用截图"
+			},
+			"app_android": {
+					"bsonType": "object",
+					"description": "安卓 App 相关信息",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "快应用名称",
+									"label": "快应用名称"
+							},
+							"url": {
+									"bsonType": "string",
+									"description": "安卓可下载安装包地址",
+									"label": "安卓下载地址"
+							}
+					}
+			},
+			"app_ios": {
+					"bsonType": "object",
+					"description": "苹果 App 相关信息",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "快应用名称",
+									"label": "快应用名称"
+							},
+							"url": {
+									"bsonType": "string",
+									"description": "AppStore 上架地址",
+									"label": "AppStore 地址"
+							},
+							"abm_url": {
+								"bsonType": "string",
+								"description": "获取 iOS ABM 应用登录链接",
+								"label": "获取 iOS ABM 应用登录链接"
+							}
+					}
+			},
+			"app_harmony": {
+					"bsonType": "object",
+					"description": "HarmonyOS Next App 相关信息",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "应用名称",
+									"label": "应用名称"
+							},
+							"url": {
+									"bsonType": "string",
+									"description": "可下载安装包或可访问地址",
+									"label": "下载地址"
+							}
+					}
+			},
+			"mp_weixin": {
+					"bsonType": "object",
+					"description": "微信小程序相关信息",
+					"label": "微信小程序",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "小程序名字"
+							},
+							"qrcode_url": {
+									"bsonType": "string",
+									"description": "二维码url"
+							}
+					}
+			},
+			"mp_alipay": {
+					"bsonType": "object",
+					"description": "支付宝小程序相关信息",
+					"label": "支付宝小程序",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "小程序名字"
+							},
+							"qrcode_url": {
+									"bsonType": "string",
+									"description": "二维码url"
+							}
+					}
+			},
+			"mp_baidu": {
+					"bsonType": "object",
+					"description": "百度小程序相关信息",
+					"label": "百度小程序",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "小程序名字"
+							},
+							"qrcode_url": {
+									"bsonType": "string",
+									"description": "二维码url"
+							}
+					}
+			},
+			"mp_toutiao": {
+					"bsonType": "object",
+					"description": "头条小程序相关信息",
+					"label": "头条小程序",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "小程序名字"
+							},
+							"qrcode_url": {
+									"bsonType": "string",
+									"description": "二维码url"
+							}
+					}
+			},
+			"mp_qq": {
+					"bsonType": "object",
+					"description": "QQ小程序相关信息",
+					"label": "QQ小程序",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "小程序名字"
+							},
+							"qrcode_url": {
+									"bsonType": "string",
+									"description": "二维码url"
+							}
+					}
+			},
+			"mp_kuaishou": {
+					"bsonType": "object",
+					"description": "快手小程序相关信息",
+					"label": "快手小程序",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "小程序名字"
+							},
+							"qrcode_url": {
+									"bsonType": "string",
+									"description": "二维码url"
+							}
+					}
+			},
+			"mp_lark": {
+					"bsonType": "object",
+					"description": "飞书小程序相关信息",
+					"label": "飞书小程序",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "小程序名字"
+							},
+							"qrcode_url": {
+									"bsonType": "string",
+									"description": "二维码url"
+							}
+					}
+			},
+			"mp_jd": {
+					"bsonType": "object",
+					"description": "京东小程序相关信息",
+					"label": "京东小程序",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "小程序名字"
+							},
+							"qrcode_url": {
+									"bsonType": "string",
+									"description": "二维码url"
+							}
+					}
+			},
+			"mp_dingtalk": {
+					"bsonType": "object",
+					"description": "钉钉小程序相关信息",
+					"label": "钉钉小程序",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "小程序名字"
+							},
+							"qrcode_url": {
+									"bsonType": "string",
+									"description": "二维码url"
+							}
+					}
+			},
+			"h5": {
+					"bsonType": "object",
+					"properties": {
+							"url": {
+									"bsonType": "string",
+									"description": "H5 可访问链接"
+							}
+					}
+			},
+			"quickapp": {
+					"bsonType": "object",
+					"properties": {
+							"name": {
+									"bsonType": "string",
+									"description": "快应用名称",
+									"label": "快应用名称"
+							},
+							"qrcode_url": {
+									"bsonType": "string",
+									"description": "快应用二维码url"
+							}
+					}
+			},
+			"store_list": {
+					"bsonType": "array",
+					"description": "发布的应用市场",
+					"label": "应用市场",
+					"properties": {
+							"id": {
+									"bsonType": "string",
+									"description": "应用id，自动生成",
+									"label": "id"
+							},
+							"name": {
+									"bsonType": "string",
+									"description": "应用名称",
+									"label": "应用名称"
+							},
+							"scheme": {
+									"bsonType": "string",
+									"description": "应用 scheme",
+									"label": "应用 scheme"
+							},
+							"enable": {
+									"bsonType": "bool",
+									"description": "是否启用"
+							},
+							"priority": {
+									"bsonType": "int",
+									"description": "按照从大到小排序",
+									"label": "优先级"
+							}
+					}
+			},
+			"remark": {
+					"bsonType": "string",
+					"description": "备注",
+					"label": "备注",
+					"componentForEdit": {
+							"name": "textarea"
+					},
+					"componentForShow": {
+							"name": "textarea",
+							"props": {
+									":disabled": true
+							}
+					}
+			},
+			"create_date": {
+					"bsonType": "timestamp",
+					"label": "创建时间",
+					"forceDefaultValue": {
+							"$env": "now"
+					},
+					"componentForEdit": {
+							"name": "uni-dateformat"
+					}
+			}
+	},
+	"version": "0.0.1"
+}

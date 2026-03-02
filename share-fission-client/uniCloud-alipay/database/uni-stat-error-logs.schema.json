@@ -1,0 +1,102 @@
+// 应用错误日志表
+{
+	"bsonType": "object",
+	"description": "记录上报的应用运行错误日志",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_ERROR_LOGS' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "用户端上报的应用ID"
+		},
+		"version": {
+			"bsonType": "string",
+			"description": "用户端上报的应用版本号"
+		},
+		"platform": {
+			"bsonType": "string",
+			"description": "用户端上报的平台code"
+		},
+		"channel": {
+			"bsonType": "string",
+			"description": "用户端上报的渠道code\/场景值"
+		},
+		"error_type": {
+			"bsonType": "int",
+			"description": "错误类型",
+			"defaultValue": 0,
+			"enum": [{
+				"text": "未知",
+				"value": 0
+			}, {
+				"text": "表示webview页面js异常（uni-app项目对应vue页面）",
+				"value": 2
+			}, {
+				"text": "表示uni框架js异常（仅uni-app项目）",
+				"value": 4
+			}, {
+				"text": "表示控制页js异常（仅uni-app项目）",
+				"value": 5
+			}, {
+				"text": "表示nvue页面js异常（仅uni-app项目）",
+				"value": 6
+			}]
+		},
+		"device_id": {
+			"bsonType": "string",
+			"description": "客户端携带的设备标识"
+		},
+		"uid": {
+			"bsonType": "string",
+			"description": "用户编号, 对应uni-id-users._id"
+		},
+		"os": {
+			"bsonType": "string",
+			"description": "客户端操作系统"
+		},
+		"ua": {
+			"bsonType": "string",
+			"description": "客户端user-agent信息"
+		},
+		"space_id": {
+			"bsonType": "string",
+			"description": "服务空间编号"
+		},
+		"space_provider": {
+			"bsonType": "string",
+			"description": "服务空间提供商"
+		},
+		"sdk_version": {
+			"bsonType": "string",
+			"description": "小程序基础库版本号"
+		},
+		"platform_version": {
+			"bsonType": "string",
+			"description": "微信、支付宝宿主App的版本号"
+		},
+		"error_msg": {
+			"bsonType": "string",
+			"description": "错误信息"
+		},
+		"error_hash": {
+			"bsonType": "string",
+			"description": "错误hash码"
+		},
+		"page_url": {
+			"bsonType": "string",
+			"description": "页面url"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		}
+	}
+}
