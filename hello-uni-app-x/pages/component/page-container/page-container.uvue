@@ -1,0 +1,183 @@
+<template>
+  <scroll-view style="flex: 1">
+    <view class="uni-padding-wrap uni-common-mt">
+      <view class="uni-title uni-common-mt">
+        <text class="uni-title-text"> 弹出位置 </text>
+      </view>
+      <view>
+        <button @click="showContainer('top', '顶部')">顶部弹出</button>
+        <button class="mt-5" @click="showContainer('bottom', '底部')">底部弹出</button>
+        <button id="right-button" class="mt-5" @click="showContainer('right', '右侧')">右侧弹出</button>
+        <!-- #ifndef MP -->
+        <button class="mt-5" @click="showContainer('left', '左侧')">左侧弹出</button>
+        <!-- #endif -->
+        <button class="mt-5" @click="showContainer('center', '居中')">居中弹出</button>
+      </view>
+    </view>
+
+    <view class="uni-padding-wrap uni-common-mt">
+      <view class="uni-title uni-common-mt">
+        <text class="uni-title-text"> 弹窗圆角 </text>
+      </view>
+      <view>
+        <button @click="showRound">圆角</button>
+      </view>
+    </view>
+
+    <view class="uni-padding-wrap uni-common-mt">
+      <view class="uni-title uni-common-mt">
+        <text class="uni-title-text"> 遮罩层 </text>
+      </view>
+      <view>
+        <button @click="showOverlay(false)">不显示蒙层</button>
+        <button class="mt-5" @click="showOverlay(true)">显示蒙层</button>
+        <button class="mt-5" @click="showTransparentOverlay">透明蒙层</button>
+      </view>
+    </view>
+
+    <view class="uni-padding-wrap uni-common-mt" style="margin-bottom: 30px;">
+      <view class="uni-title uni-common-mt">
+        <text class="uni-title-text"> 下滑关闭 </text>
+      </view>
+      <view>
+        <button @click="showSlideDown">支持下滑关闭</button>
+        <text class="slider-down-info">提示: 当 close-on-slide-down=true 时，可下滑关闭容器</text>
+      </view>
+    </view>
+
+    <page-container :show="containerShow" :position="containerPosition" :round="containerRound"
+      :overlay="containerOverlay" :overlay-style="containerOverlayStyle"
+      :close-on-slide-down="containerCloseOnSlideDown" @afterleave="onAfterLeave">
+      <view class="container">
+        <text class="container-title">{{ containerTitle }}</text>
+        <text class="container-content">{{ containerContent }}</text>
+
+        <button @click="closeContainer" type="primary">关闭容器</button>
+        <button class="mt-5" @click="navigateBack">后退页面</button>
+      </view>
+    </page-container>
+  </scroll-view>
+</template>
+
+<script setup lang="uts">
+  const containerShow = ref<boolean>(false)
+  const containerRound = ref<boolean>(false)
+  const containerPosition = ref<string>('bottom')
+  const containerOverlay = ref<boolean>(true)
+  const containerTitle = ref<string>('Page-Container')
+  const containerOverlayStyle = ref<string>('')
+  const containerContent = ref<string>('这是一个 page-container 容器')
+  const containerCloseOnSlideDown = ref<boolean>(false)
+
+  type Data = {
+    onAfterLeaveCallCount: number
+  }
+
+  // 仅用于自动化测试
+  const data = reactive<Data>({
+    onAfterLeaveCallCount: 0
+  })
+
+  function resetConfig() {
+    containerRound.value = false
+    containerPosition.value = 'bottom'
+    containerOverlay.value = true
+    containerCloseOnSlideDown.value = false
+    containerOverlayStyle.value = ''
+  }
+
+  function showContainer(position : string, text: string) {
+    resetConfig()
+    containerPosition.value = position
+    containerShow.value = true
+    containerTitle.value = `Position: ${position}`
+    containerContent.value = `容器从 ${text} 弹出`
+  }
+
+  function showRound() {
+    resetConfig()
+    containerRound.value = true
+    containerShow.value = true
+    containerTitle.value = 'Round: true'
+    containerContent.value = '弹窗圆角: true'
+  }
+
+  function showOverlay(overlay : boolean) {
+    resetConfig()
+    containerOverlay.value = overlay
+    containerShow.value = true
+    containerTitle.value = `Overlay: ${overlay}`
+    containerContent.value = `遮罩层: ${overlay}`
+  }
+
+  function showTransparentOverlay() {
+    resetConfig()
+    containerOverlay.value = true
+    containerOverlayStyle.value = 'background-color: rgba(0, 0, 0, 0);'
+    containerTitle.value = '透明蒙层'
+    containerContent.value = '蒙层开启但完全透明，可以点击蒙层区域关闭'
+    containerShow.value = true
+  }
+
+  function showSlideDown() {
+    resetConfig()
+    containerCloseOnSlideDown.value = true
+    containerShow.value = true
+    containerPosition.value = 'bottom'
+    containerTitle.value = 'Close-on-slide-down: true'
+    containerContent.value = '下滑关闭: true'
+  }
+
+  function onAfterLeave() {
+    containerShow.value = false
+    data.onAfterLeaveCallCount += 1
+  }
+
+  function closeContainer() {
+    containerShow.value = false
+  }
+
+  function navigateBack() {
+    uni.navigateBack()
+  }
+
+  defineExpose({
+    data,
+    showContainer,
+    navigateBack,
+    closeContainer
+  })
+</script>
+
+<style scoped>
+  .container {
+    padding: 20px;
+    background-color: #ffffff;
+    min-height: 300px;
+    min-width: 300px;
+  }
+
+  .container-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .container-content {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+  }
+
+  .mt-5 {
+    margin-top: 5px;
+  }
+
+  .slider-down-info {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    margin-bottom: 20px;
+  }
+</style>

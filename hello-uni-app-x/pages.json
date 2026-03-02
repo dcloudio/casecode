@@ -148,10 +148,19 @@
 			}
 		},
 		// #endif
+		// #ifdef MP-WEIXIN || APP-HARMONY || WEB
+		{
+			"path": "pages/component/page-container/page-container",
+			"group": "0,1,4",
+			"style": {
+				"navigationBarTitleText": "page-container | 页面容器"
+			}
+		},
+		// #endif
 		// #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
 		{
 			"path": "pages/component/list-view/list-view",
-			"group": "0,1,6",
+			"group": "0,1,7",
 			"style": {
 				"navigationBarTitleText": "list-view | 列表容器"
 			}
@@ -235,7 +244,7 @@
 		// #ifdef !VUE3-VAPOR && (APP-ANDROID || APP-IOS || WEB || APP-HARMONY)
 		{
 			"path": "pages/component/sticky-section/sticky-section",
-			"group": "0,1,8,1",
+			"group": "0,1,9,1",
 			"style": {
 				"navigationBarTitleText": "sticky-section | 吸顶布局容器"
 			}
@@ -260,7 +269,7 @@
 		// #ifdef !VUE3-VAPOR && (APP-ANDROID || APP-IOS || WEB || APP-HARMONY)
 		{
 			"path": "pages/component/sticky-header/sticky-header",
-			"group": "0,1,8,0",
+			"group": "0,1,9,0",
 			"style": {
 				"navigationBarTitleText": "sticky-header | 吸顶布局容器",
 				"enablePullDownRefresh": false
@@ -728,7 +737,7 @@
 		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
 		{
 			"path": "pages/component/nested-scroll-header/nested-scroll-header",
-			"group": "0,1,9,0",
+			"group": "0,1,10,0",
 			"style": {
 				"navigationBarTitleText": "nested-scroll-header"
 			}
@@ -737,7 +746,7 @@
 		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
 		{
 			"path": "pages/component/nested-scroll-body/nested-scroll-body",
-			"group": "0,1,9,1",
+			"group": "0,1,10,1",
 			"style": {
 				"navigationBarTitleText": "nested-scroll-body"
 			}
@@ -755,7 +764,7 @@
 		// #ifdef WEB || MP-WEIXIN
 		{
 			"path": "pages/component/movable-view/movable-view",
-			"group": "0,1,4,1",
+			"group": "0,1,5,1",
 			"style": {
 				"navigationBarTitleText": "movable-view | 可拖动视图容器"
 			}
@@ -791,7 +800,7 @@
 		// #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
 		{
 			"path": "pages/component/cover-view/cover-view",
-			"group": "0,1,5,0",
+			"group": "0,1,6,0",
 			"style": {
 				"navigationBarTitleText": "cover-view"
 			}
@@ -932,7 +941,7 @@
 		// #ifdef !VUE3-VAPOR && (APP-ANDROID || APP-IOS || APP-HARMONY)
 		{
 			"path": "pages/component/waterflow/waterflow",
-			"group": "0,1,7",
+			"group": "0,1,8",
 			"style": {
 				"navigationBarTitleText": "waterflow | 瀑布流容器"
 			}
@@ -958,7 +967,7 @@
 		// #ifdef APP-ANDROID || APP-IOS
 		{
 			"path": "pages/component/share-element/share-element",
-			"group": "0,1,10",
+			"group": "0,1,11",
 			"style": {
 				"navigationBarTitleText": "share-element | 共享元素视图容器"
 			}
@@ -2609,6 +2618,12 @@
 						"navigationBarTitleText": "死亡列表性能测试"
 					}
 				},
+				{
+					"path": "waterflow-perf/waterflow-perf",
+					"style": {
+						"navigationBarTitleText": "waterflow滚动加载长列表"
+					}
+				},
         // #endif
 				// #ifdef APP
 				{
@@ -2748,6 +2763,12 @@
           "path": "issue-25934/issue-25934",
           "style": {
             "navigationBarTitleText": "issue-25934"
+          }
+        },
+        {
+          "path": "issue-26523/issue-26523",
+          "style": {
+            "navigationBarTitleText": "issue-26523"
           }
         }
 			]
@@ -3650,6 +3671,10 @@
 						{
 							"id": "component.view-container.match-media",
 							"name": "match-media"
+						},
+						{
+							"id": "component.view-container.page-container",
+							"name": "page-container"
 						},
 						{
 							"id": "component.view-container.movable",
