@@ -1,0 +1,59 @@
+[
+	{
+		"IndexName": "status_is_deleted_sort_order",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "status", "Direction": "1", "Type": "int" },
+				{ "Name": "is_deleted", "Direction": "1", "Type": "bool" },
+				{ "Name": "sort_order", "Direction": "-1", "Type": "int" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "category_status_is_deleted",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "category", "Direction": "1" },
+				{ "Name": "status", "Direction": "1", "Type": "int" },
+				{ "Name": "is_deleted", "Direction": "1", "Type": "bool" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "score_cost",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "score_cost", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "status",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "status", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "is_deleted",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "is_deleted", "Direction": "1", "Type": "bool" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "images",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "images", "Direction": "1", "Type": "array" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "detail_images",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "detail_images", "Direction": "1", "Type": "array" }],
+			"MgoIsUnique": false
+		}
+	}
+]

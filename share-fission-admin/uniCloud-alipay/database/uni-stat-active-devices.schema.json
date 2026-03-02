@@ -1,0 +1,67 @@
+// 活跃设备表
+{
+	"bsonType": "object",
+	"description": "给周月维度的设备基础统计和留存统计提供数据，每日跑批合并，仅添加本周/本月首次访问的设备",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "应用ID"
+		},
+		"platform_id": {
+			"bsonType": "string",
+			"description": "应用平台ID，对应uni-stat-app-platforms._id",
+			"foreignKey": "uni-stat-app-platforms._id"
+		},
+		"channel_id": {
+			"bsonType": "string",
+			"description": "渠道\/场景值ID，对应uni-stat-app-channels._id",
+			"foreignKey": "uni-stat-app-channels._id"
+		},
+		"version_id": {
+			"bsonType": "string",
+			"description": "应用版本ID，对应opendb-app-versions._id",
+			"foreignKey": "opendb-app-versions._id"
+		},
+		"device_id": {
+			"bsonType": "string",
+			"description": "客户端携带的设备标识"
+		},
+		"is_new": {
+			"bsonType": "int",
+			"description": "是否为新设备",
+			"defaultValue": 0,
+			"enum": [{
+				"text": "否",
+				"value": 0
+			}, {
+				"text": "是",
+				"value": 1
+			}]
+		},
+		"dimension": {
+			"bsonType": "string",
+			"description": "时间范围 week:周，month:月",
+			"enum": [{
+				"text": "月",
+				"value": "month"
+			}, {
+				"text": "周",
+				"value": "week"
+			}]
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		}
+	}
+}

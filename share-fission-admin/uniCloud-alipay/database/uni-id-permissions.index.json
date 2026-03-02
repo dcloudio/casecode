@@ -1,0 +1,14 @@
+[
+    {
+        "IndexName": "permission_id",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "permission_id",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": true
+        }
+    }
+]

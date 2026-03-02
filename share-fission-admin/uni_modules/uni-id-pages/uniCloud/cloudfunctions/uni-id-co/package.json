@@ -1,0 +1,27 @@
+{
+    "name": "uni-id-co",
+    "version": "1.1.27",
+    "description": "",
+    "main": "index.js",
+    "keywords": [],
+    "author": "DCloud",
+    "dependencies": {
+        "uni-captcha": "file:..\/..\/..\/..\/uni-captcha\/uniCloud\/cloudfunctions\/common\/uni-captcha",
+        "uni-config-center": "file:..\/..\/..\/..\/uni-config-center\/uniCloud\/cloudfunctions\/common\/uni-config-center",
+        "uni-id-common": "file:..\/..\/..\/..\/uni-id-common\/uniCloud\/cloudfunctions\/common\/uni-id-common",
+        "uni-open-bridge-common": "file:..\/..\/..\/..\/uni-open-bridge-common\/uniCloud\/cloudfunctions\/common\/uni-open-bridge-common",
+        "uni-cloud-s2s": "file:..\/..\/..\/..\/uni-cloud-s2s\/uniCloud\/cloudfunctions\/common\/uni-cloud-s2s"
+    },
+    "extensions": {
+        "uni-cloud-redis": {},
+        "uni-cloud-sms": {},
+        "uni-cloud-verify": {}
+    },
+    "cloudfunction-config": {
+        "keepRunningAfterReturn": false
+    },
+    "origin-plugin-dev-name": "uni-id-pages",
+    "origin-plugin-version": "1.1.27",
+    "plugin-dev-name": "uni-starter",
+    "plugin-version": "2.2.14"
+}

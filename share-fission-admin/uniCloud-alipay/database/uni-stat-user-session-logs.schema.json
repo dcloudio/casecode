@@ -1,0 +1,82 @@
+// 用户会话日志表
+{
+	"bsonType": "object",
+	"description": "记录登录用户的会话日志",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "客户端携带的应用ID"
+		},
+		"version": {
+			"bsonType": "string",
+			"description": "客户端上报的应用版本号"
+		},
+		"platform": {
+			"bsonType": "string",
+			"description": "客户端上报的平台code"
+		},
+		"channel": {
+			"bsonType": "string",
+			"description": "客户端上报的渠道code\/场景值"
+		},
+		"session_id": {
+			"bsonType": "string",
+			"description": "访问会话日志ID，对应uni-stat-session-logs._id",
+			"foreignKey": "uni-stat-session-logs._id"
+		},
+		"uid": {
+			"bsonType": "string",
+			"description": "本次会话最终访问用户的ID, uni-id-users._id"
+		},
+		"last_visit_time": {
+			"bsonType": "timestamp",
+			"description": "用户最后一次访问时间"
+		},
+		"entry_page_id": {
+			"bsonType": "string",
+			"description": "本次会话入口页面ID, 同uni-stat-pagesd"
+		},
+		"exit_page_id": {
+			"bsonType": "string",
+			"description": "本次会话退出页面ID, 同uni-stat-pagesd"
+		},
+		"page_count": {
+			"bsonType": "int",
+			"description": "本次会话浏览的页面数"
+		},
+		"event_count": {
+			"bsonType": "int",
+			"description": "本次会话产生的事件数"
+		},
+		"duration": {
+			"bsonType": "int",
+			"description": "本次会话时长，单位为秒，服务端计算"
+		},
+		"is_finish": {
+			"bsonType": "int",
+			"defaultValue": 0,
+			"description": "本次会话是否结束，0：否，1是",
+			"enum": [{
+				"text": "否",
+				"value": 0
+			}, {
+				"text": "是",
+				"value": 1
+			}]
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		}
+	}
+}

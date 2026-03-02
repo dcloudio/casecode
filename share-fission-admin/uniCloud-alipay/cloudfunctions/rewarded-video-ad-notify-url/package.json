@@ -1,0 +1,19 @@
+{
+    "name": "rewarded-video-ad-notify-url",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "sign-in": "file:..\/common\/sign-in",
+        "uni-config-center": "file:..\/..\/..\/..\/uni-config-center\/uniCloud\/cloudfunctions\/common\/uni-config-center"
+    },
+    "origin-plugin-dev-name": "uni-template-admin",
+    "origin-plugin-version": "2.5.13",
+    "plugin-dev-name": "uni-template-admin",
+    "plugin-version": "2.5.13"
+}

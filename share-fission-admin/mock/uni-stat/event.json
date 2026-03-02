@@ -1,0 +1,87 @@
+{
+  "last_page": 1,
+  "current_page": 1,
+  "total": 10,
+  "item": [
+    {
+      "id_event": 3,
+      "event_key": "login",
+      "event_name": "登录事件",
+      "num_visitor": "65",
+      "num_visits": "666",
+      "visitor_avg_hits": "10.25"
+    },
+    {
+      "id_event": 30,
+      "event_key": "share",
+      "event_name": "分享",
+      "num_visitor": "18",
+      "num_visits": "164",
+      "visitor_avg_hits": "9.11"
+    },
+    {
+      "id_event": 82,
+      "event_key": "pay_fail",
+      "event_name": "支付失败",
+      "num_visitor": "11",
+      "num_visits": "145",
+      "visitor_avg_hits": "13.18"
+    },
+    {
+      "id_event": 841,
+      "event_key": "加入购物车",
+      "event_name": "",
+      "num_visitor": "13",
+      "num_visits": "74",
+      "visitor_avg_hits": "5.69"
+    },
+    {
+      "id_event": 840,
+      "event_key": "收藏",
+      "event_name": "",
+      "num_visitor": "13",
+      "num_visits": "57",
+      "visitor_avg_hits": "4.38"
+    },
+    {
+      "id_event": 842,
+      "event_key": "立即购买",
+      "event_name": "",
+      "num_visitor": "12",
+      "num_visits": "54",
+      "visitor_avg_hits": "4.50"
+    },
+    {
+      "id_event": 844,
+      "event_key": "取消收藏",
+      "event_name": "",
+      "num_visitor": "8",
+      "num_visits": "32",
+      "visitor_avg_hits": "4.00"
+    },
+    {
+      "id_event": 161,
+      "event_key": "pay_success",
+      "event_name": "支付成功",
+      "num_visitor": "1",
+      "num_visits": "11",
+      "visitor_avg_hits": "11.00"
+    },
+    {
+      "id_event": 94522,
+      "event_key": "ipa",
+      "event_name": "",
+      "num_visitor": "1",
+      "num_visits": "2",
+      "visitor_avg_hits": "2.00"
+    },
+    {
+      "id_event": 281238,
+      "event_key": "iapstatus",
+      "event_name": "",
+      "num_visitor": "1",
+      "num_visits": "2",
+      "visitor_avg_hits": "2.00"
+    }
+  ]
+}

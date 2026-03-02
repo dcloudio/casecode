@@ -1,0 +1,18 @@
+[
+    {
+        "IndexName": "index_search_page",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "appid",
+                    "Direction": "1"
+                },
+                {
+                    "Name": "path",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": true
+        }
+    }
+]

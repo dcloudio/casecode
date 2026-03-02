@@ -1,0 +1,52 @@
+{
+	"bsonType": "object",
+	"required": ["tagid", "name"],
+	"permission": {
+		"read": "'READ_UNI_ID_TAG' in auth.permission",
+		"create": "'CREATE_UNI_ID_TAG' in auth.permission",
+		"update": "'UPDATE_UNI_ID_TAG' in auth.permission",
+		"delete": "'DELETE_UNI_ID_TAG' in auth.permission"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"tagid": {
+			"bsonType": "string",
+			"description": "标签tagid",
+			"label": "标签tagid",
+			"componentForEdit": {
+				"name": "uni-easyinput"
+			}
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "标签名称",
+			"label": "标签名称",
+			"componentForEdit": {
+				"name": "uni-easyinput"
+			}
+		},
+		"description": {
+			"bsonType": "string",
+			"description": "标签描述",
+			"label": "标签描述",
+			"componentForEdit": {
+				"name": "textarea"
+			},
+			"componentForShow": {
+				"name": "textarea"
+			}
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"label": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			},
+			"componentForEdit": {
+				"name": "uni-dateformat"
+			}
+		}
+	}
+}
