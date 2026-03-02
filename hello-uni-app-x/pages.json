@@ -148,7 +148,7 @@
 			}
 		},
 		// #endif
-		// #ifdef MP-WEIXIN || APP-HARMONY || WEB
+		// #ifdef MP-WEIXIN || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/component/page-container/page-container",
 			"group": "0,1,4",
@@ -2603,7 +2603,7 @@
 						"enablePullDownRefresh": true
 					}
 				},
-        // #ifdef VUE3-VAPOR && APP || WEB
+        // #ifdef APP || WEB
 				{
 					"path": "long-list-deleteable/long-list-deleteable",
 					"style": {

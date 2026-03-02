@@ -144,7 +144,7 @@
       open: false,
       pages: [] as Page[],
     },
-    // #ifdef VUE3-VAPOR && APP || WEB
+    // #ifdef APP || WEB
     {
       id: 'long-list-deleteable',
       url: 'long-list-deleteable',
