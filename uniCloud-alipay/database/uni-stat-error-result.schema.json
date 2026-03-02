@@ -1,0 +1,96 @@
+// 错误数据统计结果表
+{
+	"bsonType": "object",
+	"description": "存储汇总的错误日志的数据",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_ERROR_RESULT' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "应用ID"
+		},
+		"platform_id": {
+			"bsonType": "string",
+			"description": "应用平台ID，对应uni-stat-app-platforms._id",
+			"foreignKey": "uni-stat-app-platforms._id"
+		},
+		"channel_id": {
+			"bsonType": "string",
+			"description": "渠道\/场景值ID，对应uni-stat-app-channels._id",
+			"foreignKey": "uni-stat-app-channels._id"
+		},
+		"version_id": {
+			"bsonType": "string",
+			"description": "应用版本ID，对应opendb-app-versions._id",
+			"foreignKey": "opendb-app-versions._id"
+		},
+		"type": {
+			"bsonType": "string",
+			"description": "错误类型",
+			"enum": [{
+				"text": "前端js错误",
+				"value": "js"
+			}, {
+				"text": "原生应用崩溃错误",
+				"value": "crash"
+			}]
+		},
+		"hash": {
+			"bsonType": "string",
+			"description": "错误hash码"
+		},
+		"msg": {
+			"bsonType": "string",
+			"description": "错误信息"
+		},
+		"count": {
+			"bsonType":"int",
+			"description":"报错次数"
+		},
+		"app_launch_count": {
+			"bsonType": "int",
+			"description": "本时间段App启动或从后台切到前台的次数"
+		},
+		"last_time": {
+			"bsonType":"timestamp",
+			"description":"最近一次报错事件"
+		},
+		"dimension": {
+			"bsonType": "string",
+			"description": "统计范围 day:按天统计，hour:按小时统计",
+			"enum": [{
+				"text": "月",
+				"value": "month"
+			}, {
+				"text": "周",
+				"value": "week"
+			},{
+				"text": "天",
+				"value": "day"
+			}, {
+				"text": "小时",
+				"value": "hour"
+			}]
+		},
+		"stat_date":{
+			"bsonType":"int",
+			"description":"统计日期，格式yyyymmdd，例:20211201"
+		},
+		"start_time":{
+			"bsonType":"timestamp",
+			"description":"开始时间"
+		},
+		"end_time":{
+			"bsonType":"timestamp",
+			"description":"结束时间"
+		}
+	}
+}

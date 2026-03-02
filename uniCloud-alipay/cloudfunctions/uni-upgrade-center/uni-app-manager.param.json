@@ -1,0 +1,10 @@
+// 本文件中的json内容将在云函数【运行】时作为参数传给云函数。
+
+// 配置教程参考：https://uniapp.dcloud.net.cn/uniCloud/quickstart?id=runparam
+
+{
+	"action": "checkVersion",
+	"appid": "__UNI__HelloUNIApp",
+	"appVersion": "1.0.0",
+	"wgtVersion": "1.0.0"
+}

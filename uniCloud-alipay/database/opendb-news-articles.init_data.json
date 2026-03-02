@@ -1,0 +1,17 @@
+[
+  {
+    "title": "阿里小程序IDE官方内嵌uni-app，为开发者提供多端开发服务",
+    "excerpt": "阿里小程序IDE官方内嵌uni-app，为开发者提供多端开发服务",
+    "content": "<p>随着微信、阿里、百度、头条、QQ纷纷推出小程序，开发者的开发维护成本持续上升，负担过重。这点已经成为共识，现在连小程序平台厂商也充分意识到了。</p>\n<p>阿里小程序团队，为了减轻开发者的负担，在官方的小程序开发者工具中整合了多端框架。</p>\n<p>经过阿里团队仔细评估，uni-app 在产品完成度、跨平台支持度、开发者社区、可持续发展等多方面优势明显，最终选定 uni-app内置于阿里小程序开发工具中，为开发者提供多端开发解决方案。</p>\n<p>经过之前1个月的公测，10月10日，阿里小程序正式发布0.70版开发者工具，通过 uni-app 实现多端开发，成为本次版本更新的亮点功能！</p>\n<p>如下图，在阿里小程序工具左侧主导航选择 uni-app，创建项目，即可开发。</p>\n<div class=\"aw-comment-upload-img-list active\"><img class=\"img-polaroid\" width=\"100%\" src=\"https://ask.dcloud.net.cn/uploads/article/20191014/56f7dc1bd5f265e824649f7cb4f78d5b.png\" /></div>\n<p><br />阿里小程序开发工具更新说明详见：https://docs.alipay.com/mini/ide/0.70-stable</p>\n<p>&nbsp;</p>\n<p>集成uni-app，这对于阿里团队而言，并不是一个容易做出的决定。毕竟 uni-app 是一个三方产品，要经过复杂的评审流程。</p>\n<p>这一方面突显出阿里团队以开发者需求为本的优秀价值观，另一方面也证明 uni-app的产品确实过硬。</p>\n<p>很多开发者都有多端需求，但又没有足够精力去了解、评估 uni-app，而处于观望态度。现在大家可以更放心的使用 uni-app 了，它没有让阿里失望，也不会让你失望。</p>\n<p>自从uni-app推出以来，DCloud也取得了高速的发展，目前拥有370万开发者，框架运行在4.6亿手机用户设备上，月活达到1.35亿（仅包括部分接入DCloud统计平台的数据）。并且数据仍在高速增长中，在市场占有率上处于遥遥领先的位置。</p>\n<p>本次阿里小程序工具集成 uni-app，会让 uni-app 继续快速爆发，取得更大的成功。</p>\n<p>后续DCloud还将深化与阿里的合作，在serverless等领域给开发者提供更多优质服务。</p>\n<p>使用多端框架开发各端应用，是多赢的模式。开发者减轻了负担，获得了更多新流量。而小程序平台厂商，也能保证自己平台上的各种应用可以被及时的更新。</p>\n<p>DCloud欢迎更多小程序平台厂商，与我们一起合作，为开发者、平台、用户的多赢而努力。</p>\n<p>进一步了解uni-app，详见：https://uniapp.dcloud.io</p>\n<p>欢迎扫码关注DCloud公众号，转发消息到朋友圈。<br /><img src=\"https://web-assets.dcloud.net.cn/unidoc/zh/weixin.jpg\"  width=\"80%\" /></p>",
+    "avatar": "https://ask.dcloud.net.cn/uploads/article/20191014/56f7dc1bd5f265e824649f7cb4f78d5b.png",
+    "type": 0,
+    "user_id": "_uni_starter_test_user_id",
+    "comment_count": 0,
+    "like_count": 0,
+    "comment_status": 0,
+    "article_status": 1,
+    "publish_date": 1616092287006,
+    "last_modify_date": 1616092303031,
+    "create_date": 1616092287006
+  }
+]

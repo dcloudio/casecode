@@ -1,0 +1,22 @@
+[
+    {
+        "IndexName": "index_search_version",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "appid",
+                    "Direction": "1"
+                },
+                {
+                    "Name": "platform_id",
+                    "Direction": "1"
+                },
+                {
+                    "Name": "version",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": true
+        }
+    }
+]

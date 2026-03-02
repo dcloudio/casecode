@@ -1,0 +1,22 @@
+[
+    {
+        "IndexName": "index_search_channel",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "appid",
+                    "Direction": "1"
+                },
+                {
+                    "Name": "platform_id",
+                    "Direction": "1"
+                },
+                {
+                    "Name": "channel_code",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": true
+        }
+    }
+]

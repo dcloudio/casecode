@@ -1,0 +1,192 @@
+// 应用会话日志表
+{
+	"bsonType": "object",
+	"description": "记录设备访问时产生的会话日志",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "客户端上报的应用ID"
+		},
+		"version": {
+			"bsonType": "string",
+			"description": "客户端上报的应用版本号"
+		},
+		"platform": {
+			"bsonType": "string",
+			"description": "客户端上报的平台code"
+		},
+		"channel": {
+			"bsonType": "string",
+			"description": "客户端上报的渠道code\/场景值"
+		},
+		"type": {
+			"bsonType": "string",
+			"description": "会话类型",
+			"defaultValue": 1,
+			"enum": [{
+				"text": "正常进入上报",
+				"value": 1
+			}, {
+				"text": "后台进前台超时上报",
+				"value": 2
+			}, {
+				"text": "页面停留超时上报",
+				"value": 3
+			}]
+		},
+		"device_id": {
+			"bsonType": "string",
+			"description": "客户端携带的设备标识"
+		},
+		"last_visit_user_id": {
+			"bsonType": "string",
+			"description": "本次会话最终访问用户的ID, uni-id-users._id，客户端上报"
+		},
+		"is_first_visit": {
+			"bsonType": "int",
+			"description": "是否为首次访问",
+			"defaultValue": 0,
+			"enum": [{
+				"text": "否",
+				"value": 0
+			}, {
+				"text": "是",
+				"value": 1
+			}]
+		},
+		"first_visit_time": {
+			"bsonType": "timestamp",
+			"description": "用户首次访问时间"
+		},
+		"last_visit_time": {
+			"bsonType": "timestamp",
+			"description": "用户最后一次访问时间"
+		},
+		"total_visit_count": {
+			"bsonType": "int",
+			"description": "用户累计访问次数，客户端上报"
+		},
+		"entry_page_id": {
+			"bsonType": "string",
+			"description": "本次会话入口页面ID, 同uni-stat-pagesd"
+		},
+		"exit_page_id": {
+			"bsonType": "string",
+			"description": "本次会话退出页面ID, 同uni-stat-pagesd"
+		},
+		"page_count": {
+			"bsonType": "int",
+			"description": "本次会话浏览的页面数"
+		},
+		"event_count": {
+			"bsonType": "int",
+			"description": "本次会话产生的事件数"
+		},
+		"duration": {
+			"bsonType": "int",
+			"description": "本次会话时长，单位为秒，服务端计算"
+		},
+		"sdk_version": {
+			"bsonType": "string",
+			"description": "基础库版本号"
+		},
+		"platform_version": {
+			"bsonType": "string",
+			"description": "平台版本，如微信、支付宝宿主App版本号"
+		},
+		"device_os": {
+			"bsonType": "int",
+			"description": "设备系统编号，1：安卓，2：iOS，3：PC"
+		},
+		"device_os_version": {
+			"bsonType": "string",
+			"description": "设备系统版本"
+		},
+		"device_net": {
+			"bsonType": "string",
+			"description": "设备网络型号wifi\/3G\/4G\/"
+		},
+		"device_vendor": {
+			"bsonType": "string",
+			"description": "设备供应商 "
+		},
+		"device_model": {
+			"bsonType": "string",
+			"description": "设备型号"
+		},
+		"device_language": {
+			"bsonType": "string",
+			"description": "设备语言包"
+		},
+		"device_pixel_ratio": {
+			"bsonType": "string",
+			"description": "设备像素比 "
+		},
+		"device_window_width": {
+			"bsonType": "string",
+			"description": "设备窗口宽度 "
+		},
+		"device_window_height": {
+			"bsonType": "string",
+			"description": "设备窗口高度"
+		},
+		"device_screen_width": {
+			"bsonType": "string",
+			"description": "设备屏幕宽度"
+		},
+		"device_screen_height": {
+			"bsonType": "string",
+			"description": "设备屏幕高度"
+		},
+		"location_ip": {
+			"bsonType": "string",
+			"description": "ip"
+		},
+		"location_latitude": {
+			"bsonType": "double",
+			"description": "纬度"
+		},
+		"location_longitude": {
+			"bsonType": "double",
+			"description": "经度"
+		},
+		"location_country": {
+			"bsonType": "string",
+			"description": "国家"
+		},
+		"location_province": {
+			"bsonType": "string",
+			"description": "省份"
+		},
+		"location_city": {
+			"bsonType": "string",
+			"description": "城市"
+		},
+		"is_finish": {
+			"bsonType": "int",
+			"defaultValue": 0,
+			"description": "本次会话是否结束，0：否，1是",
+			"enum": [{
+				"text": "否",
+				"value": 0
+			}, {
+				"text": "是",
+				"value": 1
+			}]
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		}
+	}
+}

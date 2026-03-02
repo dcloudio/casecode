@@ -1,0 +1,52 @@
+{
+	"bsonType": "object",
+	"required": ["permission_id", "permission_name"],
+	"permission": {
+		"read": "'READ_UNI_ID_PERMISSIONS' in auth.permission",
+		"create": "'CREATE_UNI_ID_PERMISSIONS' in auth.permission",
+		"update": "'UPDATE_UNI_ID_PERMISSIONS' in auth.permission",
+		"delete": "'DELETE_UNI_ID_PERMISSIONS' in auth.permission"
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID，系统自动生成"
+		},
+		"comment": {
+			"bsonType": "string",
+			"component": {
+				"name": "textarea"
+			},
+			"description": "备注",
+			"label": "备注",
+			"title": "备注",
+			"trim": "both"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"permission_id": {
+			"bsonType": "string",
+			"component": {
+				"name": "input"
+			},
+			"description": "权限唯一标识，不可修改，不允许重复",
+			"label": "权限标识",
+			"title": "权限ID",
+			"trim": "both"
+		},
+		"permission_name": {
+			"bsonType": "string",
+			"component": {
+				"name": "input"
+			},
+			"description": "权限名称",
+			"label": "权限名称",
+			"title": "权限名称",
+			"trim": "both"
+		}
+	}
+}

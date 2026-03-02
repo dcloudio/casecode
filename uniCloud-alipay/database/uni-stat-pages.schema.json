@@ -1,0 +1,38 @@
+// 应用页面表
+{
+	"bsonType": "object",
+	"description": "提供应用的页面字典",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_PAGES' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "统计应用ID，对应opendb-app-list.appid",
+			"foreignKey": "opendb-app-list.appid"
+		},
+		"path": {
+			"bsonType": "string",
+			"description": "页面路径，如`\/pages\/index\/index`"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "页面标题"
+		},
+		"page_rules": {
+			"bsonType": "array",
+			"description": "页面规则，每个页面最多设置5个，例：[['id','page'],['sid']]"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		}
+	}
+}

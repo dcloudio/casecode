@@ -1,0 +1,41 @@
+[
+  {
+    "status": true,
+    "bannerfile": {
+      "name": "094a9dc0-50c0-11eb-b680-7980c8a877b8.jpg",
+      "extname": "jpg",
+      "fileType": "image",
+      "url": "https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg",
+      "size": 70880,
+      "image": {
+        "width": 500,
+        "height": 333
+      },
+      "path": "https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg"
+    },
+    "open_url": "https://www.dcloud.io/",
+    "title": "测试",
+    "sort": 1,
+    "category_id": "",
+    "description": ""
+  },
+  {
+    "status": true,
+    "bannerfile": {
+      "name": "094a9dc0-50c0-11eb-b680-7980c8a877b8.jpg",
+      "extname": "jpg",
+      "fileType": "image",
+      "url": "https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg",
+      "size": 70880,
+      "image": {
+        "width": 500,
+        "height": 333
+      },
+      "path": "https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg"
+    },
+    "open_url": "https://www.dcloud.io/",
+    "title": "",
+    "category_id": "",
+    "description": ""
+  }
+]

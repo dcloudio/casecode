@@ -1,0 +1,51 @@
+[
+    {
+        "IndexName": "appid",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "appid",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "base",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "base",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "cloud_path",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "cloud_path",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "create_time",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "create_time",
+                    "Direction": "1",
+										"Type": "long"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    }
+]

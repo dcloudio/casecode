@@ -1,0 +1,39 @@
+[
+    {
+        "IndexName": "menu_id",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "menu_id",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": true
+        }
+    },
+    {
+        "IndexName": "parent_id",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "parent_id",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "permission",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "permission",
+                    "Direction": "1",
+										"Type": "array"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    }
+]

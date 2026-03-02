@@ -1,0 +1,137 @@
+// 原生应用崩溃日志表
+{
+	"bsonType": "object",
+	"description": "记录原生应用的崩溃日志",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_APP_CRASH_LOGS' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "用户端上报的应用ID"
+		},
+		"version": {
+			"bsonType": "string",
+			"description": "用户端上报的应用版本号。manifest.json中的version->name的值"
+		},
+		"platform": {
+			"bsonType": "string",
+			"description": "用户端上报的平台code"
+		},
+		"channel": {
+			"bsonType": "string",
+			"description": "用户端上报的渠道code\/场景值"
+		},
+		"sdk_version": {
+			"bsonType": "string",
+			"description": "基础库版本号"
+		},
+		"device_id": {
+			"bsonType": "string",
+			"description": "客户端携带的设备标识"
+		},
+		"device_net": {
+			"bsonType": "string",
+			"description": "设备网络型号wifi\/3G\/4G\/"
+		},
+		"device_os": {
+			"bsonType": "string",
+			"description": "系统版本：iOS平台为系统版本号，如15.1；Android平台为API等级，如30"
+		},
+		"device_os_version": {
+			"bsonType": "string",
+			"description": "系统版本名称：iOS平台与os字段一致；Android平台为版本名称，如5.1.1"
+		},
+		"device_vendor": {
+			"bsonType": "string",
+			"description": "设备供应商 "
+		},
+		"device_model": {
+			"bsonType": "string",
+			"description": "设备型号"
+		},
+		"device_is_root": {
+			"bsonType": "int",
+			"description": "是否root：1表示root；0表示未root"
+		},
+		"device_os_name": {
+			"bsonType": "string",
+			"description": "系统名称：用于区别Android和鸿蒙，仅Android支持"
+		},
+		"device_batt_level": {
+			"bsonType": "int",
+			"description": "设备电池电量：取值范围0-100，仅Android支持"
+		},
+		"device_batt_temp": {
+			"bsonType": "string",
+			"description": "电池温度，仅Android支持"
+		},
+		"device_memory_use_size": {
+			"bsonType": "int",
+			"description": "系统已使用内存，单位为Byte，仅Android支持"
+		},
+		"device_memory_total_size": {
+			"bsonType": "int",
+			"description": "系统总内存，单位为Byte，仅Android支持"
+		},
+		"device_disk_use_size": {
+			"bsonType": "int",
+			"description": "系统磁盘已使用大小，单位为Byte，仅Android支持"
+		},
+		"device_disk_total_size": {
+			"bsonType": "int",
+			"description": "系统磁盘总大小，单位为Byte，仅Android支持"
+		},
+		"device_abis": {
+			"bsonType": "string",
+			"description": "设备支持的CPU架构：多个使用,分割，如arm64-v8a,armeabi-v7a,armeabi，仅Android支持"
+		},
+		"app_count": {
+			"bsonType": "int",
+			"description": "运行的app个数：包括运行的uni小程序数目。独立App时值为1"
+		},
+		"app_use_memory_size": {
+			"bsonType": "int",
+			"description": "APP使用的内存量，单位为Byte"
+		},
+		"app_webview_count": {
+			"bsonType": "int",
+			"description": "打开Webview窗口的个数"
+		},
+		"app_use_duration": {
+			"bsonType": "int",
+			"description": "APP使用时长：单位为s"
+		},
+		"app_run_fore": {
+			"bsonType": "int",
+			"description": "是否前台运行：1表示前台运行，0表示后台运行"
+		},
+		"package_name": {
+			"bsonType": "string",
+			"description": "原生应用包名"
+		},
+		"package_version": {
+			"bsonType": "string",
+			"description": "Android的apk版本名称；iOS的ipa版本名称"
+		},
+		"page_url": {
+			"bsonType": "string",
+			"description": "页面url"
+		},
+		"error_msg": {
+			"bsonType": "string",
+			"description": "错误信息"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "客户端记录到的崩溃时间"
+		}
+	}
+}
