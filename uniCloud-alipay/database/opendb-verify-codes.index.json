@@ -1,0 +1,62 @@
+[
+    {
+        "IndexName": "mobile_code_",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "mobile",
+                    "Direction": "1"
+                },
+                {
+                    "Name": "code",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "email_code_",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "email",
+                    "Direction": "1"
+                },
+                {
+                    "Name": "code",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "device_uuid_code_",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "device_uuid",
+                    "Direction": "1"
+                },
+                {
+                    "Name": "code",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "expired_data_",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "expired_date",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    }
+]

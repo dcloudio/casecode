@@ -1,0 +1,163 @@
+[
+    {
+        "IndexName": "create_time",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "create_time",
+                    "Direction": "1",
+										"Type": "long"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "appid",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "appid",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "version",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "version",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "platform",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "platform",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "channel",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "channel",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "device_id",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "device_id",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "is_first_visit",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "is_first_visit",
+                    "Direction": "1",
+										"Type": "int"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "page_count",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "page_count",
+                    "Direction": "1",
+										"Type": "int"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+		{
+		    "IndexName": "duration",
+		    "MgoKeySchema": {
+		        "MgoIndexKeys": [
+		            {
+		                "Name": "duration",
+		                "Direction": "1",
+										"Type": "int"
+		            }
+		        ],
+		        "MgoIsUnique": false
+		    }
+		},
+		{
+			"IndexName": "old_device_id",
+			"MgoKeySchema": {
+			    "MgoIndexKeys": [
+			        {
+			            "Name": "old_device_id",
+			            "Direction": "1"
+			        }
+			    ],
+			    "MgoIsUnique": false
+			}
+		},
+		{
+			"IndexName": "is_finish",
+			"MgoKeySchema": {
+			    "MgoIndexKeys": [
+			        {
+			            "Name": "is_finish",
+			            "Direction": "1",
+									"Type": "int"
+			        }
+			    ],
+			    "MgoIsUnique": false
+			}
+		},
+		{
+			"IndexName": "exit_page_id",
+			"MgoKeySchema": {
+			    "MgoIndexKeys": [
+			        {
+			            "Name": "exit_page_id",
+			            "Direction": "1"
+			        }
+			    ],
+			    "MgoIsUnique": false
+			}
+		},
+		{
+			"IndexName": "entry_page_id",
+			"MgoKeySchema": {
+			    "MgoIndexKeys": [
+			        {
+			            "Name": "entry_page_id",
+			            "Direction": "1"
+			        }
+			    ],
+			    "MgoIsUnique": false
+			}
+		}
+]

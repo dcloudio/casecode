@@ -1,0 +1,40 @@
+[
+	{
+		"IndexName": "type",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "type", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "type_create_time",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "type", "Direction": "1" },
+				{ "Name": "create_time", "Direction": "-1", "Type": "long" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "create_time",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "create_time", "Direction": "-1", "Type": "long" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "related_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "related_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "score_change",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "score_change", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	}
+]

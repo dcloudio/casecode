@@ -1,0 +1,68 @@
+{
+	"bsonType": "object",
+	"required": ["article_id", "user_id", "comment_content", "like_count", "comment_type", "reply_user_id",
+		"reply_comment_id"
+	],
+	"permission": {
+		"read": true,
+		"create": "auth.uid != null && get(`database.opendb-news-articles.${doc.article_id}`).comment_status == 1",
+		"update": "doc.user_id == auth.uid",
+		"delete": "doc.user_id == auth.uid"
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（文章 ID），系统自动生成"
+		},
+		"article_id": {
+			"bsonType": "string",
+			"description": "文章ID，opendb-news-posts 表中的`_id`字段",
+			"foreignKey": "opendb-news-articles._id"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "评论者ID，参考`uni-id-users` 表",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
+		"comment_content": {
+			"bsonType": "string",
+			"description": "评论内容",
+			"title": "评论内容",
+			"trim": "right"
+		},
+		"like_count": {
+			"bsonType": "int",
+			"description": "评论喜欢数、点赞数"
+		},
+		"comment_type": {
+			"bsonType": "int",
+			"description": "回复类型： 0 针对文章的回复  1 针对评论的回复"
+		},
+		"reply_user_id": {
+			"bsonType": "string",
+			"description": "被回复的评论用户ID，comment_type为1时有效",
+			"foreignKey": "uni-id-users._id"
+		},
+		"reply_comment_id": {
+			"bsonType": "string",
+			"description": "被回复的评论ID，comment_type为1时有效",
+			"foreignKey": "opendb-news-comments._id"
+		},
+		"comment_date": {
+			"bsonType": "timestamp",
+			"description": "评论发表时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"comment_ip": {
+			"bsonType": "string",
+			"description": "评论发表时 IP 地址",
+			"forceDefaultValue": {
+				"$env": "clientIP"
+			}
+		}
+	}
+}

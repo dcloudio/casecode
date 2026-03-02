@@ -1,0 +1,132 @@
+{
+  "last_page": 16,
+  "current_page": 1,
+  "total": 315,
+  "item": [
+    {
+      "id_page": 8,
+      "url": "pages/tabBar/forum/forum",
+      "name": "社区",
+      "rules": [
+        "id",
+        "type"
+      ]
+    },
+    {
+      "id_page": 9,
+      "url": "pages/forum/detail/detail",
+      "name": "社区详情",
+      "rules": [
+        "id,type"
+      ]
+    },
+    {
+      "id_page": 10,
+      "url": "pages/tabBar/center/center",
+      "name": "个人中心",
+      "rules": null
+    },
+    {
+      "id_page": 11,
+      "url": "pages/tabBar/case/case",
+      "name": "实例",
+      "rules": null
+    },
+    {
+      "id_page": 16,
+      "url": "pages/tabBar/component/component",
+      "name": "组件",
+      "rules": null
+    },
+    {
+      "id_page": 17,
+      "url": "pages/tabBar/API/API",
+      "name": "API",
+      "rules": null
+    },
+    {
+      "id_page": 18,
+      "url": "pages/tabBar/extUI/extUI",
+      "name": "扩展组件",
+      "rules": null
+    },
+    {
+      "id_page": 19,
+      "url": "pages/tabBar/template/template",
+      "name": "模版",
+      "rules": null
+    },
+    {
+      "id_page": 20,
+      "url": "pages/template/mpvue-picker/mpvue-picker",
+      "name": "多列选择picker",
+      "rules": null
+    },
+    {
+      "id_page": 21,
+      "url": "pages/template/tabbar/tabbar",
+      "name": "可拖动顶部选项卡",
+      "rules": null
+    },
+    {
+      "id_page": 22,
+      "url": "pages/template/scrollmsg/scrollmsg",
+      "name": "滚动公告",
+      "rules": null
+    },
+    {
+      "id_page": 23,
+      "url": "pages/template/datachecker/datachecker",
+      "name": "表单校验",
+      "rules": null
+    },
+    {
+      "id_page": 24,
+      "url": "pages/extUI/swipe-action/swipe-action",
+      "name": "SwipeAction 滑动操作",
+      "rules": null
+    },
+    {
+      "id_page": 25,
+      "url": "pages/component/view/view",
+      "name": "view",
+      "rules": null
+    },
+    {
+      "id_page": 26,
+      "url": "pages/API/set-navigation-bar-title/set-navigation-bar-title",
+      "name": "设置界面标题",
+      "rules": null
+    },
+    {
+      "id_page": 27,
+      "url": "pages/component/navigator/navigator",
+      "name": "navigator",
+      "rules": null
+    },
+    {
+      "id_page": 28,
+      "url": "pages/component/navigator/redirect/redirect",
+      "name": "redirectPage",
+      "rules": null
+    },
+    {
+      "id_page": 29,
+      "url": "pages/component/map/map",
+      "name": "map",
+      "rules": null
+    },
+    {
+      "id_page": 30,
+      "url": "pages/component/web-view/web-view",
+      "name": "web-view",
+      "rules": null
+    },
+    {
+      "id_page": 31,
+      "url": "pages/component/form/form",
+      "name": "form",
+      "rules": null
+    }
+  ]
+}

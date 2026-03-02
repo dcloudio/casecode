@@ -1,0 +1,18 @@
+[
+    {
+        "IndexName": "article_user_",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "article_id",
+                    "Direction": "1"
+                },
+                {
+                    "Name": "user_id",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": true
+        }
+    }
+]

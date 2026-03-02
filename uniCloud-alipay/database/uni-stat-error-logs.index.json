@@ -1,0 +1,75 @@
+[
+    {
+        "IndexName": "create_time",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "create_time",
+                    "Direction": "1",
+										"Type": "long"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "appid",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "appid",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "version",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "version",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "platform",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "platform",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "channel",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "channel",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "error_hash",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "error_hash",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    }
+]

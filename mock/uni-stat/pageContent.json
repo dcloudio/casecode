@@ -1,0 +1,508 @@
+{
+  "base_url": "",
+  "last_page": 4,
+  "current_page": 1,
+  "total": 199,
+  "item": [
+    {
+      "id_page": 81556056,
+      "url": "pages/forum/detail/detail?id=39355&type=2",
+      "name": "uni-app提供开箱即用的SSR支持",
+      "num_visitor": "54",
+      "num_visits": "60",
+      "visit_avg_time": "00:00:21",
+      "visitor_avg_time": "00:00:23",
+      "num_share": "0"
+    },
+    {
+      "id_page": 82631518,
+      "url": "pages/forum/detail/detail?id=133960&type=1",
+      "name": "前端老手，寻找远程工作机会，外包项目合作，个人随缘接单",
+      "num_visitor": "36",
+      "num_visits": "38",
+      "visit_avg_time": "00:00:23",
+      "visitor_avg_time": "00:00:25",
+      "num_share": "0"
+    },
+    {
+      "id_page": 1241,
+      "url": "pages/forum/detail/detail?id=35050&type=2",
+      "name": "【收费ui ￥200】uni-app前端UI框架 graceUI 持续更新(29个基础组件   14 个界面库   表单验证模块 )，大幅度提高您的开发速度！实测 真实项目30个页面 2天完成布局",
+      "num_visitor": "19",
+      "num_visits": "34",
+      "visit_avg_time": "00:00:09",
+      "visitor_avg_time": "00:00:16",
+      "num_share": "0"
+    },
+    {
+      "id_page": 65803226,
+      "url": "pages/forum/detail/detail?id=100790&type=1",
+      "name": "请问uniapp怎么获取手机内的文件",
+      "num_visitor": "14",
+      "num_visits": "14",
+      "visit_avg_time": "00:00:13",
+      "visitor_avg_time": "00:00:13",
+      "num_share": "0"
+    },
+    {
+      "id_page": 68899690,
+      "url": "pages/forum/detail/detail?id=37834&type=2",
+      "name": " uni-app 项目小程序端支持 vue3 介绍",
+      "num_visitor": "13",
+      "num_visits": "13",
+      "visit_avg_time": "00:00:26",
+      "visitor_avg_time": "00:00:26",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83432568,
+      "url": "pages/forum/detail/detail?id=135769&type=1",
+      "name": "【报Bug】字节跳动小程序使用page-meta设置背景，开发工具有报错，uni.setBackgroundColor is not a function",
+      "num_visitor": "9",
+      "num_visits": "11",
+      "visit_avg_time": "00:00:05",
+      "visitor_avg_time": "00:00:07",
+      "num_share": "0"
+    },
+    {
+      "id_page": 82778852,
+      "url": "pages/forum/detail/detail?id=134332&type=1",
+      "name": "uniapp打包后的通知授权推送",
+      "num_visitor": "11",
+      "num_visits": "11",
+      "visit_avg_time": "00:00:08",
+      "visitor_avg_time": "00:00:08",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83039358,
+      "url": "pages/forum/detail/detail?id=134922&type=1",
+      "name": "google play 上架应用因为Dcloud SDK被暂停",
+      "num_visitor": "9",
+      "num_visits": "10",
+      "visit_avg_time": "00:00:09",
+      "visitor_avg_time": "00:00:10",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83419662,
+      "url": "pages/forum/detail/detail?id=135744&type=1",
+      "name": "一键登录开通应用催审",
+      "num_visitor": "10",
+      "num_visits": "10",
+      "visit_avg_time": "00:00:03",
+      "visitor_avg_time": "00:00:03",
+      "num_share": "0"
+    },
+    {
+      "id_page": 62476061,
+      "url": "pages/forum/detail/detail?id=35915&type=2",
+      "name": "iOS平台：用Native.js来写 如何判断系统功能权限是否开启",
+      "num_visitor": "6",
+      "num_visits": "10",
+      "visit_avg_time": "00:00:15",
+      "visitor_avg_time": "00:00:25",
+      "num_share": "0"
+    },
+    {
+      "id_page": 74506803,
+      "url": "pages/forum/detail/detail?id=36027&type=2",
+      "name": "终于搞定了UniApp开发的微信小程序的支付，分享下有关微信支付踩的坑",
+      "num_visitor": "9",
+      "num_visits": "9",
+      "visit_avg_time": "00:00:30",
+      "visitor_avg_time": "00:00:30",
+      "num_share": "0"
+    },
+    {
+      "id_page": 62529047,
+      "url": "pages/forum/detail/detail?id=85976&type=1",
+      "name": "uni app 打包成 Android 后无法请求服务器",
+      "num_visitor": "9",
+      "num_visits": "9",
+      "visit_avg_time": "00:00:34",
+      "visitor_avg_time": "00:00:34",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83415318,
+      "url": "pages/forum/detail/detail?id=135730&type=1",
+      "name": "uniapp-安卓实现自动拍照",
+      "num_visitor": "8",
+      "num_visits": "8",
+      "visit_avg_time": "00:00:07",
+      "visitor_avg_time": "00:00:07",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83418841,
+      "url": "pages/forum/detail/detail?id=135739&type=1",
+      "name": "",
+      "num_visitor": "6",
+      "num_visits": "7",
+      "visit_avg_time": "00:00:04",
+      "visitor_avg_time": "00:00:04",
+      "num_share": "0"
+    },
+    {
+      "id_page": 66951069,
+      "url": "pages/forum/detail/detail?id=102581&type=1",
+      "name": "uniapp 打包成手机h5 js缓存问题怎么解决,只能清手机缓存吗",
+      "num_visitor": "6",
+      "num_visits": "7",
+      "visit_avg_time": "00:00:10",
+      "visitor_avg_time": "00:00:11",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83408388,
+      "url": "pages/forum/detail/detail?id=135713&type=1",
+      "name": "使用VideoPlayer播放视频，视频有宽度自动收缩",
+      "num_visitor": "7",
+      "num_visits": "7",
+      "visit_avg_time": "00:00:02",
+      "visitor_avg_time": "00:00:02",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83442697,
+      "url": "pages/forum/detail/detail?id=135783&type=1",
+      "name": "有没有不用二维数组的版本",
+      "num_visitor": "7",
+      "num_visits": "7",
+      "visit_avg_time": "00:00:02",
+      "visitor_avg_time": "00:00:02",
+      "num_share": "0"
+    },
+    {
+      "id_page": 63688602,
+      "url": "pages/forum/detail/detail?id=37228&type=2",
+      "name": "5 App和uni-app在App开发上的对比",
+      "num_visitor": "7",
+      "num_visits": "7",
+      "visit_avg_time": "00:00:11",
+      "visitor_avg_time": "00:00:11",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83415397,
+      "url": "pages/forum/detail/detail?id=39503&type=2",
+      "name": "uniapp MIUI全局自由窗口适配，uniapp悬浮小窗和分屏适配",
+      "num_visitor": "2",
+      "num_visits": "7",
+      "visit_avg_time": "00:00:17",
+      "visitor_avg_time": "00:00:59",
+      "num_share": "0"
+    },
+    {
+      "id_page": 62347163,
+      "url": "pages/forum/detail/detail?id=80913&type=1",
+      "name": "uni-app flex布局，position:absolute有问题",
+      "num_visitor": "7",
+      "num_visits": "7",
+      "visit_avg_time": "00:00:28",
+      "visitor_avg_time": "00:00:28",
+      "num_share": "0"
+    },
+    {
+      "id_page": 75994881,
+      "url": "pages/forum/detail/detail?id=122399&type=1",
+      "name": "【报Bug】uni.chooseVideo()  方法选中视频文件 加载时长问题",
+      "num_visitor": "5",
+      "num_visits": "6",
+      "visit_avg_time": "00:00:06",
+      "visitor_avg_time": "00:00:08",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83422277,
+      "url": "pages/forum/detail/detail?id=135749&type=1",
+      "name": "【报Bug】plus.video.LivePusher控件推流出现变形，直播源是压扁的",
+      "num_visitor": "5",
+      "num_visits": "6",
+      "visit_avg_time": "00:00:09",
+      "visitor_avg_time": "00:00:10",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83340805,
+      "url": "pages/forum/detail/detail?id=135644&type=1",
+      "name": "uniapp中的input、text area、editor聚焦后无法唤起输入法",
+      "num_visitor": "3",
+      "num_visits": "6",
+      "visit_avg_time": "00:00:01",
+      "visitor_avg_time": "00:00:03",
+      "num_share": "0"
+    },
+    {
+      "id_page": 82122616,
+      "url": "pages/forum/detail/detail?id=39390&type=2",
+      "name": "公告：阿里云服务空间云存储容量上限调整周知",
+      "num_visitor": "6",
+      "num_visits": "6",
+      "visit_avg_time": "00:00:27",
+      "visitor_avg_time": "00:00:27",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83434138,
+      "url": "pages/forum/detail/detail?id=135773&type=1",
+      "name": "海报 二维码",
+      "num_visitor": "5",
+      "num_visits": "6",
+      "visit_avg_time": "00:00:01",
+      "visitor_avg_time": "00:00:02",
+      "num_share": "0"
+    },
+    {
+      "id_page": 79225826,
+      "url": "pages/forum/detail/detail?id=127577&type=1",
+      "name": "【报Bug】uniapp安卓热更新偶尔出现第一次重启样式错乱，第二次重启正常。",
+      "num_visitor": "6",
+      "num_visits": "6",
+      "visit_avg_time": "00:00:07",
+      "visitor_avg_time": "00:00:07",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83416762,
+      "url": "pages/forum/detail/detail?id=135731&type=1",
+      "name": "【报Bug】uni.chooseVideo方法 拍摄视频 超过一分钟之后返回的路径不对",
+      "num_visitor": "5",
+      "num_visits": "6",
+      "visit_avg_time": "00:00:03",
+      "visitor_avg_time": "00:00:04",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83113722,
+      "url": "pages/forum/detail/detail?id=135136&type=1",
+      "name": "【报Bug】ios nvue 组件中使用富文本rich-text，设置font-size，更新数据后崩溃",
+      "num_visitor": "5",
+      "num_visits": "6",
+      "visit_avg_time": "00:00:05",
+      "visitor_avg_time": "00:00:06",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83437008,
+      "url": "pages/forum/detail/detail?id=135779&type=1",
+      "name": "详情",
+      "num_visitor": "5",
+      "num_visits": "6",
+      "visit_avg_time": "00:00:03",
+      "visitor_avg_time": "00:00:03",
+      "num_share": "0"
+    },
+    {
+      "id_page": 1427,
+      "url": "pages/forum/detail/detail?id=41&type=2",
+      "name": "iOS离线打包",
+      "num_visitor": "5",
+      "num_visits": "6",
+      "visit_avg_time": "00:00:14",
+      "visitor_avg_time": "00:00:17",
+      "num_share": "0"
+    },
+    {
+      "id_page": 63162055,
+      "url": "pages/forum/detail/detail?id=37140&type=2",
+      "name": "解决uni-app的pages.json的模块化及模块热重载的问题",
+      "num_visitor": "4",
+      "num_visits": "5",
+      "visit_avg_time": "00:00:07",
+      "visitor_avg_time": "00:00:09",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83405330,
+      "url": "pages/forum/detail/detail?id=135711&type=1",
+      "name": "【报Bug】将网站套壳打包，wap2app，创建的app会随机出现无响应的情况",
+      "num_visitor": "5",
+      "num_visits": "5",
+      "visit_avg_time": "00:00:01",
+      "visitor_avg_time": "00:00:01",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83444463,
+      "url": "pages/forum/detail/detail?id=135784&type=1",
+      "name": "#插件讨论# 【 区块链货币数字钱包APP uni-app模板 - 8***@qq.com 】 怎么加你",
+      "num_visitor": "3",
+      "num_visits": "5",
+      "visit_avg_time": "00:00:06",
+      "visitor_avg_time": "00:00:10",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83447956,
+      "url": "pages/forum/detail/detail?id=106275&type=1",
+      "name": "外包uni-app项目里的APP两端的“APP原生插件配置”谷歌地图开发",
+      "num_visitor": "4",
+      "num_visits": "5",
+      "visit_avg_time": "00:00:05",
+      "visitor_avg_time": "00:00:07",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83445502,
+      "url": "pages/forum/detail/detail?id=135786&type=1",
+      "name": "【报Bug】savefile 保存doc文件时提示文件没有发现",
+      "num_visitor": "4",
+      "num_visits": "5",
+      "visit_avg_time": "00:00:04",
+      "visitor_avg_time": "00:00:05",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83424862,
+      "url": "pages/forum/detail/detail?id=135755&type=1",
+      "name": "web-view嵌套的h5页面怎么实现video全屏横屏播放",
+      "num_visitor": "4",
+      "num_visits": "5",
+      "visit_avg_time": "00:00:02",
+      "visitor_avg_time": "00:00:03",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83397776,
+      "url": "pages/forum/detail/detail?id=135707&type=1",
+      "name": "插件上传，一直都是提示名称错误",
+      "num_visitor": "4",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:05",
+      "visitor_avg_time": "00:00:05",
+      "num_share": "0"
+    },
+    {
+      "id_page": 82995242,
+      "url": "pages/forum/detail/detail?id=134753&type=1",
+      "name": "【报Bug】华为应用市场  收集个人信息因 ‘好的’ ‘我知道了’ 字眼 违规",
+      "num_visitor": "4",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:02",
+      "visitor_avg_time": "00:00:02",
+      "num_share": "0"
+    },
+    {
+      "id_page": 68918405,
+      "url": "pages/forum/detail/detail?id=102915&type=1",
+      "name": "uniapp 如何重写音量键动作呢？",
+      "num_visitor": "4",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:10",
+      "visitor_avg_time": "00:00:10",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83430380,
+      "url": "pages/forum/detail/detail?id=135768&type=1",
+      "name": "在官网下载的App离线SDK，配置了appid、包名、签名、appkey，打包运行后一直停留在HBuilder的界面，没有错误提示，请问如何解决？",
+      "num_visitor": "4",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:04",
+      "visitor_avg_time": "00:00:04",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83424008,
+      "url": "pages/forum/detail/detail?id=135752&type=1",
+      "name": "uni.navigateTo和uni.redirectTo跳转",
+      "num_visitor": "4",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:04",
+      "visitor_avg_time": "00:00:04",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83423019,
+      "url": "pages/forum/detail/detail?id=135736&type=1",
+      "name": "使用video组件 模拟器上能正常播放，真机上无法播放",
+      "num_visitor": "3",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:02",
+      "visitor_avg_time": "00:00:02",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83396003,
+      "url": "pages/forum/detail/detail?id=135705&type=1",
+      "name": "【报Bug】HBuilderX3.3.0 引出的“系统定位”模块 问题",
+      "num_visitor": "3",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:39",
+      "visitor_avg_time": "00:00:52",
+      "num_share": "0"
+    },
+    {
+      "id_page": 885,
+      "url": "pages/forum/detail/detail?id=63012&type=1",
+      "name": "用HTML5 新增的蓝牙Bluetooth模块的demo测试，安卓手机可以搜索到附近的蓝牙设备，但是苹果手机搜索不到附近的蓝牙设备，用的ios都是11.1版本以上的，请问一下这是什么原因呢？",
+      "num_visitor": "4",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:08",
+      "visitor_avg_time": "00:00:08",
+      "num_share": "0"
+    },
+    {
+      "id_page": 9977925,
+      "url": "pages/forum/detail/detail?id=35907&type=2",
+      "name": "DCloud appid 用途/作用/使用说明",
+      "num_visitor": "3",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:13",
+      "visitor_avg_time": "00:00:17",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83351021,
+      "url": "pages/forum/detail/detail?id=135657&type=1",
+      "name": "【报Bug】  使用了Hbuilder 3.2.13之后的版本 进行usb设备的拔插后（如键盘等输入设备）  页面v-if会失效以及很多视图无法及时更新。",
+      "num_visitor": "4",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:04",
+      "visitor_avg_time": "00:00:04",
+      "num_share": "0"
+    },
+    {
+      "id_page": 63151975,
+      "url": "pages/forum/detail/detail?id=81272&type=1",
+      "name": "uni.chooseImage方法使用从相册选择上传就好使  拍照的上传就失败  文件都能获取到",
+      "num_visitor": "3",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:04",
+      "visitor_avg_time": "00:00:06",
+      "num_share": "0"
+    },
+    {
+      "id_page": 74766262,
+      "url": "pages/forum/detail/detail?id=119804&type=1",
+      "name": "求助！scroll-view 自定义下拉刷新多次触发问题，上滑都会多次触发",
+      "num_visitor": "4",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:10",
+      "visitor_avg_time": "00:00:10",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83441117,
+      "url": "pages/forum/detail/detail?id=135781&type=1",
+      "name": "【报Bug】onLaunch时 plus.screen.lockOrientation('portrait-primary') 屏幕锁定无效",
+      "num_visitor": "3",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:09",
+      "visitor_avg_time": "00:00:12",
+      "num_share": "0"
+    },
+    {
+      "id_page": 83417459,
+      "url": "pages/forum/detail/detail?id=135738&type=1",
+      "name": "使用unicloud，车辆运行轨迹数据库应该如何设计",
+      "num_visitor": "4",
+      "num_visits": "4",
+      "visit_avg_time": "00:00:03",
+      "visitor_avg_time": "00:00:03",
+      "num_share": "0"
+    }
+  ]
+}
