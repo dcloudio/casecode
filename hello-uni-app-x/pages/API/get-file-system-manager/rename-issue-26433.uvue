@@ -35,7 +35,7 @@
 		// #endif
 	} as DataType)
 
-	function renameDir(_ : any) {
+	function renameDir() {
 		const fileManager = uni.getFileSystemManager()
 		const oldPath = `${data.basePath}uni-store`
 		const newPath = `${data.basePath}uni-store2`
@@ -72,7 +72,7 @@
 		})
 	}
 
-	function renameFile(_ : any) {
+	function renameFile() {
 		const fileManager = uni.getFileSystemManager()
 		const dirPath = `${data.basePath}uni-store`
 		const oldFilePath = `${dirPath}/1.txt`
