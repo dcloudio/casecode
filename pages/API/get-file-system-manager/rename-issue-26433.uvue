@@ -120,6 +120,10 @@
 			}
 		})
 	}
+
+  defineExpose({
+    data
+  })
 </script>
 
 <style>

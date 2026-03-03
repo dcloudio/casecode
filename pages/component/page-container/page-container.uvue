@@ -32,6 +32,26 @@
         <button @click="showOverlay(false)">不显示蒙层</button>
         <button class="mt-5" @click="showOverlay(true)">显示蒙层</button>
         <button class="mt-5" @click="showTransparentOverlay">透明蒙层</button>
+        <button class="mt-5" @click="showGreenTransparentOverlay">绿色半透明蒙层</button>
+      </view>
+    </view>
+
+    <view class="uni-padding-wrap uni-common-mt">
+      <view class="uni-title uni-common-mt">
+        <text class="uni-title-text"> 自动隐藏 </text>
+      </view>
+      <view>
+        <button @click="autoClose">2秒后自动关闭</button>
+      </view>
+    </view>
+
+    <view class="uni-padding-wrap uni-common-mt">
+      <view class="uni-title uni-common-mt">
+        <text class="uni-title-text"> 滚动穿透 </text>
+      </view>
+      <view>
+        <button @click="showScrollThrough">打开滚动穿透测试弹层</button>
+        <text class="slider-down-info">测试弹层内滚动到顶部或底部时是否会影响主页面滚动</text>
       </view>
     </view>
 
@@ -48,13 +68,15 @@
     <page-container :show="containerShow" :position="containerPosition" :round="containerRound"
       :overlay="containerOverlay" :overlay-style="containerOverlayStyle"
       :close-on-slide-down="containerCloseOnSlideDown" @afterleave="onAfterLeave">
-      <view class="container">
-        <text class="container-title">{{ containerTitle }}</text>
-        <text class="container-content">{{ containerContent }}</text>
-
-        <button @click="closeContainer" type="primary">关闭容器</button>
-        <button class="mt-5" @click="navigateBack">后退页面</button>
-      </view>
+        <view class="container">
+          <text class="container-title">{{ containerTitle }}</text>
+          <scroll-view v-if="enableScrollThrough" style="height: 200px;margin-bottom: 15px; padding: 10px;">
+             <text class="container-content">{{ containerContent }}</text>
+          </scroll-view>
+          <text v-else class="container-content">{{ containerContent }}</text>
+          <button @click="closeContainer" type="primary">关闭容器</button>
+          <button class="mt-5" @click="navigateBack">后退页面</button>
+        </view>
     </page-container>
   </scroll-view>
 </template>
@@ -68,6 +90,7 @@
   const containerOverlayStyle = ref<string>('')
   const containerContent = ref<string>('这是一个 page-container 容器')
   const containerCloseOnSlideDown = ref<boolean>(false)
+  const enableScrollThrough = ref<boolean>(false)
 
   type Data = {
     onAfterLeaveCallCount: number
@@ -84,6 +107,7 @@
     containerOverlay.value = true
     containerCloseOnSlideDown.value = false
     containerOverlayStyle.value = ''
+    enableScrollThrough.value = false
   }
 
   function showContainer(position : string, text: string) {
@@ -119,6 +143,16 @@
     containerShow.value = true
   }
 
+  function showGreenTransparentOverlay() {
+    resetConfig()
+    containerOverlay.value = true
+    containerPosition.value = 'center'
+    containerOverlayStyle.value = 'background-color: rgba(76, 175, 80, 0.3);'
+    containerTitle.value = '绿色半透明蒙层'
+    containerContent.value = '蒙层开启但为绿色半透明，可以点击蒙层区域关闭'
+    containerShow.value = true
+  }
+
   function showSlideDown() {
     resetConfig()
     containerCloseOnSlideDown.value = true
@@ -126,6 +160,26 @@
     containerPosition.value = 'bottom'
     containerTitle.value = 'Close-on-slide-down: true'
     containerContent.value = '下滑关闭: true'
+  }
+
+  function autoClose() {
+    resetConfig()
+    containerShow.value = true
+    containerPosition.value = 'bottom'
+    containerTitle.value = 'Page-container'
+    containerContent.value = '容器会在 2s 后自动关闭'
+    setTimeout(() => {
+      containerShow.value = false
+    }, 2000)
+  }
+
+  function showScrollThrough() {
+    resetConfig()
+    enableScrollThrough.value = true
+    containerShow.value = true
+    containerPosition.value = 'bottom'
+    containerTitle.value = 'Page-container'
+    containerContent.value = `这是一个可滚动的内容区域。\n\n请向上或向下滚动此区域。\n\n当滚动到顶部或底部边界时\n\n测试主页面是否会跟随滚动(滚动穿透问题)\n\n理想情况下,当弹层内的scroll-view滚动到边界时,不应该触发主页面的滚动。\n\n已到达底部,现在可以测试向上滚动到顶部的情况。`
   }
 
   function onAfterLeave() {

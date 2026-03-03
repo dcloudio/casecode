@@ -35,8 +35,8 @@ describe('rename-issue-26433', () => {
     const renameDir = await page.$('#renameDir')
     await renameDir.tap()
     await page.waitFor(300);
-    const data = await page.data()
-    expect(data.renamePath).toEqual('unifile://usr/uni-store2')
+    const data = await page.data("data.renamePath")
+    expect(data).toEqual('unifile://usr/uni-store2')
   });
 
   it('testRenameFile', async () => {
@@ -47,8 +47,8 @@ describe('rename-issue-26433', () => {
     const renameFile = await page.$('#renameFile')
     await renameFile.tap()
     await page.waitFor(300);
-    const data = await page.data()
-    expect(data.renamePath).toEqual('unifile://usr/uni-store/2.txt')
+    const data = await page.data("data.renamePath")
+    expect(data).toEqual('unifile://usr/uni-store/2.txt')
   });
 
 });
