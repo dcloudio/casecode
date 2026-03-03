@@ -48,7 +48,7 @@
       <button class="margin-10" type="primary" :disabled="disabled_boolean" hover-class="none">hover-class none</button>
 
       <button class="margin-10" type="primary" :disabled="disabled_boolean">uni-app x</button>
-      <button class="margin-10" type="primary" @click="change_disabled_boolean">修改disabled为{{!disabled_boolean}}</button>
+      <button id="changeDisabledButton" class="margin-10" type="primary" @click="change_disabled_boolean">修改disabled为{{!disabled_boolean}}</button>
       <!--disable-->
       <button class="margin-10 btn">
         disable-false
