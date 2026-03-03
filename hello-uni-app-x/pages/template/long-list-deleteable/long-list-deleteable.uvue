@@ -21,7 +21,7 @@
     </list-view>
     <!-- 全局侧滑菜单（始终渲染，通过 visibility 控制显示） -->
     <view class="swipe-menu"
-      :style="{ transform: menuTransform, height: menuHeight + 'px', width: menuShowWidth + 'px', visibility: menuVisibility }">
+      :style="{ transform: menuTransform, height: menuHeight + 'px' }">
       <view class="menu-item delete-btn" @click="onDeleteClick">
         <text class="menu-text">删除</text>
       </view>
@@ -160,13 +160,6 @@
     return items.value.length > 0 && selectedIds.value.length == items.value.length
   })
 
-  // 计算菜单可见性（用于鸿蒙平台兼容，避免 v-if/v-show 问题）
-  const menuVisibility = computed(() : string => {
-    if (isMultiSelectMode.value) return 'hidden'
-    if (menuVisible.value || isDeleteAnimating.value) return 'visible'
-    return 'hidden'
-  })
-
   let visibleStartIndex = 0
   let visibleEndIndex = -1
   const VISIBLE_RANGE_BUFFER = 2
@@ -216,7 +209,7 @@
 
   // 计算菜单的 transform
   const menuTransform = computed(() : string => {
-    return `translateY(${menuTop.value}px)`
+    return `translateY(${menuTop.value}px) translateX(${-menuShowWidth.value}px)`
   })
 
   // 查找列表项元素（兼容 APP 和 WEB）
@@ -258,11 +251,14 @@
     if (currentListItemElement == null) return
     if (currentIndex == -1 || currentIndex >= items.value.length) return
 
-    // 获取列表项的位置
-    const rect = currentListItemElement!.getBoundingClientRect()
-    const item = items.value[currentIndex]
-    menuTop.value = rect.top - containerTop
-    menuHeight.value = item.height
+    if(!menuVisible.value) {
+      // 获取列表项的位置，如下值在一次menu显示期间仅需更新一次
+      menuVisible.value = true
+      const rect = currentListItemElement!.getBoundingClientRect()
+      const item = items.value[currentIndex]
+      menuTop.value = rect.top - containerTop
+      menuHeight.value = item.height
+    }
   }
 
   // 长按事件 - 进入多选模式
@@ -407,7 +403,6 @@
       updateMenuPosition()
       // 菜单宽度与列表项偏移量同步
       menuShowWidth.value = Math.abs(offsetX)
-      menuVisible.value = true
     } else {
       menuVisible.value = false
       menuShowWidth.value = 0
@@ -431,8 +426,6 @@
         menuShowWidth.value = MENU_WIDTH
         activeIndex.value = currentIndex
         menuVisible.value = true
-        // 更新菜单位置确保对齐
-        updateMenuPosition()
       } else {
         // 关闭菜单
         closeMenu()
@@ -698,8 +691,9 @@
   /* 侧滑菜单样式 */
   .swipe-menu {
     position: absolute;
-    right: 0;
+    right: -80px;
     top: 0;
+    width: 80px;
     flex-direction: row;
     overflow: hidden;
   }

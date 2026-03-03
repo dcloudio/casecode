@@ -148,7 +148,7 @@
 			}
 		},
 		// #endif
-		// #ifdef MP-WEIXIN || APP-HARMONY || APP-IOS || WEB
+		// #ifdef MP-WEIXIN || APP-HARMONY || APP-IOS || APP-ANDROID || WEB
 		{
 			"path": "pages/component/page-container/page-container",
 			"group": "0,1,4",
@@ -938,7 +938,7 @@
 			}
 		},
 		// #endif
-		// #ifdef !VUE3-VAPOR && (APP-ANDROID || APP-IOS || APP-HARMONY)
+		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
 		{
 			"path": "pages/component/waterflow/waterflow",
 			"group": "0,1,8",
@@ -947,7 +947,7 @@
 			}
 		},
 		// #endif
-		// #ifdef !VUE3-VAPOR && (APP-ANDROID || APP-IOS || APP-HARMONY)
+		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
 		{
 			"path": "pages/component/waterflow/waterflow-fit-height",
 			"style": {

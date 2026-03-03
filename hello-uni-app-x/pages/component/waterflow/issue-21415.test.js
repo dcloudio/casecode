@@ -6,7 +6,7 @@ const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe('waterflow', () => {
-  if (!(isAndroid || isIOS || isHarmony) || isAppWebView || isDom2) {
+  if (!(isAndroid || isIOS || isHarmony) || isAppWebView) {
   	it('not support', () => {
   		expect(1).toBe(1)
   	})
