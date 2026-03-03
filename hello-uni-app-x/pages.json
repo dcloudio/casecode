@@ -2645,7 +2645,6 @@
 						"navigationStyle": "custom"
 					}
 				},
-				// #endif
 				{
 					"path": "long-waterflow-nested/long-waterflow-nested",
 					"style": {
@@ -2653,6 +2652,7 @@
 						"enablePullDownRefresh": true
 					}
 				},
+				// #endif
 				{
 					"path": "navbar-lite/navbar-lite",
 					"style": {

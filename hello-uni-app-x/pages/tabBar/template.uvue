@@ -124,8 +124,6 @@
           name: '顶部banner长列表（嵌套滚动）',
           url: 'long-list-nested'
         },
-        // #endif
-        // #ifdef APP-IOS || APP-ANDROID
         {
           name: '顶部banner瀑布流长列表（嵌套滚动）',
           url: 'long-waterflow-nested'
