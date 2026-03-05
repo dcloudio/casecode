@@ -1,5 +1,6 @@
 <template>
   <view class="page" id="page-canvas">
+    <page-intro content="本页演示 CanvasContext 2D API：arc、路径、描边填充、drawImage、createPattern、getSetImageData 等绘图与导出能力。"></page-intro>
     <canvas id="canvas" class="canvas-element"></canvas>
     <scroll-view class="scroll-view">
       <view class="grid-view">

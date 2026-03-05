@@ -1,5 +1,4 @@
 <template>
-		<!-- <button @click="setPointEventAuto">Set point-events auto</button> -->
     <view>
 			<view id="subView" class="subView" @click="onClick"></view>
 		</view>

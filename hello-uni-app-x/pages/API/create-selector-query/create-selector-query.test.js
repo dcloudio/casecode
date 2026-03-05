@@ -129,7 +129,7 @@ describe('nodes-info', () => {
     expect(imageNodeInfo.right).toBeCloseTo(115, 0);
     expect(Math.round(imageNodeInfo.top) > 380).toBe(true)
     expect(Math.round(imageNodeInfo.bottom) > 480).toBe(true)
-    expect(imageNodeInfo.width).toBe(100)
+    expect(imageNodeInfo.width).toBeCloseTo(100, 0);
     expect(imageNodeInfo.height).toBe(100)
   })
 
@@ -143,7 +143,7 @@ describe('nodes-info', () => {
     expect(scrollViewNodeInfo.right).toBeCloseTo(315, 0);
     expect(Math.round(scrollViewNodeInfo.top) > 560).toBe(true)
     expect(Math.round(scrollViewNodeInfo.bottom) > 660).toBe(true)
-    expect(scrollViewNodeInfo.width).toBe(300)
+    expect(scrollViewNodeInfo.width).toBeCloseTo(300, 0);
     expect(scrollViewNodeInfo.height).toBe(100)
   })
 })

@@ -1,5 +1,4 @@
 <template>
-
   <list-view @scrolltolower="onScrollTolower" style="flex:1" show-scrollbar=false>
     <list-item v-for="index in listcount" :key="index" :type="(index != 0 && index%10 == 6) ? 0:1">
       <!-- #ifndef MP -->

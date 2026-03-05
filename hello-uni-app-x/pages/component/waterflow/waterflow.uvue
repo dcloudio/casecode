@@ -302,6 +302,7 @@
 </script>
 
 <template>
+  <page-intro content="本页演示 waterflow 瀑布流组件：列数、间距、下拉刷新与加载更多；下方可调节滚动与 refresher 等属性，可跳转固定高度示例。"></page-intro>
   <view class="main">
     <waterflow :cross-axis-count="data.cross_axis_count" :main-axis-gap="data.main_axis_gap" :cross-axis-gap="data.cross_axis_gap"
       :bounces="data.bounces_boolean" :upper-threshold="data.upper_threshold_input" :lower-threshold="data.lower_threshold_input"

@@ -17,6 +17,7 @@
         </view>
       </view>
     </view>
+
     <scroll-view class="list-container" direction="vertical"  refresher-enabled=true @refresherrefresh="onRefresherrefresh" :refresher-triggered="refresherTriggered" @scroll="contentScroll">
       <view class="banner">
         <image class="banner-img" :src="banner.cover"></image>

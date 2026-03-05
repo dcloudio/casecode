@@ -1,7 +1,6 @@
 <template>
   <!-- <view class="page-scroll-view"> -->
     <page-head title="非下拉刷新的scroll-view属性示例"></page-head>
-
     <!-- 暂时分成两个方向不同的滚动视图，原因为：scroll-view组件不支持动态改变direction。 -->
     <scroll-view v-if="data.scrollX" direction="horizontal" :scroll-top="data.scrollTop" :scroll-left="data.scrollLeft"
       :upper-threshold="data.upperThreshold" :lower-threshold="data.lowerThreshold" :scroll-into-view="data.scrollIntoView"

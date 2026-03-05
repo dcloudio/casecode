@@ -34,10 +34,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{transformOrigin}}</text>
-          <text class="uni-info">获取值: {{transformOriginActual}}</text>
+          <text class="uni-info">设置值: {{data.transformOrigin}}</text>
+          <text class="uni-info">获取值: {{data.transformOriginActual}}</text>
           <view class="test-box">
-            <view ref="viewRefDynamic" class="common-image" :style="{ transformOrigin: transformOrigin, transform: 'rotate(45deg)' }">
+            <view ref="viewRefDynamic" class="common-image" :style="{ transformOrigin: data.transformOrigin, transform: 'rotate(45deg)' }">
               <text style="font-size: 12px;">view</text>
             </view>
           </view>
@@ -45,19 +45,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{transformOrigin}}</text>
-          <text class="uni-info">获取值: {{transformOriginActualText}}</text>
+          <text class="uni-info">设置值: {{data.transformOrigin}}</text>
+          <text class="uni-info">获取值: {{data.transformOriginActualText}}</text>
           <view class="test-box">
-            <text ref="textRefDynamic" class="common-text" :style="{ transformOrigin: transformOrigin, transform: 'rotate(45deg)' }">text</text>
+            <text ref="textRefDynamic" class="common-text" :style="{ transformOrigin: data.transformOrigin, transform: 'rotate(45deg)' }">text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{transformOrigin}}</text>
-          <text class="uni-info">获取值: {{transformOriginActualImage}}</text>
+          <text class="uni-info">设置值: {{data.transformOrigin}}</text>
+          <text class="uni-info">获取值: {{data.transformOriginActualImage}}</text>
           <view class="test-box">
-            <image ref="imageRefDynamic" class="common-image" :style="{ transformOrigin: transformOrigin, transform: 'rotate(45deg)' }" src="/static/test-image/logo.png"></image>
+            <image ref="imageRefDynamic" class="common-image" :style="{ transformOrigin: data.transformOrigin, transform: 'rotate(45deg)' }" src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -65,10 +65,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件拍平</text>
-          <text class="uni-info">设置值: {{transformOrigin}}</text>
-          <text class="uni-info">获取值: {{transformOriginActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.transformOrigin}}</text>
+          <text class="uni-info">获取值: {{data.transformOriginActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefDynamicFlat" class="common-image" :style="{ transformOrigin: transformOrigin, transform: 'rotate(45deg)' }" flatten>
+            <view ref="viewRefDynamicFlat" class="common-image" :style="{ transformOrigin: data.transformOrigin, transform: 'rotate(45deg)' }" flatten>
               <text style="font-size: 12px;" flatten>view</text>
             </view>
           </view>
@@ -76,19 +76,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件拍平</text>
-          <text class="uni-info">设置值: {{transformOrigin}}</text>
-          <text class="uni-info">获取值: {{transformOriginActualTextFlat}}</text>
+          <text class="uni-info">设置值: {{data.transformOrigin}}</text>
+          <text class="uni-info">获取值: {{data.transformOriginActualTextFlat}}</text>
           <view class="test-box">
-            <text ref="textRefDynamicFlat" class="common-text" :style="{ transformOrigin: transformOrigin, transform: 'rotate(45deg)' }" flatten>text</text>
+            <text ref="textRefDynamicFlat" class="common-text" :style="{ transformOrigin: data.transformOrigin, transform: 'rotate(45deg)' }" flatten>text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件拍平</text>
-          <text class="uni-info">设置值: {{transformOrigin}}</text>
-          <text class="uni-info">获取值: {{transformOriginActualImageFlat}}</text>
+          <text class="uni-info">设置值: {{data.transformOrigin}}</text>
+          <text class="uni-info">获取值: {{data.transformOriginActualImageFlat}}</text>
           <view class="test-box">
-            <image ref="imageRefDynamicFlat" class="common-image" :style="{ transformOrigin: transformOrigin, transform: 'rotate(45deg)' }" src="/static/test-image/logo.png" flatten></image>
+            <image ref="imageRefDynamicFlat" class="common-image" :style="{ transformOrigin: data.transformOrigin, transform: 'rotate(45deg)' }" src="/static/test-image/logo.png" flatten></image>
           </view>
         </view>
       </view>
@@ -96,7 +96,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="transformOriginEnum" title="transform-origin 枚举值" @change="radioChangeTransformOrigin" :compact="true"></enum-data>
-        <input-data :defaultValue="transformOrigin" title="transform-origin 自定义值" type="text" @confirm="inputChangeTransformOrigin"></input-data>
+        <input-data :defaultValue="data.transformOrigin" title="transform-origin 自定义值" type="text" @confirm="inputChangeTransformOrigin"></input-data>
       </view>
 
       <view class="scroll-view-container">
@@ -292,13 +292,15 @@
     nativeViewCount.value++
   }
 
-  const transformOrigin = ref('50% 50%')
-  const transformOriginActual = ref('')
-  const transformOriginActualText = ref('')
-  const transformOriginActualImage = ref('')
-  const transformOriginActualFlat = ref('')
-  const transformOriginActualTextFlat = ref('')
-  const transformOriginActualImageFlat = ref('')
+  const data = reactive({
+    transformOrigin: '50% 50%',
+    transformOriginActual: '',
+    transformOriginActualText: '',
+    transformOriginActualImage: '',
+    transformOriginActualFlat: '',
+    transformOriginActualTextFlat: '',
+    transformOriginActualImageFlat: ''
+  })
   const viewRefDynamic = ref(null as UniElement | null)
   const textRefDynamic = ref(null as UniTextElement | null)
   const imageRefDynamic = ref(null as UniImageElement | null)
@@ -318,16 +320,16 @@
   ]
 
   const getPropertyValues = () => {
-    transformOriginActual.value = viewRefDynamic.value?.style.getPropertyValue('transform-origin') ?? ''
-    transformOriginActualFlat.value = viewRefDynamicFlat.value?.style.getPropertyValue('transform-origin') ?? ''
-    transformOriginActualText.value = textRefDynamic.value?.style.getPropertyValue('transform-origin') ?? ''
-    transformOriginActualTextFlat.value = textRefDynamicFlat.value?.style.getPropertyValue('transform-origin') ?? ''
-    transformOriginActualImage.value = imageRefDynamic.value?.style.getPropertyValue('transform-origin') ?? ''
-    transformOriginActualImageFlat.value = imageRefDynamicFlat.value?.style.getPropertyValue('transform-origin') ?? ''
+    data.transformOriginActual = viewRefDynamic.value?.style.getPropertyValue('transform-origin') ?? ''
+    data.transformOriginActualFlat = viewRefDynamicFlat.value?.style.getPropertyValue('transform-origin') ?? ''
+    data.transformOriginActualText = textRefDynamic.value?.style.getPropertyValue('transform-origin') ?? ''
+    data.transformOriginActualTextFlat = textRefDynamicFlat.value?.style.getPropertyValue('transform-origin') ?? ''
+    data.transformOriginActualImage = imageRefDynamic.value?.style.getPropertyValue('transform-origin') ?? ''
+    data.transformOriginActualImageFlat = imageRefDynamicFlat.value?.style.getPropertyValue('transform-origin') ?? ''
   }
 
   const changeTransformOrigin = (value: string) => {
-    transformOrigin.value = value
+    data.transformOrigin = value
     viewRefDynamic.value?.style.setProperty('transform-origin', value)
     viewRefDynamicFlat.value?.style.setProperty('transform-origin', value)
     textRefDynamic.value?.style.setProperty('transform-origin', value)
@@ -353,6 +355,10 @@
 
   onReady(() => {
     getPropertyValues()
+  })
+
+  defineExpose({
+    data
   })
 </script>
 

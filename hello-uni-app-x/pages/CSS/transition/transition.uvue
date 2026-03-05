@@ -184,10 +184,10 @@
     <view class="test-container">
       <view class="test-item">
         <text class="uni-subtitle-text">view 组件</text>
-        <text class="uni-info">设置值: {{transitionValue}}</text>
-        <text class="uni-info">获取值: {{transitionActual}}</text>
+        <text class="uni-info">设置值: {{data.transitionValue}}</text>
+        <text class="uni-info">获取值: {{data.transitionActual}}</text>
         <view class="test-box">
-          <view ref="viewRefTransition" class="common-image" :style="{ transition: transitionValue }" @click="triggerTransitionView">
+          <view ref="viewRefTransition" class="common-image" :style="{ transition: data.transitionValue }" @click="triggerTransitionView">
             <text style="font-size: 12px;">点击view</text>
           </view>
         </view>
@@ -195,19 +195,19 @@
 
       <view class="test-item">
         <text class="uni-subtitle-text">text 组件</text>
-        <text class="uni-info">设置值: {{transitionValue}}</text>
-        <text class="uni-info">获取值: {{transitionActualText}}</text>
+        <text class="uni-info">设置值: {{data.transitionValue}}</text>
+        <text class="uni-info">获取值: {{data.transitionActualText}}</text>
         <view class="test-box">
-          <text ref="textRefTransition" class="common-text" :style="{ transition: transitionValue }" @click="triggerTransitionText">点击text</text>
+          <text ref="textRefTransition" class="common-text" :style="{ transition: data.transitionValue }" @click="triggerTransitionText">点击text</text>
         </view>
       </view>
 
       <view class="test-item">
         <text class="uni-subtitle-text">image 组件</text>
-        <text class="uni-info">设置值: {{transitionValue}}</text>
-        <text class="uni-info">获取值: {{transitionActualImage}}</text>
+        <text class="uni-info">设置值: {{data.transitionValue}}</text>
+        <text class="uni-info">获取值: {{data.transitionActualImage}}</text>
         <view class="test-box">
-          <image ref="imageRefTransition" class="common-image" :style="{ transition: transitionValue }" @click="triggerTransitionImage" src="/static/test-image/logo.png"></image>
+          <image ref="imageRefTransition" class="common-image" :style="{ transition: data.transitionValue }" @click="triggerTransitionImage" src="/static/test-image/logo.png"></image>
         </view>
       </view>
     </view>
@@ -215,10 +215,10 @@
     <view class="test-container">
       <view class="test-item">
         <text class="uni-subtitle-text">view 组件拍平</text>
-        <text class="uni-info">设置值: {{transitionValue}}</text>
-        <text class="uni-info">获取值: {{transitionActualFlat}}</text>
+        <text class="uni-info">设置值: {{data.transitionValue}}</text>
+        <text class="uni-info">获取值: {{data.transitionActualFlat}}</text>
         <view class="test-box">
-          <view ref="viewRefTransitionFlat" class="common-image" :style="{ transition: transitionValue }" @click="triggerTransitionView" flatten>
+          <view ref="viewRefTransitionFlat" class="common-image" :style="{ transition: data.transitionValue }" @click="triggerTransitionView" flatten>
             <text style="font-size: 12px;">点击view</text>
           </view>
         </view>
@@ -226,19 +226,19 @@
 
       <view class="test-item">
         <text class="uni-subtitle-text">text 组件拍平</text>
-        <text class="uni-info">设置值: {{transitionValue}}</text>
-        <text class="uni-info">获取值: {{transitionActualTextFlat}}</text>
+        <text class="uni-info">设置值: {{data.transitionValue}}</text>
+        <text class="uni-info">获取值: {{data.transitionActualTextFlat}}</text>
         <view class="test-box">
-          <text ref="textRefTransitionFlat" class="common-text" :style="{ transition: transitionValue }" @click="triggerTransitionText" flatten>点击text</text>
+          <text ref="textRefTransitionFlat" class="common-text" :style="{ transition: data.transitionValue }" @click="triggerTransitionText" flatten>点击text</text>
         </view>
       </view>
 
       <view class="test-item">
         <text class="uni-subtitle-text">image 组件拍平</text>
-        <text class="uni-info">设置值: {{transitionValue}}</text>
-        <text class="uni-info">获取值: {{transitionActualImageFlat}}</text>
+        <text class="uni-info">设置值: {{data.transitionValue}}</text>
+        <text class="uni-info">获取值: {{data.transitionActualImageFlat}}</text>
         <view class="test-box">
-          <image ref="imageRefTransitionFlat" class="common-image" :style="{ transition: transitionValue }" @click="triggerTransitionImage" src="/static/test-image/logo.png" flatten></image>
+          <image ref="imageRefTransitionFlat" class="common-image" :style="{ transition: data.transitionValue }" @click="triggerTransitionImage" src="/static/test-image/logo.png" flatten></image>
         </view>
       </view>
     </view>
@@ -246,7 +246,7 @@
     <view class="uni-common-mt uni-common-mb">
       <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
       <enum-data :items="transitionEnum" title="transition 枚举值" @change="radioChangeTransition" :compact="true"></enum-data>
-      <input-data :defaultValue="transitionValue" title="transition 自定义值" type="text" @confirm="inputChangeTransition"></input-data>
+      <input-data :defaultValue="data.transitionValue" title="transition 自定义值" type="text" @confirm="inputChangeTransition"></input-data>
     </view>
 
     <text class="uni-title-text uni-common-mt uni-common-mb">native-view 组件</text>
@@ -649,13 +649,25 @@
     isChangeBorderAndBackgroundColor = !isChangeBorderAndBackgroundColor
   }
 
-  const transitionValue = ref('width 1s')
-  const transitionActual = ref('')
-  const transitionActualText = ref('')
-  const transitionActualImage = ref('')
-  const transitionActualFlat = ref('')
-  const transitionActualTextFlat = ref('')
-  const transitionActualImageFlat = ref('')
+  type TransitionData = {
+    transitionValue: string
+    transitionActual: string
+    transitionActualText: string
+    transitionActualImage: string
+    transitionActualFlat: string
+    transitionActualTextFlat: string
+    transitionActualImageFlat: string
+  }
+  const data = reactive({
+    transitionValue: 'width 1s',
+    transitionActual: '',
+    transitionActualText: '',
+    transitionActualImage: '',
+    transitionActualFlat: '',
+    transitionActualTextFlat: '',
+    transitionActualImageFlat: ''
+  } as TransitionData)
+
   const viewRefTransition = ref(null as UniElement | null)
   const textRefTransition = ref(null as UniTextElement | null)
   const imageRefTransition = ref(null as UniImageElement | null)
@@ -676,16 +688,16 @@
   ]
 
   const getPropertyValues = () => {
-    transitionActual.value = viewRefTransition.value?.style.getPropertyValue('transition') ?? ''
-    transitionActualFlat.value = viewRefTransitionFlat.value?.style.getPropertyValue('transition') ?? ''
-    transitionActualText.value = textRefTransition.value?.style.getPropertyValue('transition') ?? ''
-    transitionActualTextFlat.value = textRefTransitionFlat.value?.style.getPropertyValue('transition') ?? ''
-    transitionActualImage.value = imageRefTransition.value?.style.getPropertyValue('transition') ?? ''
-    transitionActualImageFlat.value = imageRefTransitionFlat.value?.style.getPropertyValue('transition') ?? ''
+    data.transitionActual = viewRefTransition.value?.style.getPropertyValue('transition') ?? ''
+    data.transitionActualFlat = viewRefTransitionFlat.value?.style.getPropertyValue('transition') ?? ''
+    data.transitionActualText = textRefTransition.value?.style.getPropertyValue('transition') ?? ''
+    data.transitionActualTextFlat = textRefTransitionFlat.value?.style.getPropertyValue('transition') ?? ''
+    data.transitionActualImage = imageRefTransition.value?.style.getPropertyValue('transition') ?? ''
+    data.transitionActualImageFlat = imageRefTransitionFlat.value?.style.getPropertyValue('transition') ?? ''
   }
 
   const changeTransition = (value: string) => {
-    transitionValue.value = value
+    data.transitionValue = value
     viewRefTransition.value?.style.setProperty('transition', value)
     viewRefTransitionFlat.value?.style.setProperty('transition', value)
     textRefTransition.value?.style.setProperty('transition', value)
@@ -710,7 +722,7 @@
   }
 
   const triggerTransitionView = () => {
-    const transition = transitionValue.value
+    const transition: string = data.transitionValue
     isExpandedTransition.value = !isExpandedTransition.value
 
     if (transition.includes('background-color')) {
@@ -736,7 +748,7 @@
   }
 
   const triggerTransitionText = () => {
-    const transition = transitionValue.value
+    const transition: string = data.transitionValue
     isExpandedTransitionText.value = !isExpandedTransitionText.value
 
     if (transition.includes('background-color')) {
@@ -762,7 +774,7 @@
   }
 
   const triggerTransitionImage = () => {
-    const transition = transitionValue.value
+    const transition: string = data.transitionValue
     isExpandedTransitionImage.value = !isExpandedTransitionImage.value
 
     if (transition.includes('background-color')) {
@@ -809,7 +821,8 @@
 	  changeTransitionAll,
 	  changeWidthInEndFun,
 	  getChangeWidthInEndCount,
-    changeBorderAndBackgroundColor
+    changeBorderAndBackgroundColor,
+	  data
 	})
 
 </script>

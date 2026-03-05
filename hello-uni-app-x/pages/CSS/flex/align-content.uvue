@@ -168,10 +168,10 @@
         <!-- 普通版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">align-content</text>
-          <text class="uni-info">设置值: {{alignContent}}</text>
-          <text class="uni-info">获取值: {{alignContentActual}}</text>
+          <text class="uni-info">设置值: {{data.alignContent}}</text>
+          <text class="uni-info">获取值: {{data.alignContentActual}}</text>
           <view class="test-box">
-            <view ref="viewRef" class="test-flex-container test-view" :style="{ alignContent: alignContent }">
+            <view ref="viewRef" class="test-flex-container test-view" :style="{ alignContent: data.alignContent }">
               <view class="test-item-small red"></view>
               <view class="test-item-small green"></view>
               <view class="test-item-small blue"></view>
@@ -185,10 +185,10 @@
         <!-- 拍平版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">拍平</text>
-          <text class="uni-info">设置值: {{alignContent}}</text>
-          <text class="uni-info">获取值: {{alignContentActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.alignContent}}</text>
+          <text class="uni-info">获取值: {{data.alignContentActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ alignContent: alignContent }" flatten>
+            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ alignContent: data.alignContent }" flatten>
               <view class="test-item-small red"></view>
               <view class="test-item-small green"></view>
               <view class="test-item-small blue"></view>
@@ -203,7 +203,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="alignContentEnum" title="align-content 枚举值" @change="radioChangeAlignContent" :compact="true"></enum-data>
-        <input-data :defaultValue="alignContent" title="align-content 自定义值" type="text" @confirm="inputChangeAlignContent"></input-data>
+        <input-data :defaultValue="data.alignContent" title="align-content 自定义值" type="text" @confirm="inputChangeAlignContent"></input-data>
       </view>
     </view>
   <!-- #ifdef APP -->
@@ -224,19 +224,21 @@
     { value: 6, name: 'stretch' }
   ]
 
-  const alignContent = ref('center')
-  const alignContentActual = ref('')
-  const alignContentActualFlat = ref('')
+  const data = reactive({
+    alignContent: 'center',
+    alignContentActual: '',
+    alignContentActualFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const viewRefFlat = ref(null as UniElement | null)
 
   const getPropertyValues = () => {
-    alignContentActual.value = viewRef.value?.style.getPropertyValue('align-content') ?? ''
-    alignContentActualFlat.value = viewRefFlat.value?.style.getPropertyValue('align-content') ?? ''
+    data.alignContentActual = viewRef.value?.style.getPropertyValue('align-content') ?? ''
+    data.alignContentActualFlat = viewRefFlat.value?.style.getPropertyValue('align-content') ?? ''
   }
 
   const changeAlignContent = (value: string) => {
-    alignContent.value = value
+    data.alignContent = value
     viewRef.value?.style.setProperty('align-content', value)
     viewRefFlat.value?.style.setProperty('align-content', value)
     // 使用 nextTick 确保样式已应用后再获取值
@@ -261,7 +263,8 @@
   })
 
   defineExpose({
-    radioChangeAlignContent
+    radioChangeAlignContent,
+    data
   })
 </script>
 

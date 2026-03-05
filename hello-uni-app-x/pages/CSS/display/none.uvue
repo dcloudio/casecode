@@ -5,9 +5,9 @@
     <view class="page" style="flex:1">
       <view class="head">
         <text class="tip">下面有一个灰色区域，display默认值为none</text>
-        <text class="tip">当前display值：{{display}}</text>
+        <text class="tip">当前display值：{{data.display}}</text>
       </view>
-      <view class="content" :style="{display:display}">
+      <view class="content" :style="{display:data.display}">
         <text style="background-color: aquamarine;">展示display区域</text>
         <scroll-view>
           <text class="common-text"  style="height: 20px;">scroll-view</text>
@@ -25,10 +25,10 @@
         <!-- view 组件测试 -->
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{displayProp}}</text>
-          <text class="uni-info">获取值: {{displayActual}}</text>
+          <text class="uni-info">设置值: {{data.displayProp}}</text>
+          <text class="uni-info">获取值: {{data.displayActual}}</text>
           <view class="test-box">
-            <view ref="viewRef" class="common-view test-view" :style="{ display: displayProp }">
+            <view ref="viewRef" class="common-view test-view" :style="{ display: data.displayProp }">
               <text class="common-text">view</text>
             </view>
           </view>
@@ -37,20 +37,20 @@
         <!-- text 组件测试 -->
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{displayProp}}</text>
-          <text class="uni-info">获取值: {{displayActualText}}</text>
+          <text class="uni-info">设置值: {{data.displayProp}}</text>
+          <text class="uni-info">获取值: {{data.displayActualText}}</text>
           <view class="test-box">
-            <text ref="textRef" class="common-text test-text" :style="{ display: displayProp }">text</text>
+            <text ref="textRef" class="common-text test-text" :style="{ display: data.displayProp }">text</text>
           </view>
         </view>
 
         <!-- image 组件测试 -->
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{displayProp}}</text>
-          <text class="uni-info">获取值: {{displayActualImage}}</text>
+          <text class="uni-info">设置值: {{data.displayProp}}</text>
+          <text class="uni-info">获取值: {{data.displayActualImage}}</text>
           <view class="test-box">
-            <image ref="imageRef" class="common-image test-image" :style="{ display: displayProp }" src="/static/test-image/logo.png"></image>
+            <image ref="imageRef" class="common-image test-image" :style="{ display: data.displayProp }" src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -59,7 +59,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="displayEnum" title="display 枚举值" @change="radioChangeDisplay" :compact="true"></enum-data>
-        <input-data :defaultValue="displayProp" title="display 自定义值" type="text" @confirm="inputChangeDisplay"></input-data>
+        <input-data :defaultValue="data.displayProp" title="display 自定义值" type="text" @confirm="inputChangeDisplay"></input-data>
       </view>
 
       <view class="uni-common-mb">
@@ -75,10 +75,16 @@
 <script setup lang="uts">
   import { ItemType } from '@/components/enum-data/enum-data-types'
 
-  const display = ref('none')
+  const data = reactive({
+    display: 'none',
+    displayProp: 'none',
+    displayActual: '',
+    displayActualText: '',
+    displayActualImage: ''
+  })
 
   const switchDisplay = () => {
-    display.value = ('flex' == display.value) ? 'none' : 'flex'
+    data.display = ('flex' == data.display) ? 'none' : 'flex'
   }
 
   const displayEnum: ItemType[] = [
@@ -87,22 +93,18 @@
     { value: 2, name: 'none' }
   ]
 
-  const displayProp = ref('none')
-  const displayActual = ref('')
-  const displayActualText = ref('')
-  const displayActualImage = ref('')
   const viewRef = ref(null as UniElement | null)
   const textRef = ref(null as UniTextElement | null)
   const imageRef = ref(null as UniImageElement | null)
 
   const getPropertyValues = () => {
-    displayActual.value = viewRef.value?.style.getPropertyValue('display') ?? ''
-    displayActualText.value = textRef.value?.style.getPropertyValue('display') ?? ''
-    displayActualImage.value = imageRef.value?.style.getPropertyValue('display') ?? ''
+    data.displayActual = viewRef.value?.style.getPropertyValue('display') ?? ''
+    data.displayActualText = textRef.value?.style.getPropertyValue('display') ?? ''
+    data.displayActualImage = imageRef.value?.style.getPropertyValue('display') ?? ''
   }
 
   const changeDisplay = (value: string) => {
-    displayProp.value = value
+    data.displayProp = value
     viewRef.value?.style.setProperty('display', value)
     textRef.value?.style.setProperty('display', value)
     imageRef.value?.style.setProperty('display', value)
@@ -128,7 +130,8 @@
   })
 
   defineExpose({
-    radioChangeDisplay
+    radioChangeDisplay,
+    data
   })
 </script>
 

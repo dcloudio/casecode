@@ -3,6 +3,7 @@ const isAndroid = platformInfo.startsWith('android')
 const isIos = platformInfo.startsWith('ios')
 const isHarmony = platformInfo.startsWith('harmony')
 const isApp = isAndroid || isIos || isHarmony
+const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 const PAGE_PATH = '/pages/CSS/style-isolation/style-isolation'
 
 describe('style-isolation', () => {
@@ -12,11 +13,16 @@ describe('style-isolation', () => {
     await page.waitFor('view')
   })
 
+  it('screenshot', async () => {
+    const image = await program.screenshot({ fullPage: true });
+    expect(image).toSaveImageSnapshot();
+  });
+
   it('测试组件的根节点为二级组件时 样式传递', async () => {
     const levelEl = await page.$('.level-child-class')
 		const levelElStyle = await levelEl.style('background-color')
     if(isApp){
-      expect(levelElStyle).toBe('#00aaff')
+      expect(levelElStyle).toBe(isDom2? '#00AAFFFF' : '#00aaff')
     }else{
       expect(levelElStyle).toBe('rgb(0, 170, 255)')
     }
@@ -28,7 +34,7 @@ describe('style-isolation', () => {
     const comBoxEl = await compIsolatedEl.$('.com-box')
     const comBoxStyle = await comBoxEl.style('background-color')
     if(isApp){
-      expect(comBoxStyle).toBe('#d9d1ff')
+      expect(comBoxStyle).toBe(isDom2? '#D9D1FFFF' : '#d9d1ff')
     }else{
       expect(comBoxStyle).toBe('rgb(217, 209, 255)')
     }
@@ -49,14 +55,14 @@ describe('style-isolation', () => {
     const comBoxEl = await compAppEl.$('.com-box')
     const comBoxStyle = await comBoxEl.style('background-color')
     if(isApp){
-      expect(comBoxStyle).toBe('#d9d1ff')
+      expect(comBoxStyle).toBe(isDom2? '#D9D1FFFF' : '#d9d1ff')
     }else{
       expect(comBoxStyle).toBe('rgb(217, 209, 255)')
     }
     // 验证，全局样式有效(字体的粗细bold与 700 等值，大小18px)
     const globalTestEl = await compAppEl.$('.global-text')
     const globalTestWeight = await globalTestEl.style('font-weight')
-    const globalTestSize = await globalTestEl.style('fontSize')
+    const globalTestSize = await globalTestEl.style('font-size')
     expect(['700','bold']).toContain(globalTestWeight)
     // TODO：临时注释，有差异，安卓端为空，web/MP：16px，ios/harmony：16
     // expect(globalTestSize).toBe('18px')
@@ -77,8 +83,9 @@ describe('style-isolation', () => {
     // 优先级：全局样式 < 组件自身样式 < 页面样式，预期组件应用页面样式（绿色）优先级最高
     const comBoxEl = await compAppAndPageEl.$('.com-box')
     const comBoxStyle = await comBoxEl.style('background-color')
+    // app dom2  #E8F5E9FF
     if(isApp){
-      expect(comBoxStyle).toBe('#e8f5e9')
+      expect(comBoxStyle).toBe(isDom2? '#E8F5E9FF' : '#e8f5e9')
     }else{
       expect(comBoxStyle).toBe('rgb(232, 245, 233)')
     }

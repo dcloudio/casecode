@@ -12,11 +12,6 @@
       <navigator url="/pages/template/long-rich-text/long-rich-text" class="uni-btn-v">
         <button class="uni-btn">组件性能测试</button>
       </navigator>
-      <!-- #ifdef APP-HARMONY || WEB -->
-      <navigator url="/pages/component/rich-text/rich-text-test-cases" class="uni-btn-v">
-        <button class="uni-btn">rich-text测试用例</button>
-      </navigator>
-      <!-- #endif -->
 			<view class="uni-title">
 				<button type="default" @click="changeText">修改文本内容</button>
 			</view>

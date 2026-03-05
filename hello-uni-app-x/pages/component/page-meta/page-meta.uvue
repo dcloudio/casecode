@@ -19,6 +19,7 @@
     />
   </page-meta>
   <view class="content">
+    <page-intro content="本页演示 page-meta 与 navigation-bar：配置页面背景色、滚动、导航栏标题与样式，通过按钮触发滚动到指定位置并监听 scroll 与 scrolldone。"></page-intro>
     <text class="title">页面内容</text>
     <button @click="scrollTo">点击跳到 300px 处</button>
     <view class="uni-list" v-for="(_, index) in 30" :key="index">

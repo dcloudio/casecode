@@ -1,5 +1,6 @@
 <template>
   <page-head title="loadFontFace"></page-head>
+  <page-intro content="本页演示 uni.loadFontFace：全局与非全局加载字体（本地、base64、网络），展示各字体效果；可跳转子页测试字体生效范围。"></page-intro>
   <view class="uni-padding-wrap">
     <text class="font-size-20">全局加载字体：</text>
     <text class="font-size-20 line-height-40" style="font-family: UniFontFamily">font-family: uni.ttf</text>

@@ -66,11 +66,12 @@
 
 .uni-tips{
   font-size: 13px;
-  color: #856404;
-  background-color: #fff3cd;
-  border-left: 4px solid #ffc107;
+  color: #0958d9;
+  background-color: #e6f4ff;
+  border-left: 4px solid #91caff;
   padding: 10px 12px;
   border-radius: 4px;
+  margin: 10px;
 }
 
 .uni-list {

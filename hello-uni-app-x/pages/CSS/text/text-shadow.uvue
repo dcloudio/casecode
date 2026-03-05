@@ -28,20 +28,20 @@
         <!-- 普通版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">text-shadow</text>
-          <text class="uni-info">设置值: {{textShadow}}</text>
-          <text class="uni-info">获取值: {{textShadowActual}}</text>
+          <text class="uni-info">设置值: {{data.textShadow}}</text>
+          <text class="uni-info">获取值: {{data.textShadowActual}}</text>
           <view class="test-box">
-            <text ref="textRef" class="text test-text" :style="{ textShadow: textShadow }">当前 text-shadow: {{textShadow}}</text>
+            <text ref="textRef" class="text test-text" :style="{ textShadow: data.textShadow }">当前 text-shadow: {{data.textShadow}}</text>
           </view>
         </view>
 
         <!-- 拍平版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">拍平</text>
-          <text class="uni-info">设置值: {{textShadow}}</text>
-          <text class="uni-info">获取值: {{textShadowActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.textShadow}}</text>
+          <text class="uni-info">获取值: {{data.textShadowActualFlat}}</text>
           <view class="test-box">
-            <text ref="textRefFlat" class="text test-text-flatten" :style="{ textShadow: textShadow }" flatten>当前 text-shadow: {{textShadow}}</text>
+            <text ref="textRefFlat" class="text test-text-flatten" :style="{ textShadow: data.textShadow }" flatten>当前 text-shadow: {{data.textShadow}}</text>
           </view>
         </view>
       </view>
@@ -49,7 +49,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="textShadowEnum" title="text-shadow 枚举值" @change="radioChangeTextShadow" :compact="true"></enum-data>
-        <input-data :defaultValue="textShadow" title="text-shadow 自定义值" type="text" @confirm="inputChangeTextShadow"></input-data>
+        <input-data :defaultValue="data.textShadow" title="text-shadow 自定义值" type="text" @confirm="inputChangeTextShadow"></input-data>
       </view>
     </view>
   <!-- #ifdef APP -->
@@ -71,19 +71,21 @@
     { value: 7, name: '2px 4px rgba(202, 207, 17, 0.5)' }
   ]
 
-  const textShadow = ref('1px 1px 2px pink')
-  const textShadowActual = ref('')
-  const textShadowActualFlat = ref('')
+  const data = reactive({
+    textShadow: '1px 1px 2px pink',
+    textShadowActual: '',
+    textShadowActualFlat: ''
+  })
   const textRef = ref(null as UniTextElement | null)
   const textRefFlat = ref(null as UniTextElement | null)
 
   const getPropertyValues = () => {
-    textShadowActual.value = textRef.value?.style.getPropertyValue('text-shadow') ?? ''
-    textShadowActualFlat.value = textRefFlat.value?.style.getPropertyValue('text-shadow') ?? ''
+    data.textShadowActual = textRef.value?.style.getPropertyValue('text-shadow') ?? ''
+    data.textShadowActualFlat = textRefFlat.value?.style.getPropertyValue('text-shadow') ?? ''
   }
 
   const changeTextShadow = (value: string) => {
-    textShadow.value = value
+    data.textShadow = value
     textRef.value?.style.setProperty('text-shadow', value)
     textRefFlat.value?.style.setProperty('text-shadow', value)
     // 使用 nextTick 确保样式已应用后再获取值
@@ -108,7 +110,8 @@
   })
 
   defineExpose({
-    radioChangeTextShadow
+    radioChangeTextShadow,
+    data
   })
 </script>
 

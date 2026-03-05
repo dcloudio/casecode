@@ -89,10 +89,10 @@
     <view class="test-container">
       <view class="test-item">
         <text class="uni-subtitle-text">view 组件</text>
-        <text class="uni-info">设置值: {{alignSelf}}</text>
-        <text class="uni-info">获取值: {{alignSelfActual}}</text>
+        <text class="uni-info">设置值: {{data.alignSelf}}</text>
+        <text class="uni-info">获取值: {{data.alignSelfActual}}</text>
         <view class="test-box">
-          <view ref="viewRef" class="common test-view" :style="{ alignSelf: alignSelf }">
+          <view ref="viewRef" class="common test-view" :style="{ alignSelf: data.alignSelf }">
             <text class="common-text">view</text>
           </view>
         </view>
@@ -100,19 +100,19 @@
 
       <view class="test-item">
         <text class="uni-subtitle-text">text 组件</text>
-        <text class="uni-info">设置值: {{alignSelf}}</text>
-        <text class="uni-info">获取值: {{alignSelfActualText}}</text>
+        <text class="uni-info">设置值: {{data.alignSelf}}</text>
+        <text class="uni-info">获取值: {{data.alignSelfActualText}}</text>
         <view class="test-box">
-          <text ref="textRef" class="common test-text" :style="{ alignSelf: alignSelf }">text</text>
+          <text ref="textRef" class="common test-text" :style="{ alignSelf: data.alignSelf }">text</text>
         </view>
       </view>
 
       <view class="test-item">
         <text class="uni-subtitle-text">image 组件</text>
-        <text class="uni-info">设置值: {{alignSelf}}</text>
-        <text class="uni-info">获取值: {{alignSelfActualImage}}</text>
+        <text class="uni-info">设置值: {{data.alignSelf}}</text>
+        <text class="uni-info">获取值: {{data.alignSelfActualImage}}</text>
         <view class="test-box">
-          <image ref="imageRef" class="common test-image" :style="{ alignSelf: alignSelf }" src="/static/test-image/logo.png"></image>
+          <image ref="imageRef" class="common test-image" :style="{ alignSelf: data.alignSelf }" src="/static/test-image/logo.png"></image>
         </view>
       </view>
     </view>
@@ -121,10 +121,10 @@
     <view class="test-container">
       <view class="test-item">
         <text class="uni-subtitle-text">view 组件拍平</text>
-        <text class="uni-info">设置值: {{alignSelf}}</text>
-        <text class="uni-info">获取值: {{alignSelfActualFlat}}</text>
+        <text class="uni-info">设置值: {{data.alignSelf}}</text>
+        <text class="uni-info">获取值: {{data.alignSelfActualFlat}}</text>
         <view class="test-box">
-          <view ref="viewRefFlat" class="common test-view-flatten" :style="{ alignSelf: alignSelf }" flatten>
+          <view ref="viewRefFlat" class="common test-view-flatten" :style="{ alignSelf: data.alignSelf }" flatten>
             <text class="common-text">view</text>
           </view>
         </view>
@@ -132,19 +132,19 @@
 
       <view class="test-item">
         <text class="uni-subtitle-text">text 组件拍平</text>
-        <text class="uni-info">设置值: {{alignSelf}}</text>
-        <text class="uni-info">获取值: {{alignSelfActualTextFlat}}</text>
+        <text class="uni-info">设置值: {{data.alignSelf}}</text>
+        <text class="uni-info">获取值: {{data.alignSelfActualTextFlat}}</text>
         <view class="test-box">
-          <text ref="textRefFlat" class="common test-text-flatten" :style="{ alignSelf: alignSelf }" flatten>text</text>
+          <text ref="textRefFlat" class="common test-text-flatten" :style="{ alignSelf: data.alignSelf }" flatten>text</text>
         </view>
       </view>
 
       <view class="test-item">
         <text class="uni-subtitle-text">image 组件拍平</text>
-        <text class="uni-info">设置值: {{alignSelf}}</text>
-        <text class="uni-info">获取值: {{alignSelfActualImageFlat}}</text>
+        <text class="uni-info">设置值: {{data.alignSelf}}</text>
+        <text class="uni-info">获取值: {{data.alignSelfActualImageFlat}}</text>
         <view class="test-box">
-          <image ref="imageRefFlat" class="common test-image-flatten" :style="{ alignSelf: alignSelf }" flatten src="/static/test-image/logo.png"></image>
+          <image ref="imageRefFlat" class="common test-image-flatten" :style="{ alignSelf: data.alignSelf }" flatten src="/static/test-image/logo.png"></image>
         </view>
       </view>
     </view>
@@ -152,7 +152,7 @@
     <view class="uni-common-mt uni-common-mb">
       <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
       <enum-data :items="alignSelfEnum" title="align-self 枚举值" @change="radioChangeAlignSelf" :compact="true"></enum-data>
-      <input-data :defaultValue="alignSelf" title="align-self 自定义值" type="text" @confirm="inputChangeAlignSelf"></input-data>
+      <input-data :defaultValue="data.alignSelf" title="align-self 自定义值" type="text" @confirm="inputChangeAlignSelf"></input-data>
     </view>
 
     <text class="uni-title-text uni-common-mt">native-view 组件：align-self: center 和 flex-start</text>
@@ -183,13 +183,15 @@
     { value: 5, name: 'stretch' }
   ]
 
-  const alignSelf = ref('center')
-  const alignSelfActual = ref('')
-  const alignSelfActualText = ref('')
-  const alignSelfActualImage = ref('')
-  const alignSelfActualFlat = ref('')
-  const alignSelfActualTextFlat = ref('')
-  const alignSelfActualImageFlat = ref('')
+  const data = reactive({
+    alignSelf: 'center',
+    alignSelfActual: '',
+    alignSelfActualText: '',
+    alignSelfActualImage: '',
+    alignSelfActualFlat: '',
+    alignSelfActualTextFlat: '',
+    alignSelfActualImageFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const textRef = ref(null as UniTextElement | null)
   const imageRef = ref(null as UniImageElement | null)
@@ -198,16 +200,16 @@
   const imageRefFlat = ref(null as UniImageElement | null)
 
   const getPropertyValues = () => {
-    alignSelfActual.value = viewRef.value?.style.getPropertyValue('align-self') ?? ''
-    alignSelfActualFlat.value = viewRefFlat.value?.style.getPropertyValue('align-self') ?? ''
-    alignSelfActualText.value = textRef.value?.style.getPropertyValue('align-self') ?? ''
-    alignSelfActualTextFlat.value = textRefFlat.value?.style.getPropertyValue('align-self') ?? ''
-    alignSelfActualImage.value = imageRef.value?.style.getPropertyValue('align-self') ?? ''
-    alignSelfActualImageFlat.value = imageRefFlat.value?.style.getPropertyValue('align-self') ?? ''
+    data.alignSelfActual = viewRef.value?.style.getPropertyValue('align-self') ?? ''
+    data.alignSelfActualFlat = viewRefFlat.value?.style.getPropertyValue('align-self') ?? ''
+    data.alignSelfActualText = textRef.value?.style.getPropertyValue('align-self') ?? ''
+    data.alignSelfActualTextFlat = textRefFlat.value?.style.getPropertyValue('align-self') ?? ''
+    data.alignSelfActualImage = imageRef.value?.style.getPropertyValue('align-self') ?? ''
+    data.alignSelfActualImageFlat = imageRefFlat.value?.style.getPropertyValue('align-self') ?? ''
   }
 
   const changeAlignSelf = (value: string) => {
-    alignSelf.value = value
+    data.alignSelf = value
     viewRef.value?.style.setProperty('align-self', value)
     viewRefFlat.value?.style.setProperty('align-self', value)
     textRef.value?.style.setProperty('align-self', value)
@@ -236,7 +238,8 @@
   })
 
   defineExpose({
-    radioChangeAlignSelf
+    radioChangeAlignSelf,
+    data
   })
 </script>
 

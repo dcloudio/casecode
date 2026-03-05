@@ -1,5 +1,6 @@
 <template>
   <page-head title="share-element"></page-head>
+  <page-intro content="本页演示 share-element 共享元素组件：点击图片打开详情页时的转场共享效果；下方可配置过渡手势、easing、shuttle-on-push/pop 等。"></page-intro>
   <view class="main">
     <share-element class="share-element" share-key="left" :shuttle-on-pop="shuttleOnPopType"
       :transition-on-gesture="transitionOnGesture" :shuttle-on-push="shuttleOnPushType"  :easing-function="easingFunctionType" @tap="openPage()">

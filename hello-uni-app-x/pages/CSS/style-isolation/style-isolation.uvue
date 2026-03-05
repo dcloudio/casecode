@@ -4,7 +4,6 @@
   <!-- #endif -->
     <view style="padding: 15px;">
       <text class="page-title">样式隔离</text>
-
       <view class="section">
         <text class="section-title">1. 全局样式 </text>
         <text class="section-desc">App.uvue中定义的全局样式是否会影响页面元素</text>

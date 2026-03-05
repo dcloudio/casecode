@@ -1,5 +1,6 @@
 <template>
   <view class="page" id="page-canvas">
+    <page-intro content="本页演示 canvas 画布组件：toDataURL、createImage、createPath2D、requestAnimationFrame 等；可跳转 CanvasContext API 子页，展示绘图与异步上下文。"></page-intro>
     <canvas id="canvas" class="canvas-element"></canvas>
     <scroll-view class="scroll-view">
       <!-- #ifdef WEB -->

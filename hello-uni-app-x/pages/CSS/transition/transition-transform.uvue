@@ -9,8 +9,8 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{transitionTransform}}</text>
-          <text class="uni-info">获取值: {{transitionTransformActual}}</text>
+          <text class="uni-info">设置值: {{data.transitionTransform}}</text>
+          <text class="uni-info">获取值: {{data.transitionTransformActual}}</text>
           <view class="test-box">
             <view ref="viewRefDynamic" class="common-image" @click="triggerTransitionDynamic">
               <text style="font-size: 12px;">view</text>
@@ -20,8 +20,8 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{transitionTransform}}</text>
-          <text class="uni-info">获取值: {{transitionTransformActualText}}</text>
+          <text class="uni-info">设置值: {{data.transitionTransform}}</text>
+          <text class="uni-info">获取值: {{data.transitionTransformActualText}}</text>
           <view class="test-box">
             <text ref="textRefDynamic" class="common-text" @click="triggerTransitionTextDynamic">text</text>
           </view>
@@ -29,8 +29,8 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{transitionTransform}}</text>
-          <text class="uni-info">获取值: {{transitionTransformActualImage}}</text>
+          <text class="uni-info">设置值: {{data.transitionTransform}}</text>
+          <text class="uni-info">获取值: {{data.transitionTransformActualImage}}</text>
           <view class="test-box">
             <image ref="imageRefDynamic" class="common-image" @click="triggerTransitionImageDynamic" src="/static/test-image/logo.png"></image>
           </view>
@@ -40,8 +40,8 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件拍平</text>
-          <text class="uni-info">设置值: {{transitionTransform}}</text>
-          <text class="uni-info">获取值: {{transitionTransformActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.transitionTransform}}</text>
+          <text class="uni-info">获取值: {{data.transitionTransformActualFlat}}</text>
           <view class="test-box">
             <view ref="viewRefDynamicFlat" class="common-image" @click="triggerTransitionDynamic" flatten>
               <text style="font-size: 12px;">view</text>
@@ -51,8 +51,8 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件拍平</text>
-          <text class="uni-info">设置值: {{transitionTransform}}</text>
-          <text class="uni-info">获取值: {{transitionTransformActualTextFlat}}</text>
+          <text class="uni-info">设置值: {{data.transitionTransform}}</text>
+          <text class="uni-info">获取值: {{data.transitionTransformActualTextFlat}}</text>
           <view class="test-box">
             <text ref="textRefDynamicFlat" class="common-text" @click="triggerTransitionTextDynamic" flatten>text</text>
           </view>
@@ -60,8 +60,8 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件拍平</text>
-          <text class="uni-info">设置值: {{transitionTransform}}</text>
-          <text class="uni-info">获取值: {{transitionTransformActualImageFlat}}</text>
+          <text class="uni-info">设置值: {{data.transitionTransform}}</text>
+          <text class="uni-info">获取值: {{data.transitionTransformActualImageFlat}}</text>
           <view class="test-box">
             <image ref="imageRefDynamicFlat" class="common-image" @click="triggerTransitionImageDynamic" src="/static/test-image/logo.png" flatten></image>
           </view>
@@ -71,7 +71,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="transitionTransformEnum" title="transition-property 枚举值" @change="radioChangeTransitionTransform" :compact="true"></enum-data>
-        <input-data :defaultValue="transitionTransform" title="transition-property 自定义值" type="text" @confirm="inputChangeTransitionTransform"></input-data>
+        <input-data :defaultValue="data.transitionTransform" title="transition-property 自定义值" type="text" @confirm="inputChangeTransitionTransform"></input-data>
       </view>
 
       <view id="v" class="popup" @click="open">open</view>
@@ -135,13 +135,15 @@
 		uni.getElementById('imageTransform')?.style.setProperty('transform', imageTransform.value)
 	}
 
-	const transitionTransform = ref('transform')
-	const transitionTransformActual = ref('')
-	const transitionTransformActualText = ref('')
-	const transitionTransformActualImage = ref('')
-	const transitionTransformActualFlat = ref('')
-	const transitionTransformActualTextFlat = ref('')
-	const transitionTransformActualImageFlat = ref('')
+	const data = reactive({
+		transitionTransform: 'transform',
+		transitionTransformActual: '',
+		transitionTransformActualText: '',
+		transitionTransformActualImage: '',
+		transitionTransformActualFlat: '',
+		transitionTransformActualTextFlat: '',
+		transitionTransformActualImageFlat: ''
+	})
 	const viewRefDynamic = ref(null as UniElement | null)
 	const textRefDynamic = ref(null as UniTextElement | null)
 	const imageRefDynamic = ref(null as UniImageElement | null)
@@ -169,16 +171,16 @@
 	]
 
 	const getPropertyValues = () => {
-		transitionTransformActual.value = viewRefDynamic.value?.style.getPropertyValue('transition-property') ?? ''
-		transitionTransformActualFlat.value = viewRefDynamicFlat.value?.style.getPropertyValue('transition-property') ?? ''
-		transitionTransformActualText.value = textRefDynamic.value?.style.getPropertyValue('transition-property') ?? ''
-		transitionTransformActualTextFlat.value = textRefDynamicFlat.value?.style.getPropertyValue('transition-property') ?? ''
-		transitionTransformActualImage.value = imageRefDynamic.value?.style.getPropertyValue('transition-property') ?? ''
-		transitionTransformActualImageFlat.value = imageRefDynamicFlat.value?.style.getPropertyValue('transition-property') ?? ''
+		data.transitionTransformActual = viewRefDynamic.value?.style.getPropertyValue('transition-property') ?? ''
+		data.transitionTransformActualFlat = viewRefDynamicFlat.value?.style.getPropertyValue('transition-property') ?? ''
+		data.transitionTransformActualText = textRefDynamic.value?.style.getPropertyValue('transition-property') ?? ''
+		data.transitionTransformActualTextFlat = textRefDynamicFlat.value?.style.getPropertyValue('transition-property') ?? ''
+		data.transitionTransformActualImage = imageRefDynamic.value?.style.getPropertyValue('transition-property') ?? ''
+		data.transitionTransformActualImageFlat = imageRefDynamicFlat.value?.style.getPropertyValue('transition-property') ?? ''
 	}
 
 	const changeTransitionTransform = (value: string) => {
-		transitionTransform.value = value
+		data.transitionTransform = value
 		viewRefDynamic.value?.style.setProperty('transition-property', value)
 		viewRefDynamic.value?.style.setProperty('transition-duration', '1s')
 		viewRefDynamicFlat.value?.style.setProperty('transition-property', value)
@@ -268,7 +270,7 @@
 	}
 
 	const triggerTransitionDynamic = () => {
-		const property = transitionTransform.value
+		const property = data.transitionTransform
 		if (property.includes('transform') || property === 'all') {
 			isRotatedDynamic.value = !isRotatedDynamic.value
 			const transform = isRotatedDynamic.value ? 'rotate(45deg)' : 'rotate(0deg)'
@@ -284,7 +286,7 @@
 	}
 
 	const triggerTransitionTextDynamic = () => {
-		const property = transitionTransform.value
+		const property = data.transitionTransform
 		if (property.includes('transform') || property === 'all') {
 			isRotatedDynamicText.value = !isRotatedDynamicText.value
 			const transform = isRotatedDynamicText.value ? 'rotate(45deg)' : 'rotate(0deg)'
@@ -300,7 +302,7 @@
 	}
 
 	const triggerTransitionImageDynamic = () => {
-		const property = transitionTransform.value
+		const property = data.transitionTransform
 		if (property.includes('transform') || property === 'all') {
 			isRotatedDynamicImage.value = !isRotatedDynamicImage.value
 			const transform = isRotatedDynamicImage.value ? 'rotate(45deg)' : 'rotate(0deg)'
@@ -316,7 +318,7 @@
 	}
 
 	const triggerTransitionScrollViewDynamic = () => {
-		const property = transitionTransform.value
+		const property = data.transitionTransform
 		if (property.includes('transform') || property === 'all') {
 			isRotatedDynamicScrollView.value = !isRotatedDynamicScrollView.value
 			const transform = isRotatedDynamicScrollView.value ? 'rotate(45deg)' : 'rotate(0deg)'
@@ -325,7 +327,7 @@
 	}
 
 	const triggerTransitionNativeViewDynamic = () => {
-		const property = transitionTransform.value
+		const property = data.transitionTransform
 		if (property.includes('transform') || property === 'all') {
 			isRotatedDynamicNativeView.value = !isRotatedDynamicNativeView.value
 			const transform = isRotatedDynamicNativeView.value ? 'rotate(45deg)' : 'rotate(0deg)'
@@ -336,35 +338,35 @@
 	onReady(() => {
 		// 设置初始的 transition-property 和 transition-duration
 		if (viewRefDynamic.value != null) {
-			viewRefDynamic.value.style.setProperty('transition-property', transitionTransform.value)
+			viewRefDynamic.value.style.setProperty('transition-property', data.transitionTransform)
 			viewRefDynamic.value.style.setProperty('transition-duration', '1s')
 		}
 		if (viewRefDynamicFlat.value != null) {
-			viewRefDynamicFlat.value.style.setProperty('transition-property', transitionTransform.value)
+			viewRefDynamicFlat.value.style.setProperty('transition-property', data.transitionTransform)
 			viewRefDynamicFlat.value.style.setProperty('transition-duration', '1s')
 		}
 		if (textRefDynamic.value != null) {
-			textRefDynamic.value.style.setProperty('transition-property', transitionTransform.value)
+			textRefDynamic.value.style.setProperty('transition-property', data.transitionTransform)
 			textRefDynamic.value.style.setProperty('transition-duration', '1s')
 		}
 		if (textRefDynamicFlat.value != null) {
-			textRefDynamicFlat.value.style.setProperty('transition-property', transitionTransform.value)
+			textRefDynamicFlat.value.style.setProperty('transition-property', data.transitionTransform)
 			textRefDynamicFlat.value.style.setProperty('transition-duration', '1s')
 		}
 		if (imageRefDynamic.value != null) {
-			imageRefDynamic.value.style.setProperty('transition-property', transitionTransform.value)
+			imageRefDynamic.value.style.setProperty('transition-property', data.transitionTransform)
 			imageRefDynamic.value.style.setProperty('transition-duration', '1s')
 		}
 		if (imageRefDynamicFlat.value != null) {
-			imageRefDynamicFlat.value.style.setProperty('transition-property', transitionTransform.value)
+			imageRefDynamicFlat.value.style.setProperty('transition-property', data.transitionTransform)
 			imageRefDynamicFlat.value.style.setProperty('transition-duration', '1s')
 		}
 		if (scrollViewRefDynamic.value != null) {
-			scrollViewRefDynamic.value.style.setProperty('transition-property', transitionTransform.value)
+			scrollViewRefDynamic.value.style.setProperty('transition-property', data.transitionTransform)
 			scrollViewRefDynamic.value.style.setProperty('transition-duration', '1s')
 		}
 		if (nativeViewRefDynamic.value != null) {
-			nativeViewRefDynamic.value.style.setProperty('transition-property', transitionTransform.value)
+			nativeViewRefDynamic.value.style.setProperty('transition-property', data.transitionTransform)
 			nativeViewRefDynamic.value.style.setProperty('transition-duration', '1s')
 		}
 		// 设置初始值
@@ -373,7 +375,8 @@
 	})
 
 	defineExpose({
-	  open
+	  open,
+	  data
 	})
 
 </script>

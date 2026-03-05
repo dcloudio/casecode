@@ -49,10 +49,10 @@
     <view class="test-container">
       <view class="test-item">
         <text class="uni-subtitle-text">view 组件</text>
-        <text class="uni-info">设置值: {{width}}</text>
-        <text class="uni-info">获取值: {{widthActual}}</text>
+        <text class="uni-info">设置值: {{data.width}}</text>
+        <text class="uni-info">获取值: {{data.widthActual}}</text>
         <view class="test-box">
-          <view ref="viewRef" class="common test-view" :style="{ width: width }">
+          <view ref="viewRef" class="common test-view" :style="{ width: data.width }">
             <text>view</text>
           </view>
         </view>
@@ -60,19 +60,19 @@
 
       <view class="test-item">
         <text class="uni-subtitle-text">text 组件</text>
-        <text class="uni-info">设置值: {{width}}</text>
-        <text class="uni-info">获取值: {{widthActualText}}</text>
+        <text class="uni-info">设置值: {{data.width}}</text>
+        <text class="uni-info">获取值: {{data.widthActualText}}</text>
         <view class="test-box">
-          <text ref="textRef" class="common test-text" :style="{ width: width }">text</text>
+          <text ref="textRef" class="common test-text" :style="{ width: data.width }">text</text>
         </view>
       </view>
 
       <view class="test-item">
         <text class="uni-subtitle-text">image 组件</text>
-        <text class="uni-info">设置值: {{width}}</text>
-        <text class="uni-info">获取值: {{widthActualImage}}</text>
+        <text class="uni-info">设置值: {{data.width}}</text>
+        <text class="uni-info">获取值: {{data.widthActualImage}}</text>
         <view class="test-box">
-          <image ref="imageRef" class="common test-image" :style="{ width: width }" src="/static/test-image/logo.png"></image>
+          <image ref="imageRef" class="common test-image" :style="{ width: data.width }" src="/static/test-image/logo.png"></image>
         </view>
       </view>
     </view>
@@ -81,10 +81,10 @@
     <view class="test-container">
       <view class="test-item">
         <text class="uni-subtitle-text">view 组件拍平</text>
-        <text class="uni-info">设置值: {{width}}</text>
-        <text class="uni-info">获取值: {{widthActualFlat}}</text>
+        <text class="uni-info">设置值: {{data.width}}</text>
+        <text class="uni-info">获取值: {{data.widthActualFlat}}</text>
         <view class="test-box">
-          <view ref="viewRefFlat" class="common test-view-flatten" :style="{ width: width }" flatten>
+          <view ref="viewRefFlat" class="common test-view-flatten" :style="{ width: data.width }" flatten>
             <text>view</text>
           </view>
         </view>
@@ -92,19 +92,19 @@
 
       <view class="test-item">
         <text class="uni-subtitle-text">text 组件拍平</text>
-        <text class="uni-info">设置值: {{width}}</text>
-        <text class="uni-info">获取值: {{widthActualTextFlat}}</text>
+        <text class="uni-info">设置值: {{data.width}}</text>
+        <text class="uni-info">获取值: {{data.widthActualTextFlat}}</text>
         <view class="test-box">
-          <text ref="textRefFlat" class="common test-text-flatten" :style="{ width: width }" flatten>text</text>
+          <text ref="textRefFlat" class="common test-text-flatten" :style="{ width: data.width }" flatten>text</text>
         </view>
       </view>
 
       <view class="test-item">
         <text class="uni-subtitle-text">image 组件拍平</text>
-        <text class="uni-info">设置值: {{width}}</text>
-        <text class="uni-info">获取值: {{widthActualImageFlat}}</text>
+        <text class="uni-info">设置值: {{data.width}}</text>
+        <text class="uni-info">获取值: {{data.widthActualImageFlat}}</text>
         <view class="test-box">
-          <image ref="imageRefFlat" class="common test-image-flatten" :style="{ width: width }" flatten src="/static/test-image/logo.png"></image>
+          <image ref="imageRefFlat" class="common test-image-flatten" :style="{ width: data.width }" flatten src="/static/test-image/logo.png"></image>
         </view>
       </view>
     </view>
@@ -112,7 +112,7 @@
     <view class="uni-common-mt uni-common-mb">
       <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
       <enum-data :items="widthEnum" title="width 枚举值" @change="radioChangeWidth" :compact="true"></enum-data>
-      <input-data :defaultValue="width" title="width 自定义值" type="text" @confirm="inputChangeWidth"></input-data>
+      <input-data :defaultValue="data.width" title="width 自定义值" type="text" @confirm="inputChangeWidth"></input-data>
     </view>
 
     <view class="uni-common-mt uni-common-mb">
@@ -198,13 +198,15 @@
     { value: 6, name: 'auto' }
   ]
 
-  const width = ref('100px')
-  const widthActual = ref('')
-  const widthActualText = ref('')
-  const widthActualImage = ref('')
-  const widthActualFlat = ref('')
-  const widthActualTextFlat = ref('')
-  const widthActualImageFlat = ref('')
+  const data = reactive({
+    width: '100px',
+    widthActual: '',
+    widthActualText: '',
+    widthActualImage: '',
+    widthActualFlat: '',
+    widthActualTextFlat: '',
+    widthActualImageFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const textRef = ref(null as UniTextElement | null)
   const imageRef = ref(null as UniImageElement | null)
@@ -262,16 +264,16 @@
   }
 
   const getPropertyValues = () => {
-    widthActual.value = viewRef.value?.style.getPropertyValue('width') ?? ''
-    widthActualFlat.value = viewRefFlat.value?.style.getPropertyValue('width') ?? ''
-    widthActualText.value = textRef.value?.style.getPropertyValue('width') ?? ''
-    widthActualTextFlat.value = textRefFlat.value?.style.getPropertyValue('width') ?? ''
-    widthActualImage.value = imageRef.value?.style.getPropertyValue('width') ?? ''
-    widthActualImageFlat.value = imageRefFlat.value?.style.getPropertyValue('width') ?? ''
+    data.widthActual = viewRef.value?.style.getPropertyValue('width') ?? ''
+    data.widthActualFlat = viewRefFlat.value?.style.getPropertyValue('width') ?? ''
+    data.widthActualText = textRef.value?.style.getPropertyValue('width') ?? ''
+    data.widthActualTextFlat = textRefFlat.value?.style.getPropertyValue('width') ?? ''
+    data.widthActualImage = imageRef.value?.style.getPropertyValue('width') ?? ''
+    data.widthActualImageFlat = imageRefFlat.value?.style.getPropertyValue('width') ?? ''
   }
 
   const changeWidth = (value: string) => {
-    width.value = value
+    data.width = value
     viewRef.value?.style.setProperty('width', value)
     viewRefFlat.value?.style.setProperty('width', value)
     textRef.value?.style.setProperty('width', value)
@@ -302,7 +304,8 @@
 
   defineExpose({
     radioChangeWidth,
-    emptyElementValues
+    emptyElementValues,
+    data
   })
 </script>
 

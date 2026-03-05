@@ -35,10 +35,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{minWidth}}</text>
-          <text class="uni-info">获取值: {{minWidthActual}}</text>
+          <text class="uni-info">设置值: {{data.minWidth}}</text>
+          <text class="uni-info">获取值: {{data.minWidthActual}}</text>
           <view class="test-box">
-            <view ref="viewRef" class="common-dynamic test-view" :style="{ minWidth: minWidth }">
+            <view ref="viewRef" class="common-dynamic test-view" :style="{ minWidth: data.minWidth }">
               <text>view</text>
             </view>
           </view>
@@ -46,19 +46,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{minWidth}}</text>
-          <text class="uni-info">获取值: {{minWidthActualText}}</text>
+          <text class="uni-info">设置值: {{data.minWidth}}</text>
+          <text class="uni-info">获取值: {{data.minWidthActualText}}</text>
           <view class="test-box">
-            <text ref="textRef" class="common-dynamic test-text" :style="{ minWidth: minWidth }">text</text>
+            <text ref="textRef" class="common-dynamic test-text" :style="{ minWidth: data.minWidth }">text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{minWidth}}</text>
-          <text class="uni-info">获取值: {{minWidthActualImage}}</text>
+          <text class="uni-info">设置值: {{data.minWidth}}</text>
+          <text class="uni-info">获取值: {{data.minWidthActualImage}}</text>
           <view class="test-box">
-            <image ref="imageRef" class="common-dynamic test-image" :style="{ minWidth: minWidth }" src="/static/test-image/logo.png"></image>
+            <image ref="imageRef" class="common-dynamic test-image" :style="{ minWidth: data.minWidth }" src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -67,10 +67,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件拍平</text>
-          <text class="uni-info">设置值: {{minWidth}}</text>
-          <text class="uni-info">获取值: {{minWidthActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.minWidth}}</text>
+          <text class="uni-info">获取值: {{data.minWidthActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefFlat" class="common-dynamic test-view-flatten" :style="{ minWidth: minWidth }" flatten>
+            <view ref="viewRefFlat" class="common-dynamic test-view-flatten" :style="{ minWidth: data.minWidth }" flatten>
               <text>view</text>
             </view>
           </view>
@@ -78,19 +78,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件拍平</text>
-          <text class="uni-info">设置值: {{minWidth}}</text>
-          <text class="uni-info">获取值: {{minWidthActualTextFlat}}</text>
+          <text class="uni-info">设置值: {{data.minWidth}}</text>
+          <text class="uni-info">获取值: {{data.minWidthActualTextFlat}}</text>
           <view class="test-box">
-            <text ref="textRefFlat" class="common-dynamic test-text-flatten" :style="{ minWidth: minWidth }" flatten>text</text>
+            <text ref="textRefFlat" class="common-dynamic test-text-flatten" :style="{ minWidth: data.minWidth }" flatten>text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件拍平</text>
-          <text class="uni-info">设置值: {{minWidth}}</text>
-          <text class="uni-info">获取值: {{minWidthActualImageFlat}}</text>
+          <text class="uni-info">设置值: {{data.minWidth}}</text>
+          <text class="uni-info">获取值: {{data.minWidthActualImageFlat}}</text>
           <view class="test-box">
-            <image ref="imageRefFlat" class="common-dynamic test-image-flatten" :style="{ minWidth: minWidth }" flatten src="/static/test-image/logo.png"></image>
+            <image ref="imageRefFlat" class="common-dynamic test-image-flatten" :style="{ minWidth: data.minWidth }" flatten src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -98,7 +98,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="minWidthEnum" title="min-width 枚举值" @change="radioChangeMinWidth" :compact="true"></enum-data>
-        <input-data :defaultValue="minWidth" title="min-width 自定义值" type="text" @confirm="inputChangeMinWidth"></input-data>
+        <input-data :defaultValue="data.minWidth" title="min-width 自定义值" type="text" @confirm="inputChangeMinWidth"></input-data>
       </view>
 
       <view class="uni-common-mb">
@@ -126,13 +126,15 @@
     { value: 5, name: '80rpx' },
   ]
 
-  const minWidth = ref('100px')
-  const minWidthActual = ref('')
-  const minWidthActualText = ref('')
-  const minWidthActualImage = ref('')
-  const minWidthActualFlat = ref('')
-  const minWidthActualTextFlat = ref('')
-  const minWidthActualImageFlat = ref('')
+  const data = reactive({
+    minWidth: '100px',
+    minWidthActual: '',
+    minWidthActualText: '',
+    minWidthActualImage: '',
+    minWidthActualFlat: '',
+    minWidthActualTextFlat: '',
+    minWidthActualImageFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const textRef = ref(null as UniTextElement | null)
   const imageRef = ref(null as UniImageElement | null)
@@ -141,16 +143,16 @@
   const imageRefFlat = ref(null as UniImageElement | null)
 
   const getPropertyValues = () => {
-    minWidthActual.value = viewRef.value?.style.getPropertyValue('min-width') ?? ''
-    minWidthActualFlat.value = viewRefFlat.value?.style.getPropertyValue('min-width') ?? ''
-    minWidthActualText.value = textRef.value?.style.getPropertyValue('min-width') ?? ''
-    minWidthActualTextFlat.value = textRefFlat.value?.style.getPropertyValue('min-width') ?? ''
-    minWidthActualImage.value = imageRef.value?.style.getPropertyValue('min-width') ?? ''
-    minWidthActualImageFlat.value = imageRefFlat.value?.style.getPropertyValue('min-width') ?? ''
+    data.minWidthActual = viewRef.value?.style.getPropertyValue('min-width') ?? ''
+    data.minWidthActualFlat = viewRefFlat.value?.style.getPropertyValue('min-width') ?? ''
+    data.minWidthActualText = textRef.value?.style.getPropertyValue('min-width') ?? ''
+    data.minWidthActualTextFlat = textRefFlat.value?.style.getPropertyValue('min-width') ?? ''
+    data.minWidthActualImage = imageRef.value?.style.getPropertyValue('min-width') ?? ''
+    data.minWidthActualImageFlat = imageRefFlat.value?.style.getPropertyValue('min-width') ?? ''
   }
 
   const changeMinWidth = (value: string) => {
-    minWidth.value = value
+    data.minWidth = value
     viewRef.value?.style.setProperty('min-width', value)
     viewRefFlat.value?.style.setProperty('min-width', value)
     textRef.value?.style.setProperty('min-width', value)
@@ -180,7 +182,8 @@
   })
 
   defineExpose({
-    radioChangeMinWidth
+    radioChangeMinWidth,
+    data
   })
 
 </script>

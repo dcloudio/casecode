@@ -101,10 +101,10 @@
         <!-- 普通版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">flex-wrap</text>
-          <text class="uni-info">设置值: {{flexWrap}}</text>
-          <text class="uni-info">获取值: {{flexWrapActual}}</text>
+          <text class="uni-info">设置值: {{data.flexWrap}}</text>
+          <text class="uni-info">获取值: {{data.flexWrapActual}}</text>
           <view class="test-box">
-            <view ref="viewRef" class="test-flex-container test-view" :style="{ flexWrap: flexWrap }">
+            <view ref="viewRef" class="test-flex-container test-view" :style="{ flexWrap: data.flexWrap }">
               <view class="common-item red"></view>
               <view class="common-item green"></view>
               <view class="common-item blue"></view>
@@ -118,10 +118,10 @@
         <!-- 拍平版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">拍平</text>
-          <text class="uni-info">设置值: {{flexWrap}}</text>
-          <text class="uni-info">获取值: {{flexWrapActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.flexWrap}}</text>
+          <text class="uni-info">获取值: {{data.flexWrapActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ flexWrap: flexWrap }" flatten>
+            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ flexWrap: data.flexWrap }" flatten>
               <view class="common-item red"></view>
               <view class="common-item green"></view>
               <view class="common-item blue"></view>
@@ -137,7 +137,7 @@
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="flexWrapEnum" title="flex-wrap 枚举值" @change="radioChangeFlexWrap"
           :compact="true"></enum-data>
-        <input-data :defaultValue="flexWrap" title="flex-wrap 自定义值" type="text"
+        <input-data :defaultValue="data.flexWrap" title="flex-wrap 自定义值" type="text"
           @confirm="inputChangeFlexWrap"></input-data>
       </view>
     </view>
@@ -156,19 +156,21 @@
     { value: 3, name: 'wrap-reverse' }
   ]
 
-  const flexWrap = ref('nowrap')
-  const flexWrapActual = ref('')
-  const flexWrapActualFlat = ref('')
+  const data = reactive({
+    flexWrap: 'nowrap',
+    flexWrapActual: '',
+    flexWrapActualFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const viewRefFlat = ref(null as UniElement | null)
 
   const getPropertyValues = () => {
-    flexWrapActual.value = viewRef.value?.style.getPropertyValue('flex-wrap') ?? ''
-    flexWrapActualFlat.value = viewRefFlat.value?.style.getPropertyValue('flex-wrap') ?? ''
+    data.flexWrapActual = viewRef.value?.style.getPropertyValue('flex-wrap') ?? ''
+    data.flexWrapActualFlat = viewRefFlat.value?.style.getPropertyValue('flex-wrap') ?? ''
   }
 
   const changeFlexWrap = (value : string) => {
-    flexWrap.value = value
+    data.flexWrap = value
     viewRef.value?.style.setProperty('flex-wrap', value)
     viewRefFlat.value?.style.setProperty('flex-wrap', value)
     // 使用 nextTick 确保样式已应用后再获取值
@@ -193,7 +195,8 @@
   })
 
   defineExpose({
-    radioChangeFlexWrap
+    radioChangeFlexWrap,
+    data
   })
 </script>
 

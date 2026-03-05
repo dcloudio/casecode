@@ -124,10 +124,10 @@
         <!-- 普通版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">flex-flow</text>
-          <text class="uni-info">设置值: {{flexFlow}}</text>
-          <text class="uni-info">获取值: {{flexFlowActual}}</text>
+          <text class="uni-info">设置值: {{data.flexFlow}}</text>
+          <text class="uni-info">获取值: {{data.flexFlowActual}}</text>
           <view class="test-box">
-            <view ref="viewRef" class="test-flex-container test-view" :style="{ flexFlow: flexFlow }">
+            <view ref="viewRef" class="test-flex-container test-view" :style="{ flexFlow: data.flexFlow }">
               <view class="test-item red"></view>
               <view class="test-item green"></view>
               <view class="test-item blue"></view>
@@ -141,10 +141,10 @@
         <!-- 拍平版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">拍平</text>
-          <text class="uni-info">设置值: {{flexFlow}}</text>
-          <text class="uni-info">获取值: {{flexFlowActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.flexFlow}}</text>
+          <text class="uni-info">获取值: {{data.flexFlowActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ flexFlow: flexFlow }" flatten>
+            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ flexFlow: data.flexFlow }" flatten>
               <view class="test-item red" flatten></view>
               <view class="test-item green" flatten></view>
               <view class="test-item blue" flatten></view>
@@ -159,7 +159,7 @@
       <view class="uni-common-mt uni-common-mb">
           <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
           <enum-data :items="flexFlowEnum" title="flex-flow 枚举值" @change="radioChangeFlexFlow" :compact="true"></enum-data>
-          <input-data :defaultValue="flexFlow" title="flex-flow 自定义值" type="text" @confirm="inputChangeFlexFlow"></input-data>
+          <input-data :defaultValue="data.flexFlow" title="flex-flow 自定义值" type="text" @confirm="inputChangeFlexFlow"></input-data>
       </view>
     </view>
   <!-- #ifdef APP -->
@@ -180,19 +180,21 @@
     { value: 6, name: 'column wrap-reverse' }
   ]
 
-  const flexFlow = ref('row wrap')
-  const flexFlowActual = ref('')
-  const flexFlowActualFlat = ref('')
+  const data = reactive({
+    flexFlow: 'row wrap',
+    flexFlowActual: '',
+    flexFlowActualFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const viewRefFlat = ref(null as UniElement | null)
 
   const getPropertyValues = () => {
-    flexFlowActual.value = viewRef.value?.style.getPropertyValue('flex-flow') ?? ''
-    flexFlowActualFlat.value = viewRefFlat.value?.style.getPropertyValue('flex-flow') ?? ''
+    data.flexFlowActual = viewRef.value?.style.getPropertyValue('flex-flow') ?? ''
+    data.flexFlowActualFlat = viewRefFlat.value?.style.getPropertyValue('flex-flow') ?? ''
   }
 
   const changeFlexFlow = (value : string) => {
-    flexFlow.value = value
+    data.flexFlow = value
     viewRef.value?.style.setProperty('flex-flow', value)
     viewRefFlat.value?.style.setProperty('flex-flow', value)
     // 使用 nextTick 确保样式已应用后再获取值
@@ -217,7 +219,8 @@
   })
 
   defineExpose({
-    radioChangeFlexFlow
+    radioChangeFlexFlow,
+    data
   })
 </script>
 

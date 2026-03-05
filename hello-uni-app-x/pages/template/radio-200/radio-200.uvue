@@ -3,7 +3,7 @@
       <!-- #ifndef MP -->
       <fps />
       <!-- #endif -->
-  
+
       <!-- 控制按钮区域 -->
       <view style="padding: 2px;background-color: #ffffff;flex-direction: row;flex-wrap: wrap;align-items: center;">
         <button @click="toggleDisabled" :type="sharedDisabled ? 'primary' : 'default'" size="mini" style="margin: 2px;">{{ sharedDisabled ? '启用' : '禁用' }}</button>

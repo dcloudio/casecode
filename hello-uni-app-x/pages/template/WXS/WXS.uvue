@@ -1,5 +1,6 @@
 <template>
   <view class="area">
+    <page-intro content="本页演示 WXS（script module）：在 wxs 中导出 setColor、touchstart、touchmove 等，通过 ins.setStyle 改样式、ins.selectComponent 取子节点并设 left/top 实现拖拽；上方点击文字变红，下方橙色块可触摸拖拽移动。"></page-intro>
     <view @click="test.setColor" class="setColor">点击变成红色: {{test.msg}}</view>
     <view @touchstart="test.touchstart" @touchmove="test.touchmove" class="movable">{{test.msg}}</view>
   </view>

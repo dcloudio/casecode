@@ -113,10 +113,10 @@
         <!-- 普通版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">align-items</text>
-          <text class="uni-info">设置值: {{alignItems}}</text>
-          <text class="uni-info">获取值: {{alignItemsActual}}</text>
+          <text class="uni-info">设置值: {{data.alignItems}}</text>
+          <text class="uni-info">获取值: {{data.alignItemsActual}}</text>
           <view class="test-box">
-            <view ref="viewRef" class="test-flex-container test-view" :style="{ alignItems: alignItems }">
+            <view ref="viewRef" class="test-flex-container test-view" :style="{ alignItems: data.alignItems }">
               <view class="test-item-small red"></view>
               <view class="test-item-small green"></view>
               <view class="test-item-small blue"></view>
@@ -127,10 +127,10 @@
         <!-- 拍平版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">拍平</text>
-          <text class="uni-info">设置值: {{alignItems}}</text>
-          <text class="uni-info">获取值: {{alignItemsActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.alignItems}}</text>
+          <text class="uni-info">获取值: {{data.alignItemsActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ alignItems: alignItems }" flatten>
+            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ alignItems: data.alignItems }" flatten>
               <view class="test-item-small red"></view>
               <view class="test-item-small green"></view>
               <view class="test-item-small blue"></view>
@@ -142,7 +142,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
           <enum-data :items="alignItemsEnum" title="align-items 枚举值" @change="radioChangeAlignItems" :compact="true"></enum-data>
-          <input-data :defaultValue="alignItems" title="align-items 自定义值" type="text" @confirm="inputChangeAlignItems"></input-data>
+          <input-data :defaultValue="data.alignItems" title="align-items 自定义值" type="text" @confirm="inputChangeAlignItems"></input-data>
       </view>
   <!-- #ifdef APP -->
   </scroll-view>
@@ -160,19 +160,21 @@
     { value: 4, name: 'stretch' }
   ]
 
-  const alignItems = ref('center')
-  const alignItemsActual = ref('')
-  const alignItemsActualFlat = ref('')
+  const data = reactive({
+    alignItems: 'center',
+    alignItemsActual: '',
+    alignItemsActualFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const viewRefFlat = ref(null as UniElement | null)
 
   const getPropertyValues = () => {
-    alignItemsActual.value = viewRef.value?.style.getPropertyValue('align-items') ?? ''
-    alignItemsActualFlat.value = viewRefFlat.value?.style.getPropertyValue('align-items') ?? ''
+    data.alignItemsActual = viewRef.value?.style.getPropertyValue('align-items') ?? ''
+    data.alignItemsActualFlat = viewRefFlat.value?.style.getPropertyValue('align-items') ?? ''
   }
 
   const changeAlignItems = (value: string) => {
-    alignItems.value = value
+    data.alignItems = value
     viewRef.value?.style.setProperty('align-items', value)
     viewRefFlat.value?.style.setProperty('align-items', value)
     // 使用 nextTick 确保样式已应用后再获取值
@@ -197,7 +199,8 @@
   })
 
   defineExpose({
-    radioChangeAlignItems
+    radioChangeAlignItems,
+    data
   })
 </script>
 

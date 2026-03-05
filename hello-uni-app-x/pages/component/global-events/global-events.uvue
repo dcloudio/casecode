@@ -3,6 +3,7 @@
   <scroll-view style="flex: 1">
   <!-- #endif -->
     <page-head title="组件全局事件示例"></page-head>
+    <page-intro content="本页演示组件全局事件：触摸区域展示 touchstart/touchmove/touchend/touchcancel，点击区域展示 tap/click/longpress，并显示事件详情与清除；可跳转冒泡、阻止默认、transform 等子示例。"></page-intro>
     <view class="uni-padding-wrap uni-common-mt container">
       <view class="section">
         <text class="section-title">触摸事件区域：touchstart/touchmove/touchend/touchcancel</text>

@@ -129,10 +129,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{borderRadius}}</text>
-          <text class="uni-info">获取值: {{borderRadiusActual}}</text>
+          <text class="uni-info">设置值: {{data.borderRadius}}</text>
+          <text class="uni-info">获取值: {{data.borderRadiusActual}}</text>
           <view class="test-box">
-            <view ref="viewRef" class="common-dynamic test-view" :style="{ borderRadius: borderRadius }">
+            <view ref="viewRef" class="common-dynamic test-view" :style="{ borderRadius: data.borderRadius }">
               <view style="flex-grow: 1;background-color: bisque;"><text>view</text></view>
             </view>
           </view>
@@ -140,19 +140,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{borderRadius}}</text>
-          <text class="uni-info">获取值: {{borderRadiusActualText}}</text>
+          <text class="uni-info">设置值: {{data.borderRadius}}</text>
+          <text class="uni-info">获取值: {{data.borderRadiusActualText}}</text>
           <view class="test-box">
-            <text ref="textRef" class="common-dynamic test-text" :style="{ borderRadius: borderRadius }">text</text>
+            <text ref="textRef" class="common-dynamic test-text" :style="{ borderRadius: data.borderRadius }">text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{borderRadius}}</text>
-          <text class="uni-info">获取值: {{borderRadiusActualImage}}</text>
+          <text class="uni-info">设置值: {{data.borderRadius}}</text>
+          <text class="uni-info">获取值: {{data.borderRadiusActualImage}}</text>
           <view class="test-box">
-            <image ref="imageRef" class="common-image test-image" :style="{ borderRadius: borderRadius }" src="/static/test-image/logo.png"></image>
+            <image ref="imageRef" class="common-image test-image" :style="{ borderRadius: data.borderRadius }" src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -161,10 +161,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件拍平</text>
-          <text class="uni-info">设置值: {{borderRadius}}</text>
-          <text class="uni-info">获取值: {{borderRadiusActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.borderRadius}}</text>
+          <text class="uni-info">获取值: {{data.borderRadiusActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefFlat" class="common-dynamic test-view-flatten" :style="{ borderRadius: borderRadius }" flatten>
+            <view ref="viewRefFlat" class="common-dynamic test-view-flatten" :style="{ borderRadius: data.borderRadius }" flatten>
               <view style="flex-grow: 1;background-color: bisque;" flatten><text flatten>view</text></view>
             </view>
           </view>
@@ -172,19 +172,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件拍平</text>
-          <text class="uni-info">设置值: {{borderRadius}}</text>
-          <text class="uni-info">获取值: {{borderRadiusActualTextFlat}}</text>
+          <text class="uni-info">设置值: {{data.borderRadius}}</text>
+          <text class="uni-info">获取值: {{data.borderRadiusActualTextFlat}}</text>
           <view class="test-box">
-            <text ref="textRefFlat" class="common-dynamic test-text-flatten" :style="{ borderRadius: borderRadius }" flatten>text</text>
+            <text ref="textRefFlat" class="common-dynamic test-text-flatten" :style="{ borderRadius: data.borderRadius }" flatten>text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件拍平</text>
-          <text class="uni-info">设置值: {{borderRadius}}</text>
-          <text class="uni-info">获取值: {{borderRadiusActualImageFlat}}</text>
+          <text class="uni-info">设置值: {{data.borderRadius}}</text>
+          <text class="uni-info">获取值: {{data.borderRadiusActualImageFlat}}</text>
           <view class="test-box">
-            <image ref="imageRefFlat" class="common-image test-image-flatten" :style="{ borderRadius: borderRadius }" flatten src="/static/test-image/logo.png"></image>
+            <image ref="imageRefFlat" class="common-image test-image-flatten" :style="{ borderRadius: data.borderRadius }" flatten src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -192,7 +192,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="borderRadiusEnum" title="border-radius 枚举值" @change="radioChangeBorderRadius" :compact="true"></enum-data>
-        <input-data :defaultValue="borderRadius" title="border-radius 自定义值" type="text" @confirm="inputChangeBorderRadius"></input-data>
+        <input-data :defaultValue="data.borderRadius" title="border-radius 自定义值" type="text" @confirm="inputChangeBorderRadius"></input-data>
       </view>
 
       <view class="uni-common-mb">
@@ -221,13 +221,15 @@
     { value: 5, name: '50%' }
   ]
 
-  const borderRadius = ref('10px')
-  const borderRadiusActual = ref('')
-  const borderRadiusActualText = ref('')
-  const borderRadiusActualImage = ref('')
-  const borderRadiusActualFlat = ref('')
-  const borderRadiusActualTextFlat = ref('')
-  const borderRadiusActualImageFlat = ref('')
+  const data = reactive({
+    borderRadius: '10px',
+    borderRadiusActual: '',
+    borderRadiusActualText: '',
+    borderRadiusActualImage: '',
+    borderRadiusActualFlat: '',
+    borderRadiusActualTextFlat: '',
+    borderRadiusActualImageFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const textRef = ref(null as UniTextElement | null)
   const imageRef = ref(null as UniImageElement | null)
@@ -236,16 +238,16 @@
   const imageRefFlat = ref(null as UniImageElement | null)
 
   const getPropertyValues = () => {
-    borderRadiusActual.value = viewRef.value?.style.getPropertyValue('border-radius') ?? ''
-    borderRadiusActualFlat.value = viewRefFlat.value?.style.getPropertyValue('border-radius') ?? ''
-    borderRadiusActualText.value = textRef.value?.style.getPropertyValue('border-radius') ?? ''
-    borderRadiusActualTextFlat.value = textRefFlat.value?.style.getPropertyValue('border-radius') ?? ''
-    borderRadiusActualImage.value = imageRef.value?.style.getPropertyValue('border-radius') ?? ''
-    borderRadiusActualImageFlat.value = imageRefFlat.value?.style.getPropertyValue('border-radius') ?? ''
+    data.borderRadiusActual = viewRef.value?.style.getPropertyValue('border-radius') ?? ''
+    data.borderRadiusActualFlat = viewRefFlat.value?.style.getPropertyValue('border-radius') ?? ''
+    data.borderRadiusActualText = textRef.value?.style.getPropertyValue('border-radius') ?? ''
+    data.borderRadiusActualTextFlat = textRefFlat.value?.style.getPropertyValue('border-radius') ?? ''
+    data.borderRadiusActualImage = imageRef.value?.style.getPropertyValue('border-radius') ?? ''
+    data.borderRadiusActualImageFlat = imageRefFlat.value?.style.getPropertyValue('border-radius') ?? ''
   }
 
   const changeBorderRadius = (value: string) => {
-    borderRadius.value = value
+    data.borderRadius = value
     viewRef.value?.style.setProperty('border-radius', value)
     viewRefFlat.value?.style.setProperty('border-radius', value)
     textRef.value?.style.setProperty('border-radius', value)
@@ -274,7 +276,8 @@
   })
 
   defineExpose({
-    radioChangeBorderRadius
+    radioChangeBorderRadius,
+    data
   })
 </script>
 

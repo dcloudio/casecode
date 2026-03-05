@@ -85,10 +85,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{transformValueDynamic}}</text>
-          <text class="uni-info">获取值: {{transformActual}}</text>
+          <text class="uni-info">设置值: {{data.transformValueDynamic}}</text>
+          <text class="uni-info">获取值: {{data.transformActual}}</text>
           <view class="test-box">
-            <view ref="viewRefDynamic" class="common-image" :style="{ transform: transformValueDynamic }">
+            <view ref="viewRefDynamic" class="common-image" :style="{ transform: data.transformValueDynamic }">
               <text style="font-size: 12px;">view</text>
             </view>
           </view>
@@ -96,19 +96,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{transformValueDynamic}}</text>
-          <text class="uni-info">获取值: {{transformActualText}}</text>
+          <text class="uni-info">设置值: {{data.transformValueDynamic}}</text>
+          <text class="uni-info">获取值: {{data.transformActualText}}</text>
           <view class="test-box">
-            <text ref="textRefDynamic" class="common-text" :style="{ transform: transformValueDynamic }">text</text>
+            <text ref="textRefDynamic" class="common-text" :style="{ transform: data.transformValueDynamic }">text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{transformValueDynamic}}</text>
-          <text class="uni-info">获取值: {{transformActualImage}}</text>
+          <text class="uni-info">设置值: {{data.transformValueDynamic}}</text>
+          <text class="uni-info">获取值: {{data.transformActualImage}}</text>
           <view class="test-box">
-            <image ref="imageRefDynamic" class="common-image" :style="{ transform: transformValueDynamic }" src="/static/test-image/logo.png"></image>
+            <image ref="imageRefDynamic" class="common-image" :style="{ transform: data.transformValueDynamic }" src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -116,10 +116,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件拍平</text>
-          <text class="uni-info">设置值: {{transformValueDynamic}}</text>
-          <text class="uni-info">获取值: {{transformActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.transformValueDynamic}}</text>
+          <text class="uni-info">获取值: {{data.transformActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefDynamicFlat" class="common-image" :style="{ transform: transformValueDynamic }" flatten>
+            <view ref="viewRefDynamicFlat" class="common-image" :style="{ transform: data.transformValueDynamic }" flatten>
               <text style="font-size: 12px;" flatten>view</text>
             </view>
           </view>
@@ -127,19 +127,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件拍平</text>
-          <text class="uni-info">设置值: {{transformValueDynamic}}</text>
-          <text class="uni-info">获取值: {{transformActualTextFlat}}</text>
+          <text class="uni-info">设置值: {{data.transformValueDynamic}}</text>
+          <text class="uni-info">获取值: {{data.transformActualTextFlat}}</text>
           <view class="test-box">
-            <text ref="textRefDynamicFlat" class="common-text" :style="{ transform: transformValueDynamic }" flatten>text</text>
+            <text ref="textRefDynamicFlat" class="common-text" :style="{ transform: data.transformValueDynamic }" flatten>text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件拍平</text>
-          <text class="uni-info">设置值: {{transformValueDynamic}}</text>
-          <text class="uni-info">获取值: {{transformActualImageFlat}}</text>
+          <text class="uni-info">设置值: {{data.transformValueDynamic}}</text>
+          <text class="uni-info">获取值: {{data.transformActualImageFlat}}</text>
           <view class="test-box">
-            <image ref="imageRefDynamicFlat" class="common-image" :style="{ transform: transformValueDynamic }" src="/static/test-image/logo.png" flatten></image>
+            <image ref="imageRefDynamicFlat" class="common-image" :style="{ transform: data.transformValueDynamic }" src="/static/test-image/logo.png" flatten></image>
           </view>
         </view>
       </view>
@@ -147,7 +147,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="transformEnum" title="transform 枚举值" @change="radioChangeTransform" :compact="true"></enum-data>
-        <input-data :defaultValue="transformValueDynamic" title="transform 自定义值" type="text" @confirm="inputChangeTransform"></input-data>
+        <input-data :defaultValue="data.transformValueDynamic" title="transform 自定义值" type="text" @confirm="inputChangeTransform"></input-data>
       </view>
 
       <navigator style="width: 80%;" url="/pages/CSS/transform/transform-origin">
@@ -174,13 +174,15 @@
 <script setup lang="uts">
   import { ItemType } from '@/components/enum-data/enum-data-types'
 
-  const transformValueDynamic = ref('translateX(0px)')
-  const transformActual = ref('')
-  const transformActualText = ref('')
-  const transformActualImage = ref('')
-  const transformActualFlat = ref('')
-  const transformActualTextFlat = ref('')
-  const transformActualImageFlat = ref('')
+  const data = reactive({
+    transformValueDynamic: 'translateX(0px)',
+    transformActual: '',
+    transformActualText: '',
+    transformActualImage: '',
+    transformActualFlat: '',
+    transformActualTextFlat: '',
+    transformActualImageFlat: ''
+  })
   const viewRefDynamic = ref(null as UniElement | null)
   const textRefDynamic = ref(null as UniTextElement | null)
   const imageRefDynamic = ref(null as UniImageElement | null)
@@ -200,16 +202,16 @@
   ]
 
   const getPropertyValues = () => {
-    transformActual.value = viewRefDynamic.value?.style.getPropertyValue('transform') ?? ''
-    transformActualFlat.value = viewRefDynamicFlat.value?.style.getPropertyValue('transform') ?? ''
-    transformActualText.value = textRefDynamic.value?.style.getPropertyValue('transform') ?? ''
-    transformActualTextFlat.value = textRefDynamicFlat.value?.style.getPropertyValue('transform') ?? ''
-    transformActualImage.value = imageRefDynamic.value?.style.getPropertyValue('transform') ?? ''
-    transformActualImageFlat.value = imageRefDynamicFlat.value?.style.getPropertyValue('transform') ?? ''
+    data.transformActual = viewRefDynamic.value?.style.getPropertyValue('transform') ?? ''
+    data.transformActualFlat = viewRefDynamicFlat.value?.style.getPropertyValue('transform') ?? ''
+    data.transformActualText = textRefDynamic.value?.style.getPropertyValue('transform') ?? ''
+    data.transformActualTextFlat = textRefDynamicFlat.value?.style.getPropertyValue('transform') ?? ''
+    data.transformActualImage = imageRefDynamic.value?.style.getPropertyValue('transform') ?? ''
+    data.transformActualImageFlat = imageRefDynamicFlat.value?.style.getPropertyValue('transform') ?? ''
   }
 
   const changeTransformDynamic = (value: string) => {
-    transformValueDynamic.value = value
+    data.transformValueDynamic = value
     viewRefDynamic.value?.style.setProperty('transform', value)
     viewRefDynamicFlat.value?.style.setProperty('transform', value)
     textRefDynamic.value?.style.setProperty('transform', value)
@@ -235,6 +237,10 @@
 
   onReady(() => {
     getPropertyValues()
+  })
+
+  defineExpose({
+    data
   })
 </script>
 
