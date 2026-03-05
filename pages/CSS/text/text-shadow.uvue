@@ -4,7 +4,7 @@
   <!-- #endif -->
     <view class="container">
       <text class="text" style="text-shadow: 1px 1px 2px pink;">text-shadow: 1px 1px 2px pink</text>
-      <text class="text" style="text-shadow: #fc0 1px 0 10px;">text-shadow: #fc0 1px 0 10px</text>
+      <!-- <text class="text" style="text-shadow: #fc0 1px 0 10px;">text-shadow: #fc0 1px 0 10px</text> -->
       <text class="text" style="text-shadow: 5px 5px #558abb;">text-shadow: 5px 5px #558abb</text>
       <text class="text" style="text-shadow: cyan 2px 5px;">text-shadow: cyan 2px 5px</text>
       <text class="text" style="text-shadow: 5px 10px;">text-shadow: 5px 10px</text>
@@ -13,7 +13,7 @@
 
       <text class="uni-title-text">【拍平版本】</text>
       <text class="text" style="text-shadow: 1px 1px 2px pink;" flatten>text-shadow: 1px 1px 2px pink</text>
-      <text class="text" style="text-shadow: #fc0 1px 0 10px;" flatten>text-shadow: #fc0 1px 0 10px</text>
+      <!-- <text class="text" style="text-shadow: #fc0 1px 0 10px;" flatten>text-shadow: #fc0 1px 0 10px</text> -->
       <text class="text" style="text-shadow: 5px 5px #558abb;" flatten>text-shadow: 5px 5px #558abb</text>
       <text class="text" style="text-shadow: cyan 2px 5px;" flatten>text-shadow: cyan 2px 5px</text>
       <text class="text" style="text-shadow: 5px 10px;" flatten>text-shadow: 5px 10px</text>
@@ -63,7 +63,7 @@
   const textShadowEnum: ItemType[] = [
     { value: 0, name: '' },
     { value: 1, name: '1px 1px 2px pink' },
-    { value: 2, name: '#fc0 1px 0 10px' },
+    // { value: 2, name: '#fc0 1px 0 10px' },
     { value: 3, name: '5px 5px #558abb' },
     { value: 4, name: 'cyan 2px 5px' },
     { value: 5, name: '5px 10px' },
