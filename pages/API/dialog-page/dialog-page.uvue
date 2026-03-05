@@ -2,6 +2,7 @@
   <!-- #ifdef APP -->
   <scroll-view style="flex: 1;">
   <!-- #endif -->
+  <page-intro content="本页演示 dialog 弹窗与页面信息：展示 pageBody、safeAreaInsets、窗口尺寸等；通过按钮跳转下一页、打开各 dialog 示例（含错误路径、triggerParentHide、页面样式等）。"></page-intro>
   <view class="uni-padding-wrap">
     <view class="uni-common-mt flex-row" v-if="data.pageBody != null"><text>pageBody: {</text>
       <text>top: </text><text id="page-body-top">{{data.pageBody!.top}}</text><text>,</text>

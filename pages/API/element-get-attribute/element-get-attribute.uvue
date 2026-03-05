@@ -3,6 +3,7 @@
   <scroll-view class="page-scroll-view">
   <!-- #endif -->
     <view style="padding: 15px;">
+      <page-intro content="本页演示元素属性与样式读写：getAttribute 获取元素 id（小程序端支持 style）、getPropertyValue 获取样式值（如背景色）、setProperty 设置样式；含自定义组件子元素的 getBoundingClientRectAsync、scroll-view 的 scrollTo、以及获取 scale 变换后 view 的尺寸信息。"></page-intro>
       <view id="box" ref="boxRef">
         <text class="uni-title-text">元素的id：{{ data.attrId }}</text>
         <!-- #ifndef APP -->

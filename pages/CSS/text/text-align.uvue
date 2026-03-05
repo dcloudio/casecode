@@ -22,20 +22,20 @@
 			<!-- 普通版本 -->
 			<view class="uni-common-mt">
 				<text class="uni-title-text">text-align</text>
-				<text class="uni-info">设置值: {{textAlign}}</text>
-				<text class="uni-info">获取值: {{textAlignActual}}</text>
+				<text class="uni-info">设置值: {{data.textAlign}}</text>
+				<text class="uni-info">获取值: {{data.textAlignActual}}</text>
 				<view class="test-box">
-					<text ref="textRef" class="common-text test-text" :style="{ textAlign: textAlign }">当前 text-align: {{textAlign}}</text>
+					<text ref="textRef" class="common-text test-text" :style="{ textAlign: data.textAlign }">当前 text-align: {{data.textAlign}}</text>
 				</view>
 			</view>
 
 			<!-- 拍平版本 -->
 			<view class="uni-common-mt">
 				<text class="uni-title-text">拍平</text>
-				<text class="uni-info">设置值: {{textAlign}}</text>
-				<text class="uni-info">获取值: {{textAlignActualFlat}}</text>
+				<text class="uni-info">设置值: {{data.textAlign}}</text>
+				<text class="uni-info">获取值: {{data.textAlignActualFlat}}</text>
 				<view class="test-box">
-					<text ref="textRefFlat" class="common-text test-text-flatten" :style="{ textAlign: textAlign }" flatten>当前 text-align: {{textAlign}}</text>
+					<text ref="textRefFlat" class="common-text test-text-flatten" :style="{ textAlign: data.textAlign }" flatten>当前 text-align: {{data.textAlign}}</text>
 				</view>
 			</view>
 		</view>
@@ -43,7 +43,7 @@
 		<view class="uni-common-mt uni-common-mb">
 				<text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
 				<enum-data :items="textAlignEnum" title="text-align 枚举值" @change="radioChangeTextAlign" :compact="true"></enum-data>
-				<input-data :defaultValue="textAlign" title="text-align 自定义值" type="text" @confirm="inputChangeTextAlign"></input-data>
+				<input-data :defaultValue="data.textAlign" title="text-align 自定义值" type="text" @confirm="inputChangeTextAlign"></input-data>
 		</view>
 	</view>
 </template>
@@ -58,19 +58,21 @@
 		{ value: 3, name: 'right' }
 	]
 
-	const textAlign = ref('left')
-	const textAlignActual = ref('')
-	const textAlignActualFlat = ref('')
+	const data = reactive({
+		textAlign: 'left',
+		textAlignActual: '',
+		textAlignActualFlat: ''
+	})
 	const textRef = ref(null as UniTextElement | null)
 	const textRefFlat = ref(null as UniTextElement | null)
 
 	const getPropertyValues = () => {
-		textAlignActual.value = textRef.value?.style.getPropertyValue('text-align') ?? ''
-		textAlignActualFlat.value = textRefFlat.value?.style.getPropertyValue('text-align') ?? ''
+		data.textAlignActual = textRef.value?.style.getPropertyValue('text-align') ?? ''
+		data.textAlignActualFlat = textRefFlat.value?.style.getPropertyValue('text-align') ?? ''
 	}
 
 	const changeTextAlign = (value: string) => {
-		textAlign.value = value
+		data.textAlign = value
 		textRef.value?.style.setProperty('text-align', value)
 		textRefFlat.value?.style.setProperty('text-align', value)
 		// 使用 nextTick 确保样式已应用后再获取值
@@ -95,7 +97,8 @@
 	})
 
 	defineExpose({
-		radioChangeTextAlign
+		radioChangeTextAlign,
+		data
 	})
 </script>
 

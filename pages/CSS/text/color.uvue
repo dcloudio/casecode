@@ -29,20 +29,20 @@
         <!-- 普通版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">color</text>
-          <text class="uni-info">设置值: {{color}}</text>
-          <text class="uni-info">获取值: {{colorActual}}</text>
+          <text class="uni-info">设置值: {{data.color}}</text>
+          <text class="uni-info">获取值: {{data.colorActual}}</text>
           <view class="test-box">
-            <text ref="textRef" class="common test-text" :style="{ color: color }">当前 color: {{color}}</text>
+            <text ref="textRef" class="common test-text" :style="{ color: data.color }">当前 color: {{data.color}}</text>
           </view>
         </view>
 
         <!-- 拍平版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">测试拍平</text>
-          <text class="uni-info">设置值: {{color}}</text>
-          <text class="uni-info">获取值: {{colorActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.color}}</text>
+          <text class="uni-info">获取值: {{data.colorActualFlat}}</text>
           <view class="test-box">
-            <text ref="textRefFlat" class="common test-text-flatten" :style="{ color: color }" flatten>当前 color: {{color}}</text>
+            <text ref="textRefFlat" class="common test-text-flatten" :style="{ color: data.color }" flatten>当前 color: {{data.color}}</text>
           </view>
         </view>
       </view>
@@ -50,7 +50,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="colorEnum" title="color 枚举值" @change="radioChangeColor" :compact="true"></enum-data>
-        <input-data :defaultValue="color" title="color 自定义值" type="text" @confirm="inputChangeColor"></input-data>
+        <input-data :defaultValue="data.color" title="color 自定义值" type="text" @confirm="inputChangeColor"></input-data>
       </view>
     </view>
   <!-- #ifdef APP -->
@@ -71,19 +71,21 @@
     { value: 6, name: 'rgba(0, 255, 0, 0.5)' }
   ]
 
-  const color = ref('cyan')
-  const colorActual = ref('')
-  const colorActualFlat = ref('')
+  const data = reactive({
+    color: 'cyan',
+    colorActual: '',
+    colorActualFlat: ''
+  })
   const textRef = ref(null as UniTextElement | null)
   const textRefFlat = ref(null as UniTextElement | null)
 
   const getPropertyValues = () => {
-    colorActual.value = textRef.value?.style.getPropertyValue('color') ?? ''
-    colorActualFlat.value = textRefFlat.value?.style.getPropertyValue('color') ?? ''
+    data.colorActual = textRef.value?.style.getPropertyValue('color') ?? ''
+    data.colorActualFlat = textRefFlat.value?.style.getPropertyValue('color') ?? ''
   }
 
   const changeColor = (value: string) => {
-    color.value = value
+    data.color = value
     textRef.value?.style.setProperty('color', value)
     textRefFlat.value?.style.setProperty('color', value)
     // 使用 nextTick 确保样式已应用后再获取值
@@ -108,7 +110,8 @@
   })
 
   defineExpose({
-    radioChangeColor
+    radioChangeColor,
+    data
   })
 </script>
 

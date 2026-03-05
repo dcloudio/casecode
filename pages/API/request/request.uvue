@@ -1,5 +1,6 @@
 <template>
   <view style="flex: 1;">
+    <page-intro content="本页演示 uni.request：设置请求方式（GET/POST/PUT 等）、请求地址与参数，发起请求后在上方查看返回内容；可切换错误码接口、不同 header、超时等，并展示请求任务与拦截器用法。"></page-intro>
     <view class="uni-padding-wrap uni-common-mt">
       <view class="uni-common-mt" style="border-width: 2px;border-style: solid; border-radius: 4px;">
         <textarea :value="data.res" class="uni-textarea" style="width: 100%"></textarea>

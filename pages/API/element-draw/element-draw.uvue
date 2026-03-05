@@ -3,6 +3,7 @@
   <scroll-view class="page-scroll-view">
   <!-- #endif -->
     <view>
+      <page-intro content="本页演示 canvas 绘制：在 view 上绘制文本、线条、圆、虚线、图形、样式、arcto 等。"></page-intro>
       <view class="drawing" id="draw-text-view"></view>
       <view class="drawing" id="draw-line-view"></view>
       <view class="drawing" id="draw-circle-view"></view>

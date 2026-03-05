@@ -2,7 +2,9 @@
   <view>
     <view @click="onclick"
       style="transform: rotate(180deg); background-color: brown;width: 100px; height: 100px; margin: 8px auto;"
-      @longpress="onLongPress" id="event-transform"></view>
+      @longpress="onLongPress" id="event-transform">
+      <text style="text-align: center;line-height: 100px;">旋转180°后</text>
+    </view>
   </view>
   <text style="margin:0px auto;">点击上面view触发点击事件</text>
 </template>

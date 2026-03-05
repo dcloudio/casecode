@@ -62,11 +62,11 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{marginRight}}</text>
-          <text class="uni-info">获取值: {{marginRightActual}}</text>
+          <text class="uni-info">设置值: {{data.marginRight}}</text>
+          <text class="uni-info">获取值: {{data.marginRightActual}}</text>
           <view class="test-box">
             <view class="common-view" style="background-color: red;"></view>
-            <view ref="viewRef" class="common-view test-view" :style="{ marginRight: marginRight }">
+            <view ref="viewRef" class="common-view test-view" :style="{ marginRight: data.marginRight }">
               <text class="common-text">view</text>
             </view>
             <view class="common-view" style="background-color: blue;"></view>
@@ -75,22 +75,22 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{marginRight}}</text>
-          <text class="uni-info">获取值: {{marginRightActualText}}</text>
+          <text class="uni-info">设置值: {{data.marginRight}}</text>
+          <text class="uni-info">获取值: {{data.marginRightActualText}}</text>
           <view class="test-box">
             <text class="common-view common-text" style="background-color: red;">红色</text>
-            <text ref="textRef" class="common-view common-text test-text" :style="{ marginRight: marginRight }">text</text>
+            <text ref="textRef" class="common-view common-text test-text" :style="{ marginRight: data.marginRight }">text</text>
             <text class="common-view common-text" style="background-color: blue;">蓝色</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{marginRight}}</text>
-          <text class="uni-info">获取值: {{marginRightActualImage}}</text>
+          <text class="uni-info">设置值: {{data.marginRight}}</text>
+          <text class="uni-info">获取值: {{data.marginRightActualImage}}</text>
           <view class="test-box row">
             <image class="common-image" style="background-color: red;" src="/static/test-image/logo.png"></image>
-            <image ref="imageRef" class="common-image test-image" :style="{ marginRight: marginRight }" src="/static/test-image/logo.png"></image>
+            <image ref="imageRef" class="common-image test-image" :style="{ marginRight: data.marginRight }" src="/static/test-image/logo.png"></image>
             <image class="common-image" style="background-color: blue;" src="/static/test-image/logo.png"></image>
           </view>
         </view>
@@ -99,11 +99,11 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件拍平</text>
-          <text class="uni-info">设置值: {{marginRight}}</text>
-          <text class="uni-info">获取值: {{marginRightActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.marginRight}}</text>
+          <text class="uni-info">获取值: {{data.marginRightActualFlat}}</text>
           <view class="test-box">
             <view class="common-view" style="background-color: red;"></view>
-            <view ref="viewRefFlat" class="common-view test-view-flatten" :style="{ marginRight: marginRight }" flatten>
+            <view ref="viewRefFlat" class="common-view test-view-flatten" :style="{ marginRight: data.marginRight }" flatten>
               <text class="common-text">view</text>
             </view>
             <view class="common-view" style="background-color: blue;"></view>
@@ -112,22 +112,22 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件拍平</text>
-          <text class="uni-info">设置值: {{marginRight}}</text>
-          <text class="uni-info">获取值: {{marginRightActualTextFlat}}</text>
+          <text class="uni-info">设置值: {{data.marginRight}}</text>
+          <text class="uni-info">获取值: {{data.marginRightActualTextFlat}}</text>
           <view class="test-box">
             <text class="common-view common-text" style="background-color: red;">红色</text>
-            <text ref="textRefFlat" class="common-view common-text test-text-flatten" :style="{ marginRight: marginRight }" flatten>text</text>
+            <text ref="textRefFlat" class="common-view common-text test-text-flatten" :style="{ marginRight: data.marginRight }" flatten>text</text>
             <text class="common-view common-text" style="background-color: blue;">蓝色</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件拍平</text>
-          <text class="uni-info">设置值: {{marginRight}}</text>
-          <text class="uni-info">获取值: {{marginRightActualImageFlat}}</text>
+          <text class="uni-info">设置值: {{data.marginRight}}</text>
+          <text class="uni-info">获取值: {{data.marginRightActualImageFlat}}</text>
           <view class="test-box row">
             <image class="common-image" style="background-color: red;" src="/static/test-image/logo.png"></image>
-            <image ref="imageRefFlat" class="common-image test-image-flatten" :style="{ marginRight: marginRight }" flatten src="/static/test-image/logo.png"></image>
+            <image ref="imageRefFlat" class="common-image test-image-flatten" :style="{ marginRight: data.marginRight }" flatten src="/static/test-image/logo.png"></image>
             <image class="common-image" style="background-color: blue;" src="/static/test-image/logo.png"></image>
           </view>
         </view>
@@ -135,7 +135,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="marginRightEnum" title="margin-right 枚举值" @change="radioChangeMarginRight" :compact="true"></enum-data>
-        <input-data :defaultValue="marginRight" title="margin-right 自定义值" type="text" @confirm="inputChangeMarginRight"></input-data>
+        <input-data :defaultValue="data.marginRight" title="margin-right 自定义值" type="text" @confirm="inputChangeMarginRight"></input-data>
       </view>
 
       <view class="uni-common-mb">
@@ -162,13 +162,15 @@
 <script setup lang="uts">
   import { ItemType } from '@/components/enum-data/enum-data-types'
 
-  const marginRight = ref('25px')
-  const marginRightActual = ref('')
-  const marginRightActualText = ref('')
-  const marginRightActualImage = ref('')
-  const marginRightActualFlat = ref('')
-  const marginRightActualTextFlat = ref('')
-  const marginRightActualImageFlat = ref('')
+  const data = reactive({
+    marginRight: '25px',
+    marginRightActual: '',
+    marginRightActualText: '',
+    marginRightActualImage: '',
+    marginRightActualFlat: '',
+    marginRightActualTextFlat: '',
+    marginRightActualImageFlat: ''
+  })
 
   const viewRef = ref(null as UniElement | null)
   const textRef = ref(null as UniTextElement | null)
@@ -188,16 +190,16 @@
   ]
 
   const getPropertyValues = () => {
-    marginRightActual.value = viewRef.value?.style.getPropertyValue('margin-right') ?? ''
-    marginRightActualFlat.value = viewRefFlat.value?.style.getPropertyValue('margin-right') ?? ''
-    marginRightActualText.value = textRef.value?.style.getPropertyValue('margin-right') ?? ''
-    marginRightActualTextFlat.value = textRefFlat.value?.style.getPropertyValue('margin-right') ?? ''
-    marginRightActualImage.value = imageRef.value?.style.getPropertyValue('margin-right') ?? ''
-    marginRightActualImageFlat.value = imageRefFlat.value?.style.getPropertyValue('margin-right') ?? ''
+    data.marginRightActual = viewRef.value?.style.getPropertyValue('margin-right') ?? ''
+    data.marginRightActualFlat = viewRefFlat.value?.style.getPropertyValue('margin-right') ?? ''
+    data.marginRightActualText = textRef.value?.style.getPropertyValue('margin-right') ?? ''
+    data.marginRightActualTextFlat = textRefFlat.value?.style.getPropertyValue('margin-right') ?? ''
+    data.marginRightActualImage = imageRef.value?.style.getPropertyValue('margin-right') ?? ''
+    data.marginRightActualImageFlat = imageRefFlat.value?.style.getPropertyValue('margin-right') ?? ''
   }
 
   const changeMarginRight = (value: string) => {
-    marginRight.value = value
+    data.marginRight = value
     viewRef.value?.style.setProperty('margin-right', value)
     viewRefFlat.value?.style.setProperty('margin-right', value)
     textRef.value?.style.setProperty('margin-right', value)
@@ -226,7 +228,8 @@
   })
 
   defineExpose({
-    radioChangeMarginRight
+    radioChangeMarginRight,
+    data
   })
 </script>
 

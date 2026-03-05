@@ -1,5 +1,6 @@
 <template>
   <view>
+    <page-intro content="本页为 issue-14765 示例：Comp1、Comp2 子组件与 getElementById 等测试。"></page-intro>
     <Comp1 :id="id1" @ready="onComp1Ready"></Comp1>
     <Comp2 :id="id2"></Comp2>
   </view>

@@ -27,20 +27,20 @@
         <!-- 普通版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">font-weight</text>
-          <text class="uni-info">设置值: {{fontWeight}}</text>
-          <text class="uni-info">获取值: {{fontWeightActual}}</text>
+          <text class="uni-info">设置值: {{data.fontWeight}}</text>
+          <text class="uni-info">获取值: {{data.fontWeightActual}}</text>
           <view class="test-box">
-            <text ref="textRef" class="common-size test-text" :style="{ fontWeight: fontWeight }">当前 font-weight: {{fontWeight}}</text>
+            <text ref="textRef" class="common-size test-text" :style="{ fontWeight: data.fontWeight }">当前 font-weight: {{data.fontWeight}}</text>
           </view>
         </view>
 
         <!-- 拍平版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">测试拍平</text>
-          <text class="uni-info">设置值: {{fontWeight}}</text>
-          <text class="uni-info">获取值: {{fontWeightActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.fontWeight}}</text>
+          <text class="uni-info">获取值: {{data.fontWeightActualFlat}}</text>
           <view class="test-box">
-            <text ref="textRefFlat" class="common-size test-text-flatten" :style="{ fontWeight: fontWeight }" flatten>当前 font-weight: {{fontWeight}}</text>
+            <text ref="textRefFlat" class="common-size test-text-flatten" :style="{ fontWeight: data.fontWeight }" flatten>当前 font-weight: {{data.fontWeight}}</text>
           </view>
         </view>
       </view>
@@ -48,7 +48,7 @@
       <view class="uni-common-mt uni-common-mb">
           <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
           <enum-data :items="fontWeightEnum" title="font-weight 枚举值" @change="radioChangeFontWeight" :compact="true"></enum-data>
-          <input-data :defaultValue="fontWeight" title="font-weight 自定义值" type="text" @confirm="inputChangeFontWeight"></input-data>
+          <input-data :defaultValue="data.fontWeight" title="font-weight 自定义值" type="text" @confirm="inputChangeFontWeight"></input-data>
       </view>
     </view>
   <!-- #ifdef APP -->
@@ -69,19 +69,21 @@
 		{ value: 6, name: '700' }
 	]
 
-	const fontWeight = ref('normal')
-	const fontWeightActual = ref('')
-	const fontWeightActualFlat = ref('')
+	const data = reactive({
+		fontWeight: 'normal',
+		fontWeightActual: '',
+		fontWeightActualFlat: ''
+	})
 	const textRef = ref(null as UniTextElement | null)
 	const textRefFlat = ref(null as UniTextElement | null)
 
 	const getPropertyValues = () => {
-		fontWeightActual.value = textRef.value?.style.getPropertyValue('font-weight') ?? ''
-		fontWeightActualFlat.value = textRefFlat.value?.style.getPropertyValue('font-weight') ?? ''
+		data.fontWeightActual = textRef.value?.style.getPropertyValue('font-weight') ?? ''
+		data.fontWeightActualFlat = textRefFlat.value?.style.getPropertyValue('font-weight') ?? ''
 	}
 
 	const changeFontWeight = (value: string) => {
-		fontWeight.value = value
+		data.fontWeight = value
 		textRef.value?.style.setProperty('font-weight', value)
 		textRefFlat.value?.style.setProperty('font-weight', value)
 		// 使用 nextTick 确保样式已应用后再获取值
@@ -106,7 +108,8 @@
 	})
 
 	defineExpose({
-		radioChangeFontWeight
+		radioChangeFontWeight,
+		data
 	})
 </script>
 

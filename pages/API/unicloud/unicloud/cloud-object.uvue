@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="uts">
-  
+
 
   type DataType = {
     todoTitle: string,

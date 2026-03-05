@@ -102,12 +102,12 @@
         <!-- view 组件测试 -->
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{flexProp}}</text>
-          <text class="uni-info">获取值: {{flexActual}}</text>
+          <text class="uni-info">设置值: {{data.flexProp}}</text>
+          <text class="uni-info">获取值: {{data.flexActual}}</text>
           <view class="test-box">
             <view class="test-flex-container">
               <view class="common-dynamic" style="background-color: red;"></view>
-              <view ref="viewRef" class="common-dynamic test-view" style="background-color: green;" :style="{ flex: flexProp }">
+              <view ref="viewRef" class="common-dynamic test-view" style="background-color: green;" :style="{ flex: data.flexProp }">
                 <text class="text-flex">view</text>
               </view>
               <view class="common-dynamic" style="background-color: blue;"></view>
@@ -118,12 +118,12 @@
         <!-- text 组件测试 -->
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{flexProp}}</text>
-          <text class="uni-info">获取值: {{flexActualText}}</text>
+          <text class="uni-info">设置值: {{data.flexProp}}</text>
+          <text class="uni-info">获取值: {{data.flexActualText}}</text>
           <view class="test-box">
             <view class="test-flex-container">
               <text class="common-dynamic text-flex" style="background-color: red;">红色</text>
-              <text ref="textRef" class="common-dynamic text-flex test-text" style="background-color: green;" :style="{ flex: flexProp }">text</text>
+              <text ref="textRef" class="common-dynamic text-flex test-text" style="background-color: green;" :style="{ flex: data.flexProp }">text</text>
               <text class="common-dynamic text-flex" style="background-color: blue;">蓝色</text>
             </view>
           </view>
@@ -132,12 +132,12 @@
         <!-- image 组件测试 -->
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{flexProp}}</text>
-          <text class="uni-info">获取值: {{flexActualImage}}</text>
+          <text class="uni-info">设置值: {{data.flexProp}}</text>
+          <text class="uni-info">获取值: {{data.flexActualImage}}</text>
           <view class="test-box">
             <view class="test-flex-container">
               <image class="common-image" style="background-color: red;" src="/static/test-image/logo.png"></image>
-              <image ref="imageRef" class="common-image test-image" style="background-color: green;" :style="{ flex: flexProp }" src="/static/test-image/logo.png"></image>
+              <image ref="imageRef" class="common-image test-image" style="background-color: green;" :style="{ flex: data.flexProp }" src="/static/test-image/logo.png"></image>
               <image class="common-image" style="background-color: blue;" src="/static/test-image/logo.png"></image>
             </view>
           </view>
@@ -149,12 +149,12 @@
         <!-- view 组件拍平测试 -->
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件拍平</text>
-          <text class="uni-info">设置值: {{flexProp}}</text>
-          <text class="uni-info">获取值: {{flexActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.flexProp}}</text>
+          <text class="uni-info">获取值: {{data.flexActualFlat}}</text>
           <view class="test-box">
             <view class="test-flex-container">
               <view class="common-dynamic" style="background-color: red;"></view>
-              <view ref="viewRefFlat" class="common-dynamic test-view-flatten" style="background-color: green;" :style="{ flex: flexProp }" flatten>
+              <view ref="viewRefFlat" class="common-dynamic test-view-flatten" style="background-color: green;" :style="{ flex: data.flexProp }" flatten>
                 <text class="text-flex">view</text>
               </view>
               <view class="common-dynamic" style="background-color: blue;"></view>
@@ -165,12 +165,12 @@
         <!-- text 组件拍平测试 -->
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件拍平</text>
-          <text class="uni-info">设置值: {{flexProp}}</text>
-          <text class="uni-info">获取值: {{flexActualTextFlat}}</text>
+          <text class="uni-info">设置值: {{data.flexProp}}</text>
+          <text class="uni-info">获取值: {{data.flexActualTextFlat}}</text>
           <view class="test-box">
             <view class="test-flex-container">
               <text class="common-dynamic text-flex" style="background-color: red;">红色</text>
-              <text ref="textRefFlat" class="common-dynamic text-flex test-text-flatten" style="background-color: green;" :style="{ flex: flexProp }" flatten>text</text>
+              <text ref="textRefFlat" class="common-dynamic text-flex test-text-flatten" style="background-color: green;" :style="{ flex: data.flexProp }" flatten>text</text>
               <text class="common-dynamic text-flex" style="background-color: blue;">蓝色</text>
             </view>
           </view>
@@ -179,12 +179,12 @@
         <!-- image 组件拍平测试 -->
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件拍平</text>
-          <text class="uni-info">设置值: {{flexProp}}</text>
-          <text class="uni-info">获取值: {{flexActualImageFlat}}</text>
+          <text class="uni-info">设置值: {{data.flexProp}}</text>
+          <text class="uni-info">获取值: {{data.flexActualImageFlat}}</text>
           <view class="test-box">
             <view class="test-flex-container">
               <image class="common-image" style="background-color: red;" src="/static/test-image/logo.png"></image>
-              <image ref="imageRefFlat" class="common-image test-image-flatten" style="background-color: green;" :style="{ flex: flexProp }" flatten src="/static/test-image/logo.png"></image>
+              <image ref="imageRefFlat" class="common-image test-image-flatten" style="background-color: green;" :style="{ flex: data.flexProp }" flatten src="/static/test-image/logo.png"></image>
               <image class="common-image" style="background-color: blue;" src="/static/test-image/logo.png"></image>
             </view>
           </view>
@@ -194,7 +194,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="flexEnum" title="flex 枚举值" @change="radioChangeFlex" :compact="true"></enum-data>
-        <input-data :defaultValue="flexProp" title="flex 自定义值" type="text" @confirm="inputChangeFlex"></input-data>
+        <input-data :defaultValue="data.flexProp" title="flex 自定义值" type="text" @confirm="inputChangeFlex"></input-data>
       </view>
 
       <text class="uni-title-text uni-common-mt">native-view 组件：flex: 1; 和 flex: auto;</text>
@@ -230,13 +230,15 @@
     { value: 6, name: '1 1 auto' }
   ]
 
-  const flexProp = ref('1')
-  const flexActual = ref('')
-  const flexActualFlat = ref('')
-  const flexActualText = ref('')
-  const flexActualImage = ref('')
-  const flexActualTextFlat = ref('')
-  const flexActualImageFlat = ref('')
+  const data = reactive({
+    flexProp: '1',
+    flexActual: '',
+    flexActualFlat: '',
+    flexActualText: '',
+    flexActualImage: '',
+    flexActualTextFlat: '',
+    flexActualImageFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const viewRefFlat = ref(null as UniElement | null)
   const textRef = ref(null as UniTextElement | null)
@@ -245,16 +247,16 @@
   const imageRefFlat = ref(null as UniImageElement | null)
 
   const getPropertyValues = () => {
-    flexActual.value = viewRef.value?.style.getPropertyValue('flex') ?? ''
-    flexActualFlat.value = viewRefFlat.value?.style.getPropertyValue('flex') ?? ''
-    flexActualText.value = textRef.value?.style.getPropertyValue('flex') ?? ''
-    flexActualTextFlat.value = textRefFlat.value?.style.getPropertyValue('flex') ?? ''
-    flexActualImage.value = imageRef.value?.style.getPropertyValue('flex') ?? ''
-    flexActualImageFlat.value = imageRefFlat.value?.style.getPropertyValue('flex') ?? ''
+    data.flexActual = viewRef.value?.style.getPropertyValue('flex') ?? ''
+    data.flexActualFlat = viewRefFlat.value?.style.getPropertyValue('flex') ?? ''
+    data.flexActualText = textRef.value?.style.getPropertyValue('flex') ?? ''
+    data.flexActualTextFlat = textRefFlat.value?.style.getPropertyValue('flex') ?? ''
+    data.flexActualImage = imageRef.value?.style.getPropertyValue('flex') ?? ''
+    data.flexActualImageFlat = imageRefFlat.value?.style.getPropertyValue('flex') ?? ''
   }
 
   const changeFlex = (value: string) => {
-    flexProp.value = value
+    data.flexProp = value
     viewRef.value?.style.setProperty('flex', value)
     viewRefFlat.value?.style.setProperty('flex', value)
     textRef.value?.style.setProperty('flex', value)
@@ -283,7 +285,8 @@
   })
 
   defineExpose({
-    radioChangeFlex
+    radioChangeFlex,
+    data
   })
 </script>
 

@@ -6,11 +6,11 @@
       <text class="uni-tips">说明：左边是正常版本，右边是拍平版本</text>
       <view class="demo-box">
         <view class="common">
-          <text ref="text" :style="{'font-size': fontSize}">font-size: {{fontSize}}</text>
+          <text ref="text" :style="{'font-size': data.fontSize}">font-size: {{data.fontSize}}</text>
           <text style="font-size: 30px;">font-size: 30px</text>
         </view>
         <view class="common">
-          <text ref="text" :style="{'font-size': fontSize}" flatten>font-size: {{fontSize}}</text>
+          <text ref="text" :style="{'font-size': data.fontSize}" flatten>font-size: {{data.fontSize}}</text>
           <text style="font-size: 30px;" flatten>font-size: 30px</text>
         </view>
       </view>
@@ -23,20 +23,20 @@
         <!-- 普通版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">font-size</text>
-          <text class="uni-info">设置值: {{fontSizeProp}}</text>
-          <text class="uni-info">获取值: {{fontSizeActual}}</text>
+          <text class="uni-info">设置值: {{data.fontSizeProp}}</text>
+          <text class="uni-info">获取值: {{data.fontSizeActual}}</text>
           <view class="test-box">
-            <text ref="textRef" :style="{ fontSize: fontSizeProp }">当前 font-size: {{fontSizeProp}}</text>
+            <text ref="textRef" :style="{ fontSize: data.fontSizeProp }">当前 font-size: {{data.fontSizeProp}}</text>
           </view>
         </view>
 
         <!-- 拍平版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">测试拍平</text>
-          <text class="uni-info">设置值: {{fontSizeProp}}</text>
-          <text class="uni-info">获取值: {{fontSizeActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.fontSizeProp}}</text>
+          <text class="uni-info">获取值: {{data.fontSizeActualFlat}}</text>
           <view class="test-box">
-            <text ref="textRefFlat" :style="{ fontSize: fontSizeProp }" flatten>当前 font-size: {{fontSizeProp}}</text>
+            <text ref="textRefFlat" :style="{ fontSize: data.fontSizeProp }" flatten>当前 font-size: {{data.fontSizeProp}}</text>
           </view>
         </view>
       </view>
@@ -44,7 +44,7 @@
       <view class="uni-common-mt uni-common-mb">
           <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
           <enum-data :items="fontSizeEnum" title="font-size 枚举值" @change="radioChangeFontSize" :compact="true"></enum-data>
-          <input-data :defaultValue="fontSizeProp" title="font-size 自定义值" type="text" @confirm="inputChangeFontSize"></input-data>
+          <input-data :defaultValue="data.fontSizeProp" title="font-size 自定义值" type="text" @confirm="inputChangeFontSize"></input-data>
       </view>
     </view>
   <!-- #ifdef APP -->
@@ -55,14 +55,20 @@
 <script setup lang="uts">
   import { ItemType } from '@/components/enum-data/enum-data-types'
 
-  const fontSize = ref('15px')
+  const data = reactive({
+    fontSize: '15px',
+    fontSizeProp: '15px',
+    fontSizeActual: '',
+    fontSizeActualFlat: ''
+  })
   // 自动化测试
   const setFontSize = () => {
-    fontSize.value = '30px'
+    data.fontSize = '30px'
   }
 
   defineExpose({
-    setFontSize
+    setFontSize,
+    data
   })
 
   const fontSizeEnum: ItemType[] = [
@@ -75,19 +81,16 @@
     { value: 6, name: '20rpx' },
   ]
 
-  const fontSizeProp = ref('15px')
-  const fontSizeActual = ref('')
-  const fontSizeActualFlat = ref('')
   const textRef = ref(null as UniTextElement | null)
   const textRefFlat = ref(null as UniTextElement | null)
 
   const getPropertyValues = () => {
-    fontSizeActual.value = textRef.value?.style.getPropertyValue('font-size') ?? ''
-    fontSizeActualFlat.value = textRefFlat.value?.style.getPropertyValue('font-size') ?? ''
+    data.fontSizeActual = textRef.value?.style.getPropertyValue('font-size') ?? ''
+    data.fontSizeActualFlat = textRefFlat.value?.style.getPropertyValue('font-size') ?? ''
   }
 
   const changeFontSize = (value: string) => {
-    fontSizeProp.value = value
+    data.fontSizeProp = value
     textRef.value?.style.setProperty('font-size', value)
     textRefFlat.value?.style.setProperty('font-size', value)
     // 使用 nextTick 确保样式已应用后再获取值

@@ -35,10 +35,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{minHeight}}</text>
-          <text class="uni-info">获取值: {{minHeightActual}}</text>
+          <text class="uni-info">设置值: {{data.minHeight}}</text>
+          <text class="uni-info">获取值: {{data.minHeightActual}}</text>
           <view class="test-box">
-            <view ref="viewRef" class="common-dynamic test-view" :style="{ minHeight: minHeight }">
+            <view ref="viewRef" class="common-dynamic test-view" :style="{ minHeight: data.minHeight }">
               <text>view</text>
             </view>
           </view>
@@ -46,19 +46,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{minHeight}}</text>
-          <text class="uni-info">获取值: {{minHeightActualText}}</text>
+          <text class="uni-info">设置值: {{data.minHeight}}</text>
+          <text class="uni-info">获取值: {{data.minHeightActualText}}</text>
           <view class="test-box">
-            <text ref="textRef" class="common-dynamic test-text" :style="{ minHeight: minHeight }">text</text>
+            <text ref="textRef" class="common-dynamic test-text" :style="{ minHeight: data.minHeight }">text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{minHeight}}</text>
-          <text class="uni-info">获取值: {{minHeightActualImage}}</text>
+          <text class="uni-info">设置值: {{data.minHeight}}</text>
+          <text class="uni-info">获取值: {{data.minHeightActualImage}}</text>
           <view class="test-box">
-            <image ref="imageRef" class="common-dynamic test-image" :style="{ minHeight: minHeight }" src="/static/test-image/logo.png"></image>
+            <image ref="imageRef" class="common-dynamic test-image" :style="{ minHeight: data.minHeight }" src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -67,10 +67,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件拍平</text>
-          <text class="uni-info">设置值: {{minHeight}}</text>
-          <text class="uni-info">获取值: {{minHeightActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.minHeight}}</text>
+          <text class="uni-info">获取值: {{data.minHeightActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefFlat" class="common-dynamic test-view-flatten" :style="{ minHeight: minHeight }" flatten>
+            <view ref="viewRefFlat" class="common-dynamic test-view-flatten" :style="{ minHeight: data.minHeight }" flatten>
               <text>view</text>
             </view>
           </view>
@@ -78,19 +78,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件拍平</text>
-          <text class="uni-info">设置值: {{minHeight}}</text>
-          <text class="uni-info">获取值: {{minHeightActualTextFlat}}</text>
+          <text class="uni-info">设置值: {{data.minHeight}}</text>
+          <text class="uni-info">获取值: {{data.minHeightActualTextFlat}}</text>
           <view class="test-box">
-            <text ref="textRefFlat" class="common-dynamic test-text-flatten" :style="{ minHeight: minHeight }" flatten>text</text>
+            <text ref="textRefFlat" class="common-dynamic test-text-flatten" :style="{ minHeight: data.minHeight }" flatten>text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件拍平</text>
-          <text class="uni-info">设置值: {{minHeight}}</text>
-          <text class="uni-info">获取值: {{minHeightActualImageFlat}}</text>
+          <text class="uni-info">设置值: {{data.minHeight}}</text>
+          <text class="uni-info">获取值: {{data.minHeightActualImageFlat}}</text>
           <view class="test-box">
-            <image ref="imageRefFlat" class="common-dynamic test-image-flatten" :style="{ minHeight: minHeight }" flatten src="/static/test-image/logo.png"></image>
+            <image ref="imageRefFlat" class="common-dynamic test-image-flatten" :style="{ minHeight: data.minHeight }" flatten src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -98,7 +98,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="minHeightEnum" title="min-height 枚举值" @change="radioChangeMinHeight" :compact="true"></enum-data>
-        <input-data :defaultValue="minHeight" title="min-height 自定义值" type="text" @confirm="inputChangeMinHeight"></input-data>
+        <input-data :defaultValue="data.minHeight" title="min-height 自定义值" type="text" @confirm="inputChangeMinHeight"></input-data>
       </view>
 
       <view class="uni-common-mb">
@@ -126,13 +126,15 @@
     { value: 5, name: '80rpx' },
   ]
 
-  const minHeight = ref('100px')
-  const minHeightActual = ref('')
-  const minHeightActualText = ref('')
-  const minHeightActualImage = ref('')
-  const minHeightActualFlat = ref('')
-  const minHeightActualTextFlat = ref('')
-  const minHeightActualImageFlat = ref('')
+  const data = reactive({
+    minHeight: '100px',
+    minHeightActual: '',
+    minHeightActualText: '',
+    minHeightActualImage: '',
+    minHeightActualFlat: '',
+    minHeightActualTextFlat: '',
+    minHeightActualImageFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const textRef = ref(null as UniTextElement | null)
   const imageRef = ref(null as UniImageElement | null)
@@ -141,16 +143,16 @@
   const imageRefFlat = ref(null as UniImageElement | null)
 
   const getPropertyValues = () => {
-    minHeightActual.value = viewRef.value?.style.getPropertyValue('min-height') ?? ''
-    minHeightActualFlat.value = viewRefFlat.value?.style.getPropertyValue('min-height') ?? ''
-    minHeightActualText.value = textRef.value?.style.getPropertyValue('min-height') ?? ''
-    minHeightActualTextFlat.value = textRefFlat.value?.style.getPropertyValue('min-height') ?? ''
-    minHeightActualImage.value = imageRef.value?.style.getPropertyValue('min-height') ?? ''
-    minHeightActualImageFlat.value = imageRefFlat.value?.style.getPropertyValue('min-height') ?? ''
+    data.minHeightActual = viewRef.value?.style.getPropertyValue('min-height') ?? ''
+    data.minHeightActualFlat = viewRefFlat.value?.style.getPropertyValue('min-height') ?? ''
+    data.minHeightActualText = textRef.value?.style.getPropertyValue('min-height') ?? ''
+    data.minHeightActualTextFlat = textRefFlat.value?.style.getPropertyValue('min-height') ?? ''
+    data.minHeightActualImage = imageRef.value?.style.getPropertyValue('min-height') ?? ''
+    data.minHeightActualImageFlat = imageRefFlat.value?.style.getPropertyValue('min-height') ?? ''
   }
 
   const changeMinHeight = (value: string) => {
-    minHeight.value = value
+    data.minHeight = value
     viewRef.value?.style.setProperty('min-height', value)
     viewRefFlat.value?.style.setProperty('min-height', value)
     textRef.value?.style.setProperty('min-height', value)
@@ -179,7 +181,8 @@
   })
 
   defineExpose({
-    radioChangeMinHeight
+    radioChangeMinHeight,
+    data
   })
 
 </script>

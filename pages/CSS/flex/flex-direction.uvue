@@ -96,10 +96,10 @@
         <!-- 普通版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">flex-direction</text>
-          <text class="uni-info">设置值: {{flexDirection}}</text>
-          <text class="uni-info">获取值: {{flexDirectionActual}}</text>
+          <text class="uni-info">设置值: {{data.flexDirection}}</text>
+          <text class="uni-info">获取值: {{data.flexDirectionActual}}</text>
           <view class="test-box">
-            <view ref="viewRef" class="test-flex-container test-view" :style="{ flexDirection: flexDirection }">
+            <view ref="viewRef" class="test-flex-container test-view" :style="{ flexDirection: data.flexDirection }">
               <view class="test-item-small red"></view>
               <view class="test-item-small green"></view>
               <view class="test-item-small blue"></view>
@@ -110,10 +110,10 @@
         <!-- 拍平版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">拍平</text>
-          <text class="uni-info">设置值: {{flexDirection}}</text>
-          <text class="uni-info">获取值: {{flexDirectionActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.flexDirection}}</text>
+          <text class="uni-info">获取值: {{data.flexDirectionActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ flexDirection: flexDirection }" flatten>
+            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ flexDirection: data.flexDirection }" flatten>
               <view class="test-item-small red"></view>
               <view class="test-item-small green"></view>
               <view class="test-item-small blue"></view>
@@ -125,7 +125,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="flexDirectionEnum" title="flex-direction 枚举值" @change="radioChangeFlexDirection" :compact="true"></enum-data>
-        <input-data :defaultValue="flexDirection" title="flex-direction 自定义值" type="text" @confirm="inputChangeFlexDirection"></input-data>
+        <input-data :defaultValue="data.flexDirection" title="flex-direction 自定义值" type="text" @confirm="inputChangeFlexDirection"></input-data>
       </view>
     </view>
   <!-- #ifdef APP -->
@@ -144,19 +144,21 @@
     { value: 4, name: 'column-reverse' }
   ]
 
-  const flexDirection = ref('row')
-  const flexDirectionActual = ref('')
-  const flexDirectionActualFlat = ref('')
+  const data = reactive({
+    flexDirection: 'row',
+    flexDirectionActual: '',
+    flexDirectionActualFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const viewRefFlat = ref(null as UniElement | null)
 
   const getPropertyValues = () => {
-    flexDirectionActual.value = viewRef.value?.style.getPropertyValue('flex-direction') ?? ''
-    flexDirectionActualFlat.value = viewRefFlat.value?.style.getPropertyValue('flex-direction') ?? ''
+    data.flexDirectionActual = viewRef.value?.style.getPropertyValue('flex-direction') ?? ''
+    data.flexDirectionActualFlat = viewRefFlat.value?.style.getPropertyValue('flex-direction') ?? ''
   }
 
   const changeFlexDirection = (value: string) => {
-    flexDirection.value = value
+    data.flexDirection = value
     viewRef.value?.style.setProperty('flex-direction', value)
     viewRefFlat.value?.style.setProperty('flex-direction', value)
     // 使用 nextTick 确保样式已应用后再获取值
@@ -181,7 +183,8 @@
   })
 
   defineExpose({
-    radioChangeFlexDirection
+    radioChangeFlexDirection,
+    data
   })
 </script>
 

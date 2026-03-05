@@ -1,5 +1,6 @@
 <template>
   <view class="container">
+    <page-intro content="本页演示 editor 富文本编辑器：工具栏可设置加粗、斜体、对齐、行高、字体等，支持插入图片与预览，展示内容变化与只读模式。"></page-intro>
     <view class="page-body">
       <view class='wrapper'>
         <view class='toolbar' @tap="format">

@@ -1,7 +1,6 @@
 <template>
   <scroll-view @scroll="onScroll" class="page" show-scrollbar="false">
     <view ref="seatbarRef" class="seatbar"></view>
-
     <view class="content">
       <view class="content-item">
         <text class="text">1. 当前示例监听了 scroll-view 的 scroll 事件 ，滚动页面实时监听scrollTop。</text>

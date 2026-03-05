@@ -44,7 +44,7 @@ describe('test element-get-attribute', () => {
 			await page.waitFor(1000)
 		  const marginTop = await page.callMethod('getScrollViewStyleMarginTop')
 			console.log("getScrollViewStyleMarginTop", marginTop)
-		  expect(marginTop).toEqual("15");
+		  expect(marginTop).toEqual(isDom2 ? "15px" : "15");
 		})
 	}
 

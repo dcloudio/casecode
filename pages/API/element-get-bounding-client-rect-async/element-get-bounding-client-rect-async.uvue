@@ -4,6 +4,7 @@
   <!-- #endif -->
     <view class="page" id="page">
       <page-head :title="title"></page-head>
+      <page-intro content="本页演示元素获取布局矩形：getBoundingClientRectAsync 异步接口与 getBoundingClientRect 同步方法，返回 x、y、width、height、left、top、right、bottom；对 view、text、image、scroll-view 等组件分别测试，并含拍平（flatten）对比。"></page-intro>
       <button class="uni-common-mt" @click="getBoundingClientRectAsync">getBoundingClientRectAsync</button>
       <view id="rect-test" ref="rectTest" class="rect-test"></view>
       <view class="rect-info" v-if="data.rectInfo != null">

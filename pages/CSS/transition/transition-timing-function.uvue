@@ -38,10 +38,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{transitionTimingFunctionDynamic}}</text>
-          <text class="uni-info">获取值: {{transitionTimingFunctionActual}}</text>
+          <text class="uni-info">设置值: {{data.transitionTimingFunctionDynamic}}</text>
+          <text class="uni-info">获取值: {{data.transitionTimingFunctionActual}}</text>
           <view class="test-box">
-            <view ref="viewRefDynamic" class="common-image test-view" :style="{ transitionTimingFunction: transitionTimingFunctionDynamic, transitionProperty: 'width', transitionDuration: '2s' }" @click="triggerTransitionDynamic">
+            <view ref="viewRefDynamic" class="common-image test-view" :style="{ transitionTimingFunction: data.transitionTimingFunctionDynamic, transitionProperty: 'width', transitionDuration: '2s' }" @click="triggerTransitionDynamic">
               <text style="font-size: 12px;">点击view</text>
             </view>
           </view>
@@ -49,19 +49,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{transitionTimingFunctionDynamic}}</text>
-          <text class="uni-info">获取值: {{transitionTimingFunctionActualText}}</text>
+          <text class="uni-info">设置值: {{data.transitionTimingFunctionDynamic}}</text>
+          <text class="uni-info">获取值: {{data.transitionTimingFunctionActualText}}</text>
           <view class="test-box">
-            <text ref="textRefDynamic" class="common-text test-text" :style="{ transitionTimingFunction: transitionTimingFunctionDynamic, transitionProperty: 'width', transitionDuration: '2s' }" @click="triggerTransitionTextDynamic">点击text</text>
+            <text ref="textRefDynamic" class="common-text test-text" :style="{ transitionTimingFunction: data.transitionTimingFunctionDynamic, transitionProperty: 'width', transitionDuration: '2s' }" @click="triggerTransitionTextDynamic">点击text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{transitionTimingFunctionDynamic}}</text>
-          <text class="uni-info">获取值: {{transitionTimingFunctionActualImage}}</text>
+          <text class="uni-info">设置值: {{data.transitionTimingFunctionDynamic}}</text>
+          <text class="uni-info">获取值: {{data.transitionTimingFunctionActualImage}}</text>
           <view class="test-box">
-            <image ref="imageRefDynamic" class="common-image test-image" :style="{ transitionTimingFunction: transitionTimingFunctionDynamic, transitionProperty: 'width', transitionDuration: '2s' }" @click="triggerTransitionImageDynamic" src="/static/test-image/logo.png"></image>
+            <image ref="imageRefDynamic" class="common-image test-image" :style="{ transitionTimingFunction: data.transitionTimingFunctionDynamic, transitionProperty: 'width', transitionDuration: '2s' }" @click="triggerTransitionImageDynamic" src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -69,7 +69,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="transitionTimingFunctionEnum" title="transition-timing-function 枚举值" @change="radioChangeTransitionTimingFunction" :compact="true"></enum-data>
-        <input-data :defaultValue="transitionTimingFunctionDynamic" title="transition-timing-function 自定义值" type="text" @confirm="inputChangeTransitionTimingFunction"></input-data>
+        <input-data :defaultValue="data.transitionTimingFunctionDynamic" title="transition-timing-function 自定义值" type="text" @confirm="inputChangeTransitionTimingFunction"></input-data>
       </view>
 
       <text class="uni-title-text uni-common-mt uni-common-mb">native-view 组件 transition-timing-function：ease-in-out</text>
@@ -142,10 +142,12 @@
   }
   import { ItemType } from '@/components/enum-data/enum-data-types'
 
-  const transitionTimingFunctionDynamic = ref('ease')
-  const transitionTimingFunctionActual = ref('')
-  const transitionTimingFunctionActualText = ref('')
-  const transitionTimingFunctionActualImage = ref('')
+  const data = reactive({
+    transitionTimingFunctionDynamic: 'ease',
+    transitionTimingFunctionActual: '',
+    transitionTimingFunctionActualText: '',
+    transitionTimingFunctionActualImage: ''
+  })
   const viewRefDynamic = ref(null as UniElement | null)
   const textRefDynamic = ref(null as UniTextElement | null)
   const imageRefDynamic = ref(null as UniImageElement | null)
@@ -166,13 +168,13 @@
   ]
 
   const getPropertyValues = () => {
-    transitionTimingFunctionActual.value = viewRefDynamic.value?.style.getPropertyValue('transition-timing-function') ?? ''
-    transitionTimingFunctionActualText.value = textRefDynamic.value?.style.getPropertyValue('transition-timing-function') ?? ''
-    transitionTimingFunctionActualImage.value = imageRefDynamic.value?.style.getPropertyValue('transition-timing-function') ?? ''
+    data.transitionTimingFunctionActual = viewRefDynamic.value?.style.getPropertyValue('transition-timing-function') ?? ''
+    data.transitionTimingFunctionActualText = textRefDynamic.value?.style.getPropertyValue('transition-timing-function') ?? ''
+    data.transitionTimingFunctionActualImage = imageRefDynamic.value?.style.getPropertyValue('transition-timing-function') ?? ''
   }
 
   const changeTransitionTimingFunctionDynamic = (value: string) => {
-    transitionTimingFunctionDynamic.value = value
+    data.transitionTimingFunctionDynamic = value
     viewRefDynamic.value?.style.setProperty('transition-timing-function', value)
     textRefDynamic.value?.style.setProperty('transition-timing-function', value)
     imageRefDynamic.value?.style.setProperty('transition-timing-function', value)
@@ -221,7 +223,7 @@
   onReady(() => {
     getPropertyValues()
     if (scrollViewRefDynamic.value != null) {
-      scrollViewRefDynamic.value.style.setProperty('transition-timing-function', transitionTimingFunctionDynamic.value)
+      scrollViewRefDynamic.value.style.setProperty('transition-timing-function', data.transitionTimingFunctionDynamic)
       scrollViewRefDynamic.value.style.setProperty('transition-property', 'width')
       scrollViewRefDynamic.value.style.setProperty('transition-duration', '2s')
     }
@@ -230,7 +232,8 @@
   defineExpose({
     jest_start,
     jest_reset,
-    radioChangeTransitionTimingFunction
+    radioChangeTransitionTimingFunction,
+    data
   })
 </script>
 

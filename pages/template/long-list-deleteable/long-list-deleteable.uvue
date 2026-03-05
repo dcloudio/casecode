@@ -376,7 +376,15 @@
     if (!isSwiping) {
       return
     } else {
+      // #ifdef WEB
+      // 滚动已经开始等情况时，web端不可阻止默认行为。去除此if会在控制台告警
+      if(e.cancelable) {
+        e.preventDefault()
+      }
+      // #endif
+      // #ifndef WEB
       e.preventDefault()
+      // #endif
     }
 
     // 计算偏移量

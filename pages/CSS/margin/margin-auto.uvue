@@ -135,10 +135,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{margin}}</text>
-          <text class="uni-info">获取值: {{marginActual}}</text>
+          <text class="uni-info">设置值: {{data.margin}}</text>
+          <text class="uni-info">获取值: {{data.marginActual}}</text>
           <view class="test-box">
-            <view ref="viewRef" class="common test-view" style="width: 100px;" :style="{ margin: margin }">
+            <view ref="viewRef" class="common test-view" style="width: 100px;" :style="{ margin: data.margin }">
               <text class="common-text">view</text>
             </view>
           </view>
@@ -146,19 +146,19 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{margin}}</text>
-          <text class="uni-info">获取值: {{marginActualText}}</text>
+          <text class="uni-info">设置值: {{data.margin}}</text>
+          <text class="uni-info">获取值: {{data.marginActualText}}</text>
           <view class="test-box">
-            <text ref="textRef" class="common-text test-text" style="width: 100px;" :style="{ margin: margin }">text</text>
+            <text ref="textRef" class="common-text test-text" style="width: 100px;" :style="{ margin: data.margin }">text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{margin}}</text>
-          <text class="uni-info">获取值: {{marginActualImage}}</text>
+          <text class="uni-info">设置值: {{data.margin}}</text>
+          <text class="uni-info">获取值: {{data.marginActualImage}}</text>
           <view class="test-box">
-            <image ref="imageRef" class="common-image test-image" :style="{ margin: margin }" src="/static/test-image/logo.png"></image>
+            <image ref="imageRef" class="common-image test-image" :style="{ margin: data.margin }" src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -166,10 +166,10 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件拍平</text>
-          <text class="uni-info">设置值: {{margin}}</text>
-          <text class="uni-info">获取值: {{marginActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.margin}}</text>
+          <text class="uni-info">获取值: {{data.marginActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefFlat" class="common test-view-flatten" style="width: 100px;" :style="{ margin: margin }" flatten>
+            <view ref="viewRefFlat" class="common test-view-flatten" style="width: 100px;" :style="{ margin: data.margin }" flatten>
               <text class="common-text">view</text>
             </view>
           </view>
@@ -177,26 +177,26 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件拍平</text>
-          <text class="uni-info">设置值: {{margin}}</text>
-          <text class="uni-info">获取值: {{marginActualTextFlat}}</text>
+          <text class="uni-info">设置值: {{data.margin}}</text>
+          <text class="uni-info">获取值: {{data.marginActualTextFlat}}</text>
           <view class="test-box">
-            <text ref="textRefFlat" class="common-text test-text-flatten" style="width: 100px;" :style="{ margin: margin }" flatten>text</text>
+            <text ref="textRefFlat" class="common-text test-text-flatten" style="width: 100px;" :style="{ margin: data.margin }" flatten>text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件拍平</text>
-          <text class="uni-info">设置值: {{margin}}</text>
-          <text class="uni-info">获取值: {{marginActualImageFlat}}</text>
+          <text class="uni-info">设置值: {{data.margin}}</text>
+          <text class="uni-info">获取值: {{data.marginActualImageFlat}}</text>
           <view class="test-box">
-            <image ref="imageRefFlat" class="common-image test-image-flatten" :style="{ margin: margin }" flatten src="/static/test-image/logo.png"></image>
+            <image ref="imageRefFlat" class="common-image test-image-flatten" :style="{ margin: data.margin }" flatten src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="marginAutoEnum" title="margin 枚举值" @change="radioChangeMargin" :compact="true"></enum-data>
-        <input-data :defaultValue="margin" title="margin 自定义值" type="text" @confirm="inputChangeMargin"></input-data>
+        <input-data :defaultValue="data.margin" title="margin 自定义值" type="text" @confirm="inputChangeMargin"></input-data>
       </view>
 
       <view class="uni-common-mb">
@@ -219,13 +219,15 @@
 <script setup lang="uts">
   import { ItemType } from '@/components/enum-data/enum-data-types'
 
-  const margin = ref('0 auto')
-  const marginActual = ref('')
-  const marginActualText = ref('')
-  const marginActualImage = ref('')
-  const marginActualFlat = ref('')
-  const marginActualTextFlat = ref('')
-  const marginActualImageFlat = ref('')
+  const data = reactive({
+    margin: '0 auto',
+    marginActual: '',
+    marginActualText: '',
+    marginActualImage: '',
+    marginActualFlat: '',
+    marginActualTextFlat: '',
+    marginActualImageFlat: ''
+  })
 
   const viewRef = ref(null as UniElement | null)
   const textRef = ref(null as UniTextElement | null)
@@ -243,16 +245,16 @@
   ]
 
   const getPropertyValues = () => {
-    marginActual.value = viewRef.value?.style.getPropertyValue('margin') ?? ''
-    marginActualFlat.value = viewRefFlat.value?.style.getPropertyValue('margin') ?? ''
-    marginActualText.value = textRef.value?.style.getPropertyValue('margin') ?? ''
-    marginActualTextFlat.value = textRefFlat.value?.style.getPropertyValue('margin') ?? ''
-    marginActualImage.value = imageRef.value?.style.getPropertyValue('margin') ?? ''
-    marginActualImageFlat.value = imageRefFlat.value?.style.getPropertyValue('margin') ?? ''
+    data.marginActual = viewRef.value?.style.getPropertyValue('margin') ?? ''
+    data.marginActualFlat = viewRefFlat.value?.style.getPropertyValue('margin') ?? ''
+    data.marginActualText = textRef.value?.style.getPropertyValue('margin') ?? ''
+    data.marginActualTextFlat = textRefFlat.value?.style.getPropertyValue('margin') ?? ''
+    data.marginActualImage = imageRef.value?.style.getPropertyValue('margin') ?? ''
+    data.marginActualImageFlat = imageRefFlat.value?.style.getPropertyValue('margin') ?? ''
   }
 
   const changeMargin = (value: string) => {
-    margin.value = value
+    data.margin = value
     viewRef.value?.style.setProperty('margin', value)
     viewRefFlat.value?.style.setProperty('margin', value)
     textRef.value?.style.setProperty('margin', value)
@@ -281,7 +283,8 @@
   })
 
   defineExpose({
-    radioChangeMargin
+    radioChangeMargin,
+    data
   })
 </script>
 

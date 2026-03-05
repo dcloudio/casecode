@@ -3,6 +3,7 @@
   <scroll-view id="scroll-view" style="flex: 1;">
   <!-- #endif -->
     <view>
+      <page-intro content="本页演示 overflow: visible 下的事件行为：子元素超出父区域时点击仍可触发 click/touch 事件；与 position:absolute 遮挡时的点击顺序、hover-class、多层级 overflow:visible、以及 overflow:visible 与 z-index 组合时的事件触发。"></page-intro>
       <text style="font-size: 15px;">overflow=visible 父view（绿色），子view（红色），点击超出父view区域的部分也可触发事件。</text>
       <view class="backgroundview">
         <view id="parent" class="box-visible-border-radius">

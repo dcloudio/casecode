@@ -1,7 +1,6 @@
 <template>
   <view class="content">
     <uni-nav-bar :title="title" :is-left="isLeft" :navigationBarTextStyle="navigationBarTextColor"></uni-nav-bar>
-
     <view class="content-item" @click="onClick">
       <text>点击此处，将标题切换为{{isLeft?'居中':'左侧'}}显示</text>
     </view>

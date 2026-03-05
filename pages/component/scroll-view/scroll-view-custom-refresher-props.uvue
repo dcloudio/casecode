@@ -1,5 +1,6 @@
 <template>
   <view style="flex: 1;">
+    <page-intro content="本页演示 scroll-view 自定义下拉刷新属性：refresher 插槽、pulling/refresh/restore/abort 事件、竖排暗黑样式。"></page-intro>
     <scroll-view id="refreshing1"
       style="flex: 1;"
       :refresher-enabled="true"

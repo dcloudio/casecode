@@ -4,6 +4,7 @@
   <!-- #endif -->
     <view>
       <page-head title="global-properties"></page-head>
+      <page-intro content="本页演示组件通用属性：id、class、data、style 的绑定与校验，以及 ref、hover-class、hover-start-time、hover-stay-time 等点击态效果。"></page-intro>
       <view class="uni-padding-wrap">
         <view :id="generalId" :class="generalClass"
           <!-- #ifdef !VUE3-VAPOR-->

@@ -128,10 +128,10 @@
         <!-- 普通版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">justify-content</text>
-          <text class="uni-info">设置值: {{justifyContent}}</text>
-          <text class="uni-info">获取值: {{justifyContentActual}}</text>
+          <text class="uni-info">设置值: {{data.justifyContent}}</text>
+          <text class="uni-info">获取值: {{data.justifyContentActual}}</text>
           <view class="test-box">
-            <view ref="viewRef" class="test-flex-container test-view" :style="{ justifyContent: justifyContent }">
+            <view ref="viewRef" class="test-flex-container test-view" :style="{ justifyContent: data.justifyContent }">
               <view class="test-item-small red"></view>
               <view class="test-item-small green"></view>
               <view class="test-item-small blue"></view>
@@ -142,10 +142,10 @@
         <!-- 拍平版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">拍平</text>
-          <text class="uni-info">设置值: {{justifyContent}}</text>
-          <text class="uni-info">获取值: {{justifyContentActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.justifyContent}}</text>
+          <text class="uni-info">获取值: {{data.justifyContentActualFlat}}</text>
           <view class="test-box">
-            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ justifyContent: justifyContent }" flatten>
+            <view ref="viewRefFlat" class="test-flex-container test-view-flatten" :style="{ justifyContent: data.justifyContent }" flatten>
               <view class="test-item-small red"></view>
               <view class="test-item-small green"></view>
               <view class="test-item-small blue"></view>
@@ -157,7 +157,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
           <enum-data :items="justifyContentEnum" title="justify-content 枚举值" @change="radioChangeJustifyContent" :compact="true"></enum-data>
-        <input-data :defaultValue="justifyContent" title="justify-content 自定义值" type="text" @confirm="inputChangeJustifyContent"></input-data>
+        <input-data :defaultValue="data.justifyContent" title="justify-content 自定义值" type="text" @confirm="inputChangeJustifyContent"></input-data>
       </view>
 
     </view>
@@ -179,19 +179,21 @@
     { value: 6, name: 'space-evenly' }
   ]
 
-  const justifyContent = ref('center')
-  const justifyContentActual = ref('')
-  const justifyContentActualFlat = ref('')
+  const data = reactive({
+    justifyContent: 'center',
+    justifyContentActual: '',
+    justifyContentActualFlat: ''
+  })
   const viewRef = ref(null as UniElement | null)
   const viewRefFlat = ref(null as UniElement | null)
 
   const getPropertyValues = () => {
-    justifyContentActual.value = viewRef.value?.style.getPropertyValue('justify-content') ?? ''
-    justifyContentActualFlat.value = viewRefFlat.value?.style.getPropertyValue('justify-content') ?? ''
+    data.justifyContentActual = viewRef.value?.style.getPropertyValue('justify-content') ?? ''
+    data.justifyContentActualFlat = viewRefFlat.value?.style.getPropertyValue('justify-content') ?? ''
   }
 
   const changeJustifyContent = (value: string) => {
-    justifyContent.value = value
+    data.justifyContent = value
     viewRef.value?.style.setProperty('justify-content', value)
     viewRefFlat.value?.style.setProperty('justify-content', value)
     // 使用 nextTick 确保样式已应用后再获取值
@@ -216,7 +218,8 @@
   })
 
   defineExpose({
-    radioChangeJustifyContent
+    radioChangeJustifyContent,
+    data
   })
 </script>
 

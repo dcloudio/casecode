@@ -6,6 +6,7 @@
       refresher-default-style="none" @refresherpulling="onRefresherpulling" @refresherrefresh="onRefresherrefresh"
       @refresherrestore="onRefreshrestore" :refresher-threshold="refresherThreshold" refresher-max-drag-distance="200px">
 
+      <page-intro content="本页演示自定义下拉刷新：sticky header、列表项与自定义 refresher 插槽（refresh-box），下拉触发刷新。"></page-intro>
       <sticky-header>
         <view class="header">
           <text>sticky header</text>

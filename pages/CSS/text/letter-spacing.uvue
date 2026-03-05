@@ -35,20 +35,20 @@
         <!-- 普通版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">letter-spacing</text>
-          <text class="uni-info">设置值: {{letterSpacing}}</text>
-          <text class="uni-info">获取值: {{letterSpacingActual}}</text>
+          <text class="uni-info">设置值: {{data.letterSpacing}}</text>
+          <text class="uni-info">获取值: {{data.letterSpacingActual}}</text>
           <view class="test-box">
-            <text ref="textRef" class="common-text" :style="{ letterSpacing: letterSpacing }">当前 letter-spacing: {{letterSpacing}}</text>
+            <text ref="textRef" class="common-text" :style="{ letterSpacing: data.letterSpacing }">当前 letter-spacing: {{data.letterSpacing}}</text>
           </view>
         </view>
 
         <!-- 拍平版本 -->
         <view class="uni-common-mt">
           <text class="uni-title-text">拍平</text>
-          <text class="uni-info">设置值: {{letterSpacing}}</text>
-          <text class="uni-info">获取值: {{letterSpacingActualFlat}}</text>
+          <text class="uni-info">设置值: {{data.letterSpacing}}</text>
+          <text class="uni-info">获取值: {{data.letterSpacingActualFlat}}</text>
           <view class="test-box">
-            <text ref="textRefFlat" class="common-text" :style="{ letterSpacing: letterSpacing }" flatten>当前 letter-spacing: {{letterSpacing}}</text>
+            <text ref="textRefFlat" class="common-text" :style="{ letterSpacing: data.letterSpacing }" flatten>当前 letter-spacing: {{data.letterSpacing}}</text>
           </view>
         </view>
       </view>
@@ -56,7 +56,7 @@
       <view class="uni-common-mt uni-common-mb">
           <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
           <enum-data :items="letterSpacingEnum" title="letter-spacing 枚举值" @change="radioChangeLetterSpacing" :compact="true"></enum-data>
-          <input-data :defaultValue="letterSpacing" title="letter-spacing 自定义值" type="text" @confirm="inputChangeLetterSpacing"></input-data>
+          <input-data :defaultValue="data.letterSpacing" title="letter-spacing 自定义值" type="text" @confirm="inputChangeLetterSpacing"></input-data>
       </view>
     </view>
   <!-- #ifdef APP -->
@@ -77,19 +77,22 @@
 		{ value: 6, name: '10px' }
 	]
 
-	const letterSpacing = ref('0px')
-	const letterSpacingActual = ref('')
-	const letterSpacingActualFlat = ref('')
+	const data = reactive({
+		letterSpacing: '0px',
+		letterSpacingActual: '',
+		letterSpacingActualFlat: ''
+	})
+	const letterSpacing_mix = ref(1)
 	const textRef = ref(null as UniTextElement | null)
 	const textRefFlat = ref(null as UniTextElement | null)
 
 	const getPropertyValues = () => {
-		letterSpacingActual.value = textRef.value?.style.getPropertyValue('letter-spacing') ?? ''
-		letterSpacingActualFlat.value = textRefFlat.value?.style.getPropertyValue('letter-spacing') ?? ''
+		data.letterSpacingActual = textRef.value?.style.getPropertyValue('letter-spacing') ?? ''
+		data.letterSpacingActualFlat = textRefFlat.value?.style.getPropertyValue('letter-spacing') ?? ''
 	}
 
 	const changeLetterSpacing = (value: string) => {
-		letterSpacing.value = value
+		data.letterSpacing = value
 		textRef.value?.style.setProperty('letter-spacing', value)
 		textRefFlat.value?.style.setProperty('letter-spacing', value)
 		// 使用 nextTick 确保样式已应用后再获取值
@@ -121,8 +124,6 @@
     begin: false
   } as AutoTextData)
 
-  const letterSpacing_mix = ref(1)
-
   function plusLetterSpacing() {
     letterSpacing_mix.value += 0.2
   }
@@ -141,7 +142,8 @@
     autoTestData,
     getLetterSpacing,
     plusLetterSpacing,
-    minusLetterSpacing
+    minusLetterSpacing,
+    data
   })
   /**
    * * * * * * * * * * * * * *

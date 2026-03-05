@@ -72,13 +72,13 @@
       <view class="test-container">
         <view class="test-item">
           <text class="uni-subtitle-text">view 组件</text>
-          <text class="uni-info">设置值: {{zIndexValue}}</text>
-          <text class="uni-info">获取值: {{zIndexActual}}</text>
+          <text class="uni-info">设置值: {{data.zIndexValue}}</text>
+          <text class="uni-info">获取值: {{data.zIndexActual}}</text>
           <view class="test-box">
             <view class="common-bg" style="background-color: blue; z-index: 1;">
               <text class="common-text-bg">蓝色view</text>
             </view>
-            <view ref="viewRef" class="common-dynamic test-view" style="background-color: cyan;" :style="{ zIndex: zIndexValue }">
+            <view ref="viewRef" class="common-dynamic test-view" style="background-color: cyan;" :style="{ zIndex: data.zIndexValue }">
               <text class="common-text-bg">青色view</text>
             </view>
           </view>
@@ -86,21 +86,21 @@
 
         <view class="test-item">
           <text class="uni-subtitle-text">text 组件</text>
-          <text class="uni-info">设置值: {{zIndexValue}}</text>
-          <text class="uni-info">获取值: {{zIndexActualText}}</text>
+          <text class="uni-info">设置值: {{data.zIndexValue}}</text>
+          <text class="uni-info">获取值: {{data.zIndexActualText}}</text>
           <view class="test-box">
             <text class="common-bg common-text-bg" style="background-color: blue; z-index: 1;">蓝色text</text>
-            <text ref="textRef" class="common-dynamic common-text-bg test-text" style="background-color: cyan;" :style="{ zIndex: zIndexValue }">青色text</text>
+            <text ref="textRef" class="common-dynamic common-text-bg test-text" style="background-color: cyan;" :style="{ zIndex: data.zIndexValue }">青色text</text>
           </view>
         </view>
 
         <view class="test-item">
           <text class="uni-subtitle-text">image 组件</text>
-          <text class="uni-info">设置值: {{zIndexValue}}</text>
-          <text class="uni-info">获取值: {{zIndexActualImage}}</text>
+          <text class="uni-info">设置值: {{data.zIndexValue}}</text>
+          <text class="uni-info">获取值: {{data.zIndexActualImage}}</text>
           <view class="test-box">
             <image class="common-bg common-image-bg" style="z-index: 1;" src="/static/test-image/logo.png"></image>
-            <image ref="imageRef" class="common-dynamic common-image-bg test-image" :style="{ zIndex: zIndexValue }" src="/static/test-image/logo.png"></image>
+            <image ref="imageRef" class="common-dynamic common-image-bg test-image" :style="{ zIndex: data.zIndexValue }" src="/static/test-image/logo.png"></image>
           </view>
         </view>
       </view>
@@ -108,7 +108,7 @@
       <view class="uni-common-mt uni-common-mb">
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="zIndexEnum" title="z-index 枚举值" @change="radioChangeZIndex" :compact="true"></enum-data>
-        <input-data :defaultValue="zIndexValue.toString()" title="z-index 自定义值" type="number" @confirm="inputChangeZIndex"></input-data>
+        <input-data :defaultValue="data.zIndexValue.toString()" title="z-index 自定义值" type="number" @confirm="inputChangeZIndex"></input-data>
       </view>
 
       <view class="uni-common-mb" style="top: 50px;">
@@ -129,11 +129,19 @@
   type DataType = {
     zIndex: number
     autoTest: boolean
+    zIndexValue: number
+    zIndexActual: string
+    zIndexActualText: string
+    zIndexActualImage: string
   }
 
   const data = reactive({
     zIndex: 5,
-    autoTest: false
+    autoTest: false,
+    zIndexValue: 5,
+    zIndexActual: '',
+    zIndexActualText: '',
+    zIndexActualImage: ''
   } as DataType)
 
   const view = ref(null as UniElement | null)
@@ -151,22 +159,18 @@
     { value: 4, name: '10' },
   ]
 
-  const zIndexValue = ref(5)
-  const zIndexActual = ref('')
-  const zIndexActualText = ref('')
-  const zIndexActualImage = ref('')
   const viewRef = ref(null as UniElement | null)
   const textRef = ref(null as UniTextElement | null)
   const imageRef = ref(null as UniImageElement | null)
 
   const getPropertyValues = () => {
-    zIndexActual.value = viewRef.value?.style.getPropertyValue('z-index') ?? ''
-    zIndexActualText.value = textRef.value?.style.getPropertyValue('z-index') ?? ''
-    zIndexActualImage.value = imageRef.value?.style.getPropertyValue('z-index') ?? ''
+    data.zIndexActual = viewRef.value?.style.getPropertyValue('z-index') ?? ''
+    data.zIndexActualText = textRef.value?.style.getPropertyValue('z-index') ?? ''
+    data.zIndexActualImage = imageRef.value?.style.getPropertyValue('z-index') ?? ''
   }
 
   const changeZIndexProperty = (value: number) => {
-    zIndexValue.value = value
+    data.zIndexValue = value
     viewRef.value?.style.setProperty('z-index', value)
     textRef.value?.style.setProperty('z-index', value.toString())
     imageRef.value?.style.setProperty('z-index', value.toString())
