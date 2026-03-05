@@ -10,7 +10,8 @@ describe('page-scroll-to', () => {
     const btnScrollTo = await page.$('.btn-scrollTo')
 
     await btnScrollTo.tap()
-    await page.waitFor(600)
+    // 等待滚动完成
+    await page.waitFor(1000)
 
     const scrollTop = await page.scrollTop()
     // 设备精度问题，允许上下浮动 1px

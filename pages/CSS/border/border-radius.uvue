@@ -7,8 +7,16 @@
       <view>
         <text>border-radius: 10px</text>
         <view class="demo-box">
-          <view class="common" style="border-radius: 10px"></view>
-          <view class="common" style="border-radius: 10px" flatten></view>
+          <view class="common" style="border-radius: 10px;"></view>
+          <view class="common" style="border-radius: 10px;" flatten></view>
+        </view>
+      </view>
+
+      <view>
+        <text>border-radius: 10% 和阴影</text>
+        <view class="demo-box" style="height: 60px;">
+          <view class="common" style="border-radius: 10%;box-shadow: 5px 5px  rgba(0, 0, 0, .3);"></view>
+          <view class="common" style="border-radius: 10%;box-shadow: 5px 5px  rgba(0, 0, 0, .3);" flatten></view>
         </view>
       </view>
 
