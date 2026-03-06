@@ -141,6 +141,15 @@
           <text class="section-desc">预期：.global-box会应用全局样式（蓝色），.page-box会应用页面样式（绿色）优先级最高，组件自身样式（紫色）</text>
         </view>
       </view>
+      <view class="section">
+        <text class="section-title">7. 自定义组件hover-class透传</text>
+        <text class="section-desc">单根节点为view的自定义组件，可以直接透传hover-class相关属性</text>
+        <view class="test-item">
+          <child-hover-class class="view-class" hover-class="hover-class" :hover-stay-time="1000">
+            <text class="text">抬起 1000 ms 后背景恢复</text>
+          </child-hover-class>
+        </view>
+      </view>
     </view>
   <!-- #ifdef APP -->
   </scroll-view>
@@ -150,6 +159,7 @@
 <script setup lang="uts">
   import child from './child.uvue'
   import childExternal from './child-external-classes.uvue'
+  import childHoverClass from './child-hover-class.uvue'
   import childExternalStyle from './child-external-style.uvue'
   import childMultiTag from './child-multi-tag.uvue'
   import level from './level.uvue'
@@ -238,5 +248,16 @@
     color:red;
     font-size: 14px;
   }
-
+  .view-class {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    border: 2px solid #4caf50;
+    background-color: #e8f5e9;
+    justify-content: center;
+    align-items: center;
+  }
+  .hover-class {
+    background-color: red;
+  }
 </style>
