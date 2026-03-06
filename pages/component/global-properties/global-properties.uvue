@@ -31,10 +31,6 @@
           <text class="text">按下 1000 ms 后背景变红</text>
           <text class="text">抬起 1000 ms 后背景恢复</text>
         </view>
-        <Child class="view-class" :hover-class="hoverClass" :hover-stay-time="1000">
-          <text class="text">自定义组件透传hover-class</text>
-          <text class="text">抬起 1000 ms 后背景恢复</text>
-        </Child>
       </view>
     </view>
   <!-- #ifdef APP -->
@@ -43,7 +39,6 @@
 </template>
 
 <script setup lang="uts">
-  import Child from './child.uvue'
   const generalId = ref('general-id')
   const generalClass = ref('general-class')
   const generalData = ref('general-data')

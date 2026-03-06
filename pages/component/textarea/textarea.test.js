@@ -32,7 +32,7 @@ describe('component-native-textarea', () => {
       if (isHarmony) {
         const textareaRect = await page.data('data.textareaRect');
         options.x = textareaRect.x + textareaRect.width / 2.0;
-        options.y = textareaRect.y + textareaRect.height / 2.0;
+        options.y = textareaRect.y + textareaRect.height - (isDom2 ? 20 : 10);
       }
       await program.keyboardInput(options)
       await page.waitFor(2000)
