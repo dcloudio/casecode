@@ -757,6 +757,7 @@ export function testString(): Result {
         expect(value).toEqual(getCharCodes(key))
         console.log(value, getCharCodes(key))
       })
+      expect("1/f2").toEqual("1/f2");
     });
   })
 }
