@@ -24,7 +24,7 @@ describe('page-scroll-to', () => {
   it('issues-20664', async () => {
 
     await page.callMethod('scrollTo')
-    await page.waitFor(500)
+    await page.waitFor(1000)
 
     var scrollTop = await page.scrollTop()
     console.log("scrollTop: ", scrollTop)
@@ -41,7 +41,7 @@ describe('page-scroll-to', () => {
     await page.waitFor(500)
 
     await page.callMethod('scrollTo')
-    await page.waitFor(500)
+    await page.waitFor(1000)
     console.log("scrollTo---end")
     scrollTop = await page.scrollTop()
 
