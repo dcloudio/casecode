@@ -21,6 +21,7 @@ describe('style-isolation', () => {
 
   it('自定义组件hover-class透传', async () => {
     const childHoverEl = await page.$('.view-class')
+    // 设置较长的 hover-stay-time，确保在 waitFor(1000) 时 hover 状态仍然激活
     await page.setData({
       data:{
         stay_time: 1000 * 3
@@ -45,6 +46,7 @@ describe('style-isolation', () => {
     // 通过检查样式来判断 hover-class 是否生效
     const getHoverStyle = await childHoverEl.style('background-color')
     console.log('getHoverStyle', getHoverStyle)
+    // TODO: Android/iOS/Web 平台，在 hover 激活期间 style.getPropertyValue 读取样式还是之前的样式
     if(isHarmony){
         expect(getHoverStyle).toBe(isDom2? '#E8F5E9FF' : '#00aaff')
     }

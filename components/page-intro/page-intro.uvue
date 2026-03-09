@@ -29,7 +29,7 @@ const toggle = () => {
 </template>
 
 <style>
-  .theme-light {
+  .page-intro.theme-light {
     --page-intro-border-color: #91caff;
     --page-intro-bg-color: #e6f4ff;
     --page-intro-title-color: #0958d9;
@@ -37,7 +37,7 @@ const toggle = () => {
     --page-intro-content-color: #1d39c4;
   }
 
-  .theme-dark {
+  .page-intro.theme-dark {
     --page-intro-border-color: #1d39c4;
     --page-intro-bg-color: #0b1b3a;
     --page-intro-title-color: #91caff;
