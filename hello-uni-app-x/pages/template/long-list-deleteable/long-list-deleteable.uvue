@@ -525,15 +525,21 @@
     isDeleteAnimating.value = false
     menuShowWidth.value = 0
     currentListItemElement = null
+    deleteAnimationIndexToDelete = -1
+    // 动画结束，执行删除
+    itemMetas.value.splice(indexToDelete, 1)
+    // 此操作影响list-item位置时会在下一帧生效，通过vue响应式更新
     resetAllItemMetas()
-
-    // 延迟更新transform、删除元素减少闪烁
+    // #ifdef APP && VUE3-VAPOR
     nextTick(() => {
-      // 动画结束，执行删除
+      // 鸿蒙平台蒸汽模式，此操作影响list-item位置时会立即生效，由c层直接更新native层translate
       items.value.splice(indexToDelete, 1)
-      itemMetas.value.splice(indexToDelete, 1)
-      deleteAnimationIndexToDelete = -1
     })
+    // #endif
+    // #ifndef APP && VUE3-VAPOR
+    // 其他平台直接删除，通过vue响应式更新
+    items.value.splice(indexToDelete, 1)
+    // #endif
   }
 
   // 先声明函数变量并初始化，然后重新赋值（UTS递归调用的解决方案）
