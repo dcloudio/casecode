@@ -18,6 +18,38 @@ describe('style-isolation', () => {
     expect(image).toSaveImageSnapshot();
   });
 
+
+  it('自定义组件hover-class透传', async () => {
+    const childHoverEl = await page.$('.view-class')
+    await page.setData({
+      data:{
+        stay_time: 1000 * 3
+      }
+    })
+    await page.waitFor(100)
+    if(isApp){
+        const viewRect = await page.data('data.childViewRect');
+        const point_x = viewRect.x + viewRect.width / 2.0;
+        const point_y = viewRect.y + viewRect.height - (isDom2 ? 20 : 10);
+        await program.tap({
+          x: Math.round(point_x),
+          y: Math.round(point_y)
+        })
+        await page.waitFor(200);
+
+    }else{
+        await childHoverEl.tap()
+    }
+
+    await page.waitFor(1000)
+    // 通过检查样式来判断 hover-class 是否生效
+    const getHoverStyle = await childHoverEl.style('background-color')
+    console.log('getHoverStyle', getHoverStyle)
+    if(isHarmony){
+        expect(getHoverStyle).toBe(isDom2? '#E8F5E9FF' : '#00aaff')
+    }
+  })
+
   it('测试组件的根节点为二级组件时 样式传递', async () => {
     const levelEl = await page.$('.level-child-class')
 		const levelElStyle = await levelEl.style('background-color')
@@ -41,7 +73,6 @@ describe('style-isolation', () => {
     // 验证全局样式无效，预期组件默认字体大小16px
     const globalTestEl = await compIsolatedEl.$('.global-text')
     const globalTestStyle = await globalTestEl.style('font-size')
-    // expect(globalTestStyle).toBe('16px')
     // TODO：临时注释，调整写法，有差异，web/MP：16px，ios/harmony：16（ios端是number，其他是string）
     // expect(globalTestStyle).toBe('16px')
     if(!isAndroid){
@@ -105,5 +136,7 @@ describe('style-isolation', () => {
       expect([14,'14','14px']).toContain(pageTestSize)
     }
   })
+
+
 
 });

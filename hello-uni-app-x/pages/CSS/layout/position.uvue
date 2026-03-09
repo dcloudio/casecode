@@ -339,7 +339,7 @@
 
   .combo-all-sides {
     top: 60px;
-    left: 220px;
+    left: 45%;
     bottom: 40px;
     right: 40px;
   }
@@ -347,7 +347,7 @@
   .fixed-combo {
     /* #ifdef WEB*/
     top: calc(var(--uni-safe-area-inset-top) + 60px);
-    left: calc(var(--uni-safe-area-inset-left) + 220px);
+    left: calc(var(--uni-safe-area-inset-left) + 45%);
     bottom: calc(var(--uni-safe-area-inset-bottom) + 40px);
     right: calc(var(--uni-safe-area-inset-right) + 40px);
     /* #endif */
@@ -409,8 +409,6 @@
   .scroll-view-common {
     width: 80px;
     height: 60px;
-    justify-content: center;
-    align-items: center;
   }
 
 </style>
