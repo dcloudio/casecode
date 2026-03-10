@@ -468,16 +468,6 @@
     flex-direction: row;
   }
 
-  .self {
-    flex-direction: row-reverse;
-  }
-  .self-content {
-    background-color: #3c99ff;
-  }
-  .self-content-text {
-    color: #fff;
-  }
-
   .content {
     margin: 0 8px;
     max-width: 562rpx;
@@ -546,5 +536,14 @@
     color: #fff;
     background-color: #3c99ff;
     border-color: #3c99ff;
+  }
+  .self {
+    flex-direction: row-reverse;
+  }
+  .self-content {
+    background-color: #3c99ff;
+  }
+  .self-content-text {
+    color: #fff;
   }
 </style>
