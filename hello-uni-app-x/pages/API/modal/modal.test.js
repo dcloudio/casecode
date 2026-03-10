@@ -676,7 +676,7 @@ describe('API-loading', () => {
     await page.waitFor(500);
   })
 
-  it("placeholderText-no_content-editable", async () => {
+  it("no_placeholderText-no_content-editable", async () => {
     await setPageData({
       placeholderTextSelect: false,
     })
