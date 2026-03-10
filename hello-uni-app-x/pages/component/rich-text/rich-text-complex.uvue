@@ -9,7 +9,7 @@
       <enum-data title="设置mode（仅Android平台支持，默认值为web）" :items="modeItemTypes" @change="onModeChange"></enum-data>
       <!-- #endif -->
       <view class="uni-padding-wrap uni-common-mt" @click="fViewClick('触发父 view click 事件')">
-        <rich-text :nodes="htmlString" :selectable="true" @itemclick="itemClick" @click="selfClick('触发 richtext click 事件')" :mode="data.mode"></rich-text>
+        <rich-text id="richtext" :nodes="htmlString" :selectable="true" @itemclick="itemClick" @click="selfClick('触发 richtext click 事件')" :mode="data.mode"></rich-text>
       </view>
     </view>
   <!-- #ifdef APP -->
@@ -67,7 +67,13 @@ function onModeChange(value : number) {
   data.mode = modeItems[value];
 }
 
+function getBoundingClientRectForRichtext() : DOMRect | null {
+  return uni.getElementById('richtext')?.getBoundingClientRect();
+}
+
+
 defineExpose({
-  data
+  data,
+  getBoundingClientRectForRichtext
 })
 </script>
