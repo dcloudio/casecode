@@ -60,11 +60,9 @@ describe('rich-text-test', () => {
   }
 
   it('click-event', async () => {
-    const rect = await page.callMethod("getBoundingClientRectForRichtext")
-    const windowInfo = await program.callUniMethod('getWindowInfo');
     await program.tap({
-      x: Math.ceil(rect.left + rect.width *0.7),
-      y: Math.ceil(windowInfo.statusBarHeight + 44 + rect.top + 100),
+      x: 210,
+      y: 280,
       duration: 100
     })
 
@@ -77,18 +75,15 @@ describe('rich-text-test', () => {
 
 
   it('itemclick-event', async () => {
-    const rect = await page.callMethod("getBoundingClientRectForRichtext")
-    const windowInfo = await program.callUniMethod('getWindowInfo');
     await program.tap({
-      x: Math.ceil(rect.left + 30),
-      y: Math.ceil(windowInfo.statusBarHeight + 44 + rect.top + 60),
+      x: 66,
+      y: 266,
       duration: 100
     })
 
     await page.waitFor(500);
 
     // 关闭弹窗逻辑各平台需要适配不同机型
-
     if (isIOS) {
         // 关闭弹窗 iPhone Pro 机型
         await program.tap({

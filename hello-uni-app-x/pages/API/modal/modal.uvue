@@ -16,10 +16,6 @@
       </view>
       <view class="uni-list">
         <view class="uni-list-cell uni-list-cell-pd">
-          <view class="uni-list-cell-db">提示内容为空</view>
-          <switch :checked="data.emptyContent" @change="emptyContentChange" />
-        </view>
-        <view class="uni-list-cell uni-list-cell-pd">
           <view class="uni-list-cell-db">是否显示过长文字</view>
           <switch :checked="data.showLongContent" @change="showLongContentChange" />
         </view>
@@ -66,17 +62,12 @@
         </view>
         <!-- #ifndef MP -->
         <view class="uni-btn-v">
-          <button type="default" @tap="closeAllModal">
-            关闭全部弹窗
-          </button>
-        </view>
-        <view class="uni-btn-v">
-          <button type="default" @tap="setTimeoutCloseAllModal" id="btn-modal-hide-all">
+          <button type="default" @tap="closeAllModal" id="btn-modal-hide-all">
             延迟3s关闭全部弹窗
           </button>
         </view>
         <view class="uni-btn-v">
-          <button type="default" @tap="setTimeoutCloseLastModal" id="btn-modal-hide-last">
+          <button type="default" @tap="closeLastModal" id="btn-modal-hide-last">
             延迟3s关闭最后一个弹窗
           </button>
         </view>
@@ -101,7 +92,6 @@
     title : string;
     showCancelSelect : boolean;
     showLongContent : boolean;
-    emptyContent : boolean;
     illegalColorSelect : boolean;
     illegalButtonTextSelect : boolean;
     cancelTextSelect : boolean;
@@ -119,7 +109,6 @@
     title: 'modal',
     showCancelSelect: false,
     showLongContent: false,
-    emptyContent: false,
     illegalColorSelect: false,
     illegalButtonTextSelect: false,
     cancelTextSelect: false,
@@ -147,10 +136,6 @@
 
   const showLongContentChange = (e : UniSwitchChangeEvent) => {
     data.showLongContent = e.detail.value
-  }
-
-  const emptyContentChange = (e : UniSwitchChangeEvent) => {
-    data.emptyContent = e.detail.value
   }
 
   const illegalColorChange = (e : UniSwitchChangeEvent) => {
@@ -191,22 +176,7 @@
     }
   }
 
-  const closeAllModal = () => {
-    uni.hideModal({
-      modalPage: null,
-      success: (res) => {
-        data.exeRet = JSON.stringify(res)
-      },
-      fail: (res) => {
-        data.exeRet = JSON.stringify(res)
-      },
-      complete: (res) => {
-        data.timesShowRet.push(res)
-      }
-    })
-  }
-
-  const setTimeoutCloseLastModal = () => {
+  const closeLastModal = () => {
     setTimeout(() => {
       uni.hideModal({
         modalPage: data.lastModal,
@@ -223,7 +193,7 @@
     }, 3000)
   }
 
-  const setTimeoutCloseAllModal = () => {
+  const closeAllModal = () => {
     setTimeout(() => {
       uni.hideModal({
         modalPage: null,
@@ -270,9 +240,6 @@
 
     if (data.showLongContent) {
       contentVal = "弹窗内容，告知当前状态、信息和解决方法，描述文字原则上可以无限多！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！"
-    }
-    if(data.emptyContent) {
-      contentVal = ""
     }
     if (data.placeholderTextSelect) {
       placeholderTextVal = "定制提示信息"
@@ -330,8 +297,6 @@
   })
 
   defineExpose({
-    data,
-    modalTap,
-    closeAllModal
+    data
   })
 </script>
