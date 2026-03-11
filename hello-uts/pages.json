@@ -6,6 +6,11 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
+    }, {
+      "path": "pages/issues/issue-26943/issue-26943",
+      "style": {
+        "navigationBarTitleText": "issue-26943"
+      }
     },
     {
       "path": "pages/index/basicTest",

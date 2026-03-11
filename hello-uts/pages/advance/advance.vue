@@ -134,7 +134,11 @@
                         {
                             name: "nvue语法示例",
                             url: "SyntaxCase/nvueTest"
-                        }
+                        },
+                        {
+                            name: "issue-26943",
+                            url: "issues/issue-26943/issue-26943"
+                        },
                         ]
                     },
 					{
