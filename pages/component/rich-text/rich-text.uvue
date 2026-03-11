@@ -42,6 +42,8 @@
   <!-- #ifdef APP -->
   </scroll-view style="flex: 1;">
   <!-- #endif -->
+	<rich-text v-if="data.autoTest" id="test-rich-text" :nodes="data.testNodes" :selectable="true"
+		@itemclick="itemClickForTest" style="position: fixed;width: 100px;height: 100px;"></rich-text>
 </template>
 
 <script setup lang="uts">
@@ -49,6 +51,9 @@
 		text : string;
 		richTextHeight : number;
 		richTextElement : UniElement | null;
+		autoTest : boolean;
+		testNodes : string;
+		isItemClickTrigger : boolean;
 		richTextStr : boolean;
 		richTextStyle : string;
 		currentFontSize : string;
@@ -68,6 +73,10 @@
 		text: "<span>hello uni-app x!</span><br/><span>uni-app x，终极跨平台方案</span>",
 		richTextHeight: 0,
 		richTextElement: null,
+		// 自动化测试
+		autoTest: false,
+		testNodes: '<img src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni@2x.png"></img>',
+		isItemClickTrigger: false,
 		richTextStr: false,
 		richTextStyle: "border: 1px; border-style: solid; border-color: red;",
 		currentFontSize: "默认",
@@ -148,6 +157,10 @@
 		updateRichTextStyle()
 	}
 
+	// 自动化测试
+	const itemClickForTest = (_ : UniRichTextItemClickEvent) => {
+		data.isItemClickTrigger = true;
+	}
 
 	const getBoundingClientRectForTest = () : DOMRect => {
 		return uni.getElementById('test-rich-text')?.getBoundingClientRect()!;

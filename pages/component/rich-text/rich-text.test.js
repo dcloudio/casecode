@@ -39,6 +39,39 @@ describe('rich-text-test', () => {
     expect(beforeValue).toBe(afterValue)
   })
 
+  if (isAndroid || isiOS || isHarmony) {
+    it('test selectable itemclick', async () => {
+      await setPageData({
+        autoTest: true,
+        isItemClickTrigger: false
+      })
+      await page.waitFor(1000);
+      const windowInfo = await program.callUniMethod('getWindowInfo');
+      const rect = await page.callMethod('getBoundingClientRectForTest');
+      await program.tap({
+        x: (rect.right - rect.left) / 2,
+        y: windowInfo.statusBarHeight + 44 + (rect.bottom - rect.top) / 2
+      });
+      await page.waitFor(1000);
+      expect(await page.data('data.isItemClickTrigger')).toBe(true);
+      await setPageData({
+        isItemClickTrigger: false
+      })
+      await program.navigateTo("/pages/component/rich-text/rich-text-tags");
+      await page.waitFor(500);
+      await program.navigateBack();
+      await program.tap({
+        x: (rect.right - rect.left) / 2,
+        y: windowInfo.statusBarHeight + 44 + (rect.bottom - rect.top) / 2
+      });
+      await page.waitFor(1000);
+      expect(await page.data('data.isItemClickTrigger')).toBe(true);
+      await setPageData({
+        autoTest: false
+      })
+    });
+  }
+
   it('rich-text parent click', async () => {
     const element = await page.$('#rich-text-parent')
     await element.tap()

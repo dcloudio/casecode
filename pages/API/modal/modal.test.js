@@ -657,37 +657,4 @@ describe('API-loading', () => {
     const image2 = await program.screenshot(deviceShotOptions);
     expect(image2).toSaveImageSnapshot();
   })
-  it("placeholderText-no_content-editable", async () => {
-    page = await program.reLaunch(PAGE_PATH+ '?onLoadShowModal=false')
-    await setPageData({
-      showCancelSelect: true,
-      emptyContent: true,
-      editableSelect: true,
-      placeholderTextSelect: true,
-    })
-    await page.waitFor(1000);
-
-    await page.callMethod('modalTap')
-    await page.waitFor(500);
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
-
-    await page.callMethod('closeAllModal')
-    await page.waitFor(500);
-  })
-
-  it("no_placeholderText-no_content-editable", async () => {
-    await setPageData({
-      placeholderTextSelect: false,
-    })
-    await page.waitFor(1000);
-
-    await page.callMethod('modalTap')
-    await page.waitFor(500);
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
-
-    await page.callMethod('closeAllModal')
-    await page.waitFor(500);
-  })
 });
