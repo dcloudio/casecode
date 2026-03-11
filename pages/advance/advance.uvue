@@ -87,6 +87,10 @@
                         name: "issue-20232",
                         url: "issues/issue-20232/issue-20232"
                     },
+                    {
+                        name: "issue-26943",
+                        url: "issues/issue-26943/issue-26943"
+                    },
                     ] as Page[]
                 },
                 {
