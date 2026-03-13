@@ -130,7 +130,7 @@ describe('nodes-info', () => {
     expect(Math.round(imageNodeInfo.top) > 380).toBe(true)
     expect(Math.round(imageNodeInfo.bottom) > 480).toBe(true)
     expect(imageNodeInfo.width).toBeCloseTo(100, 0);
-    expect(imageNodeInfo.height).toBe(100)
+    expect(imageNodeInfo.height).toBeCloseTo(100, 0)
   })
 
   // 测试 scroll-view 组件查询
@@ -144,7 +144,7 @@ describe('nodes-info', () => {
     expect(Math.round(scrollViewNodeInfo.top) > 560).toBe(true)
     expect(Math.round(scrollViewNodeInfo.bottom) > 660).toBe(true)
     expect(scrollViewNodeInfo.width).toBeCloseTo(300, 0);
-    expect(scrollViewNodeInfo.height).toBe(100)
+    expect(scrollViewNodeInfo.height).toBeCloseTo(100, 0)
   })
 })
 

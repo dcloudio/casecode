@@ -104,8 +104,8 @@
       <view class="uni-common-mb">
         <text>native-view组件: min-height: 100px 和 min-height: 150px</text>
         <view class="demo-box">
-          <native-view class="common" style="min-height: 100px; background-color: cyan;width:100px;"></native-view>
-          <native-view class="common" style="min-height: 150px; background-color: cyan;width:100px;"></native-view>
+          <native-view class="common-dynamic" style="min-height: 100px;"></native-view>
+          <native-view class="common-dynamic" style="min-height: 150px;"></native-view>
         </view>
       </view>
     </view>

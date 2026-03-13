@@ -104,8 +104,8 @@
       <view class="uni-common-mb">
         <text>native-view组件: min-width: 100px 和 min-width: 200px</text>
         <view class="demo-box">
-          <native-view class="common" style="min-width: 100px; background-color: cyan;"></native-view>
-          <native-view class="common" style="min-width: 200px; background-color: cyan;"></native-view>
+          <native-view class="common-dynamic" style="min-width: 100px;"></native-view>
+          <native-view class="common-dynamic" style="min-width: 200px;"></native-view>
         </view>
       </view>
     </view>
