@@ -338,8 +338,6 @@
 
   .native-view-grow {
     height: 50px;
-    justify-content: center;
-    align-items: center;
   }
 
   .width-30-no-grow {

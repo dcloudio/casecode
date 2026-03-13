@@ -104,8 +104,8 @@
       <view class="uni-common-mb">
         <text>native-view组件: max-width: 100px 和 max-width: 200px</text>
         <view class="demo-box">
-          <native-view class="common" style="max-width: 100px; background-color: cyan;"></native-view>
-          <native-view class="common" style="max-width: 200px; background-color: cyan;"></native-view>
+          <native-view class="common-view" style="max-width: 100px;"></native-view>
+          <native-view class="common-view" style="max-width: 200px;"></native-view>
         </view>
       </view>
 
@@ -195,6 +195,11 @@
     background-color: cyan;
     justify-content: center;
     align-items: center;
+  }
+  .common-view{
+    width: 400px;
+    height: 80px;
+    background-color: cyan;
   }
 
   .common-text{

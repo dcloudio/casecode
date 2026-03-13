@@ -335,7 +335,5 @@
 
   .native-view-shrink {
     height: 50px;
-    justify-content: center;
-    align-items: center;
   }
 </style>

@@ -152,12 +152,12 @@
       <text class="uni-title-text">native-view 组件：flex-basis: 50px 和 100px</text>
       <view class="demo-box uni-common-mb">
         <view class="flex-container">
-          <native-view class="common" style="flex-basis: 50px;"></native-view>
+          <native-view class="common-view" style="flex-basis: 50px;"></native-view>
           <view class="flex-item green"></view>
           <view class="flex-item blue"></view>
         </view>
         <view class="flex-container">
-          <native-view class="common" style="flex-basis: 100px;"></native-view>
+          <native-view class="common-view" style="flex-basis: 100px;"></native-view>
           <view class="flex-item green"></view>
           <view class="flex-item blue"></view>
         </view>
@@ -274,6 +274,12 @@
     background-color: red;
     justify-content: center;
     align-items: center;
+  }
+
+  .common-view {
+    width: 40px;
+    height: 40px;
+    background-color: red;
   }
 
   .common-text {
