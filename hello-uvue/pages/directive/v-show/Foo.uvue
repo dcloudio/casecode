@@ -1,5 +1,0 @@
-<template>
-  <view id="foo">
-    component Foo
-  </view>
-</template>
