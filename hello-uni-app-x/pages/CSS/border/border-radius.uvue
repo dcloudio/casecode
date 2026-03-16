@@ -53,6 +53,38 @@
       </view>
 
       <view>
+        <text>border-top-left-radius: 20%</text>
+        <view class="demo-box">
+          <view class="common" style="border-top-left-radius: 20%"></view>
+          <view class="common" style="border-top-left-radius: 20%" flatten></view>
+        </view>
+      </view>
+
+      <view>
+        <text>border-top-right-radius: 20%</text>
+        <view class="demo-box">
+          <view class="common" style="border-top-right-radius: 20%"></view>
+          <view class="common" style="border-top-right-radius: 20%" flatten></view>
+        </view>
+      </view>
+
+      <view>
+        <text>border-bottom-left-radius: 20%</text>
+        <view class="demo-box">
+          <view class="common" style="border-bottom-left-radius: 20%"></view>
+          <view class="common" style="border-bottom-left-radius: 20%" flatten></view>
+        </view>
+      </view>
+
+      <view>
+        <text>border-bottom-right-radius: 20%</text>
+        <view class="demo-box">
+          <view class="common" style="border-bottom-right-radius: 20%"></view>
+          <view class="common" style="border-bottom-right-radius: 20%" flatten></view>
+        </view>
+      </view>
+
+      <view>
         <text>border-radius: 150px（长宽不同形成扁圆）</text>
         <view class="demo-box">
           <view class="common" style="border-radius: 150px"></view>

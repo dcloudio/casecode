@@ -1,0 +1,18 @@
+<template>
+  <view>
+    <view>
+      <text>期望下方方块为红色背景</text>
+    </view>
+    <Comp class="issue-27180-box"></Comp>
+    <CompA></CompA>
+  </view>
+</template>
+
+<script setup>
+    import Comp from './Comp.uvue'
+    import CompA from './CompA.uvue'
+</script>
+
+<style>
+
+</style>

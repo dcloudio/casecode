@@ -1,0 +1,13 @@
+<template>
+  <view style="width: 100px; height: 100px; border: dashed 2px black;">
+
+  </view>
+</template>
+
+<script setup>
+
+</script>
+
+<style>
+
+</style>
