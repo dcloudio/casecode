@@ -1,0 +1,34 @@
+[
+  {
+    "IndexName": "appid",
+    "MgoKeySchema": {
+      "MgoIndexKeys": [
+        {
+          "Name": "appid",
+          "Direction": "1"
+        }
+      ],
+      "MgoIsUnique": false
+    }
+  },
+  {
+    "IndexName": "查找上线发行应用",
+    "MgoKeySchema": {
+      "MgoIndexKeys": [
+        {
+          "Name": "appid",
+          "Direction": "1"
+        },
+        {
+          "Name": "platform",
+          "Direction": "1"
+        },
+        {
+          "Name": "stable_publish",
+          "Direction": "1"
+        }
+      ],
+      "MgoIsUnique": false
+    }
+  }
+]

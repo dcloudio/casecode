@@ -1,0 +1,40 @@
+[
+    {
+        "IndexName": "sort_",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "sort",
+                    "Direction": "1",
+										"Type": "int"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "status_",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "status",
+                    "Direction": "1",
+										"Type": "bool"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "category_id_",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "category_id",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    }
+]

@@ -1,0 +1,81 @@
+{
+    "bsonType": "object",
+    "required": [],
+    "permission": {
+        "read": false,
+        "create": false,
+        "update": false,
+        "delete": false
+    },
+    "properties": {
+        "_id": {
+            "description": "ID，系统自动生成"
+        },
+        "name": {
+            "bsonType": "string",
+            "description": "任务名称",
+            "trim": "both"
+        },
+        "app_id": {
+            "bsonType": "string",
+            "description": "App ID",
+            "trim": "both"
+        },
+        "template_id": {
+            "bsonType": "string",
+            "description": "短信模板ID",
+            "trim": "both"
+        },
+        "template_content": {
+            "bsonType": "string",
+            "description": "短信模板内容",
+            "trim": "both"
+        },
+        "vars": {
+            "bsonType": "array",
+            "description": "短信变量"
+        },
+        "to": {
+            "bsonType": "object",
+            "description": "短信接收者信息",
+            "properties": {
+                "all": {
+                    "bsonType": "bool",
+                    "description": "全部用户发送；字段废弃，由 condition 替代"
+                },
+                "type": {
+                    "bsonType": "string",
+                    "description": "可选值 user | userTags"
+                },
+                "receiver": {
+                    "bsonType": "array",
+                    "description": "用户ID's / 用户标签ID's；指定id发送"
+                },
+                "condition": {
+                    "bsonType": "object",
+                    "description": "根据条件发送，例如给所有人发送"
+                }
+            }
+        },
+        "send_qty": {
+            "bsonType": "int",
+            "description": "发送总数"
+        },
+        "success_qty": {
+            "bsonType": "int",
+            "description": "成功总数"
+        },
+        "fail_qty": {
+            "bsonType": "int",
+            "description": "失败总数"
+        },
+        "create_date": {
+            "bsonType": "timestamp",
+            "description": "创建时间",
+            "forceDefaultValue": {
+                "$env": "now"
+            }
+        }
+    },
+    "version": "0.0.1"
+}

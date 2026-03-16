@@ -1,0 +1,53 @@
+{
+	"bsonType": "object",
+	"required": ["name", "menu_id"],
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID，系统自动生成"
+		},
+		"menu_id": {
+			"bsonType": "string",
+			"description": "菜单项的ID，不可重复",
+			"trim": "both"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "菜单名称",
+			"trim": "both"
+		},
+		"icon": {
+			"bsonType": "string",
+			"description": "菜单图标",
+			"trim": "both"
+		},
+		"url": {
+			"bsonType": "string",
+			"description": "菜单url",
+			"trim": "both"
+		},
+		"sort": {
+			"bsonType": "int",
+			"description": "菜单序号（越大越靠后）"
+		},
+		"parent_id": {
+			"bsonType": "string",
+			"description": "父级菜单Id",
+			"parentKey": "menu_id"
+		},
+		"permission": {
+			"bsonType": "array",
+			"description": "菜单权限列表"
+		},
+		"enable": {
+			"bsonType": "bool",
+			"description": "是否启用菜单，true启用、false禁用"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "菜单创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

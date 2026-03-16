@@ -1,0 +1,16 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true
+	},
+	"properties": {
+		"title": {
+			"bsonType": "string"
+		},
+		"author": {
+			"bsonType": "string"
+		}
+	}
+}

@@ -1,8 +1,2 @@
-node_modules/
-unpackage/
+node_modules
 .DS_Store
-.hbuilderx/
-__image_snapshots__/
-__snapshot__
-/code-review/node_modules
-/nul

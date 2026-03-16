@@ -1,0 +1,93 @@
+{
+	"bsonType": "object",
+	"required": ["user_id", "score", "exchange_rate", "amount", "fee_rate", "fee", "actual_amount", "method", "account_info", "status"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "用户ID"
+		},
+		"score": {
+			"bsonType": "int",
+			"description": "提现积分数"
+		},
+		"exchange_rate": {
+			"bsonType": "number",
+			"description": "兑换汇率（元/积分）"
+		},
+		"amount": {
+			"bsonType": "number",
+			"description": "提现金额（元，扣除手续费前）"
+		},
+		"fee_rate": {
+			"bsonType": "number",
+			"description": "手续费比例（如0.2表示20%）"
+		},
+		"fee": {
+			"bsonType": "number",
+			"description": "手续费金额（元）"
+		},
+		"actual_amount": {
+			"bsonType": "number",
+			"description": "实际到账金额（元）"
+		},
+		"method": {
+			"bsonType": "string",
+			"description": "提现方式：bank_card/alipay"
+		},
+		"account_info": {
+			"bsonType": "object",
+			"description": "收款账户信息",
+			"properties": {
+				"type": {
+					"bsonType": "string",
+					"description": "账户类型：bank_card/alipay"
+				},
+				"name": {
+					"bsonType": "string",
+					"description": "真实姓名"
+				},
+				"account": {
+					"bsonType": "string",
+					"description": "账号"
+				},
+				"bank_name": {
+					"bsonType": "string",
+					"description": "银行名称（银行卡时）"
+				}
+			}
+		},
+		"status": {
+			"bsonType": "int",
+			"description": "状态：0=待审核，1=已通过，2=已拒绝，3=已打款",
+			"enum": [0, 1, 2, 3]
+		},
+		"reject_reason": {
+			"bsonType": "string",
+			"description": "拒绝原因"
+		},
+		"audit_time": {
+			"bsonType": "timestamp",
+			"description": "审核时间"
+		},
+		"pay_time": {
+			"bsonType": "timestamp",
+			"description": "打款时间"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "申请时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

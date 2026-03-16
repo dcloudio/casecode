@@ -1,0 +1,22 @@
+[
+  {
+    "user_id": "_uni_starter_test_user_id",
+    "watch_time": 1737878400000,
+    "ad_type": "rewardedVideo",
+    "ad_id": "ad_test_001",
+    "score": 10,
+    "revenue": 0.0012,
+    "is_realtime": true,
+    "create_time": 1737878400000
+  },
+  {
+    "user_id": "_uni_starter_test_user_id",
+    "watch_time": 1737964800000,
+    "ad_type": "interstitial",
+    "ad_id": "ad_test_002",
+    "score": 5,
+    "revenue": null,
+    "is_realtime": false,
+    "create_time": 1737964800000
+  }
+]

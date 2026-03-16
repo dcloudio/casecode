@@ -1,0 +1,12 @@
+{
+  "name": "uqrcode",
+  "version": "3.5.1",
+  "description": "",
+  "main": "uqrcode.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

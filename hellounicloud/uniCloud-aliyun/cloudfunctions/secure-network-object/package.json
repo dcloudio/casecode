@@ -1,0 +1,7 @@
+{
+  "name": "secure-object",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

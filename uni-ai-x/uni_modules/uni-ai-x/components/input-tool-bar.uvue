@@ -1,0 +1,329 @@
+<template>
+    <view class="input-tool-bar" :class="[`ui-theme-${uiTheme}`]">
+        <view class="input-tool-bar-btn" :class="currentLLMModel.thinking == true ? 'input-tool-bar-btn-active' : ''" @click="setThinking">
+            <uni-ai-icon code="e639" :color="isOpenClaw ? '#aaa' : (currentLLMModel.thinking != null ? '#3c76e4': !hasDeepseekR1Model ? '#aaa' : '#666')"></uni-ai-icon>
+            <text class="input-tool-bar-text" :class="[(currentLLMModel.thinking ?? false) ? 'input-tool-bar-text-active' : '', isOpenClaw ? 'input-tool-bar-text-disable' : (!hasDeepseekR1Model ? 'input-tool-bar-text-disable' : '')]">深度思考 (R1)</text>
+        </view>
+        <view class="input-tool-bar-btn input-tool-bar-search" :class="[!canWebSearch ? 'input-tool-bar-btn-disable' : '', webSearch ? 'input-tool-bar-btn-active' : '']" @click="setWebSearch">
+            <uni-ai-icon code="e797" :color="webSearch ? '#3c76e4': !canWebSearch ? '#aaa' : '#666'"></uni-ai-icon>
+            <text class="input-tool-bar-text" :class="[!canWebSearch ? 'input-tool-bar-text-disable' : '', webSearch ? 'input-tool-bar-text-active' : '']">联网搜索</text>
+        </view>
+				
+        <uni-icons v-if="canParseImg" @click="uploadImage" class="input-tool-bar-upload-image-btn" type="plusempty" size="25" color="var(--text-secondary)"></uni-icons>
+        <view v-if="aiState == 'processing'" class="input-tool-bar-stop input-tool-bar-stop-active" @click="stop">
+            <uni-ai-icon code="e691" color="#FFF" size="14"></uni-ai-icon>
+        </view>
+        <view v-else class="input-tool-bar-send" @click="send" :class="inputContent.length > 0 && allUploaded ? 'input-tool-bar-send-active' : ''"
+					<!-- #ifdef WEB -->
+					:title="allUploaded ? '发送' : '请等待图片上传完成'"
+					<!-- #endif -->
+				>
+            <uni-ai-icon code="e627" color="#FFF" size="20"></uni-ai-icon>
+        </view>
+    </view>
+</template>
+<script lang="uts" setup>
+import uniAi, { uiTheme, MsgItem } from '@/uni_modules/uni-ai-x/sdk';
+import {llmModelMap, providerNameList, type LLMModel} from '../config';
+import { ImgItem } from '@/uni_modules/uni-ai-x/types.uts';
+const canWebSearchLLmList: string[] = [];
+const canThinkingLLmList: string[] = [];
+let hasDeepseekR1Model = ref<boolean>(false);
+let hasDoubaoSeed16Model = ref<boolean>(false);
+llmModelMap.forEach((provider,providerName) => {
+    provider.models.forEach(model => {
+        if (model.webSearch == true) {
+            canWebSearchLLmList.push(providerName + ' - ' + model.name);
+        }
+        if (model.thinking == true) {
+            canThinkingLLmList.push(providerName + ' - ' + model.name);
+        }
+        if (model.name == 'deepseek-r1') {
+            hasDeepseekR1Model.value = true;
+        }
+        if (model.name == 'doubao-seed-1.6') {
+            hasDoubaoSeed16Model.value = true;
+        }
+    });
+});
+
+const isOpenClaw = computed<boolean>(() => {
+    return uniAi.llm.provider == 'openClaw';
+});
+
+
+const aiState = computed<string>(() => {
+    let state = uniAi.currentChat?.state ?? 'none';
+    if (state != 'processing' && uniAi.lastAiMsg?.rendered == false) {
+        state = 'processing'
+    }
+    return state
+
+});
+
+const inputContent = ref<string>(uniAi.currentChat?.inputContent ?? '')
+
+watch(inputContent, (newValue: string) => {
+    if (uniAi.currentChat != null) {
+        uniAi.currentChat!.inputContent = newValue
+    }
+})
+
+watch((): string => {
+    return uniAi.currentChat?.inputContent ?? ''
+}, (newValue: string) => {
+    inputContent.value = newValue
+})
+
+const canParseImg = computed<boolean>(() => {
+    return true// currentLLMModel.value.canParseImg ?? false;
+});
+
+const llmModel = computed<string>(() => {
+    return uniAi.llm.model
+});
+
+const currentLLMModel = computed<LLMModel>(() => {
+    const provider = uniAi.llm.provider
+    const model = uniAi.llm.model
+    const currentLLMModel = llmModelMap.get(provider)!.models.find(m => m.name == model) as LLMModel;
+    return currentLLMModel
+});
+
+const webSearch = computed<boolean>(() => {
+    return uniAi.llm.webSearch as boolean;
+});
+
+const canWebSearch = computed<boolean>(() => {
+    const canWebSearch = currentLLMModel.value.webSearch ?? false;
+    if (!canWebSearch) {
+        uniAi.llm.webSearch = false;
+    }
+    return canWebSearch
+});
+
+const stop = async () => {
+    uniAi.currentChat!.state = 'stop';
+    uniAi.abortRequest()
+    await nextTick()
+};
+
+const allUploaded = computed<boolean>(() => {
+    return uniAi.imgList.every(img => img.uploadPercent == 100);
+});
+
+const send = async () => {
+    if (inputContent.value.length == 0) {
+        return;
+    }
+    if (!allUploaded.value) {
+        uni.showToast({
+            title: '请等待图片上传完成',
+            duration: 3000,
+            icon: 'none'
+        });
+        return;
+    }
+    uniAi.sendMsg(inputContent.value)
+    inputContent.value = '';
+};
+
+const canThinking = computed<boolean>(() => {
+    return currentLLMModel.value.thinking ?? false;
+});
+const setThinking = () => {
+    if (isOpenClaw.value) {
+        uni.showToast({
+            title: 'openClaw不支持深度思考',
+            icon: 'none'
+        });
+        return
+    }
+    if (!hasDeepseekR1Model.value) {
+        uni.showToast({
+            title: '请在 config.json 中配置 deepseek-r1 模型',
+            duration: 3000,
+            icon: 'none'
+        });
+    } else {
+        uniAi.llm.model = canThinking.value ? "deepseek-v3" : "deepseek-r1"
+    }
+};
+
+const setWebSearch = () => {
+    if (canWebSearch.value) {
+        uniAi.llm.webSearch = !webSearch.value;
+    } else {
+        const title: string = canWebSearchLLmList.length > 0 ? `仅${canWebSearchLLmList.join('、')}模型支持联网搜索` : '当前模型不支持联网搜索';
+        uni.showToast({
+            title,
+            duration: 3000,
+            icon: 'none'
+        });
+    }
+};
+
+function uploadImage() {
+    // 判断当前大语言模型是否支持，如果不支持提示切换
+    if (currentLLMModel.value?.image != true) {
+        if (hasDoubaoSeed16Model.value) {
+            uni.showModal({
+                title: '提示',
+                content: '当前模型不支持图片理解，是否切换到 doubao-seed-1.6 模型？',
+                success: (res) => {
+                    if (res.confirm) {
+                        uniAi.llm.model = 'doubao-seed-1.6';
+                        uploadImage();
+                    }
+                }
+            });
+            return;
+        } else {
+            uni.showToast({
+                title: '请在 config.json 中配置支持图片理解的模型',
+                duration: 3000,
+                icon: 'none'
+            });
+            return;
+        }
+    }
+
+    if (uniAi.imgList.length >= 9) {
+        uni.showToast({
+            title: '最多上传9张图片',
+            duration: 3000,
+            icon: 'none'
+        });
+        return;
+    }
+	
+    uniCloud.chooseAndUploadFile({
+        sourceType: ['album','camera'],
+        count: 9 - uniAi.imgList.length,
+        sizeType: ['compressed'],
+        type: 'image',
+        onChooseFile(res: UniCloudChooseAndUploadFileResult) {
+            // console.log(res)
+            const imgList: ImgItem[] = res.tempFiles.map<ImgItem>((file: UniCloudChooseAndUploadFileItem): ImgItem=> {
+                return {
+                    path: file.path,
+                    name: file.name,
+                    size: '0B',
+                    type: 'image',
+                    uploadPercent: 0
+                }
+            });
+            uniAi.imgList.push(...imgList);
+        },
+        onUploadProgress(res: UniCloudChooseAndUploadFileProgressEvent) {
+            // 根据 tempFilePath 找到对应的 index
+            const index = uniAi.imgList.findIndex(img => img.path == res.tempFilePath);
+            if (index != -1) {
+                const currentImg = uniAi.imgList[index]!;
+                currentImg.size = res.total > 1024 ? Math.floor(res.total / 1024) + 'KB' : Math.floor(res.total / 1024) + 'B';
+                currentImg.uploadPercent = Math.floor(res.loaded / res.total * 100);
+            } else {
+                // console.error('上传图片进度设置失败，tempFilePath 不存在', res.tempFilePath, uniAi.imgList.length)
+            }
+        }
+    }).then((res: UniCloudChooseAndUploadFileResult) => {
+        // console.log('上传图片完成', res)
+        res.tempFiles.forEach((file: UniCloudChooseAndUploadFileItem) => {
+            // console.log(file)
+            const index = uniAi.imgList.findIndex(img => img.path == file.path);
+            if (index != -1) {
+                uniCloud.getTempFileURL({
+                    fileList: [file.url!],
+                }).then((res: UniCloudGetTempFileURLResult) => {
+                    // console.log(res.fileList[0].tempFileURL)
+                    uniAi.imgList[index]!.path = res.fileList[0].tempFileURL;
+                })
+            }
+        })
+    })
+		.catch((error)=>{
+			console.error('chooseAndUploadFile error', error)
+		})
+}
+
+onMounted(() => {
+    // #ifdef WEB
+    document.addEventListener('keydown', async (e) => {
+        if (e.key == 'Enter' && !e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey && !e.isComposing) {
+            e.preventDefault()
+            if (aiState.value == 'processing') {
+                await stop()
+            }
+            send()
+        }
+    })
+    // #endif
+});
+</script>
+<style lang="scss">
+@import '@/uni_modules/uni-ai-x/static/css/variables.scss';
+.ui-theme-light {
+    --input-btn-active-bg: #dbeafe;
+    --input-btn-bg: #f3f4f6;
+}
+.ui-theme-dark {
+    --input-btn-active-bg: #3d434b;
+    --input-btn-bg: #3d434b;
+}
+
+.input-tool-bar {
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.input-tool-bar-btn {
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 30px;
+    margin-right: 5px;
+    background-color: var(--input-btn-bg);
+}
+
+.input-tool-bar-btn-active {
+    background-color: var(--input-btn-active-bg);
+}
+
+.input-tool-bar-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-left: 3px;
+}
+
+.input-tool-bar-text-active {
+    color: var(--accent-primary);
+}
+
+.input-tool-bar-text-disable {
+    color: var(--text-disabled);
+}
+
+.input-tool-bar-search {
+    margin-right: auto;
+}
+
+.input-tool-bar-stop,
+.input-tool-bar-send {
+    background-color: var(--accent-secondary);
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+}
+
+.input-tool-bar-stop-active,
+.input-tool-bar-send-active {
+    background-color: var(--accent-primary);
+}
+
+.input-tool-bar-upload-image-btn {
+    margin-right: 15px;
+}
+</style>

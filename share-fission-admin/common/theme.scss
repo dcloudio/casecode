@@ -1,0 +1,293 @@
+@import '@/uni.scss';
+
+$theme-map: ();
+$primary-key: 'primary';
+$success-key: 'success';
+$warn-key: 'warn';
+$warning-key: 'warning';
+$error-key: 'error';
+
+@mixin themeify {
+	@each $theme-name, $theme-map in $themes {
+		$theme-map: $theme-map !global;
+		[data-theme='#{inspect($theme-name)}'] {
+			@content;
+		}
+	}
+}
+@function getTheme($key) {
+	@return map-get($theme-map, $key);
+}
+@mixin uni-button($button-type) {
+	$button-type-color: getTheme(#{$button-type + '-color'});
+	uni-button,
+	button {
+		&[type='#{$button-type}'] {
+			background-color: $button-type-color;
+			&[disabled] {
+				background-color: opacify($button-type-color, 0.6);
+			}
+			&[plain] {
+				color: $button-type-color;
+				border-color: $button-type-color;
+				background-color: transparent;
+			}
+			&[loading] {
+				background-color: $button-type-color;
+				&[plain] {
+					color: $button-type-color;
+				}
+			}
+			&.button-hover {
+				$hover-color: darken(
+					$color: $button-type-color,
+					$amount: 10%
+				);
+				background-color: $hover-color;
+				&[plain] {
+					color: $hover-color;
+					border-color: $hover-color;
+					background-color: transparent;
+				}
+			}
+		}
+	}
+}
+@mixin uni-switch {
+	$primary-color: getTheme(#{$primary-key + '-color'});
+	.uni-switch-input.uni-switch-input-checked {
+		background-color: $primary-color !important;
+		border-color: $primary-color !important;
+	}
+}
+@mixin uni-ui-checkbox {
+	$primary-color: getTheme(#{$primary-key + '-color'});
+	.checklist-box {
+		&.is-checked {
+			.checkbox__inner {
+				border-color: $primary-color !important;
+				background-color: $primary-color !important;
+			}
+			.radio__inner {
+				border-color: $primary-color !important;
+				.radio__inner-icon {
+					background-color: $primary-color !important;
+				}
+			}
+			.checklist-text {
+				color: $primary-color !important;
+			}
+		}
+		.checkbox__inner:hover {
+			border-color: $primary-color !important;
+		}
+	}
+}
+@mixin uni-ui-easyinput {
+	$primary-color: getTheme(#{$primary-key + '-color'});
+	$error-color: getTheme(#{$error-key + '-color'});
+	.uni-easyinput {
+		&.uni-easyinput-error {
+			color: $error-color !important;
+		}
+		.uni-easyinput__content {
+			&.is-focused {
+				&.is-input-border {
+					border-color: $primary-color !important;
+				}
+				.uni-icons {
+					color: $primary-color !important;
+				}
+			}
+		}
+	}
+}
+@mixin uni-menu {
+	$primary-color: getTheme(#{$primary-key + '-color'});
+	// 左侧菜单
+	.uni-nav-menu {
+		.uni-menu-item.is-active {
+			color: $primary-color;
+		}
+	}
+	// 修改密码
+	.navbar-menu {
+		.menu-item.hover-highlight:hover {
+			color: $primary-color;
+		}
+	}
+}
+@mixin uni-table {
+	$primary-color: getTheme(#{$primary-key + '-color'});
+	.uni-table {
+		.link-btn-color {
+			color: $primary-color;
+		}
+		.uni-table-checkbox {
+			.checkbox__inner {
+				&.checkbox--indeterminate,
+				&.is-checked {
+					border-color: $primary-color;
+					background-color: $primary-color;
+				}
+			}
+			.checkbox__inner:hover {
+				border-color: $primary-color;
+			}
+		}
+		.uni-table-th-content {
+			.arrow-box {
+				.arrow.active ::after {
+					background-color: $primary-color;
+				}
+			}
+		}
+		// 表格头部搜索按钮
+		.opera-area {
+			.btn.btn-submit {
+				background-color: $primary-color;
+			}
+		}
+		.dropdown-btn {
+			.icon-search.active {
+				.icon-search-0 {
+					border-color: $primary-color;
+				}
+				.icon-search-1 {
+					background-color: $primary-color;
+				}
+			}
+			.icon-calendar.active {
+				.icon-calendar-0 {
+					border-color: $primary-color;
+				}
+				.icon-calendar-1 {
+					background-color: $primary-color;
+				}
+			}
+		}
+		.uni-icons.uni-stat-edit--btn {
+			color: $primary-color !important;
+		}
+	}
+	.uni-pagination {
+		.uni-pagination__num-current .page--active {
+			background-color: $primary-color !important;
+		}
+	}
+}
+@mixin uni-picker {
+	$primary-color: getTheme(#{$primary-key + '-color'});
+	.uni-picker-select {
+		.uni-picker-item.selected {
+			color: $primary-color;
+		}
+	}
+}
+@mixin uni-calendar {
+	$primary-color: getTheme(#{$primary-key + '-color'});
+	.uni-calendar__button-text {
+		color: $primary-color;
+	}
+	.uni-datetime-picker--btn {
+		background-color: $primary-color;
+	}
+	.uni-calendar-item--multiple {
+		.uni-calendar-item--before-checked,
+		.uni-calendar-item--after-checked {
+			background-color: $primary-color;
+		}
+	}
+	.uni-calendar-item__weeks-box {
+		.uni-calendar-item--checked {
+			background-color: $primary-color;
+		}
+		&-text {
+			color: darken($color: $primary-color, $amount: 40%);
+		}
+	}
+}
+@mixin uni-popup {
+	$primary-color: getTheme(#{$primary-key + '-color'});
+	.uni-popup-dialog {
+		.uni-button-color {
+			color: $primary-color;
+		}
+	}
+}
+@mixin uni-tag($tag-type) {
+	$tag-type-color: getTheme(#{$tag-type + '-color'});
+	.uni-tag {
+		&--#{$tag-type} {
+			background-color: $tag-type-color !important;
+			border-color: $tag-type-color !important;
+		}
+		&--#{$tag-type}--inverted {
+			background-color: #fff !important;
+			color: $tag-type-color !important;
+		}
+	}
+}
+
+body {
+	@at-root {
+		@include themeify {
+			$primary-color: getTheme(#{$primary-key + '-color'});
+			// 组件
+			@include uni-button($primary-key);
+			@include uni-button($warn-key);
+			@include uni-tag($primary-key);
+			@include uni-tag($success-key);
+			@include uni-tag($warning-key);
+			@include uni-tag($error-key);
+			@include uni-ui-checkbox;
+			@include uni-switch;
+			@include uni-ui-easyinput;
+			@include uni-menu;
+			@include uni-table;
+			@include uni-picker;
+			@include uni-calendar;
+			@include uni-popup;
+			// 页面
+			.link-btn {
+				color: $primary-color !important;
+			}
+			.uni-stat--tab-item {
+				&.uni-stat--tab-item-line-active,
+				&.uni-stat--tab-item-boldLine-active {
+					color: $primary-color;
+					border-color: $primary-color;
+				}
+				&.uni-stat--tab-item-box-active {
+					border-color: $primary-color;
+				}
+			}
+			.uni-title.app-list {
+				color: $primary-color;
+				border-color: $primary-color;
+			}
+			.uni-link {
+				color: $primary-color;
+			}
+			.uni-selector-select .uni-picker-item.selected {
+				color: $primary-color;
+			}
+			.uni-tabs__item.is-active {
+				color: $primary-color;
+			}
+			.uni-modal__btn_primary {
+				color: $primary-color !important;
+			}
+			.uni-radio-input-checked {
+				background-color: $primary-color !important;
+				border-color: $primary-color !important;
+			}
+			.uni-container {
+				.icon-item:hover,
+				.icon-item:hover .icon-text {
+					color: $primary-color;
+				}
+			}
+		}
+	}
+}

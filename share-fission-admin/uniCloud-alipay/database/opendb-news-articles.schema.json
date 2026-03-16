@@ -1,0 +1,165 @@
+{
+	"bsonType": "object",
+	"required": ["user_id", "title", "content"],
+	"permission": {
+		"read": "doc.user_id == auth.uid && doc.article_status == 0 || doc.article_status == 1",
+		"create": "auth.uid != null",
+		"update": "doc.user_id == auth.uid",
+		"delete": "doc.user_id == auth.uid"
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（用户 ID），系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "文章作者ID， 参考`uni-id-users` 表",
+			"foreignKey": "uni-id-users._id",
+			"defaultValue": {
+				"$env": "uid"
+			}
+		},
+		"category_id": {
+			"bsonType": "string",
+			"title": "分类",
+			"description": "分类 id，参考`uni-news-categories`表",
+			"foreignKey": "opendb-news-categories._id",
+			"enum": {
+				"collection": "opendb-news-categories",
+				"field": "name as text, _id as value"
+			}
+		},
+		"title": {
+			"bsonType": "string",
+			"title": "标题",
+			"description": "标题",
+			"label": "标题",
+			"trim": "both"
+		},
+		"content": {
+			"bsonType": "string",
+			"title": "文章内容",
+			"description": "文章内容",
+			"label": "文章内容",
+			"trim": "right"
+		},
+		"excerpt": {
+			"bsonType": "string",
+			"title": "文章摘录",
+			"description": "文章摘录",
+			"label": "摘要",
+			"trim": "both"
+		},
+		"article_status": {
+			"bsonType": "int",
+			"title": "文章状态",
+			"description": "文章状态：0 草稿箱 1 已发布",
+			"defaultValue": 0,
+			"enum": [{
+				"value": 0,
+				"text": "草稿箱"
+			}, {
+				"value": 1,
+				"text": "已发布"
+			}]
+		},
+		"view_count": {
+			"bsonType": "int",
+			"title": "阅读数量",
+			"description": "阅读数量",
+			"permission": {
+				"write": false
+			}
+		},
+		"like_count": {
+			"bsonType": "int",
+			"description": "喜欢数、点赞数",
+			"permission": {
+				"write": false
+			}
+		},
+		"is_sticky": {
+			"bsonType": "bool",
+			"title": "是否置顶",
+			"description": "是否置顶",
+			"permission": {
+				"write": false
+			}
+		},
+		"is_essence": {
+			"bsonType": "bool",
+			"title": "阅读加精",
+			"description": "阅读加精",
+			"permission": {
+				"write": false
+			}
+		},
+		"comment_status": {
+			"bsonType": "int",
+			"title": "开放评论",
+			"description": "评论状态：0 关闭  1 开放",
+			"enum": [{
+				"value": 0,
+				"text": "关闭"
+			}, {
+				"value": 1,
+				"text": "开放"
+			}]
+		},
+		"comment_count": {
+			"bsonType": "int",
+			"description": "评论数量",
+			"permission": {
+				"write": false
+			}
+		},
+		"last_comment_user_id": {
+			"bsonType": "string",
+			"description": "最后回复用户 id，参考`uni-id-users` 表",
+			"foreignKey": "uni-id-users._id"
+		},
+		"avatar": {
+			"bsonType": "string",
+			"title": "封面大图",
+			"description": "缩略图地址",
+			"label": "封面大图",
+			"trim": "both"
+		},
+		"publish_date": {
+			"bsonType": "timestamp",
+			"title": "发表时间",
+			"description": "发表时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"publish_ip": {
+			"bsonType": "string",
+			"title": "发布文章时IP地址",
+			"description": "发表时 IP 地址",
+			"forceDefaultValue": {
+				"$env": "clientIP"
+			}
+		},
+		"last_modify_date": {
+			"bsonType": "timestamp",
+			"title": "最后修改时间",
+			"description": "最后修改时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"last_modify_ip": {
+			"bsonType": "string",
+			"description": "最后修改时 IP 地址",
+			"forceDefaultValue": {
+				"$env": "clientIP"
+			}
+		},
+		"mode": {
+			"bsonType": "number",
+			"title": "排版显示模式",
+			"description": "排版显示模式,如左图右文、上图下文等"
+		}
+	}
+}

@@ -1,0 +1,130 @@
+<template>
+  <uni-popup ref="popup" @clickMask="cancel">
+    <view class="popup-captcha">
+      <view class="content">
+        <text class="title">{{title}}</text>
+        <uni-captcha ref="captcha" :focus="focus" :scene="scene" v-model="val" :cursorSpacing="150"></uni-captcha>
+      </view>
+      <view class="button-box">
+        <text @click="cancel" class="btn cancel">取消</text>
+        <text @click="confirm" class="btn confirm">确认</text>
+      </view>
+    </view>
+  </uni-popup>
+</template>
+
+<script>
+  let confirmCallBack = ():void=>console.log('未传入回调函数')
+  export default {
+    emits:["modelValue","confirm","cancel"],
+    data() {
+      return {
+        focus: false,
+        val:""
+      }
+    },
+    props: {
+      modelValue: {
+        type: String,
+        default: ""
+      },
+      value: {
+        type: String,
+        default: ""
+      },
+      scene: {
+        type: String,
+        default: ""
+      },
+      title: {
+        type: String,
+        default: "默认标题"
+      }
+    },
+    watch: {
+      val(val:string) {
+        // console.log(val);
+        // TODO 兼容 vue2
+        // #ifdef VUE2
+        this.$emit('input', val);
+        // #endif
+        
+        // TODO　兼容　vue3
+        // #ifdef VUE3
+        this.$emit('update:modelValue', val)
+        // #endif
+        
+        if(val.length == 4){
+          this.confirm()
+        }
+      }
+    },
+    mounted() {},
+    methods: {
+      open(callback: () => void) {
+        // console.log('callback',callback);
+        confirmCallBack = callback;
+        this.focus = true
+        this.val = "";
+        (this.$refs['popup'] as ComponentPublicInstance).$callMethod("open");
+        this.$nextTick(()=>{
+          (this.$refs['captcha'] as ComponentPublicInstance).$callMethod("getImageCaptcha",true);
+        })
+      },
+      close() {
+        this.focus = false;
+        (this.$refs['popup'] as ComponentPublicInstance).$callMethod("close");
+      },
+      cancel(){
+        this.close()
+        this.$emit("cancel")
+      },
+      confirm() {
+        if (this.val.length != 4) {
+          return uni.showToast({
+            title: '请填写验证码',
+            icon: 'none'
+          });
+        }
+        this.close()
+        this.$emit('confirm')
+        confirmCallBack()
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+  .popup-captcha {
+    background-color: #fff;
+    flex-direction: column;
+    width: 600rpx;
+    padding:10px 15px;
+    border-radius: 10px;
+  }
+  .popup-captcha .title {
+    text-align: center;
+    font-weight: 700;
+    margin: 5px 0;
+  }
+  .popup-captcha .button-box {
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 5px;
+  }
+  .popup-captcha .button-box .btn {
+    flex: 1;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+  }
+  .popup-captcha .button-box .cancel {
+    border: 1px solid #eee;
+    color: #666;
+  }
+  .confirm {
+    background-color: #0070ff;
+    color: #fff;
+    margin-left: 5px;
+  }
+</style>

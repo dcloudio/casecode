@@ -1,0 +1,346 @@
+<template>
+    <view>
+        <template v-if="isCertify">
+            <view class="list">
+                <view class="list__item">
+                    <view class="list__title">姓名</view>
+                    <view class="list__content">
+                        <text class="value">{{realnameInfo['realName']}}</text>
+                    </view>
+                </view>
+                <view class="list__item">
+                    <view class="list__title">身份证号码</view>
+                    <view class="list__content">
+                        <text class="value">{{realnameInfo['identity']}}</text>
+                    </view>
+                </view>
+            </view>
+        </template>
+        <template v-else>
+            <template v-if="verifyFail">
+                <view class="fail-tip-content">
+                    <view class="face-icon">
+                        <image src="@/uni_modules/uni-id-pages-x/static/face-verify-icon.png" class="face-icon-image"/>
+                    </view>
+                    <view class="error-title">
+                        <text class="text">{{verifyFailTitle}}</text>
+                    </view>
+                    <view class="error-description">
+                        <text class="text">{{verifyFailContent}}</text>
+                    </view>
+                    <button type="primary" @click="retry" v-if="verifyFailCode != 10013">重新开始验证</button>
+                    <button type="primary" @click="retry" v-else>返回</button>
+                    <view class="dev-tip" v-if="isDev">请在控制台查看详细错误（此提示仅在开发环境展示）</view>
+                </view>
+            </template>
+            <template v-else>
+                <uni-id-pages-x-input class="input" v-model=" realName as string" placeholder="姓名" :focus="true"
+                                      :maxlength="25"></uni-id-pages-x-input>
+                <uni-id-pages-x-input class="input" v-model="idCard as string" placeholder="身份证号码"
+                                      :maxlength="25"></uni-id-pages-x-input>
+                <uni-id-pages-x-agreements scope="realNameVerify" ref="agreements"
+                                           style="margin: 0 10px 10px;"></uni-id-pages-x-agreements>
+                <button type="primary" :disabled="!certifyIdNext" @click="getCertifyId" style="margin: 0 10px;">确定
+                </button>
+            </template>
+        </template>
+    </view>
+</template>
+
+<script lang="uts">
+    import {state, mutations} from '@/uni_modules/uni-id-pages-x/store.uts';
+    import checkIdCard from "@/uni_modules/uni-id-pages-x/lib/check-id-card.uts";
+
+    const uniIdCo = uniCloud.importObject('uni-id-co')
+    const tempFrvInfoKey = 'uni-id-pages-temp-frv'
+
+    export default {
+        data() {
+            return {
+                realName: '',
+                idCard: '',
+                certifyId: '',
+                verifyFail: false,
+                verifyFailCode: 0,
+                verifyFailTitle: '',
+                verifyFailContent: ''
+            };
+        },
+        computed: {
+            userInfo(): UTSJSONObject {
+                return state.userInfo
+            },
+            realnameInfo(): UTSJSONObject {
+                return this.userInfo.getJSON('realNameInfo') ?? {}
+            },
+            certifyIdNext(): boolean {
+                return this.realName !== '' && this.idCard !== '' && !state.pendingAgreements
+            },
+            isCertify(): boolean {
+                return this.realnameInfo.getNumber('authStatus') == 2
+            },
+            isDev(): boolean {
+                return process.env.NODE_ENV == 'development'
+            }
+        },
+        methods: {
+            async getCertifyId(): Promise<void> {
+                if (!this.certifyIdNext) return
+
+                if (!checkIdCard(this.idCard)) {
+                    uni.showToast({
+                        title: "身份证不合法",
+                        icon: "none"
+                    })
+                    return
+                }
+
+                const reg = new RegExp('^[\u4e00-\u9fa5]{1,10}(·?[\u4e00-\u9fa5]{1,10}){0,5}', 'g')
+
+                if (
+                    typeof this.realName !== 'string' ||
+                    this.realName.length < 2 ||
+                    !reg.test(this.realName)
+                ) {
+                    uni.showToast({
+                        title: "姓名只能是汉字",
+                        icon: "none"
+                    })
+                    return
+                }
+
+                uni.setStorage({
+                    key: tempFrvInfoKey,
+                    data: {
+                        realName: this.realName,
+                        idCard: this.idCard
+                    }
+                });
+
+                const metaInfo = uni.getFacialRecognitionMetaInfo()
+
+                const res: UTSJSONObject = await uniIdCo.getFrvCertifyId({
+                    realName: this.realName,
+                    idCard: this.idCard,
+                    metaInfo
+                })
+
+                if (res.getNumber('errCode') == 0) {
+                    return uni.showToast({
+                        title: res.getString('errMsg') as string,
+                        icon: "none"
+                    })
+                }
+
+                this.certifyId = res.getString('certifyId') as string
+
+                this.startFacialRecognitionVerify()
+            },
+            startFacialRecognitionVerify() {
+                uni.startFacialRecognitionVerify({
+                    certifyId: this.certifyId,
+                    progressBarColor: "#2979ff",
+                    success: () => {
+                        this.verifyFail = false
+                        this.getFrvAuthResult()
+                    },
+                    fail: (e: IFacialRecognitionVerifyError) => {
+                        let title = "验证失败"
+                        let content: string;
+
+                        console.log(
+                            `[frv-debug] certifyId auth error: certifyId -> ${this.certifyId}, error -> ${JSON.stringify(e)}`
+                        )
+
+                        switch (e.errCode) {
+                            case 10001:
+                                content = '认证ID为空'
+                                break
+                            case 10010:
+                                title = '刷脸异常'
+                                content = e.cause?.message ?? '错误代码: 10010'
+                                break
+                            case 10011:
+                                title = '验证中断'
+                                content = e.cause?.message ?? '错误代码: 10011'
+                                break
+                            case 10012:
+                                content = '网络异常'
+                                break
+                            case 10020:
+                                content = '设备设置时间异常'
+                                break
+                            case 10013:
+                                this.verifyFailCode = e.errCode
+                                this.verifyFailContent = e.cause?.message ?? '错误代码: 10013'
+                                this.getFrvAuthResult()
+
+                                console.log(
+                                    `[frv-debug] 刷脸失败, certifyId -> ${this.certifyId}, 如在开发环境请检查用户的姓名、身份证号与刷脸用户是否为同一用户。如遇到认证ID已使用请检查opendb-frv-logs表中certifyId状态`
+                                )
+                                return
+                            default:
+                                title = ''
+                                content = `验证未知错误 (${e.errCode})`
+                                break
+                        }
+                        this.verifyFail = true
+                        this.verifyFailCode = e.errCode
+                        this.verifyFailTitle = title
+                        this.verifyFailContent = content
+                    }
+                })
+            },
+            async getFrvAuthResult(): Promise<void> {
+                const uniIdCo = uniCloud.importObject('uni-id-co', {
+                    customUI: true
+                })
+                try {
+                    uni.showLoading({
+                        title: "验证中...",
+                        mask: false
+                    })
+                    const res: UTSJSONObject = await uniIdCo.getFrvAuthResult({
+                        certifyId: this.certifyId
+                    })
+
+                    if (this.verifyFailContent != '') {
+                        console.log(`[frv-debug] 客户端刷脸失败，由实人认证服务查询具体原因，原因：${this.verifyFailContent}`)
+                    }
+
+                    uni.showModal({
+                        content: "实名认证成功",
+                        showCancel: false,
+                        success: () => {
+                            mutations.updateUserInfo({
+                                realNameInfo: res
+                            })
+                            this.verifyFail = false
+                        }
+                    })
+
+                    uni.removeStorage({
+                        key: tempFrvInfoKey
+                    })
+                } catch (e) {
+                    const error = e as UniCloudError
+                    this.verifyFail = true
+                    this.verifyFailTitle = error.errMsg
+                    console.error(JSON.stringify(e))
+                }
+                uni.hideLoading()
+            },
+            retry() {
+                if (this.verifyFailCode != 10013) {
+                    this.getCertifyId()
+                } else {
+                    this.verifyFail = false
+                }
+            },
+        }
+    }
+</script>
+
+<style lang="scss">
+  @import url("/uni_modules/uni-id-pages-x/common/common.scss");
+
+  .list {
+    position: relative;
+    background-color: #fff;
+    margin-top: 15px;
+
+    &__item {
+      border-bottom: 1px solid #f5f5f5;
+      flex-direction: row;
+      align-items: center;
+      padding: 15px 15px;
+    }
+
+    &__title {
+      flex: 1;
+    }
+
+    &__text {
+      font-size: 14px;
+      color: #333;
+    }
+
+    &__content {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      .value {
+        color: #999;
+        font-size: 12px;
+      }
+
+      .unset {
+        color: #aaa;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .input {
+    background-color: #FFF;
+  }
+
+  .uni-label-pointer {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .item {
+    flex-direction: row;
+  }
+
+  .text {
+    line-height: 26px;
+  }
+
+  .agreements {
+    margin-bottom: 20px;
+  }
+
+  .fail-tip-content {
+    padding: 20px;
+  }
+
+  .face-icon {
+    width: 100px;
+    height: 100px;
+    margin: 50px auto 30px;
+  }
+
+  .face-icon-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .error-title {
+    .text {
+      font-size: 18px;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+
+  .error-description {
+    margin: 10px 0 20px;
+
+    .text {
+      font-size: 13px;
+      color: #999999;
+      text-align: center;
+    }
+  }
+
+  .dev-tip {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #999;
+    text-align: center;
+  }
+</style>

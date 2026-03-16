@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/app.css" />
+		<link rel="stylesheet" href="css/about.css" />
+		<style>
+			body,
+			.mui-content {
+				background-color: #fff;
+				/*efeff4*/
+				
+				margin: 0px;
+				padding: 15px 0px;
+			}
+			.article {
+				font-size: 14px;
+				text-indent: 2em;
+			}
+			#qrcode {
+				width: 280px;
+				margin: 5px auto;
+			}
+			.mui-btn,
+			.mui-btn:hover,
+			.mui-btn:active {
+				background-color: #4a82d1;
+				color: #fff;
+				border: solid 1px #4a82d1;
+				width: 165px;
+				margin-bottom: 10px;
+			}
+			.mui-btn-group {
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title kr-title"><span class="kr-logo">36Kr</span></h1>
+		</header>
+		<div class="container mui-content">
+			<article class="single-post-article">
+				<div class="content-wrapper-single">
+					<section class="article">
+						36氪官网为你提供创业资讯、科技新闻、投融资对接、股权投资等创业服务，致力成为创业者可以依赖的创业服务平台，36氪让创业更简单！
+					</section>
+					<img id="qrcode" src="img/qrcode.png" />
+					<section class="mui-btn-group">
+						<a id="share" class="mui-btn">分享</a>
+						<a id="shortcut" class="mui-btn">创建桌面快捷方式</a>
+					</section>
+				</div>
+			</article>
+		</div>
+		<script type="text/javascript" charset="UTF-8" src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="js/share.js"></script>
+		<script>
+			mui.init({
+				gestureConfig: {
+					longtap: true,
+				}
+			});
+			var qrcodeEl = document.getElementById("qrcode");
+			qrcodeEl.addEventListener('longtap', function() {
+				plus.nativeUI.actionSheet({
+					cancel: '取消',
+					buttons: [{
+						title: '保存到相册'
+					}]
+				}, function(e) {
+					var index = e.index;
+					if (e.index === 1) {
+						plus.gallery.save(qrcodeEl.src, function() {
+							mui.toast('保存成功');
+						}, function() {
+							mui.toast('保存失败，请重试！');
+						});
+					}
+				});
+			});
+			if (mui.os.plus && mui.os.android) {
+				var Intent = null,
+					main = null;
+				// H5 plus事件处理
+				mui.plusReady(function() {
+					Intent = plus.android.importClass("android.content.Intent");
+					main = plus.android.runtimeMainActivity();
+				});
+				document.getElementById("share").addEventListener('tap', function(event) {
+					event.stopPropagation();
+					share.open({
+						title: '致力成为创业者可以依赖的创业服务平台，36氪让创业更简单！（http://m3w.cn/s/H5EC86117?scene=share&__streamapp）',
+						content: '致力成为创业者可以依赖的创业服务平台，36氪让创业更简单！（http://m3w.cn/s/H5EC86117?scene=share&__streamapp）',
+						href: 'http://m3w.cn/s/H5EC86117?scene=share&__streamapp'
+					});
+					//					var intent = new Intent(Intent.ACTION_SEND);
+					//					intent.setType("text/plain");
+					//					intent.putExtra(Intent.EXTRA_TEXT, '致力成为创业者可以依赖的创业服务平台，36氪让创业更简单！（http://m3w.cn/s/H5EC86117?scene=share&__streamapp）');
+					//					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					//					main.startActivity(Intent.createChooser(intent, "系统分享"));
+				});
+				if (mui.os.stream) {
+					var blacklist = ['QiKU', 'smartisan'];
+					document.getElementById("shortcut").addEventListener('tap', function() {
+						//创建快捷方式
+						if (~blacklist.indexOf(plus.device.vendor)) {
+							mui.toast('此手机上不支持创建桌面快捷方式');
+							return false;
+						}
+						if (mui.isFunction(plus.navigator.createShortcut)) {
+							plus.navigator.createShortcut({
+								name: "36氪资讯",
+								icon: "img/icon.png"
+							});
+						}
+					});
+				}
+			}
+		</script>
+	</body>
+
+</html>

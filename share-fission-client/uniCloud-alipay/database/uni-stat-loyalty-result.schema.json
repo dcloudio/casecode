@@ -1,0 +1,84 @@
+// 用户忠诚度统计表
+{
+	"bsonType": "object",
+	"description": "存储汇总的设备/用户的粘性数据",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_LOYALTY_RESULT' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "应用ID"
+		},
+		"platform_id": {
+			"bsonType": "string",
+			"description": "应用平台ID，对应uni-stat-app-platforms._id",
+			"foreignKey": "uni-stat-app-platforms._id"
+		},
+		"channel_id": {
+			"bsonType": "string",
+			"description": "渠道\/场景值ID，对应uni-stat-app-channels._id",
+			"foreignKey": "uni-stat-app-channels._id"
+		},
+		"version_id": {
+			"bsonType": "string",
+			"description": "应用版本ID，对应opendb-app-versions._id",
+			"foreignKey": "opendb-app-versions._id"
+		},
+		"visit_depth_data": {
+			"bsonType": "object",
+			"description": "访问深度数据",
+			"properties": {
+				"visit_users": {
+					"bsonType": "object",
+					"description": "访问用户数"
+				},
+				"visit_devices": {
+					"bsonType": "object",
+					"description": "访问设备数"
+				},
+				"visit_times": {
+					"bsonType": "object",
+					"description": "访问次数"
+				}
+			}
+		},
+		"duration_data": {
+			"bsonType": "object",
+			"description": "访问时长数据",
+			"properties": {
+				"visit_users": {
+					"bsonType": "object",
+					"description": "访问用户数"
+				},
+				"visit_devices": {
+					"bsonType": "object",
+					"description": "访问设备数"
+				},
+				"visit_times": {
+					"bsonType": "object",
+					"description": "访问次数"
+				}
+			}
+		},
+		"stat_date": {
+			"bsonType": "int",
+			"description": "统计日期，格式yyyymmdd，例:20211201"
+		},
+		"start_time": {
+			"bsonType": "timestamp",
+			"description": "开始时间"
+		},
+		"end_time": {
+			"bsonType": "timestamp",
+			"description": "结束时间"
+		}
+	}
+}

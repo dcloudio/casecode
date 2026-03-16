@@ -1,0 +1,29 @@
+[{
+		"IndexName": "appid",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "appid", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "name",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "name", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "platform",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "platform", "Direction": "1", "Type": "array" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "type",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "type", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "uni_platform",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "uni_platform", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "create_env",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "create_env", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "stable_publish",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "stable_publish", "Direction": "1", "Type": "bool" }], "MgoIsUnique": false }
+	}
+]

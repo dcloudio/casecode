@@ -1,0 +1,103 @@
+[{
+		"IndexName": "username",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "username", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "mobile",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "mobile", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "email",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "email", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "wx_openid.app",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "wx_openid.app", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "wx_openid.mp",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "wx_openid.mp", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "wx_unionid",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "wx_unionid", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "ali_openid",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "ali_openid", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "my_invite_code",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "my_invite_code", "Direction": "1" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "inviter_uid",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "inviter_uid", "Direction": "1", "Type": "array" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "role",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "role", "Direction": "1", "Type": "array" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "tags",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "tags", "Direction": "1", "Type": "array" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "register_date",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "register_date", "Direction": "-1", "Type": "long" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "last_login_date",
+		"MgoKeySchema": { "MgoIndexKeys": [{ "Name": "last_login_date", "Direction": "-1", "Type": "long" }], "MgoIsUnique": false }
+	},
+	{
+		"IndexName": "wx_openid.h5",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{
+				"Name": "wx_openid.h5",
+				"Direction": "1"
+			}],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "wx_openid.web",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{
+				"Name": "wx_openid.web",
+				"Direction": "1"
+			}],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "apple_openid",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{
+				"Name": "apple_openid",
+				"Direction": "1"
+			}],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "register_env_app_version_",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{
+				"Name": "register_env.appVersion",
+				"Direction": "1"
+			}],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "register_env_channel_",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{
+				"Name": "register_env.channel",
+				"Direction": "1"
+			}],
+			"MgoIsUnique": false
+		}
+	}
+]

@@ -1,0 +1,59 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "固定值：main"
+		},
+		"ad_score_base": {
+			"bsonType": "int",
+			"description": "单次广告基础积分（非实时模式）",
+			"defaultValue": 30
+		},
+		"ad_score_rate": {
+			"bsonType": "int",
+			"description": "广告收益转积分比例（实时模式，1元=1000积分）",
+			"defaultValue": 1000
+		},
+		"ad_score_self_rate": {
+			"bsonType": "number",
+			"description": "自己获得积分比例（50%）",
+			"defaultValue": 0.5
+		},
+		"ad_score_l1_rate": {
+			"bsonType": "number",
+			"description": "一级上线获得积分比例（25%）",
+			"defaultValue": 0.25
+		},
+		"ad_score_l2_rate": {
+			"bsonType": "number",
+			"description": "二级上线获得积分比例（25%）",
+			"defaultValue": 0.25
+		},
+		"ad_daily_limit": {
+			"bsonType": "int",
+			"description": "每日广告观看次数限制",
+			"defaultValue": 10
+		},
+		"withdrawal_fee_rate": {
+			"bsonType": "number",
+			"description": "提现手续费比例（20%）",
+			"defaultValue": 0.2
+		},
+		"withdrawal_min_score": {
+			"bsonType": "int",
+			"description": "最低提现积分",
+			"defaultValue": 1000
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间"
+		}
+	}
+}

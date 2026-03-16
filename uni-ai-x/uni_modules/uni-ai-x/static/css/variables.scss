@@ -1,0 +1,43 @@
+// 浅色主题类
+.ui-theme-light {
+  --bg-primary: #ffffff;        // 主背景色，用于页面主体区域
+  --bg-secondary: #f5f5f5;      // 次要背景色，用于卡片、面板等容器
+  --bg-tertiary: #efefef;       // 第三级背景色，用于分割线、hover状态等
+  --text-primary: #333333;      // 主要文本颜色，用于标题、重要内容
+  --text-secondary: #666666;    // 次要文本颜色，用于正文、描述文字
+  --text-tertiary: #999999;     // 第三级文本颜色，用于辅助信息、占位符
+  --text-disabled: #cccccc;     // 禁用状态文本颜色
+  --border-primary: #dddddd;    // 主要边框颜色，用于重要分割线
+  --border-secondary: #eeeeee;  // 次要边框颜色，用于轻微分割
+  --border-color: #e0e0e0;      // 通用边框颜色
+  --accent-primary: #0066cc;    // 主要强调色，用于按钮、链接等交互元素
+  --accent-secondary: #4d94ff;  // 次要强调色，用于hover状态等
+  --accent-color: #007aff;      // 通用强调色
+  --error: #ff4d4f;             // 错误状态颜色，用于错误提示、警告
+  --warning: #faad14;           // 警告状态颜色，用于警告提示
+  --success: #52c41a;           // 成功状态颜色，用于成功提示
+  --shadow: rgba(0, 0, 0, 0.3); // 阴影颜色，用于卡片阴影效果
+  --shadow-color: rgba(0,0,0,0.1); // 阴影颜色别名
+}
+
+// 深色主题类
+.ui-theme-dark {
+  --bg-primary: #25282c;        // 主背景色，深色主题下的页面主体区域
+  --bg-secondary: #29292d;      // 次要背景色，深色主题下的卡片、面板等
+  --bg-tertiary: #3c3c3c;       // 第三级背景色，深色主题下的分割线、hover状态
+  --text-primary: #ffffff;      // 主要文本颜色，深色主题下的标题、重要内容
+  --text-secondary: #e0e0e0;    // 次要文本颜色，深色主题下的正文、描述文字
+  --text-tertiary: #b0b0b0;     // 第三级文本颜色，深色主题下的辅助信息
+  --text-disabled: #666666;     // 禁用状态文本颜色，深色主题
+  --border-primary: #4a4a4a;    // 主要边框颜色，深色主题下的重要分割线
+  --border-secondary: #555555;  // 次要边框颜色，深色主题下的轻微分割
+  --border-color: #404040;      // 通用边框颜色，深色主题
+  --accent-primary: #4d94ff;    // 主要强调色，深色主题下的按钮、链接等
+  --accent-secondary: #6ba4ff;  // 次要强调色，深色主题下的hover状态
+  --accent-color: #4a9eff;      // 通用强调色，深色主题
+  --error: #ff7875;             // 错误状态颜色，深色主题下的错误提示
+  --warning: #ffc53d;           // 警告状态颜色，深色主题下的警告提示
+  --success: #73d13d;           // 成功状态颜色，深色主题下的成功提示
+  --shadow: rgba(0, 0, 0, 0.3); // 阴影颜色，深色主题下的阴影效果
+  --shadow-color: rgba(0,0,0,0.3); // 阴影颜色别名，深色主题
+}

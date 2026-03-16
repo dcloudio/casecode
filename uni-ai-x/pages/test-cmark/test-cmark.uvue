@@ -1,0 +1,37 @@
+<template>
+  无界面测试例，一编译就运行
+</template>
+
+<script lang="uts" setup>
+	import { onLoad } from '@dcloudio/uni-app'
+	import { md2json, initializeCmarkGfm } from '@/uni_modules/uni-cmark'
+
+	onLoad(async () => {
+		// 应用启动时初始化 WebAssembly 模块
+		await initializeCmarkGfm()
+		const testMarkdown : string = `# 一个井号的标题(H1)
+## 两个井号的标题(H2)
+### 三个井号的标题
+#### 四个井号的标题
+
+| 姓名 | 年龄 | 职业 |
+|------|------|------|
+| 张三 | 25  | 工程师 |
+| 李四 | 30  | 设计师 |
+
+- 列表
+- 列表项 1
+- 列表项 2
+  - 嵌套列表项
+  - 嵌套列表项 2
+`
+
+		// 现在 md2json 是同步方法
+		const result = md2json(testMarkdown)
+		console.log('转换结果:', result)
+		console.log('转换结果:', JSON.stringify(result, null, 2))
+	})
+</script>
+
+<style>
+</style>

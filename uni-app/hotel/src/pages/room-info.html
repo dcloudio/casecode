@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>房间信息</title>
+	<link href="../mui/css/mui.min.css" rel="stylesheet" />
+	<link href="../styles/default.css" rel="stylesheet" />
+	<style>
+		.hotel-btn-booking {
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			background: #ff9a14;
+			color: #fff;
+			font-size: 14px;
+			padding: 5px 20px;
+			border-radius: 3px;
+		}
+		
+		.hotel-btn-booking:active {
+			color: #fff;
+		}
+		
+		.hotel-color-orange {
+			position: absolute;
+			left: 10px;
+			font-weight: bold;
+			top: 14px;
+			font-size: 16px;
+		}
+		
+		.mui-content {
+			padding-bottom: 70px;
+		}
+		
+		#slider {
+			height: 200px;
+			background: #fff;
+		}
+		
+		#slider:after {
+			position: absolute;
+			bottom: 0px;
+			right: 0px;
+			left: 0px;
+			height: 1px;
+			content: '';
+			background-color: #c8c7cc;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5);
+		}
+		
+		.hotel-right-padded {
+			position: absolute;
+			right: 20px;
+		}
+		
+		.mui-table-view {
+			margin-top: 15px
+		}
+	</style>
+</head>
+
+<body>
+	<header class="mui-bar mui-bar-nav hotel-header">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">房间信息</h1>
+	</header>
+	<div class="mui-content">
+		<div id="slider" class="mui-slider">
+			<div class="mui-slider-group">
+				<!-- 第一张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="../styles/images/hotel-loading.png">
+					</a>
+				</div>
+				<!-- 第二张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="../styles/images/hotel-loading.png">
+					</a>
+				</div>
+				<!-- 第三张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="../styles/images/hotel-loading.png">
+					</a>
+				</div>
+				<!-- 第四张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="../styles/images/hotel-loading.png">
+					</a>
+				</div>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+		<ul class="mui-table-view">
+			<li class="mui-input-row mui-table-view-cell">
+				<a>
+						面积
+						<span class="hotel-right-padded">30 ㎡</span>
+					</a>
+			</li>
+			<li class="mui-input-row mui-table-view-cell">
+				<a>
+						可住
+						<span class="hotel-right-padded">2 人</span>
+					</a>
+			</li>
+			<li class="mui-input-row mui-table-view-cell">
+				<a>
+						加床
+						<span class="hotel-right-padded">不可加床</span>
+					</a>
+			</li>
+			<li class="mui-input-row mui-table-view-cell">
+				<a>
+						楼层
+						<span class="hotel-right-padded">1-5 层</span>
+					</a>
+			</li>
+			<li class="mui-input-row mui-table-view-cell">
+				<a>
+						床宽
+						<span class="hotel-right-padded">大床 2.00 米</span>
+					</a>
+			</li>
+			<li class="mui-input-row mui-table-view-cell">
+				<a>
+						宽带
+						<span class="hotel-right-padded">全部房间Wi-Fi、有线宽带免费</span>
+					</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell mui-media">
+				<div class="mui-media-body">
+					此为向酒店或代理商申请的特殊价格，价格可能变动且不保证预订成功；提交订单后会先操作扣款。特殊需求皆不能保证满足。
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="hotel-footer">
+		<span class="hotel-color-orange">￥315</span>
+		<a class="hotel-btn-booking" data-url='./booking.html'>预定</a>
+	</div>
+	<script src="../mui/js/mui.min.js"></script>
+	<script src="../libs/ems.js" data-main='./room-info.js'></script>
+</body>
+
+</html>

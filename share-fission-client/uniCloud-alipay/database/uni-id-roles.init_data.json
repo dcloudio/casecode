@@ -1,0 +1,9 @@
+[
+  {
+    "role_id": "admin",
+    "role_name": "超级管理员",
+    "permission": [],
+    "comment": "超级管理员拥有所有权限",
+    "create_date": 0
+  }
+]

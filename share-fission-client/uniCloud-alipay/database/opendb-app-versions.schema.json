@@ -1,0 +1,182 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [
+		"appid",
+		"uni_platform",
+		"version",
+		"type",
+		"create_env"
+	],
+	"permission": {
+		"read": "'READ_OPENDB_APP_VERSIONS' in auth.permission",
+		"create": "'CREATE_OPENDB_APP_VERSIONS' in auth.permission",
+		"update": "'UPDATE_OPENDB_APP_VERSIONS' in auth.permission",
+		"delete": "'DELETE_OPENDB_APP_VERSIONS' in auth.permission"
+	},
+	"properties": {
+		"_id": {
+			"description": "记录id,自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"trim": "both",
+			"description": "应用的AppID",
+			"label": "AppID",
+			"componentForEdit": {
+				"name": "uni-easyinput",
+				"props": {
+					"disabled": true
+				}
+			}
+		},
+		"name": {
+			"bsonType": "string",
+			"trim": "both",
+			"description": "应用名称",
+			"label": "应用名称",
+			"componentForEdit": {
+				"name": "uni-easyinput",
+				"props": {
+					"disabled": true
+				}
+			}
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "更新标题",
+			"label": "更新标题"
+		},
+		"contents": {
+			"bsonType": "string",
+			"description": "更新内容",
+			"label": "更新内容",
+			"componentForEdit": {
+				"name": "textarea"
+			},
+			"componentForShow": {
+				"name": "textarea",
+				"props": {
+					"disabled": true
+				}
+			}
+		},
+		"platform": {
+			"bsonType": "array",
+			"enum": [
+				{
+					"value": "Android",
+					"text": "安卓"
+				},
+				{
+					"value": "iOS",
+					"text": "苹果"
+				},
+				{
+					"value": "Harmony",
+					"text": "鸿蒙 Next"
+				}
+			],
+			"description": "更新平台，Android || iOS || Harmony || [Android, iOS, Harmony]",
+			"label": "平台"
+		},
+		"type": {
+			"bsonType": "string",
+			"enum": [
+				{
+					"value": "native_app",
+					"text": "原生App安装包"
+				},
+				{
+					"value": "wgt",
+					"text": "Wgt资源包"
+				}
+			],
+			"description": "安装包类型，native_app || wgt",
+			"label": "安装包类型"
+		},
+		"version": {
+			"bsonType": "string",
+			"description": "当前包版本号，必须大于当前线上发行版本号",
+			"label": "版本号"
+		},
+		"min_uni_version": {
+			"bsonType": "string",
+			"description": "原生App最低版本",
+			"label": "原生App最低版本"
+		},
+		"url": {
+			"bsonType": "string",
+			"description": "可下载或跳转的链接",
+			"label": "链接"
+		},
+		"stable_publish": {
+			"bsonType": "bool",
+			"description": "是否上线发行",
+			"label": "上线发行"
+		},
+		"is_silently": {
+			"bsonType": "bool",
+			"description": "是否静默更新",
+			"label": "静默更新",
+			"defaultValue": false
+		},
+		"is_mandatory": {
+			"bsonType": "bool",
+			"description": "是否强制更新",
+			"label": "强制更新",
+			"defaultValue": false
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"label": "上传时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			},
+			"componentForEdit": {
+				"name": "uni-dateformat"
+			}
+		},
+		"uni_platform": {
+			"bsonType": "string",
+			"description": "uni平台信息，如：mp-weixin/web/ios/android",
+			"label": "uni 平台"
+		},
+		"create_env": {
+			"bsonType": "string",
+			"description": "创建来源，uni-stat：uni统计自动创建，upgrade-center：升级中心管理员创建"
+		},
+		"store_list": {
+			"bsonType": "array",
+			"description": "发布的应用市场",
+			"label": "应用市场",
+			"properties": {
+				"id": {
+					"bsonType": "string",
+					"description": "应用id，自动生成",
+					"label": "id"
+				},
+				"name": {
+					"bsonType": "string",
+					"description": "应用名称",
+					"label": "应用名称"
+				},
+				"scheme": {
+					"bsonType": "string",
+					"description": "应用 scheme",
+					"label": "应用 scheme"
+				},
+				"enable": {
+					"bsonType": "bool",
+					"description": "是否启用"
+				},
+				"priority": {
+					"bsonType": "int",
+					"description": "按照从大到小排序",
+					"label": "优先级"
+				}
+			}
+		}
+	},
+	"version": "0.0.1"
+}

@@ -1,0 +1,33 @@
+[
+	{
+		"IndexName": "user_id_date",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "user_id", "Direction": "1" },
+				{ "Name": "date", "Direction": "1", "Type": "long" }
+			],
+			"MgoIsUnique": true
+		}
+	},
+	{
+		"IndexName": "user_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "user_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "date",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "date", "Direction": "-1", "Type": "long" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "score",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "score", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	}
+]

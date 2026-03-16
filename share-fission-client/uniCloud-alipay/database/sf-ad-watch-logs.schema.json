@@ -1,0 +1,50 @@
+{
+	"bsonType": "object",
+	"required": ["user_id", "watch_time", "score", "is_realtime"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "用户ID"
+		},
+		"watch_time": {
+			"bsonType": "timestamp",
+			"description": "观看日期（时间戳）"
+		},
+		"ad_type": {
+			"bsonType": "string",
+			"description": "广告类型"
+		},
+		"ad_id": {
+			"bsonType": "string",
+			"description": "广告ID"
+		},
+		"score": {
+			"bsonType": "int",
+			"description": "获得积分"
+		},
+		"revenue": {
+			"bsonType": "number",
+			"description": "广告收益（元，实时模式）"
+		},
+		"is_realtime": {
+			"bsonType": "bool",
+			"description": "是否实时模式"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

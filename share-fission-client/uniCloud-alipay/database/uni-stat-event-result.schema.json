@@ -1,0 +1,82 @@
+// 事件统计结果表
+{
+	"bsonType": "object",
+	"description": "存储汇总的事件日志的数据",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_EVENT_RESULT' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "应用ID"
+		},
+		"platform_id": {
+			"bsonType": "string",
+			"description": "应用平台ID，对应uni-stat-app-platforms._id",
+			"foreignKey": "uni-stat-app-platforms._id"
+		},
+		"channel_id": {
+			"bsonType": "string",
+			"description": "渠道\/场景值ID，对应uni-stat-app-channels._id",
+			"foreignKey": "uni-stat-app-channels._id"
+		},
+		"version_id": {
+			"bsonType": "string",
+			"description": "应用版本ID，对应opendb-app-versions._id",
+			"foreignKey": "opendb-app-versions._id"
+		},
+		"event_key": {
+			"bsonType": "string",
+			"description": "事件key，对应uni-stat-events.event_key",
+			"foreignKey": "uni-stat-events.event_key"
+		},
+		"event_count": {
+			"bsonType": "int",
+			"description": "触发次数"
+		},
+		"device_count": {
+			"bsonType": "int",
+			"description": "触发该事件的设备数"
+		},
+		"user_count": {
+			"bsonType": "int",
+			"description": "触发该事件的用户数"
+		},
+		"dimension": {
+			"bsonType": "string",
+			"description": "统计范围 day:按天统计，hour:按小时统计",
+			"enum": [{
+				"text": "月",
+				"value": "month"
+			}, {
+				"text": "周",
+				"value": "week"
+			}, {
+				"text": "天",
+				"value": "day"
+			}, {
+				"text": "小时",
+				"value": "hour"
+			}]
+		},
+		"stat_date": {
+			"bsonType": "int",
+			"description": "统计日期，格式yyyymmdd，例:20211201"
+		},
+		"start_time": {
+			"bsonType": "timestamp",
+			"description": "开始时间"
+		},
+		"end_time": {
+			"bsonType": "timestamp",
+			"description": "结束时间"
+		}
+	}
+}

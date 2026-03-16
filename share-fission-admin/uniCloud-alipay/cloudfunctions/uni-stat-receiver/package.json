@@ -1,0 +1,20 @@
+{
+    "name": "uni-stat-receiver",
+    "dependencies": {
+        "uni-stat": "file:..\/common\/uni-stat",
+        "uni-id-common": "file:..\/..\/..\/uni_modules\/uni-id-common\/uniCloud\/cloudfunctions\/common\/uni-id-common"
+    },
+    "cloudfunction-config": {
+        "concurrency": 1,
+        "memorySize": 128,
+        "timeout": 60,
+        "triggers": []
+    },
+    "extensions": {
+        "uni-cloud-jql": {}
+    },
+    "origin-plugin-dev-name": "uni-template-admin",
+    "origin-plugin-version": "2.5.13",
+    "plugin-dev-name": "uni-template-admin",
+    "plugin-version": "2.5.13"
+}

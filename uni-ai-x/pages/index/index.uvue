@@ -1,0 +1,29 @@
+<template>
+	<view>
+		<button @click="openUniAI">打开 uni-ai-x</button>
+	</view>
+</template>
+
+<script lang="uts" setup>
+	const title = ref<string>('Hello')
+	
+	const openUniAI = () => {
+		uni.navigateTo({
+			url: '/uni_modules/uni-ai-x/pages/index/index'
+		})
+	}
+</script>
+
+<style>
+	.logo {
+		height: 100px;
+		width: 100px;
+		margin: 100px auto 25px auto;
+	}
+
+	.title {
+		font-size: 18px;
+		color: #8f8f94;
+    text-align: center;
+	}
+</style>

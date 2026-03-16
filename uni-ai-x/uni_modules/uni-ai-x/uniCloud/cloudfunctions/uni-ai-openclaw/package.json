@@ -1,0 +1,8 @@
+{
+  "name": "uni-ai-openclaw",
+  "dependencies": {},
+  "extensions": {},
+	"cloudfunction-config": {
+		"path": "/openclaw"
+	}
+}

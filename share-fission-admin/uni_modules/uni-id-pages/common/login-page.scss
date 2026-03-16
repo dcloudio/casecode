@@ -1,0 +1,126 @@
+// 隐藏 edge 浏览器的密码查看按钮
+
+/* #ifdef H5 */
+.input-box ::v-deep{
+  .uni-input-input[type="password"] {
+    &::-ms-reveal {
+      display: none;
+    }
+  }
+}
+/* #endif */
+
+.uni-content {
+  padding: 0 60rpx;
+}
+
+.login-logo {
+	display: none;
+}
+
+/* #ifndef APP-NVUE */
+@media screen and (min-width: 690px) {
+  .uni-content {
+	/* #ifndef H5 */
+	padding: 0;
+	max-width: 300px;
+	margin-left: calc(50% - 200px);
+	/* #endif */
+	/* #ifdef H5 */
+	margin: 0 auto;
+	position: relative;
+	top: 100px;
+	padding: 30px 40px 80px 40px;
+	max-width: 450px;
+	max-height: 450px;
+	border-radius: 10px;
+	box-shadow: 0 0 20px #efefef;
+	background-color: #FFF;
+	/* #endif */
+  }
+  /* #ifdef H5 */
+  .login-logo {
+  	display: flex;
+  	justify-content: center;
+  }
+
+  .login-logo image {
+	width: 60px;
+  	height: 60px;
+  }
+
+  .register-back{
+	  display: none;
+  }
+
+  uni-button{
+	  padding-bottom: 1px;
+  }
+  
+  /* #endif */
+}
+
+.uni-content view {
+  box-sizing: border-box;
+}
+/* #endif */
+
+
+
+.title {
+  /* #ifndef APP-NVUE */
+  display: flex;
+  /* #endif */
+  padding: 18px 0;
+  font-weight: 800;
+  flex-direction: column;
+}
+
+.tip {
+  /* #ifndef APP-NVUE */
+  display: flex;
+  /* #endif */
+  color: #BDBDC0;
+  font-size: 11px;
+  margin: 6px 0;
+}
+
+
+/* #ifndef APP-NVUE */
+// 解决小程序端开启虚拟节点virtualHost引起的 class = input-box丢失的问题 [详情参考](https://uniapp.dcloud.net.cn/matter.html#%E5%90%84%E5%AE%B6%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6%E4%B8%8D%E5%90%8C-%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8%E7%9A%84%E5%B9%B3%E5%8F%B0%E5%85%BC%E5%AE%B9%E9%97%AE%E9%A2%98)
+.uni-content ::v-deep .uni-easyinput__content,
+/* #endif */
+
+.input-box {
+  height: 44px;
+  background-color: #F8F8F8 !important;
+  border-radius: 0;
+  font-size: 14px;
+  /* #ifndef APP-NVUE */
+  display: flex;
+  /* #endif */
+  flex: 1;
+}
+
+.link {
+  color: #04498c;
+  cursor: pointer;
+}
+
+.uni-content ::v-deep .uni-forms-item__inner {
+  padding-bottom: 8px;
+}
+
+.uni-btn {
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	margin: 15px 0 10px 0;
+	color: #FFF !important;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+.uni-body.uni_modules-uni-id-pages-pages-login-login-withoutpwd{
+	height: auto !important;
+}

@@ -1,0 +1,23 @@
+yarn.lock
+.DS_Store
+.hbuilderx/
+.vite/
+uni_modules.config.json
+.DS_Store
+node_modules
+/unpackage/
+uniCloud-alipay/database/newQuery.jql
+package-lock.json
+*.yaml
+# AI 代码评审配置需纳入版本管理
+!code-review/configs/code-review.yaml
+cementing-debug.log
+*.log
+uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-ai-x/config.json
+logger-server
+logs
+/uni_modules/uni-ai-x/static/app-harmony/html/
+!*/.gitkeep
+platformConfig.json
+package.json
+!/uni_modules/uni-ai-x/uniCloud/cloudfunctions/uni-ai-openclaw/package.json

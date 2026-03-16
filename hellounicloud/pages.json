@@ -1,0 +1,372 @@
+{
+  "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/cloudFunction/cloudFunction",
+      "style": {
+        "navigationBarTitleText": "云函数",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/cloudObject/cloudObject",
+      "style": {
+        "navigationBarTitleText": "云对象",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/secure-network/cloud-function",
+      "style": {
+        "navigationBarTitleText": "安全网络 - 云函数",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/secure-network/cloud-object",
+      "style": {
+        "navigationBarTitleText": "安全网络 - 云对象",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/test/test",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/clientDB/unicloud-db-demo/unicloud-db-demo",
+      "style": {
+        "navigationBarTitleText": "unicloud-db demo",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/clientDB/demo/demo",
+      "style": {
+        "navigationBarTitleText": "留言板",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/clientDB/permission-table-simple/permission-table-simple",
+      "style": {
+        "navigationBarTitleText": "表级-简单权限控制",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/clientDB/permission-table-compound/permission-table-compound",
+      "style": {
+        "navigationBarTitleText": "表级-复杂权限控制",
+        "enablePullDownRefresh": false
+      }
+
+    },
+    {
+      "path": "pages/clientDB/clientDB",
+      "style": {
+        "navigationBarTitleText": "前端操作数据库",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/user-info/add",
+      "style": {
+        "navigationBarTitleText": "新增"
+      }
+    }, {
+      "path": "pages/user-info/edit",
+      "style": {
+        "navigationBarTitleText": "修改"
+      }
+    }, {
+      "path": "pages/user-info/list",
+      "style": {
+        "navigationBarTitleText": "列表"
+      }
+    }, {
+      "path": "pages/user-info/detail",
+      "style": {
+        "navigationBarTitleText": "详情"
+      }
+    },
+    {
+      "path": "pages/storage/storage",
+      "style": {
+        "navigationBarTitleText": "云存储",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/storage/space-storage",
+      "style": {
+        "navigationBarTitleText": "空间内置云存储",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/storage/ext-storage-qiniu",
+      "style": {
+        "navigationBarTitleText": "扩展存储-七牛云",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/schema2code/schema2code",
+      "style": {
+        "navigationBarTitleText": "schema2code",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/clientDB/permission/permission",
+      "style": {
+        "navigationBarTitleText": "角色权限",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/clientDB/permission-demo/permission-demo",
+      "style": {
+        "navigationBarTitleText": "角色权限",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/clientDB/permission-demo/readme",
+      "style": {
+        "navigationBarTitleText": "角色权限",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/clientDB/permission-field-simple/permission-field-simple",
+      "style": {
+        "navigationBarTitleText": "简单-字段级权限控制",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/clientDB/clientDB-api/clientDB-api",
+      "style": {
+        "navigationBarTitleText": "前端操作数据库的API",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/clientDB/validate/validate",
+      "style": {
+        "navigationBarTitleText": "字段值域验证",
+        "enablePullDownRefresh": false
+      }
+
+    }, {
+      "path": "pages/validate-demo/add",
+      "style": {
+        "navigationBarTitleText": "新增"
+      }
+    }, {
+      "path": "pages/validate-demo/edit",
+      "style": {
+        "navigationBarTitleText": "修改"
+      }
+    }, {
+      "path": "pages/validate-demo/list",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    }, {
+      "path": "pages/validate-demo/detail",
+      "style": {}
+    }, {
+      "path": "pages/webview/webview",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+
+    },
+    {
+      "path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
+      "style": {
+        "disableScroll": true,
+        "app-plus": {
+          "backgroundColorTop": "transparent",
+          "background": "transparent",
+          "titleNView": false,
+          "scrollIndicator": false,
+          "popGesture": "none",
+          "animationType": "fade-in",
+          "animationDuration": 200
+
+        }
+      }
+    }, {
+      "path": "pages/cloudFunction/redis/redis",
+      "style": {
+        "navigationBarTitleText": "扩展能力Redis",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "uni_modules/uni-upgrade-center/pages/version/list",
+      "style": {
+        "navigationBarTitleText": "版本列表"
+      }
+    }, {
+      "path": "uni_modules/uni-upgrade-center/pages/version/add",
+      "style": {
+        "navigationBarTitleText": "新版发布"
+      }
+    }, {
+      "path": "uni_modules/uni-upgrade-center/pages/version/detail",
+      "style": {
+        "navigationBarTitleText": "版本信息查看"
+      }
+    }
+,{
+    "path": "uni_modules/uni-id-pages/pages/register/register",
+    "style": {
+        "navigationBarTitleText": "注册"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
+    "style": {
+        "navigationBarTitleText": "登录"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/login/login-withpwd",
+    "style": {
+        "navigationBarTitleText": "账号密码登录"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/login/login-smscode",
+    "style": {
+        "navigationBarTitleText": "手机验证码登录"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
+    "style": {
+        "navigationBarTitleText": "个人资料"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
+    "style": {
+        "navigationBarTitleText": "绑定手机号码"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
+    "style": {
+        "navigationBarTitleText": ""
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/register/register-by-email",
+    "style": {
+        "navigationBarTitleText": "邮箱验证码注册"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/retrieve/retrieve",
+    "style": {
+        "navigationBarTitleText": "重置密码"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/retrieve/retrieve-by-email",
+    "style": {
+        "navigationBarTitleText": "通过邮箱重置密码"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/common/webview/webview",
+    "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": ""
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/userinfo/change_pwd/change_pwd",
+    "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "修改密码"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/register/register-admin",
+    "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "注册管理员账号"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd",
+    "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "设置密码"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate",
+    "style": {
+        "navigationBarTitleText": "注销账号"
+    }
+}
+,{
+    "path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
+    "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "实名认证"
+    }
+}
+],
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#1296db",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [{
+        "pagePath": "pages/cloudFunction/cloudFunction",
+        "iconPath": "static/tabbar/fn.png",
+        "selectedIconPath": "static/tabbar/fn1.png",
+        "text": "云函数"
+      },
+      {
+        "pagePath": "pages/cloudObject/cloudObject",
+        "iconPath": "static/tabbar/obj.png",
+        "selectedIconPath": "static/tabbar/obj1.png",
+        "text": "云对象"
+      },
+      {
+        "pagePath": "pages/storage/storage",
+        "iconPath": "static/tabbar/storage.png",
+        "selectedIconPath": "static/tabbar/storage1.png",
+        "text": "云存储"
+      },
+      {
+        "pagePath": "pages/clientDB/clientDB",
+        "iconPath": "static/tabbar/yun.png",
+        "selectedIconPath": "static/tabbar/yun1.png",
+        "text": "clientDB"
+      }, {
+        "pagePath": "pages/schema2code/schema2code",
+        "iconPath": "/static/tabbar/st-code.png",
+        "selectedIconPath": "static/tabbar/st-code1.png",
+        "text": "schema2code"
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  }
+}

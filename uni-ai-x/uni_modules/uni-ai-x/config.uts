@@ -1,0 +1,170 @@
+import {reactive} from 'vue';
+import {LLMModel, Provider, DefaultLLM, LLmTokenInfo, Userinfo} from '@/uni_modules/uni-ai-x/types.uts';
+// 1. 定义左侧菜单区域下方的用户头像信息
+export const currentUser: Userinfo = reactive<Userinfo>({})
+// 这里以uni-id的用户信息绑定为例，你自己的系统如果不是基于 unicloud 的，请参考此方法修改
+// import {watch} from 'vue';
+// 导入 uni-id 中的用户信息
+// import {state as uniIdState} from '@/uni_modules/uni-id-pages-x/store.uts';
+// 监听用户信息变化，更新 currentUser 对象
+// watch((): UTSJSONObject => uniIdState.userInfo,(userInfo: UTSJSONObject)=>{
+// 	currentUser._id = userInfo.getString('_id')
+// 	currentUser.nickname = userInfo.getString('nickname')
+// 	// 根据 file_id 获取文件的 url
+// 	const avatarFileUrl = userInfo.getString('avatar_file.url')
+// 	if (avatarFileUrl != null) {
+// 		uniCloud.getTempFileURL({fileList: [avatarFileUrl]}).then((res) => {
+// 			currentUser.avatar_file = {url: res.fileList[0].tempFileURL}
+// 		})
+// 	} else {
+// 		currentUser.avatar_file = null
+// 	}
+// }, {deep: true, immediate: true})
+
+// 2. 点击左侧菜单区域下方的用户头像信息后跳转的页面路径
+export const userCenterPage = '/uni_modules/uni-id-pages-x/pages/userinfo/userinfo?showLoginManage=true'
+
+// 3. 配置大语言模型
+/** 
+ * 配置大语言模型
+ * 注意需要在，目录：`/uni_modules/uni-ai-x/static/ai-provider/${provider}.png` 中添加对应的logo图片
+ * 默认以第一个为默认模型
+ */
+const bailianTokenInfo: LLmTokenInfo = {token: '', expireTime: 0}
+const qiniuTokenInfo: LLmTokenInfo = {token: '', expireTime: 0}
+const llmModelMap = new Map<string, Provider>([
+	// OpenClaw - WebSocket 通信
+	[
+		'openClaw', {
+			models: [
+				{ name: 'auto', image: true}
+			],
+			description: 'OpenClaw - WebSocket 实时通信',
+			baseURL: ""
+		}
+	],
+	// 七牛
+	[
+		'qiniu', {
+			models: [
+				{ name: 'deepseek-v3'},
+				{ name: 'deepseek-r1', thinking: true},
+				{ name: 'doubao-seed-1.6', image: true},
+				{ name: 'gpt-oss-120b'}
+			],
+			description: '七牛云-专注云计算和大数据',
+			baseURL: "https://openai.qiniu.com/v1/chat/completions",
+			async getToken(): Promise<string> {
+				// 如果token存在且未过期，则直接返回
+				if (qiniuTokenInfo.expireTime > Date.now()) {
+					return qiniuTokenInfo.token
+				}
+			
+				// unicloud项目 通过uni-ai-x-co 获取临时token
+				const uniAiChatCo = uniCloud.importObject("uni-ai-x-co", { customUI: true })
+				try {
+					const getTmpTokenRes = await uniAiChatCo.getTmpToken({provider: "qiniu"})
+					if (getTmpTokenRes.errCode != 0) {
+						throw new Error('获取临时token失败')
+					}
+					const tmpToken = getTmpTokenRes.getString('data.token', '')
+					const expiresAt = getTmpTokenRes.getNumber('data.expiresAt', 0)
+					qiniuTokenInfo.token = tmpToken
+					qiniuTokenInfo.expireTime = expiresAt
+					return tmpToken
+				} catch (e: any) {
+					// const error = JSON.parse<UniCloudError>(JSON.stringify(e)) as UniCloudError
+					// console.error('uni-ai-x-co 请求失败', error, error.message)
+					throw new Error('获取临时token失败')
+				}
+				
+			
+				// 非 unicloud项目 请求自己的服务器的接口得到临时 token 例如
+				/*
+				const res = await uni.request({
+					url: 'https://your-server.com/get-token',
+					method: 'GET'
+				})
+				if (res.statusCode != 200) {
+					throw new Error('获取临时token失败')
+				}
+				const tmpToken = res.getString('data.token', '')
+				const expiresAt = res.getNumber('data.expiresAt', 0)
+				qiniuTokenInfo.token = tmpToken
+				qiniuTokenInfo.expireTime = expiresAt
+				return tmpToken
+				*/
+			}
+		}
+	],
+	// 阿里云百炼
+	[
+		'bailian', {
+			models: [
+				{ name: 'deepseek-v3'},
+				{ name: 'deepseek-r1', thinking: true },
+				{ name: 'qwen-turbo'},
+				{ name: 'qwen-plus', thinking: true }
+			],
+			description: '阿里云百炼 - 专注AI技术研究和应用',
+			baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+			async getToken(): Promise<string> {
+				// 如果token存在且未过期，则直接返回
+				if (bailianTokenInfo.expireTime > Date.now()) {
+					return bailianTokenInfo.token
+				}
+
+				// unicloud项目 通过uni-ai-x-co 获取临时token
+				const uniAiChatCo = uniCloud.importObject("uni-ai-x-co", { customUI: true })
+				try {
+					const getTmpTokenRes = await uniAiChatCo.getTmpToken({provider: "aliyun-bailian"})
+					if (getTmpTokenRes.errCode != 0) {
+						throw new Error('获取临时token失败')
+					}
+					const tmpToken = getTmpTokenRes.getString('data.token', '')
+					const expiresAt = getTmpTokenRes.getNumber('data.expiresAt', 0)
+					bailianTokenInfo.token = tmpToken
+					bailianTokenInfo.expireTime = expiresAt
+					return tmpToken
+				} catch (e: any) {
+					// const error = JSON.parse<UniCloudError>(JSON.stringify(e)) as UniCloudError
+					// console.error('uni-ai-x-co 请求失败', error, error.message)
+					throw new Error('获取临时token失败')
+				}
+				
+
+				// 非 unicloud项目 请求自己的服务器的接口得到临时 token 例如
+				/*
+				const res = await uni.request({
+					url: 'https://your-server.com/get-token',
+					method: 'GET'
+				})
+				if (res.statusCode != 200) {
+					throw new Error('获取临时token失败')
+				}
+				const tmpToken = res.getString('data.token', '')
+				const expiresAt = res.getNumber('data.expiresAt', 0)
+				bailianTokenInfo.token = tmpToken
+				bailianTokenInfo.expireTime = expiresAt
+				return tmpToken
+				*/
+			}
+		}
+	]
+])
+
+const providerNameList: string[] = []
+llmModelMap.forEach((_, key: string) => {
+	providerNameList.push(key)
+})
+
+if (providerNameList.length < 1) {
+	throw new Error('至少需要配置一个大语言模型提供商')
+}
+const defaultLLM: DefaultLLM = {
+	provider: providerNameList[0]!,
+	model: llmModelMap.get(providerNameList[0])?.models?.[0].name!
+}
+
+export default llmModelMap
+export { llmModelMap, type LLMModel, providerNameList, defaultLLM }

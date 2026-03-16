@@ -1,0 +1,80 @@
+
+{
+  "pages": [
+		{
+		  "path": "uni_modules/uni-id-pages-x/pages/login/login",
+		  "style": {
+		    "navigationBarTitleText": "登录账号",
+		    "enablePullDownRefresh": false
+		  }
+		}, {
+		  "path": "uni_modules/uni-id-pages-x/pages/userinfo/userinfo",
+		  "style": {
+		    "navigationBarTitleText": "我的资料",
+		    "enablePullDownRefresh": false
+		  }
+		},
+		{
+		  "path": "uni_modules/uni-id-pages-x/pages/register/register",
+		  "style": {
+		    "navigationBarTitleText": "注册",
+		    "enablePullDownRefresh": false
+		  }
+		},
+		{
+		  "path": "uni_modules/uni-id-pages-x/pages/retrieve/retrieve",
+		  "style": {
+		    "navigationBarTitleText": "重置密码",
+		    "enablePullDownRefresh": false
+		  }
+		},
+		{
+		  "path": "uni_modules/uni-id-pages-x/pages/common/webview/webview",
+		  "style": {
+		    "navigationBarTitleText": "",
+		    "enablePullDownRefresh": false
+		  }
+		},
+		{
+		  "path": "uni_modules/uni-id-pages-x/pages/userinfo/deactivate/deactivate",
+		  "style": {
+		    "navigationBarTitleText": "注销账号",
+		    "enablePullDownRefresh": false
+		  }
+		},
+		{
+		  "path": "uni_modules/uni-id-pages-x/pages/userinfo/bindMobile/bindMobile",
+		  "style": {
+		    "navigationBarTitleText": "绑定手机号码",
+		    "enablePullDownRefresh": false
+		  }
+		},
+		{
+		  "path": "uni_modules/uni-id-pages-x/pages/userinfo/setNickname/setNickname",
+		  "style": {
+		    "navigationBarTitleText": "设置昵称",
+		    "enablePullDownRefresh": false,
+		    "navigationStyle": "custom"
+		    // "app-plus": {
+		    //   "titleNView": {
+		    //     "buttons": [
+		    //       {
+		    //         "color": "#fff",
+		    //         "text": "完成",
+		    //         "float": "right",
+		    //         "fontWeight": "normal"
+		    //       }
+		    //     ]
+		    //   }
+		    // }
+		  }
+		},
+		{
+		  "path": "uni_modules/uni-id-pages-x/pages/userinfo/realnameAuth/realnameAuth",
+		  "style": {
+		    "navigationBarTitleText": "实名认证",
+		    "enablePullDownRefresh": false
+		  }
+		}
+	]
+}

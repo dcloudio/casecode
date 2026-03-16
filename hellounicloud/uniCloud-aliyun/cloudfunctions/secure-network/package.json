@@ -1,0 +1,7 @@
+{
+  "name": "secure-network",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

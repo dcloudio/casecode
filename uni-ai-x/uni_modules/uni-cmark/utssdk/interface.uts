@@ -1,0 +1,40 @@
+export type ParseMdRes = {
+	data: MarkdownToken[],
+	errorMsg: string
+}
+export type Align = 'center' | 'left' | 'right';
+export type MarkdownToken = {
+	type?: string;
+	raw?: string;
+	text?: string;
+	html?: string;
+	tokens?: MarkdownToken[];
+	checked?: number;
+	escaped?: number;
+	pre?: number;
+	block?: number;
+	ordered?: number;
+	loose?: number;
+	task?: number;
+	inLink?: number;
+	inRawBlock?: number;
+	isClose?: number;
+	codeBlockStyle?: 'indented';
+	lang?: string;
+	tag?: string;
+	href?: string;
+	title?: string;
+	depth?: number;
+	start?: number | string;
+	items?: MarkdownToken[];
+	align?: Align[];
+	codeTokens?: MarkdownToken[][];
+	deepIndex?: number;
+	orderedIndex?: number;
+	className?: string;
+	uniqueId?: string;
+	start_column?: number;
+	end_column?: number;
+	width?: number;
+	height?: number;
+};

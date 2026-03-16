@@ -1,0 +1,14 @@
+[
+  {
+    "IndexName": "parent_id",
+    "MgoKeySchema": {
+      "MgoIndexKeys": [
+        {
+          "Name": "parent_id",
+          "Direction": "1"
+        }
+      ],
+      "MgoIsUnique": false
+    }
+  }
+]

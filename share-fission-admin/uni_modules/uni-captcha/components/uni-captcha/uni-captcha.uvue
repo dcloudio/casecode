@@ -1,0 +1,180 @@
+<template>
+  <view class="captcha-box">
+    <view class="captcha-img-box">
+      <image class="loding" src="/uni_modules/uni-captcha/static/run.gif" v-if="loging" mode="widthFix" />
+      <image class="captcha-img" :class="{opacity:loging}" @click="getImageCaptcha(true)" :src="captchaBase64" mode="widthFix" />
+    </view>
+    <input @blur="focusCaptchaInput = false" @focus="focusCaptchaInput = true" :focus="focusCaptchaInput" type="digit" class="captcha" :inputBorder="false"
+      maxlength="4" v-model="val" placeholder="请输入验证码" :cursor-spacing="cursorSpacing" />
+  </view>
+</template>
+
+<script>
+  export default {
+    emits: ["modelValue"],
+    props: {
+      cursorSpacing: {
+        type: Number,
+        default: 100
+      },
+      modelValue: {
+        type: String,
+        default: ""
+      },
+      value: {
+        type: String,
+        default: ""
+      },
+      scene: {
+        type: String,
+        default: ""
+      },
+      focus: {
+        type: Boolean,
+        default: false
+      }
+    },
+    data() {
+      return {
+        focusCaptchaInput: false,
+        captchaBase64: "" as string,
+        loging: false,
+        val: ""
+      };
+    },
+    watch: {
+      value: {
+        handler(value : string) {
+          // console.log('setvue', value);
+          this.val = value
+        },
+        immediate: true
+      },
+      modelValue: {
+        handler(modelValue : string) {
+          // console.log('setvue', modelValue);
+          this.val = modelValue
+        },
+        immediate: true
+      },
+      scene: {
+        handler(scene : string) {
+          if (scene.length != 0) {
+            this.getImageCaptcha(this.focus)
+          } else {
+            uni.showToast({
+              title: 'scene不能为空',
+              icon: 'none'
+            });
+          }
+        },
+        immediate: true
+      },
+      val(value : string) {
+        // console.log('setvue', value);
+        // TODO 兼容 vue2
+        // #ifdef VUE2
+        this.$emit('input', value);
+        // #endif
+        // TODO　兼容　vue3
+        // #ifdef VUE3
+        this.$emit('update:modelValue', value)
+        // #endif
+      }
+    },
+    methods: {
+      setFocus(state:boolean){
+        this.focusCaptchaInput = state
+      },
+      getImageCaptcha(focus : boolean) {
+        this.loging = true
+        if (focus) {
+          this.val = ''
+          this.focusCaptchaInput = true
+        }
+        const uniIdCo = uniCloud.importObject("uni-captcha-co", {
+          customUI: true
+        })
+        uniIdCo.getImageCaptcha({
+          scene: this.scene,
+          isUniAppX:true
+        }).then((result : UTSJSONObject) => {
+          this.captchaBase64 = (result.getString('captchaBase64') as string)
+        })
+       .catch<void>((err : any | null) : void => {
+         const error = err as UniCloudError
+         console.error(error)
+         console.error(error.code)
+        	uni.showToast({
+        		title: error.message,
+        		icon: 'none'
+        	});
+        })
+        .finally(()=> {
+        	this.loging = false
+        })
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+  .captcha-box {
+    /* #ifndef APP-NVUE */
+    display: flex;
+    /* #endif */
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+  }
+
+  .captcha-img-box,
+  .captcha {
+    height: 44px;
+  }
+
+  .captcha {
+    flex: 1;
+  }
+
+  .captcha-img-box {
+    position: relative;
+    background-color: #FEFAE7;
+  }
+
+  .captcha {
+    background-color: #F8F8F8;
+    font-size: 14px;
+    flex: 1;
+    padding: 0 20rpx;
+    margin-left: 20rpx;
+    /* #ifndef APP-NVUE */
+    box-sizing: border-box;
+    /* #endif */
+  }
+
+  .captcha-img-box,
+  .captcha-img,
+  .loding {
+    width: 100px;
+  }
+
+  .captcha-img {
+    /* #ifdef WEB */
+    cursor: pointer;
+    /* #endif */
+    height: 44px;
+  }
+
+  .loding {
+    z-index: 9;
+    position: absolute;
+    width: 30px;
+    margin:7px 35px;
+  }
+
+  .opacity {
+    opacity: 0.5;
+  }
+</style>

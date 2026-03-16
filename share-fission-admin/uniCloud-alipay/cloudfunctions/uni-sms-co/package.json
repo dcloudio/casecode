@@ -1,0 +1,14 @@
+{
+    "name": "uni-sms-co",
+    "dependencies": {
+        "uni-config-center": "file:..\/..\/..\/uni_modules\/uni-config-center\/uniCloud\/cloudfunctions\/common\/uni-config-center"
+    },
+    "extensions": {
+        "uni-cloud-sms": {},
+        "uni-cloud-jql": {}
+    },
+    "origin-plugin-dev-name": "uni-template-admin",
+    "origin-plugin-version": "2.5.13",
+    "plugin-dev-name": "uni-template-admin",
+    "plugin-version": "2.5.13"
+}

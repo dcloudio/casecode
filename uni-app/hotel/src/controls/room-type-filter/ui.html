@@ -1,0 +1,23 @@
+<div class="room-type-filter">
+	<legend>房型(单选)</legend>
+	<ul>
+		<li v-repeat="roomTypes" class="{{ value==roomType.value?'active':'' }}" v-on="tap:pickRoomType($index)">
+			{{text}}
+		</li>
+	</ul>
+	<legend>早餐(单选)</legend>
+	<ul>
+		<li v-repeat="breakfasts" class="{{ value==breakfast.value?'active':'' }}" v-on="tap:pickBreakfast($index)">
+			{{text}}
+		</li>
+	</ul>
+	<legend>其他(复选)</legend>
+	<ul>
+		<li v-repeat="others" class="{{ value==other.value?'active':'' }}" v-on="tap:pickOther($index)">
+			{{text}}
+		</li>
+	</ul>
+	<div class="btn-wraper">
+		<button type="button" data-event='tap>ok' class="mui-btn mui-btn-block mui-btn-warning hotel-btn-main">确定</button>
+	</div>
+</div>

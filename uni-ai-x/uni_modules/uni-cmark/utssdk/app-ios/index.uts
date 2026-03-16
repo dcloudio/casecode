@@ -1,0 +1,16 @@
+import { ScopeparserBridge } from "scopeparser4ios"
+export * from '../interface.uts'
+// 创建 scopeparserBridge 实例
+let scopeparserBridge: ScopeparserBridge | null = null
+function getScopeparserBridge(): ScopeparserBridge {
+	if (scopeparserBridge == null) {
+		scopeparserBridge = new ScopeparserBridge()
+	}
+	return scopeparserBridge!
+}
+
+export function md2json(markdownText: string): string {
+	return getScopeparserBridge().md2json(markdownText) as string
+}
+
+export async function initCmark() {} // iOS 端不需要初始化，空实现

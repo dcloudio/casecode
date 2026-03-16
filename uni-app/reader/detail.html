@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>36氪 - 文章详情</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/app.css?v=2015123" />
+		<style>
+			html,
+			body {
+				min-height: 100%;
+				background-color: #efeff4;
+			}
+			.kr-loader {
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				padding: 55% 0;
+				width: 100%;
+				height: 100%;
+				color: #888;
+				font-size: 14px;
+				text-align: center;
+				background-color: #efeff4;
+				display: none;
+			}
+			.kr-overlay .kr-loader {
+				display: block;
+			}
+			.kr-overlay .mui-content {
+				display: none;
+			}
+			.kr-article-bar {
+				-webkit-transition: -webkit-transform .3s, opacity .3s;
+				transition: transform .3s, opacity .3s;
+				-webkit-transform: translate3d(0, 100%, 0);
+				transform: translate3d(0, 100%, 0);
+				opacity: 0;
+			}
+			.kr-article-bar.mui-active {
+				-webkit-transform: translate3d(0, 0, 0);
+				transform: translate3d(0, 0, 0);
+				opacity: 1;
+			}
+		</style>
+	</head>
+
+	<body class="kr-article-detail kr-overlay">
+		<div id="footer" class="kr-article-bar mui-bar mui-bar-standard mui-bar-footer">
+			<a id="back" class="mui-action-back mui-icon mui-icon-arrowleft mui-pull-left" style="padding: 10px;margin-left: -10px;"></a>
+			<div class="mui-pull-right">
+				<a id="share" class="mui-icon mui-icon-upload" href="javascript:;"></a>
+			</div>
+		</div>
+		<div class="mui-content">
+			<div id="kr-article-banner" class="kr-article-banner">
+				<div id="kr-article-cover" class="kr-article-cover">
+					<img/>
+					<div class="kr-image-overlay"></div>
+				</div>
+
+				<h2 id="kr-article-title" class="kr-article-title"></h2>
+			</div>
+			<div class="kr-article-content">
+				<div class="kr-article-meta">
+					<div id="kr-article-author" class="kr-article-author"></div>
+					<div class="kr-article-text">发表于</div>
+					<div id="kr-article-time" class="kr-article-time"></div>
+				</div>
+				<div id="kr-article-article" class="kr-article-article">
+
+				</div>
+			</div>
+		</div>
+		<div id="loader" class="kr-loader">加载中...</div>
+		<script type="text/javascript" charset="UTF-8" src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="js/html5sql.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="js/app.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="js/news.js"></script>
+		<script>
+			var coverEl = document.querySelector("#kr-article-cover");
+			var titleEl = document.getElementById("kr-article-title");
+			var authorEl = document.getElementById("kr-article-author");
+			var timeEl = document.getElementById("kr-article-time");
+			var articleEl = document.getElementById("kr-article-article");
+			var footerEl = document.getElementById("footer");
+			var guid = '';
+			mui.init({
+				beforeback: function() {
+					setTimeout(function() {
+						coverEl.replaceChild(document.createElement('img'), coverEl.querySelector('img'));
+						titleEl.innerText = '';
+						authorEl.innerText = '';
+						articleEl.innerHTML = '';
+						footerEl.classList.remove('mui-active');
+						document.body.classList.add('kr-overlay');
+					}, 200);
+				}
+			});
+			document.body.addEventListener('tap', function() {
+				footerEl.classList.toggle('mui-active');
+			});
+			mui('#kr-article-article').on('tap', 'a', function() {
+				var url = this.href;
+				var protocol = /^([\w-]+:)\/\//.test(url) ? RegExp.$1 : '';
+				if (protocol === 'http:' || protocol === 'https:') { //外部链接
+					var browserMainWebview = plus.webview.getWebviewById('browser_main');
+					var browserWebview = plus.webview.getWebviewById('browser');
+					mui.fire(browserMainWebview, 'mui.view.beforeshow');
+					browserWebview.loadURL(url);
+					browserMainWebview.show('slide-in-bottom', 200);
+				}
+			});
+			(function($) {
+				var regex = /\((.*)\)/;
+				html5sql.openDatabase("kr", "36Kr", 5 * 1024 * 1024);
+				document.addEventListener('mui.view.beforeshow', function(event) {
+					//if (!event.detail.guid) return;
+					if (event.detail.$$type === 'back') {
+						setTimeout(function() {
+							document.body.classList.remove('kr-overlay');
+						}, 500);
+						return;
+					}
+					document.body.classList.add('kr-overlay');
+					//console.log("id:" + event.detail.guid);
+					kr.getNewsByGuid(decodeURIComponent(event.detail.guid), function(news) {
+						guid = event.detail.guid;
+						coverEl.querySelector('img').src = news.image || 'img/blank_big.jpg';
+						titleEl.innerText = news.title;
+						//console.log("news aaa:" + JSON.stringify(news));
+						var author = news.author || '';
+						var matches = author.match(regex);
+						if (matches && matches.length === 2) {
+							author = matches[1];
+						}
+						authorEl.innerText = author;
+						timeEl.innerText = kr.format(news.pubDate);
+						articleEl.innerHTML = news.description;
+						window.scrollTo(0, 0);
+						setTimeout(function() {
+							document.body.classList.remove('kr-overlay');
+						}, 290);
+					});
+				});
+				var Intent = null,
+					main = null;
+				// H5 plus事件处理
+				$.plusReady(function() {
+					Intent = plus.android.importClass("android.content.Intent");
+					main = plus.android.runtimeMainActivity();
+				});
+				document.getElementById("share").addEventListener('tap', function(event) {
+					event.stopPropagation();
+					var intent = new Intent(Intent.ACTION_SEND);
+					intent.setType("text/plain");
+					intent.putExtra(Intent.EXTRA_TEXT, titleEl.innerText + '（' + guid + '）');
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					main.startActivity(Intent.createChooser(intent, "系统分享"));
+				});
+			})(mui);
+		</script>
+	</body>
+
+</html>

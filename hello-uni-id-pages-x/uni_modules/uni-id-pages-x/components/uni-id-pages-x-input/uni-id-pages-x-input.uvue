@@ -1,0 +1,202 @@
+<template>
+	<view class="input-box" :class="{border}">
+		<!-- <solt></solt> -->
+		<text v-if="hasTitleAndContent" class="title">{{title}}</text>
+		<input class="input" ref="input" :placeholder="_placeholder" :class="{'move-down':hasTitleAndContent}"
+			:value="modelValue" @input="updateValue" :type="type" :maxlength="maxlength"
+			:password="password && !visiblePwd" :focus="focusInput" @blur="onBlur" @focus="onFocus" @confirm="confirm"
+			:confirm-type="confirmType" />
+		<view class="my-input-icon-box" v-if="modelValue">
+			<uni-id-pages-x-icons v-if="password" :color="visiblePwd?'#0070ff':'#ddd'"
+        @click="setVisiblePwd('click')" @touchstart="setVisiblePwd('touchstart')" @touchend="setVisiblePwd('touchend')" @touchcancel="setVisiblePwd('touchcancel')"
+      type="eyes" />
+			<view class="password-icon">
+				<uni-id-pages-x-icons @click="clearValue" type="clear" color="#ddd" />
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		name: 'MyInput',
+		emits: ["blur", "focus", "confirm", "update:modelValue"],
+		data() {
+			return {
+				visiblePwd: false,
+        focusInput: false
+			}
+		},
+    mounted(){
+      if(this.focus){
+        this.setFocus(true)
+      }
+    },
+		computed: {
+			_placeholder() : string {
+				if (this.placeholder.length > 0) {
+					return this.placeholder
+				} else if (this.title.length > 0) {
+					return "请输入" + this.title
+				} else {
+					return ""
+				}
+			},
+			hasTitleAndContent() : boolean {
+				return this.title.length > 0 && this.modelValue.length > 0
+			}
+		},
+		props: {
+			title: {
+				type: String,
+				default: ""
+			},
+			modelValue: {
+				type: String,
+				default: ""
+			},
+			type: {
+				type: String,
+				default: "text"
+			},
+			placeholder: {
+				type: String,
+				default: ""
+			},
+			maxlength: {
+				type: Number,
+				default: 140
+			},
+			password: {
+				type: Boolean,
+				default: false
+			},
+			focus: {
+				type: Boolean,
+				default: false
+			},
+			border: {
+				type: Boolean,
+				default: false
+			},
+			confirmType: {
+				type: String,
+				default: "done"
+			},
+      /**
+       * 显示密码的方式
+       * @type {String}
+       * @default click
+       * @example click | touch
+       */
+      visiblePwdOption:{
+        type: String,
+        default: "click"
+      }
+		},
+		methods: {
+			updateValue(event : InputEvent) {
+				// console.log('event.detail.value', event.detail.value);
+				this.$emit('update:modelValue', event.detail.value);
+			},
+			clearValue() {
+				this.$emit('update:modelValue', '');
+				this.setFocus(true)
+			},
+			onBlur() {
+				// this.$emit('update:focus', false);
+				this.$emit('blur');
+			},
+			onFocus() {
+				this.$emit('focus');
+				// this.$emit('update:focus', true);
+			},
+			setFocus(state : boolean) {
+        // console.log('setFocus',state)
+				this.focusInput = state
+			},
+			confirm(event : InputConfirmEvent) {
+				this.$emit('confirm', event)
+			},
+      setVisiblePwd(eventName:string){
+        console.error('eventName',eventName)
+        if(eventName == "click" && this.visiblePwdOption == 'click'){
+          this.visiblePwd = !this.visiblePwd
+        }else if(eventName.includes("touch") && this.visiblePwdOption == 'touch'){
+          // console.log('eventName',eventName)
+          switch (eventName){
+            case "touchstart":
+              this.visiblePwd = true
+              break;
+            case "touchend":
+              this.visiblePwd = false
+              break;
+            case "touchcancel":
+              this.visiblePwd = false
+              break;
+          }
+        }
+      }
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	.input-box {
+		position: relative;
+		background-color: #F8F8F8;
+		height: 50px !important;
+		border-radius: 5rpx;
+		// border: 1px solid #000;
+	}
+
+	.border {
+		border: 1px solid #86868b;
+	}
+
+	.input {
+		border-radius: 5px;
+		height: 50px;
+    padding: 0 16rpx 0 12px;
+    // todo：临时解决鸿蒙input设置高度内容不居中
+    /* #ifdef APP-HARMONY */
+    padding: 15px 8px 15px 12px;
+    /* #endif */
+		font-size: 14px;
+		top: 0;
+		position: relative;
+	}
+
+	.title {
+		position: absolute;
+		top: 0;
+		left: 16rpx;
+		color: #555;
+		font-weight: 400;
+		font-size: 12px;
+		padding-left:5px;
+		height: 30px;
+		line-height: 30px;
+	}
+
+	.input.move-down {
+		top: 22px;
+		height: 22px;
+    // todo：临时解决鸿蒙input设置高度内容不居中
+    /* #ifdef APP-HARMONY */
+    padding:0 6px 6px 8px;
+    /* #endif */
+	}
+
+	.my-input-icon-box {
+		position: absolute;
+		right: 10px;
+		bottom:14px;
+		flex-direction: row;
+    z-index: 2;
+	}
+
+	.password-icon {
+		margin-left: 5px;
+	}
+</style>

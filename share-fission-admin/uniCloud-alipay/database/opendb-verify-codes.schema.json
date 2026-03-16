@@ -1,0 +1,45 @@
+{
+	"bsonType": "object",
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"code": {
+			"bsonType": "string",
+			"description": "验证码"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		},
+		"device_uuid": {
+			"bsonType": "string",
+			"description": "设备UUID，常用于图片验证码"
+		},
+		"email": {
+			"bsonType": "string",
+			"description": "邮箱"
+		},
+		"expired_date": {
+			"bsonType": "timestamp",
+			"description": "过期时间"
+		},
+		"ip": {
+			"bsonType": "string",
+			"description": "请求时客户端IP地址"
+		},
+		"mobile": {
+			"bsonType": "string",
+			"description": "手机号码"
+		},
+		"scene": {
+			"bsonType": "string",
+			"description": "使用验证码的场景，如：login, bind, unbind, pay"
+		},
+		"state": {
+			"bsonType": "int",
+			"description": "验证状态：0 未验证、1 已验证、2 已作废"
+		}
+	},
+	"required": []
+}

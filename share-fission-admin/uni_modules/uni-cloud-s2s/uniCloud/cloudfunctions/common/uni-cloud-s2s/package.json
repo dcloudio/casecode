@@ -1,0 +1,15 @@
+{
+    "name": "uni-cloud-s2s",
+    "version": "1.0.1",
+    "description": "",
+    "keywords": [],
+    "author": "DCloud",
+    "main": "index.js",
+    "dependencies": {
+        "uni-config-center": "file:..\/..\/..\/..\/..\/uni-config-center\/uniCloud\/cloudfunctions\/common\/uni-config-center"
+    },
+    "origin-plugin-dev-name": "uni-template-admin",
+    "origin-plugin-version": "2.5.13",
+    "plugin-dev-name": "uni-template-admin",
+    "plugin-version": "2.5.13"
+}

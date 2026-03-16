@@ -1,0 +1,117 @@
+<template>
+	<view class="page">
+		<view class="form">
+			<!-- 获取验证码组件（输入手机号码+发送短信验证码所需的图形验证码，获得短信验证码） -->
+			<uni-id-pages-x-smsCode scene="bind-mobile-by-sms" ref="smsCode"
+				@input="smsCodeInput"></uni-id-pages-x-smsCode>
+			<button class="uni-btn" type="primary" @click="sendSmsCode">获取验证码</button>
+		</view>
+
+		<!-- 多次登录错误时，获取登录时专用的图形验证码 （悬浮） -->
+		<uni-popup-captcha @cancel="popupCaptchaCancel" ref="popup-captcha" scene="bind-mobile-by-sms" v-model="captcha"
+			title="请输入验证码"></uni-popup-captcha>
+	</view>
+</template>
+
+<script>
+	import { mutations } from '@/uni_modules/uni-id-pages-x/store.uts';
+	export default {
+		data() {
+			return {
+				smsCodeEl: null as null | UniIdPagesXSmsCodeComponentPublicInstance,
+				needCaptcha: false,
+				captcha: ""
+			}
+		},
+		mounted() {
+			this.smsCodeEl = (this.$refs["smsCode"] as UniIdPagesXSmsCodeComponentPublicInstance)
+		},
+		methods: {
+			sendSmsCode() {
+				this.smsCodeEl!.sendSmsCode(false);
+			},
+			smsCodeInput(param : UTSJSONObject) {
+				// console.log('smsCodeInput param', param);
+				const mobile = param.getString("mobile") as string;
+				const code = param.getString("code") as string;
+				if (mobile.length == 11 && code.length == 6) {
+					this.bindMobileBySms(param)
+				}
+			},
+			bindMobileBySms(param : UTSJSONObject) {
+				// 设置(添加)验证码并重新发起
+				const setCaptchaRetry = ()=> {
+					uni.showToast({
+						title: '请输入验证码',
+						icon: 'none',
+						duration: 3000
+					});
+					(this.$refs['popup-captcha'] as UniPopupCaptchaComponentPublicInstance).open(() => {
+						this.bindMobileBySms(param)
+					});
+				}
+
+				if (this.needCaptcha) {
+					if (this.captcha.length != 4) {
+						return setCaptchaRetry()
+					} else {
+						param.set("captcha", this.captcha)
+					}
+				}
+
+				uni.showLoading({ "title": "请求中" })
+				const uniIdCo = uniCloud.importObject("uni-id-co", { "customUI": true })
+				uniIdCo.bindMobileBySms(param)
+					.finally(() : void => {
+						uni.hideLoading()
+					})
+					.then((_: UTSJSONObject) : void => {
+						// console.log(e);
+						uni.showToast({
+							title: '绑定成功',
+							icon: 'none',
+							duration: 3000,
+							complete() {
+								uni.navigateBack()
+							}
+						});
+						mutations.updateUserInfo({
+							"mobile": param.getString("mobile")
+						} as UTSJSONObject)
+					})
+					.catch((err : any | null) : void => {
+						const error = err as UniCloudError
+						console.error(error)
+						console.error(error.code)
+						if (['uni-id-captcha-required', 'uni-captcha-verify-fail'].includes(error.code as string)) {
+							this.needCaptcha = true;
+							//登录失败，自动重新获取验证码
+							return setCaptchaRetry()
+						} else if (error.code == "uni-id-mobile-verify-code-error") {
+							this.smsCodeEl!.clearCodeInput();
+						} else {
+							this.smsCodeEl!.reset();
+							this.captcha = ""
+						}
+						uni.showToast({
+							title: error.message,
+							icon: 'none',
+							duration: 3000,
+							mask: false
+						});
+					})
+			},
+			popupCaptchaCancel() {
+				this.smsCodeEl!.reset();
+				this.captcha = ""
+			}
+		}
+	}
+</script>
+
+<style>
+@import url("/uni_modules/uni-id-pages-x/common/common.scss");
+.uni-btn {
+  margin-top: 10px;
+}
+</style>

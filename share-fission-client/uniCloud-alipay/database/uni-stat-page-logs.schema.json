@@ -1,0 +1,90 @@
+// 应用页面访问日志表
+{
+	"bsonType": "object",
+	"description": "记录上报的页面访问日志",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_PAGE_LOGS' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "应用ID"
+		},
+		"version": {
+			"bsonType": "string",
+			"description": "用户端上报的应用版本号"
+		},
+		"platform": {
+			"bsonType": "string",
+			"description": "用户端上报的平台code"
+		},
+		"channel": {
+			"bsonType": "string",
+			"description": "用户端上报的渠道code\/场景值"
+		},
+		"device_id": {
+			"bsonType": "string",
+			"description": "客户端携带的设备标识"
+		},
+		"uid": {
+			"bsonType": "string",
+			"description": "用户编号, 对应uni-id-users._id"
+		},
+		"session_id": {
+			"bsonType": "string",
+			"description": "访问会话日志ID，对应uni-stat-session-logs._id",
+			"foreignKey": "uni-stat-session-logs._id"
+		},
+		"page_id": {
+			"bsonType": "string",
+			"description": "当前页面ID，对应uni-stat-pages._id",
+			"foreignKey": "uni-stat-pages._id"
+		},
+		"page_detail_id": {
+			"bsonType": "string",
+			"description": "页面详情表ID，对应uni-stat-page-details._id",
+			"foreignKey": "uni-stat-page-details._id"
+		},
+		"previous_page_id": {
+			"bsonType": "string",
+			"description": "上级页面ID，为空表示第一个页面, 对应uni-stat-pages._id",
+			"foreignKey": "uni-stat-pages._id"
+		},
+		"previous_page_detail_id": {
+			"bsonType": "string",
+			"description": "上级页面详情表ID，对应uni-stat-page-details._id",
+			"foreignKey": "uni-stat-page-details._id"
+		},
+		"previous_page_duration": {
+			"bsonType": "int",
+			"description": "上级页面停留时间，单位秒，前端上报"
+		},
+		"previous_page_is_entry": {
+			"bsonType": "int",
+			"defaultValue": 0,
+			"description": " 上级页面是否为入口页, 0否 1是",
+			"enum": [{
+				"text": "否",
+				"value": 0
+			}, {
+				"text": "是",
+				"value": 1
+			}]
+		},
+		"query_string": {
+			"bsonType": "string",
+			"description": "页面参数"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		}
+	}
+}

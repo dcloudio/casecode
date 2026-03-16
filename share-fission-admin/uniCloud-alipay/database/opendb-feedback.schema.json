@@ -1,0 +1,72 @@
+{
+	"bsonType": "object",
+	"required": ["content"],
+	"permission": {
+		"create": "auth.uid != null",
+		"read": true,
+		"delete": false,
+		"update": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "留言反馈用户ID\/回复留言用户ID，参考uni-id-users表",
+			"foreignKey": "uni-id-users._id",
+			"forceDefaultValue": {
+				"$env": "uid"
+			}
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"title": "留言时间\/回复留言时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"content": {
+			"bsonType": "string",
+			"title": "留言内容\/回复内容",
+			"componentForEdit": {
+				"name": "textarea"
+			},
+			"trim": "right"
+		},
+		"imgs": {
+			"bsonType": "array",
+			"arrayType": "file",
+			"maxLength": 6,
+			"fileMediaType": "image",
+			"title": "图片列表"
+		},
+		"is_reply": {
+			"bsonType": "bool",
+			"title": "是否是回复类型"
+		},
+		"feedback_id": {
+			"bsonType": "string",
+			"title": "被回复留言ID"
+		},
+		"contact": {
+			"bsonType": "string",
+			"title": "联系人",
+			"trim": "both"
+		},
+		"mobile": {
+			"bsonType": "string",
+			"title": "联系电话",
+			"pattern": "^\\+?[0-9-]{3,20}$",
+			"trim": "both"
+		},
+		"reply_count": {
+			"permission": {
+				"write": false
+			},
+			"bsonType": "int",
+			"title": "被回复条数",
+			"defaultValue": 0
+		}
+	}
+}

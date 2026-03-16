@@ -1,0 +1,55 @@
+{
+	"bsonType": "object",
+	"required": ["goods_id", "card_no", "status"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"goods_id": {
+			"bsonType": "string",
+			"description": "关联商品ID"
+		},
+		"card_no": {
+			"bsonType": "string",
+			"description": "卡号",
+			"trim": "both"
+		},
+		"card_pwd": {
+			"bsonType": "string",
+			"description": "卡密",
+			"trim": "both"
+		},
+		"exchange_url": {
+			"bsonType": "string",
+			"description": "兑换地址",
+			"trim": "both"
+		},
+		"status": {
+			"bsonType": "int",
+			"description": "状态：0=未发放，1=已发放",
+			"enum": [0, 1],
+			"defaultValue": 0
+		},
+		"order_id": {
+			"bsonType": "string",
+			"description": "关联订单ID"
+		},
+		"used_time": {
+			"bsonType": "timestamp",
+			"description": "使用时间"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "导入时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

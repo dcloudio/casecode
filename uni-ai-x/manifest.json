@@ -1,0 +1,90 @@
+{
+	"name": "uni-ai-x",
+	"appid": "__UNI__C50103A",
+	"description": "",
+	"versionName": "2.1.0",
+	"versionCode": "26020501",
+	"uni-app-x": {},
+	/* 快应用特有相关 */
+	"quickapp": {},
+	/* 小程序特有相关 */
+	"mp-weixin": {
+		"appid": "",
+		"setting": {
+			"urlCheck": false
+		},
+		"usingComponents": true
+	},
+	"mp-alipay": {
+		"usingComponents": true
+	},
+	"mp-baidu": {
+		"usingComponents": true
+	},
+	"mp-toutiao": {
+		"usingComponents": true
+	},
+	"uniStatistics": {
+		"enable": false
+	},
+	"vueVersion": "3",
+	"app": {
+		"distribute": {
+			"icons": {
+				"android": {
+					"hdpi": "",
+					"xhdpi": "",
+					"xxhdpi": "",
+					"xxxhdpi": ""
+				}
+			}
+		}
+	},
+	"app-android": {
+		"distribute": {
+			"modules": {},
+			"icons": {
+				"hdpi": "",
+				"xhdpi": "",
+				"xxhdpi": "",
+				"xxxhdpi": ""
+			},
+			"splashScreens": {
+				"default": {}
+			},
+			"abiFilters": [
+				"armeabi-v7a",
+				"arm64-v8a"
+			]
+		}
+	},
+	"app-ios": {
+		"distribute": {
+			"modules": {},
+			"icons": {},
+			"splashScreens": {}
+		}
+	},
+	"web": {
+		"router": {
+			"mode": "",
+			"base": "./"
+		}
+	},
+	"app-harmony": {
+		"distribute": {
+			"bundleName": "io.dcloud.dev.app.h",
+			"signingConfigs": {
+				"default": {
+					"certpath": "/Users/dcloud_linju/Library/Application Support/HBuilder X/extensions/launcher/agc-certs/1766396894129.cer",
+					"keyAlias": "debugKey",
+					"keyPassword": "0000001A0746EF37E5F90305A6E3DD0DEC487A1946159FB88FA5738698C687BA5FF4D66548BE6EDC9369",
+					"profile": "/Users/dcloud_linju/Library/Application Support/HBuilder X/extensions/launcher/agc-certs/1769692996083.p7b",
+					"signAlg": "SHA256withECDSA",
+					"storeFile": "/Users/dcloud_linju/Library/Application Support/HBuilder X/extensions/launcher/agc-certs/1746792900627.p12",
+					"storePassword": "0000001A0746EF37E5F90305A6E3DD0DEC487A1946159FB88FA5738698C687BA5FF4D66548BE6EDC9369"
+				}
+			}
+		}
+	}
+}
