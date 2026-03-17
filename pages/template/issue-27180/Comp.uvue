@@ -5,7 +5,9 @@
 </template>
 
 <script setup>
-
+  defineOptions({
+    styleIsolation: 'app-and-page'
+  })
 </script>
 
 <style>

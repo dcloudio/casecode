@@ -8,7 +8,10 @@
 </template>
 
 <script setup>
-    import Comp from './Comp.uvue'
+  import Comp from './Comp.uvue'
+  defineOptions({
+    styleIsolation: 'app-and-page'
+  })
 </script>
 
 <style>
