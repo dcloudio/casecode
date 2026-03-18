@@ -184,7 +184,8 @@ describe('getCurrentPages', () => {
   if(isApp) {
     it('takeSnapshot', async () => {
       await page.callMethod('checkTakeSnapshot')
-      await page.waitFor(2000)
+      // harmony 滚动截屏，需要增加等待时间
+      await page.waitFor(isHarmony ? 6000 : 2000)
       expect(await page.data('data.checkSnapshotResult')).toBe(true)
     })
   }
