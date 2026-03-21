@@ -10,6 +10,7 @@
       <!-- h-margin-right末尾元素添加margin-right 测试bug #3866-->
       <view class="item" :id="'horizontal_'+item.id" v-for="(item,index) in data.items"
         :class="index==9 ? 'h-margin-right': ''">
+        <view :id="'horizontal_grand_child_' + item.id"></view>
         <text class="uni-text">{{item.label}}</text>
       </view>
     </scroll-view>
@@ -20,6 +21,7 @@
       @scroll="scroll" @scrollend="scrollend" ref="scrollViewYRef" id="scrollViewY" class="uni-margin-wrap">
       <!-- v-margin-bottom末尾元素添加margin-bottom 测试bug #3866-->
       <view class="item" :id="item.id" v-for="(item, index) in data.items" :class="index==9 ? 'v-margin-bottom': ''">
+        <view :id="'grand_child_' + item.id"></view>
         <text class="uni-text">{{item.label}}</text>
       </view>
     </scroll-view>
