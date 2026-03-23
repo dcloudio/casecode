@@ -1,0 +1,689 @@
+type TestRes = {
+  name: string
+  pass: boolean
+}
+
+function equalStringArray(left: string[], right: string[]): boolean {
+  return left.length == right.length && left.join('||') == right.join('||')
+}
+
+function testIfStatement(): TestRes {
+  const str: string = 'hello'
+  const emptyStr: string = ''
+  const num: number = 123
+  const zero: number = 0
+
+  const logs: string[] = []
+  if (str) {
+    logs.push('str true')
+  }
+  if (emptyStr) {
+    logs.push('emptyStr true')
+  } else {
+    logs.push('emptyStr false')
+  }
+  if (num) {
+    logs.push('num true')
+  }
+  if (zero) {
+    logs.push('zero true')
+  } else {
+    logs.push('zero false')
+  }
+
+  return {
+    name: 'IfStatement truthy/falsy for string/number',
+    pass: equalStringArray(logs, ['str true', 'emptyStr false', 'num true', 'zero false'])
+  }
+}
+
+function testWhileStatement(): TestRes {
+  let str: string = 'hello'
+  const emptyStr: string = ''
+  let num: number = 123
+  const zero: number = 0
+
+  const logs: string[] = []
+  let loop = 0
+
+  while (str) {
+    logs.push('while str')
+    str = ''
+    loop++
+  }
+  while (emptyStr) {
+    logs.push('while emptyStr')
+    loop++
+  }
+  while (num) {
+    logs.push('while num')
+    num = 0
+    loop++
+  }
+  while (zero) {
+    logs.push('while zero')
+    loop++
+  }
+
+  return {
+    name: 'WhileStatement truthy/falsy for string/number',
+    pass: equalStringArray(logs, ['while str', 'while num']) && loop == 2
+  }
+}
+
+function testDoStatement(): TestRes {
+  let str: string = 'hello'
+  const emptyStr: string = ''
+  let num: number = 123
+  const zero: number = 0
+
+  const logs: string[] = []
+  let loop = 0
+
+  do {
+    logs.push('do str')
+    str = ''
+    loop++
+  } while (str)
+
+  do {
+    logs.push('do emptyStr')
+    loop++
+  } while (emptyStr)
+
+  do {
+    logs.push('do num')
+    num = 0
+    loop++
+  } while (num)
+
+  do {
+    logs.push('do zero')
+    loop++
+  } while (zero)
+
+  return {
+    name: 'DoStatement truthy/falsy for string/number',
+    pass: equalStringArray(logs, ['do str', 'do emptyStr', 'do num', 'do zero']) && loop == 4
+  }
+}
+
+function testForStatement(): TestRes {
+  let str: string = 'hello'
+  const emptyStr: string = ''
+  let num: number = 123
+  const zero: number = 0
+
+  const logs: string[] = []
+
+  for (; str;) {
+    logs.push('for str')
+    str = ''
+  }
+  for (; emptyStr;) {
+    logs.push('for emptyStr')
+  }
+  for (; num;) {
+    logs.push('for num')
+    num = 0
+  }
+  for (; zero;) {
+    logs.push('for zero')
+  }
+
+  return {
+    name: 'ForStatement truthy/falsy for string/number',
+    pass: equalStringArray(logs, ['for str', 'for num'])
+  }
+}
+
+function testArithmeticTruthiness(): TestRes {
+  const logs: string[] = []
+  const a: number = 5
+  const b: number = 2
+  const c: number = 10
+  const d: number = 3
+
+  if (a + b) {
+    logs.push('a + b')
+  }
+  if (a - b) {
+    logs.push('a - b')
+  }
+  if (b - b) {
+    logs.push('b - b true')
+  } else {
+    logs.push('b - b false')
+  }
+  if (a * b) {
+    logs.push('a * b')
+  }
+  if (a * 0) {
+    logs.push('a * 0 true')
+  } else {
+    logs.push('a * 0 false')
+  }
+  if (a / b) {
+    logs.push('a / b')
+  }
+  if (0 / b) {
+    logs.push('0 / b true')
+  } else {
+    logs.push('0 / b false')
+  }
+
+  const inf: number = 1 / 0
+  if (inf) {
+    logs.push('1 / 0')
+  }
+
+  if (a % b) {
+    logs.push('a % b')
+  }
+  if (4 % 2) {
+    logs.push('4 % 2 true')
+  } else {
+    logs.push('4 % 2 false')
+  }
+
+  if (-1) {
+    logs.push('-1')
+  }
+  if (-0) {
+    logs.push('-0 true')
+  } else {
+    logs.push('-0 false')
+  }
+
+  if ((a + b) * (a - b)) {
+    logs.push('compound product')
+  }
+  if ((a - 5) * (b - 2)) {
+    logs.push('zero compound true')
+  } else {
+    logs.push('zero compound false')
+  }
+  if ((a + b + c) - (a + b + c)) {
+    logs.push('sum cancel true')
+  } else {
+    logs.push('sum cancel false')
+  }
+  if ((c / d) * (d - b)) {
+    logs.push('fraction * diff')
+  }
+  if (((a + b) * (c - d)) / (a + b)) {
+    logs.push('cancel division')
+  }
+  if (((a + b) * (c - d)) / (a + b) - (c - d)) {
+    logs.push('cancel to zero true')
+  } else {
+    logs.push('cancel to zero false')
+  }
+  if ((a * b) + (c * d) - (a * b) - (c * d)) {
+    logs.push('multi cancel true')
+  } else {
+    logs.push('multi cancel false')
+  }
+  if ((a - b) * (b - a)) {
+    logs.push('neg product')
+  }
+  if ((a + b) % (a - b)) {
+    logs.push('mod compound')
+  }
+
+  return {
+    name: 'Truthiness for arithmetic expressions',
+    pass: equalStringArray(logs, [
+      'a + b',
+      'a - b',
+      'b - b false',
+      'a * b',
+      'a * 0 false',
+      'a / b',
+      '0 / b false',
+      '1 / 0',
+      'a % b',
+      '4 % 2 false',
+      '-1',
+      '-0 false',
+      'compound product',
+      'zero compound false',
+      'sum cancel false',
+      'fraction * diff',
+      'cancel division',
+      'cancel to zero false',
+      'multi cancel false',
+      'neg product',
+      'mod compound'
+    ])
+  }
+}
+
+function testConditionalUnaryLogical(): TestRes {
+  const str: string = 'hello'
+  const emptyStr: string = ''
+  const num: number = 123
+  const zero: number = 0
+
+  const ternaryStr = str ? 'true' : 'false'
+  const ternaryNum = num ? 'true' : 'false'
+
+  const unaryLogs: string[] = []
+  if (!emptyStr) {
+    unaryLogs.push('!emptyStr true')
+  }
+  if (!zero) {
+    unaryLogs.push('!zero true')
+  }
+
+  const logicalLogs: string[] = []
+  if (str && num) {
+    logicalLogs.push('str && num')
+  }
+  if (emptyStr || zero) {
+    logicalLogs.push('emptyStr || zero')
+  } else {
+    logicalLogs.push('emptyStr || zero false')
+  }
+
+  const numA = 1
+  const numB = 2
+  const numC = numA || numB
+  const numD = numA && numB
+  const strC = emptyStr || str
+  const strD = emptyStr && str
+
+  const objA = { x: 1 }
+  const objB = { x: 2 }
+  const objC = objA || objB
+  const objD = objA && objB
+
+  const chainStrA = ''
+  const chainStrB = 'hello'
+  const chainStrC = ''
+  const chainStrD = 'world'
+  const chainedStrOr = chainStrA || chainStrB || chainStrC || chainStrD
+
+  const chainAndA = 'left'
+  const chainAndB = 'middle'
+  const chainAndC = ''
+  const chainAndD = 'right'
+  const chainedStrAnd = chainAndA && chainAndB && chainAndC && chainAndD
+
+  const chainNumA = 0
+  const chainNumB = 10
+  const chainNumC = 20
+  const chainedNumOr = chainNumA || chainNumB || chainNumC
+
+  const chainNumAndA = 1
+  const chainNumAndB = 2
+  const chainNumAndC = 3
+  const chainedNumAnd = chainNumAndA && chainNumAndB && chainNumAndC
+
+  let assignOrA = ''
+  assignOrA ||= 'fallback'
+
+  let assignOrB = 'kept'
+  assignOrB ||= 'ignored'
+
+  let assignAndA = 'next'
+  assignAndA &&= 'updated'
+
+  let assignAndB = ''
+  assignAndB &&= 'ignored'
+
+  return {
+    name: 'Conditional/Unary/Logical operators',
+    pass: ternaryStr == 'true'
+      && ternaryNum == 'true'
+      && equalStringArray(unaryLogs, ['!emptyStr true', '!zero true'])
+      && equalStringArray(logicalLogs, ['str && num', 'emptyStr || zero false'])
+      && numC == 1
+      && numD == 2
+      && strC == 'hello'
+      && strD == ''
+      && objC.x == objA.x
+      && objD.x == objB.x
+      && chainedStrOr == 'hello'
+      && chainedStrAnd == ''
+      && chainedNumOr == 10
+      && chainedNumAnd == 3
+      && assignOrA == 'fallback'
+      && assignOrB == 'kept'
+      && assignAndA == 'updated'
+      && assignAndB == ''
+  }
+}
+
+function testMixedBooleanAndNonBoolean(): TestRes {
+  const str: string = 'hello'
+  const num: number = 123
+  let pass = true
+
+  const boolVal = true
+  const boolAndStr = boolVal && str
+  const boolOrNum = boolVal || num
+  const strAndBool = str && boolVal
+  const numOrBool = num || boolVal
+
+  pass = boolAndStr == 'hello'
+    && boolOrNum == true
+    && strAndBool == true
+    && numOrBool == 123
+
+  return {
+    name: 'Logical operators with mixed boolean and non-boolean',
+    pass
+  }
+}
+
+function testObjectBooleanFunctionRef(): TestRes {
+  const logs: string[] = []
+
+  const a = { b: 1 }
+  if (a) {
+    logs.push('a object true')
+  }
+
+  type Ma = { m: string }
+  const b: Ma = { m: '1' }
+  if (b) {
+    logs.push('b interface true')
+  }
+
+  class MyClass {
+    c: number = 1
+  }
+  const c = new MyClass()
+  if (c) {
+    logs.push('c class true')
+  }
+
+  if (true) {
+    logs.push('true literal')
+  }
+  if (false) {
+    logs.push('false literal')
+  }
+
+  const boolVar = true
+  if (boolVar) {
+    logs.push('boolVar')
+  }
+
+  const str: string = 'hello'
+  const num: number = 123
+  if (str == 'hello') {
+    logs.push('str == hello')
+  }
+  if (num > 0) {
+    logs.push('num > 0')
+  }
+
+  function getStr(): string {
+    return 'test'
+  }
+  if (getStr()) {
+    logs.push('getStr truthy')
+  }
+
+  function getNum(): number {
+    return 1
+  }
+  if (getNum()) {
+    logs.push('getNum truthy')
+  }
+
+  function getBool(): boolean {
+    return true
+  }
+  if (getBool()) {
+    logs.push('getBool truthy')
+  }
+
+  function getClassObj(): MyClass {
+    return new MyClass()
+  }
+  if (getClassObj()) {
+    logs.push('getClassObj truthy')
+  }
+
+  function getInterfaceObj(): Ma {
+    return { m: 'test' }
+  }
+  if (getInterfaceObj()) {
+    logs.push('getInterfaceObj truthy')
+  }
+
+  type O = { x: number }
+  function getObjLiteral(): O {
+    return { x: 1 } as O
+  }
+  if (getObjLiteral()) {
+    logs.push('getObjLiteral truthy')
+  }
+
+  function wrapStr(s: string): string {
+    return s
+  }
+  if (wrapStr(getStr())) {
+    logs.push('wrapStr(getStr()) truthy')
+  }
+
+  if (getStr() && getNum()) {
+    logs.push('getStr && getNum')
+  }
+  if (getBool() || getStr()) {
+    logs.push('getBool || getStr')
+  }
+
+  const ternaryFunc = getStr() ? 'true' : 'false'
+
+  if (!getStr()) {
+    logs.push('!getStr truthy')
+  }
+  if (!getBool()) {
+    logs.push('!getBool truthy')
+  }
+
+  const refNumA = ref(1)
+  const refNumB = ref(2)
+  if (refNumA.value) {
+    logs.push('refNumA.value true')
+  }
+  const refValuePass = refNumB.value == 2
+
+  return {
+    name: 'Truthiness for objects/booleans/functions/ref',
+    pass: ternaryFunc == 'true'
+      && refValuePass
+      && equalStringArray(logs, [
+        'a object true',
+        'b interface true',
+        'c class true',
+        'true literal',
+        'boolVar',
+        'str == hello',
+        'num > 0',
+        'getStr truthy',
+        'getNum truthy',
+        'getBool truthy',
+        'getClassObj truthy',
+        'getInterfaceObj truthy',
+        'getObjLiteral truthy',
+        'wrapStr(getStr()) truthy',
+        'getStr && getNum',
+        'getBool || getStr',
+        'refNumA.value true'
+      ])
+  }
+}
+
+function testAnyTruthiness(): TestRes {
+  const str: string = 'hello'
+  let anyVal: any = 'hello'
+  const logs: string[] = []
+
+  if (anyVal) {
+    logs.push('anyVal is truthy')
+  }
+  while (anyVal) {
+    logs.push('while anyVal')
+    break
+  }
+  const ternaryAny = anyVal ? 'true' : 'false'
+
+  if (!anyVal) {
+    logs.push('!anyVal is truthy')
+  }
+
+  const anyA: any = 1
+  const anyB: any = 2
+  const anyOr = anyA || anyB
+  const anyAnd = anyA && anyB
+
+  const anyOrStr = anyVal || str
+  const strAndAny = str && anyVal
+
+  return {
+    name: 'any type truthy/falsy tests',
+    pass: ternaryAny == 'true'
+      && anyOr == 1
+      && anyAnd == 2
+      && anyOrStr == 'hello'
+      && strAndAny == 'hello'
+      && equalStringArray(logs, ['anyVal is truthy', 'while anyVal'])
+  }
+}
+
+function testUnionTruthiness(): TestRes {
+  const logs: string[] = []
+
+  const unionStrNum: string | number = 'test'
+  if (unionStrNum) {
+    logs.push('unionStrNum is truthy')
+  }
+
+  const unionStrNull: string | null = 'test'
+  if (unionStrNull) {
+    logs.push('unionStrNull is truthy')
+  }
+
+  const unionNumUndefined: number | undefined = 123
+  if (unionNumUndefined) {
+    logs.push('unionNumUndefined is truthy')
+  }
+
+  const unionOr = unionStrNum || unionStrNull
+  const unionAnd = unionStrNum && unionStrNull
+
+  function unionFunction(): string | number {
+    return ''
+  }
+
+  if (unionFunction()) {
+    logs.push('=====')
+  }
+
+  return {
+    name: 'union type truthy/falsy tests',
+    pass: unionOr == 'test'
+      && unionAnd == 'test'
+      && equalStringArray(logs, [
+        'unionStrNum is truthy',
+        'unionStrNull is truthy',
+        'unionNumUndefined is truthy'
+      ])
+  }
+}
+
+function testGenericTruthiness(): TestRes {
+  const logs: string[] = []
+
+  function checkGeneric<T>(val: T): string {
+    if (val) {
+      logs.push('generic val is truthy')
+    }
+    return val ? 'true' : 'false'
+  }
+
+  function checkGenericWithConstraint<T extends object>(val: T): void {
+    if (val) {
+      logs.push('generic constrained val is truthy')
+    }
+  }
+
+  function genericLogical<T>(a: T, b: T): T {
+    const result = a || b
+    return result
+  }
+
+  const genericPass = checkGeneric('hello') == 'true'
+    && checkGeneric(123) == 'true'
+    && checkGeneric({ x: 1 }) == 'true'
+
+  checkGenericWithConstraint({ x: 1 })
+
+  return {
+    name: 'generic function truthy/falsy tests',
+    pass: genericPass
+      && genericLogical('a', 'b') == 'a'
+      && equalStringArray(logs, [
+        'generic val is truthy',
+        'generic val is truthy',
+        'generic val is truthy',
+        'generic constrained val is truthy'
+      ])
+  }
+}
+
+function testVoidAndFunctionReturnTruthiness(): TestRes {
+  const logs: string[] = []
+
+  function returnsVoid(): void {
+    logs.push('side effect')
+  }
+  const voidResult: void = returnsVoid()
+  if (voidResult) {
+    logs.push('voidResult is truthy')
+  }
+
+  function getAny(): any {
+    return 'dynamic'
+  }
+  if (getAny()) {
+    logs.push('getAny() is truthy')
+  }
+
+  const anyVal: any = 'hello'
+  const unionStrNum: string | number = 'test'
+  if (anyVal && unionStrNum) {
+    logs.push('anyVal && unionStrNum truthy')
+  }
+
+  return {
+    name: 'void and function return truthy tests',
+    pass: equalStringArray(logs, [
+      'side effect',
+      'getAny() is truthy',
+      'anyVal && unionStrNum truthy'
+    ])
+  }
+}
+
+export function testCondition(): TestRes[] {
+  return [
+    testIfStatement(),
+    testWhileStatement(),
+    testDoStatement(),
+    testForStatement(),
+    testArithmeticTruthiness(),
+    testConditionalUnaryLogical(),
+    testMixedBooleanAndNonBoolean(),
+    testObjectBooleanFunctionRef(),
+    testAnyTruthiness(),
+    testUnionTruthiness(),
+    testGenericTruthiness(),
+    testVoidAndFunctionReturnTruthiness()
+  ]
+}
