@@ -39,7 +39,7 @@
           increase lifeCycleNum
         </button>
         <text class="uni-common-mt">lifeCycleNum: {{ data.lifeCycleNum }}</text>
-        <!-- #ifndef MP -->
+        <!-- #ifdef APP-ANDROID -->
         <button class="uni-common-mt" @click="getAndroidApplication">
           getAndroidApplication
         </button>
@@ -180,7 +180,7 @@
     setLifeCycleNum(num)
   }
 
-  // #ifndef MP
+  // #ifdef APP-ANDROID
   const getAndroidApplication = () : boolean => {
     const app = getApp()
     data.androidApplication = app.getAndroidApplication()
@@ -198,7 +198,7 @@
     setGlobalData,
     _increaseLifeCycleNum,
     setLifeCycleNumFunc,
-    // #ifndef MP
+    // #ifdef APP-ANDROID
     getAndroidApplication
     // #endif
   })

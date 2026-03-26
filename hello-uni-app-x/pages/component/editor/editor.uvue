@@ -6,60 +6,60 @@
         <view style="flex-direction: row;flex-wrap: wrap;">
           <view @click="format('bold')">
             <!-- #ifdef MP -->
-            <text :class="data.formats.bold === 'strong' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8a;"}}</text>
+            <text :class="data.formats?.bold === 'strong' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8a;"}}</text>
             <!-- #endif -->
             <!-- #ifndef MP -->
-            <text :class="data.formats.bold ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8a;"}}</text>
+            <text :class="data.formats?.bold ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8a;"}}</text>
             <!-- #endif -->
           </view>
           <view @click="format('italic')">
             <!-- #ifdef MP -->
-            <text :class="data.formats.italic === 'em' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8f;"}}</text>
+            <text :class="data.formats?.italic === 'em' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8f;"}}</text>
             <!-- #endif -->
             <!-- #ifndef MP -->
-            <text :class="data.formats.italic ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8f;"}}</text>
+            <text :class="data.formats?.italic ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8f;"}}</text>
             <!-- #endif -->
           </view>
           <view @click="format('underline')">
-            <text :class="data.formats.underline ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8e;"}}</text>
+            <text :class="data.formats?.underline ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8e;"}}</text>
           </view>
           <view @click="insertMention">
             <text class="iconfont">@</text>
           </view>
           <view @click="format('strike')">
             <!-- #ifdef MP -->
-            <text :class="data.formats.strike === 'del' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8b;"}}</text>
+            <text :class="data.formats?.strike === 'del' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8b;"}}</text>
             <!-- #endif -->
             <!-- #ifndef MP -->
-            <text :class="data.formats.strike ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8b;"}}</text>
+            <text :class="data.formats?.strike ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8b;"}}</text>
             <!-- #endif -->
           </view>
           <!-- #ifndef MP-BAIDU -->
           <view @click="format('align', 'left')">
-            <text :class="data.formats.align == 'left' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec91;"}}</text>
+            <text :class="data.formats?.align == 'left' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec91;"}}</text>
           </view>
           <!-- #endif -->
           <view @click="format('align', 'center')">
-            <text :class="data.formats.align == 'center' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec84;"}}</text>
+            <text :class="data.formats?.align == 'center' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec84;"}}</text>
           </view>
           <view @click="format('align', 'right')">
-            <text :class="data.formats.align == 'right' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec87;"}}</text>
+            <text :class="data.formats?.align == 'right' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec87;"}}</text>
           </view>
           <view @click="format('align', 'justify')">
-            <text :class="data.formats.align == 'justify' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec94;"}}</text>
+            <text :class="data.formats?.align == 'justify' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec94;"}}</text>
           </view>
           <!-- #ifndef MP-BAIDU -->
           <view @click="format('lineHeight', '2')">
-            <text :class="data.formats.lineHeight == '2' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe7f8;"}}</text>
+            <text :class="data.formats?.lineHeight == '2' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe7f8;"}}</text>
           </view>
           <view @click="format('letterSpacing', '2em')">
-            <text :class="data.formats.letterSpacing == '2em' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe964;"}}</text>
+            <text :class="data.formats?.letterSpacing == '2em' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe964;"}}</text>
           </view>
           <view @click="format('marginTop', '20px')">
-            <text :class="data.formats.marginTop == '20px' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe660;"}}</text>
+            <text :class="data.formats?.marginTop == '20px' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe660;"}}</text>
           </view>
           <view @click="format('marginBottom', '20px')">
-            <text :class="data.formats.marginBottom == '20px' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe65f;"}}</text>
+            <text :class="data.formats?.marginBottom == '20px' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe65f;"}}</text>
           </view>
           <!-- #endif -->
 
@@ -69,17 +69,17 @@
 
           <!-- #ifndef MP-BAIDU -->
           <view @click="format('fontFamily', 'Pacifico')">
-            <text :class="data.formats.fontFamily == 'Pacifico' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe684;"}}</text>
+            <text :class="data.formats?.fontFamily == 'Pacifico' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe684;"}}</text>
           </view>
           <view @click="format('fontSize', '24px')">
-            <text :class="data.formats.fontSize == '24px' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe6fd;"}}</text>
+            <text :class="data.formats?.fontSize == '24px' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe6fd;"}}</text>
           </view>
           <!-- #endif -->
           <view @click="format('color', '#0000ff')">
-            <text :class="data.formats.color == '#0000ff' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe72c;"}}</text>
+            <text :class="data.formats?.color == '#0000ff' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe72c;"}}</text>
           </view>
           <view @click="format('backgroundColor', '#00ff00')" class="icon-fontbgcolor">
-            <text :class="data.formats.backgroundColor == '#00ff00' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe678;"}}</text>
+            <text :class="data.formats?.backgroundColor == '#00ff00' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe678;"}}</text>
           </view>
           <view @click="insertDate">
             <text class="iconfont">{{"&#xe63e;"}}</text>
@@ -88,10 +88,10 @@
             <text class="iconfont">{{"&#xe664;"}}</text>
           </view>
           <view @click="format('list', 'ordered')">
-            <text :class="data.formats.list == 'ordered' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec86;"}}</text>
+            <text :class="data.formats?.list == 'ordered' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec86;"}}</text>
           </view>
           <view @click="format('list', 'bullet')">
-            <text :class="data.formats.list == 'bullet' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec83;"}}</text>
+            <text :class="data.formats?.list == 'bullet' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec83;"}}</text>
           </view>
 
           <view @click="undo">
@@ -114,13 +114,13 @@
             <text class="iconfont">{{"&#xec82;"}}</text>
           </view>
           <view @click="format('header', 1)">
-            <text :class="data.formats.header == 1 ? 'iconfont ql-active' : 'iconfont'">{{"&#xe860;"}}</text>
+            <text :class="data.formats?.header == 1 ? 'iconfont ql-active' : 'iconfont'">{{"&#xe860;"}}</text>
           </view>
           <view @click="format('script', 'sub')">
-            <text :class="data.formats.script == 'sub' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec93;"}}</text>
+            <text :class="data.formats?.script == 'sub' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec93;"}}</text>
           </view>
           <view @click="format('script', 'super')">
-            <text :class="data.formats.script == 'super' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8c;"}}</text>
+            <text :class="data.formats?.script == 'super' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8c;"}}</text>
           </view>
 
           <view @click="clear">
@@ -128,7 +128,7 @@
           </view>
 
           <view @click="format('direction', 'rtl')">
-            <text :class="data.formats.direction == 'rtl' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe66e;"}}</text>
+            <text :class="data.formats?.direction == 'rtl' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe66e;"}}</text>
           </view>
         </view>
       </scroll-view>
@@ -167,7 +167,8 @@
 
   type DataType = {
     readOnly: boolean;
-    formats: Formats;
+    // 此处 null 类型在安卓端测试例用到
+    formats: Formats | null;
     // TODO 补充editorContext类型
     // #ifdef APP
     editorCtx: EditorContext | null;

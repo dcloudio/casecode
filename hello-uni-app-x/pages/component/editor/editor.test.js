@@ -3,10 +3,12 @@ const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
 const isHarmony = platformInfo.startsWith('harmony')
+const isAndroid = platformInfo.startsWith('android')
+const isiOS = platformInfo.startsWith('ios')
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe('editor.uvue', () => {
-  if (!isHarmony && (isDom2 || (!isWeb && !isMP))) {
+  if (!isHarmony && !isAndroid && (isDom2 || (!isWeb && !isMP))) {
     it('app', () => {
       expect(1).toBe(1)
     })
@@ -20,7 +22,9 @@ describe('editor.uvue', () => {
     await page.waitFor(time);
     editor = await page.$('#editor');
     await page.setData({
-      data:{autoTest: true}
+      data: {
+        autoTest: true
+      }
     })
   });
 
@@ -35,9 +39,9 @@ describe('editor.uvue', () => {
   it('editor-wrapper', async () => {
     if (isWeb || isMP) {
       expect(await editor.attribute("placeholder")).toBe("开始输入...")
-      if(isMP){
+      if (isMP) {
         expect(await page.data("data.readOnly")).toBe(false)
-      }else{
+      } else {
         expect(await editor.attribute("read-only")).toBe("false")
       }
     }
@@ -56,7 +60,9 @@ describe('editor.uvue', () => {
       })
       await page.callMethod('setContents', options)
       await page.setData({
-        data:{formats: {}}
+        data: {
+          formats: null
+        }
       })
       await iconfontsEl[i].tap()
     }
@@ -86,7 +92,7 @@ describe('editor.uvue', () => {
     await page.waitFor(1000)
     expect(await page.data('data.undoTest')).toBe(true)
     await page.callMethod('redo')
-    if(isMP){await page.waitFor(1000)}
+    await page.waitFor(1000)
     expect(await page.data('data.redoTest')).toBe(true)
   })
 
@@ -117,9 +123,31 @@ describe('editor.uvue', () => {
     }])
     await page.waitFor(500)
     await page.callMethod('removeFormat')
-    if(isMP){await page.waitFor(1000)}
+    await page.waitFor(1000)
     expect(await page.data('data.removeFormatTest')).toBe(true)
-    expect(await page.data('data.formats')).toEqual({})
+    if (!isAndroid) {
+      expect(await page.data('data.formats')).toEqual({})
+    } else {
+      expect(await page.data('data.formats')).toEqual({
+        bold: null,
+        italic: null,
+        underline: null,
+        strike: null,
+        align: null,
+        lineHeight: null,
+        letterSpacing: null,
+        marginTop: null,
+        marginBottom: null,
+        fontFamily: null,
+        fontSize: null,
+        color: null,
+        backgroundColor: null,
+        list: null,
+        header: null,
+        script: null,
+        direction: null,
+      })
+    }
   })
 
 });
