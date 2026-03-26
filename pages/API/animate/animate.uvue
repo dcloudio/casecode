@@ -6,11 +6,13 @@
     <view id="main" style="width: 100px;height: 100px; background-color: brown; transform: scale(1);"></view>
 
     <button @click="startAnimate">开始动画</button>
+    <!-- #ifdef VUE3-VAPOR -->
     <!-- #ifndef MP-WEIXIN -->
     <button @click="pauseAnimate">暂停动画</button>
     <button @click="resumeAnimate">恢复动画</button>
     <!-- #endif -->
     <button @click="cancelAnimate">取消动画</button>
+    <!-- #endif -->
 
     <image src="/static/test-image/logo.png" id="roll" style="width: 100px; height: 100px;margin: 10px;"></image>
 
@@ -134,17 +136,19 @@
       duration: 5000,
 
     })
-    animation!.oncancel = (_ : UniAnimationPlaybackEvent) => {
-      data.testTriggerCancelEvent = true
-      uni.showToast({
-        title: "动画被取消了"
-      })
-    }
-    animation!.onfinish = (_ : UniAnimationPlaybackEvent) => {
-      data.testTriggerFinishEvent = true
-      uni.showToast({
-        title: "动画播放完成"
-      })
+    if (animation != null) {
+      animation!.oncancel = (_ : UniAnimationPlaybackEvent) => {
+        data.testTriggerCancelEvent = true
+        uni.showToast({
+          title: "动画被取消了"
+        })
+      }
+      animation!.onfinish = (_ : UniAnimationPlaybackEvent) => {
+        data.testTriggerFinishEvent = true
+        uni.showToast({
+          title: "动画播放完成"
+        })
+      }
     }
   }
 
