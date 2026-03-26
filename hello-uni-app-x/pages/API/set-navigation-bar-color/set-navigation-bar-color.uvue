@@ -66,7 +66,7 @@
 
   const goNavbarLite = () => {
     uni.navigateTo({
-      url: '/pages/template/navbar-lite/navbar-lite'
+      url: '/pages/template/custom-navbar-search/custom-navbar-search'
     })
   }
 

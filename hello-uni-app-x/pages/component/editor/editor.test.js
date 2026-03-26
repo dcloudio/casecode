@@ -2,10 +2,11 @@ jest.setTimeout(30000);
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
+const isHarmony = platformInfo.startsWith('harmony')
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe('editor.uvue', () => {
-  if (isDom2 || (!isWeb && !isMP)) {
+  if (!isHarmony && (isDom2 || (!isWeb && !isMP))) {
     it('app', () => {
       expect(1).toBe(1)
     })
@@ -32,11 +33,13 @@ describe('editor.uvue', () => {
   }
 
   it('editor-wrapper', async () => {
-    expect(await editor.attribute("placeholder")).toBe("开始输入...")
-    if(isMP){
-      expect(await page.data("data.readOnly")).toBe(false)
-    }else{
-      expect(await editor.attribute("read-only")).toBe("false")
+    if (isWeb || isMP) {
+      expect(await editor.attribute("placeholder")).toBe("开始输入...")
+      if(isMP){
+        expect(await page.data("data.readOnly")).toBe(false)
+      }else{
+        expect(await editor.attribute("read-only")).toBe("false")
+      }
     }
     expect(await program.screenshot()).toSaveImageSnapshot();
   });
@@ -47,9 +50,8 @@ describe('editor.uvue', () => {
       await iconfontsEl[i].tap()
       // await page.waitFor(500)
       const getFormats = await page.data('data.formats')
-      const name = await iconfontsEl[i].attribute('data-name')
       options.push({
-        insert: '文本内容' + name,
+        insert: '文本内容ABC123defgpqif',
         attributes: getFormats
       })
       await page.callMethod('setContents', options)
@@ -68,7 +70,13 @@ describe('editor.uvue', () => {
 
   it('clear', async () => {
     await page.callMethod('clear')
-    expect(await editor.attribute("placeholder")).toBe("开始输入...")
+    const start = Date.now();
+    await page.waitFor(async () => {
+      return await page.data('data.clearTest') === true || (Date.now() - start > 2000)
+    })
+    if (isWeb || isMP) {
+      expect(await editor.attribute("placeholder")).toBe("开始输入...")
+    }
   })
 
   it('undo-redo', async () => {

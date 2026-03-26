@@ -59,26 +59,42 @@
       <text style="font-size: 15px;">overflow=hidden效果 子元素是text</text>
       <view class="backgroundview">
         <view class="box-hidden-border-radius">
-          <text class="text1">ABCDEFG</text>
+          <text
+            <!-- #ifdef VUE3-VAPOR-->
+              max-lines=1
+            <!-- #endif-->
+            class="text1">ABCDEFG</text>
         </view>
       </view>
       <text>拍平</text>
       <view class="backgroundview">
         <view class="box-hidden-border-radius" flatten>
-          <text class="text1" flatten>ABCDEFG</text>
+          <text
+          <!-- #ifdef VUE3-VAPOR-->
+            max-lines=1
+          <!-- #endif-->
+          class="text1" flatten>ABCDEFG</text>
         </view>
       </view>
 
       <text style="font-size: 15px;">overflow=visible效果 子元素是text</text>
       <view class="backgroundview">
         <view class="box-visible-border-radius">
-          <text class="text1">ABCDEFG</text>
+          <text
+          <!-- #ifdef VUE3-VAPOR-->
+            max-lines=1
+          <!-- #endif-->
+          class="text1">ABCDEFG</text>
         </view>
       </view>
       <text>拍平</text>
       <view class="backgroundview">
         <view class="box-visible-border-radius" flatten>
-          <text class="text1" flatten>ABCDEFG</text>
+          <text
+          <!-- #ifdef VUE3-VAPOR-->
+            max-lines=1
+          <!-- #endif-->
+           class="text1" flatten >ABCDEFG</text>
         </view>
       </view>
 
@@ -146,6 +162,24 @@
           <view style="width: 50px; height: 50px; background-color: greenyellow;right: -70px;position: absolute;" flatten></view>
         </view>
       </view>
+
+      <text style="font-size: 15px;">overflow=hidden 多层view嵌套裁剪</text>
+      <view class="backgroundview">
+        <view class="box-visible-border-width">
+          <view style="overflow: hidden; width: 100px; height: 100px;">
+            <view style="width: 50px; height: 130px; background-color: greenyellow;position: absolute;"></view>
+          </view>
+        </view>
+      </view>
+      <text>拍平</text>
+      <view class="backgroundview">
+        <view class="box-visible-border-width" flatten>
+          <view style="overflow: hidden; width: 100px; height: 100px;" flatten>
+            <view style="width: 50px; height: 130px; background-color: greenyellow;position: absolute;" flatten></view>
+          </view>
+        </view>
+      </view>
+
     </view>
   <!-- #ifdef APP -->
   </scroll-view>

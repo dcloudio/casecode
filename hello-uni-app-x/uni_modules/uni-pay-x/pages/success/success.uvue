@@ -33,6 +33,11 @@
 </template>
 
 <script setup lang="uts">
+  /**
+   * @description: 展示支付成功后的结果页，包含金额、订单编号以及返回订单详情入口。
+   * @logic: 页面加载时读取支付结果参数，格式化展示订单金额和编号；当存在 `return_url` 时，点击“查看订单”会拼接订单参数并跳转详情页。
+   * @optimization: 将支付结果参数统一存入 `myOptions`，并通过 `amountFormat` 与 `queryOrder` 收敛展示和跳转逻辑，减少模板层的处理负担。
+   */
   const myOptions = ref({
     adpid: "",
     order_no: "",

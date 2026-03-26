@@ -53,6 +53,7 @@
   })
 
   onBackPress((options : OnBackPressOptions) : boolean | null => {
+    console.log('dialog 2 onBackPress', options)
     // 自动化测试
     setLifeCycleNum(state.lifeCycleNum + 1)
     return false

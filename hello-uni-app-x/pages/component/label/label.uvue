@@ -37,9 +37,15 @@
           <label class="label-3 label">
             <view class="uni-list-cell uni-list-cell-pd">
               <checkbox value="for1">选项一</checkbox>
+              <!-- #ifdef MP-ALIPAY -->
+              <text>选项一</text>
+              <!-- #endif -->
             </view>
             <view class="uni-list-cell uni-list-cell-pd">
               <checkbox value="for2">选项二</checkbox>
+              <!-- #ifdef MP-ALIPAY -->
+              <text>选项二</text>
+              <!-- #endif -->
             </view>
             <view class="uni-center" style="margin:10px 0;">
               <text class="uni-link">点击该label下的文字默认选中第一个checkbox</text>

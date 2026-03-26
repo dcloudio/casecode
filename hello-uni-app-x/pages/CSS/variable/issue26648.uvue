@@ -1,0 +1,20 @@
+<template>
+	<view class="cell">
+		<text class="cell-text" :style="textStyle">文字颜色依旧为红色</text>
+	</view>
+</template>
+<script setup>
+	const textStyle = ref({
+		color: "blue",
+	})
+</script>
+<style scoped lang="scss">
+	.cell {
+		--app-color: red;
+
+		&-text {
+			color: var(--app-color);
+			// color:red; //不用css变量则正常
+		}
+	}
+</style>

@@ -7,7 +7,7 @@
 					<sticky-header style="background-color: antiquewhite;">
 						<text class="group-title">{{ group.title }}</text>
 					</sticky-header>
-					<list-item class="content-group">
+					<list-item class="content-group" v-for="item in 1" :key="item">
 						<view class="content-box">
 							<text class="item" v-for="index in 20" >{{index}} item信息</text>
 						</view>

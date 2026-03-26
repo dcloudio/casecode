@@ -20,8 +20,14 @@
         <!-- 原有的基础拍平测试 -->
         <text class="uni-title-text uni-common-mt">基础（右边为拍平）</text>
         <view class="uni-center image-bg">
-          <image class="image" :fade-show="true" mode="widthFix" :src="data.imageSrc" @error="error" @load="load"></image>
-          <image class="image" :fade-show="true" mode="widthFix" :src="data.imageSrc" @error="error" @load="load" flatten></image>
+            #<!-- #ifndef APP-IOS -->
+            <image class="image"  :fade-show="true" mode="widthFix" :src="data.imageSrc" @error="error" @load="load"></image>
+            <image class="image"  :fade-show="true" mode="widthFix" :src="data.imageSrc" @error="error" @load="load" flatten></image>
+            <!-- #endif -->
+            #<!-- #ifdef APP-IOS -->
+            <image class="image"  mode="widthFix" :src="data.imageSrc" @error="error" @load="load"></image>
+            <image class="image"  mode="widthFix" :src="data.imageSrc" @error="error" @load="load" flatten></image>
+            <!-- #endif -->
         </view>
 
         <button class="uni-btn" @tap="imageFormat">图片格式示例</button>

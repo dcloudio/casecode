@@ -8,7 +8,7 @@
       </view>
       <view v-if="!hasLeftWin" class="uni-text-box">
         <text class="hello-text">以下是部分模板示例，更多模板见插件市场：</text>
-        <u-link class="hello-text" href="https://ext.dcloud.net.cn" :text="'https://ext.dcloud.net.cn'" :inWhiteList="true"></u-link>
+        <uni-link class="hello-text" href="https://ext.dcloud.net.cn" text="https://ext.dcloud.net.cn" :inWhiteList="true"></uni-link>
       </view>
       <view class="uni-panel" v-for="(item, index) in list" :key="item.id">
         <view hover-class="is--active" class="uni-panel-h" @click="triggerCollapse(index, item)">
@@ -115,145 +115,152 @@
       pages: [
         // #ifdef WEB
         {
-          name: '顶部banner长列表（嵌套滚动）',
-          url: 'long-list2'
+          name: '顶部 Banner 分栏信息流嵌套滚动',
+          url: 'banner-tabs-feed-nested-scroll'
         },
         // #endif
         // #ifdef APP
         {
-          name: '顶部banner长列表（嵌套滚动）',
-          url: 'long-list-nested'
+          name: '顶部 Banner 分栏长列表嵌套滚动',
+          url: 'banner-tabs-long-list-nested-scroll'
         },
         {
-          name: '顶部banner瀑布流长列表（嵌套滚动）',
-          url: 'long-waterflow-nested'
+          name: '顶部 Banner 瀑布流嵌套滚动',
+          url: 'banner-waterfall-nested-scroll'
         },
         // #endif
         {
-          name: '顶部搜索框随时下移长列表',
-          url: 'long-list'
+          name: '带搜索框的分栏长列表',
+          url: 'search-header-long-list'
         }
       ] as Page[],
     },
     {
-      id: 'list-news',
-      url: 'list-news',
-      name: '列表到详情（吸顶）',
+      id: 'news-feed-list',
+      url: 'news-feed-list',
+      name: '新闻资讯列表',
       open: false,
       pages: [] as Page[],
     },
     // #ifdef APP || WEB
     {
-      id: 'long-list-deleteable',
-      url: 'long-list-deleteable',
-      name: '带删除的不等高长列表',
+      id: 'list-delete-swipe-batch',
+      url: 'list-delete-swipe-batch',
+      name: '可侧滑删除和多选删除的列表',
       open: false,
       pages: [] as Page[],
     },
     // #endif
     // #ifndef VUE3-VAPOR
     {
-      id: 'long-list-batch',
-      url: 'long-list-batch',
+      id: 'batch-load-long-list',
+      url: 'batch-load-long-list',
       name: '分批加载长列表',
       open: false,
       pages: [] as Page[],
     },
     {
-      id: 'custom-long-list',
-      url: 'custom-long-list',
-      name: '回收复用长列表',
+      id: 'recycle-long-list',
+      url: 'recycle-long-list',
+      name: '可回收复用长列表',
       open: false,
       pages: [] as Page[],
     },
     // #endif
     {
-      id: 'swiper-list',
-      url: 'swiper-list',
-      name: 'swiper-list',
+      id: 'swipe-tabs-underline',
+      url: 'swipe-tabs-underline',
+      name: '横滑分页标签栏',
       open: false,
       pages: [
         {
-          name: '下划线样式',
-          url: 'swiper-list'
+          name: '横滑分页标签栏（下划线指示）',
+          url: 'swipe-tabs-underline'
         },
         {
-          name: '字体放大样式',
-          url: 'swiper-list2'
+          name: '横滑分页标签栏（字体缩放高亮）',
+          url: 'swipe-tabs-scale-highlight'
         },
       ] as Page[],
     },
     {
-      id: 'scroll-fold-nav',
-      url: 'scroll-fold-nav',
+      id: 'scroll-collapse-navbar',
+      url: 'scroll-collapse-navbar',
       name: '随滚动折叠的导航栏',
       open: false,
       pages: [] as Page[],
     },
     // #ifdef APP
     {
-      id: 'pull-zoom-image',
-      url: 'pull-zoom-image',
-      name: '下拉缩放顶部封面图',
+      id: 'pull-zoom-profile-page',
+      url: 'pull-zoom-profile-page',
+      name: '下拉缩放封面图的个人主页',
       open: false,
       pages: [] as Page[],
     },
     {
-      id: 'scroll-sticky',
-      url: 'scroll-sticky',
-      name: 'scroll-view自定义滚动吸顶',
+      id: 'scroll-view-sticky-section',
+      url: 'scroll-view-sticky-section',
+      name: 'scroll-view 分段吸顶列表',
       open: false,
       pages: [] as Page[],
     },
     // #endif
     {
-      id: 'navbar-lite',
-      url: 'navbar-lite',
-      name: '自定义导航栏',
+      id: 'custom-navbar-search',
+      url: 'custom-navbar-search',
+      name: '带搜索框的自定义导航栏',
       open: false,
       pages: [] as Page[],
     },
     {
-      id: 'nav-transparent',
-      url: 'nav-transparent',
-      name: '自定义透明渐变导航栏',
+      id: 'scroll-fade-navbar',
+      url: 'scroll-fade-navbar',
+      name: '随滚动渐显的透明导航栏',
       open: false,
       pages: [] as Page[],
     },
     {
-      id: 'custom-tab-bar',
-      url: 'custom-tab-bar',
-      name: '自定义TabBar',
+      id: 'tabbar-center-action',
+      url: 'tabbar-center-action',
+      name: '带中间操作按钮的自定义 TabBar',
       open: false,
       enable: true,
       pages: [] as Page[],
     },{
-      id: 'swiper-vertical-video',
-      url: 'swiper-vertical-video',
-      name: '竖滑视频',
+      id: 'vertical-video-feed',
+      url: 'vertical-video-feed',
+      name: '竖滑切换的视频信息流',
       open: false,
       pages: [] as Page[],
     },
     // #ifdef VUE3-VAPOR || APP-IOS || APP-ANDROID || WEB
     {
-      id: 'ai-chat',
-      url: 'ai-chat',
-      name: 'ai-chat聊天示例',
+      id: 'chat-stream-reply',
+      url: 'chat-stream-reply',
+      name: '流式回复聊天示例',
       open: false,
       pages: [] as Page[],
     },
     // #endif
     {
-      id: 'half-screen',
-      url: 'half-screen',
-      name: '半屏弹窗',
+      id: 'draggable-half-modal',
+      url: 'draggable-half-modal',
+      name: '可拖拽关闭的半屏弹窗',
       open: false,
       pages: [] as Page[],
     },
     {
-      id: 'drop-card',
-      url: 'drop-card',
-      name: '划走式卡片',
+      id: 'interstitial-poster',
+      url: 'interstitial-poster',
+      name: 'page-container 插屏海报',
+      open: false,
+      pages: [] as Page[],
+    },
+    {
+      id: 'swipe-card-stack',
+      url: 'swipe-card-stack',
+      name: '左右划走的卡片堆叠',
       open: false,
       pages: [] as Page[],
     },
@@ -271,34 +278,34 @@
     },
     // #ifdef APP || WEB
     {
-      id: 'schema',
-      url: 'schema',
-      name: '打开外部链接',
+      id: 'external-link-launch',
+      url: 'external-link-launch',
+      name: '唤起外部应用与链接',
       open: false,
       pages: [] as Page[],
     },
     // #endif
     // #ifdef WEB
     {
-      id: 'browser-element',
-      url: 'browser-element',
-      name: '如何使用浏览器 element',
+      id: 'browser-built-in-elements',
+      url: 'browser-built-in-elements',
+      name: '浏览器内置元素示例',
       open: false,
       pages: [] as Page[],
     },
     // #endif
     // #ifdef MP-WEIXIN
     {
-      id: 'vant',
-      url: 'vant',
-      name: '微信自定义组件示例',
+      id: 'mp-custom-components-vant',
+      url: 'mp-custom-components-vant',
+      name: '微信小程序自定义组件接入（Vant）',
       open: false,
       pages: [] as Page[],
     },
     {
-      id: 'WXS',
-      url: 'WXS',
-      name: 'WXS',
+      id: 'wxs-drag-interaction',
+      url: 'wxs-drag-interaction',
+      name: 'WXS 交互与拖拽示例',
       open: false,
       pages: [] as Page[],
     },
@@ -374,7 +381,7 @@
   watch(() => netless.value, (netless) => {
     if (netless) {
       list.value = list.value.filter(item => {
-        return !['list-news'].includes(item.id)
+        return !['news-feed-list'].includes(item.id)
       })
     }
   }, { immediate: true })
@@ -403,15 +410,15 @@
     generateListViewMockList()
     generateWaterflowMockList()
     // #endif
-    // 预请求网络，只发送head请求，预先完成dns解析和tcp握手，提升后续请求速度
+    // 预热网络，只发送head请求，预先完成dns解析和tcp握手，提升后续请求速度
     uni.request({
       url: 'https://unidemo.dcloud.net.cn', // 替换为实际请求的URL
       method: 'HEAD',
       success: (res) => {
-        console.log('预热网络成功', res)
+        // console.log('预热网络成功', res)
       },
       fail: (err) => {
-        console.log('预热网络失败', err);
+        // console.log('预热网络失败', err);
       }
     })
   })

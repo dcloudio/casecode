@@ -83,4 +83,12 @@ describe('text-props', () => {
       }
       await setPageData({ autoTest: false })
   })
+
+  it('test attr decode', async () => {
+      await setPageData({ decode: false });
+      await page.waitFor(100);
+      const image = await program.screenshot({ fullPage: true });
+      expect(image).toSaveImageSnapshot();
+      await setPageData({ decode: true });
+  });
 })

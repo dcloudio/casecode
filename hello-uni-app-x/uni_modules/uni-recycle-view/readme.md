@@ -29,7 +29,7 @@ uni-recycle-view 组件只创建了有限的VNode，循环复用这些VNode。un
 
 ### 基本用法
 
-示例参考：[hello uni-app-x 虚拟长列表模板](https://gitcode.com/dcloud/hello-uni-app-x/blob/dev/pages/template/custom-long-list/custom-long-list.uvue)
+示例参考：[hello uni-app-x 虚拟长列表模板](https://gitcode.com/dcloud/hello-uni-app-x/blob/dev/pages/template/recycle-long-list/recycle-long-list.uvue)
 
 uni-recycle-view组件传入通过绑定list属性`:list="list"`传入含所有数据的列表。经过组件内部计算，由作用域插槽返回真实要渲染的部分数据`v-slot:default="{items}"`。最终仅需渲染items而不是list，从而节省了大量的计算消耗及内存占用。
 

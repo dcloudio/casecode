@@ -2,8 +2,6 @@ const PAGE_PATH = '/pages/component/rich-text/rich-text'
 
 describe('rich-text-test', () => {
   const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
-  const isMP = platformInfo.startsWith('mp')
-  const isWeb = platformInfo.startsWith('web')
   const isiOS = platformInfo.startsWith('ios')
   const isAndroid = platformInfo.startsWith('android')
   const isHarmony = platformInfo.startsWith('harmony')

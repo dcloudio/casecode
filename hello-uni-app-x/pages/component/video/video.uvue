@@ -22,14 +22,22 @@
       <!-- #ifdef APP-HARMONY -->
       <template #controls>
         <view  v-if="data.subCompControlsShow" class="video-fullscreen_controls">
-          <view class="control-btn" @click="togglePlay">
-            <text class="control-icon">{{ data.isPlaying ? ICON_PAUSH : ICON_PLAY }}</text>
+          <view style="flex-direction: row;justify-content: center;align-items: center;">
+            <view class="control-btn" @click="togglePlay">
+              <text class="control-icon">{{ data.isPlaying ? ICON_PAUSH : ICON_PLAY }}</text>
+            </view>
+            <view class="control-btn" @click="toggleDanmu">
+              <text class="control-icon">{{ data.enableDanmu ? ICON_DANMU_ACTIVE : ICON_DANMU }}</text>
+            </view>
+            <view class="control-btn" @click="toggleMute">
+              <text class="control-icon">{{ data.muted ? ICON_VOLUME_MUTE : ICON_VOLUME }}</text>
+            </view>
           </view>
-          <view class="control-btn" @click="toggleDanmu">
-            <text class="control-icon">{{ data.enableDanmu ? ICON_DANMU_ACTIVE : ICON_DANMU }}</text>
-          </view>
-          <view class="control-btn" @click="toggleMute">
-            <text class="control-icon">{{ data.muted ? ICON_VOLUME_MUTE : ICON_VOLUME }}</text>
+
+          <view>
+            <view class="control-btn" @click="toggleFullscreen">
+              <text class="control-icon">{{ data.isFullscreen ? ICON_FULLSCREEN_CLOSE : ICON_FULLSCREEN }}</text>
+            </view>
           </view>
         </view>
       </template>
@@ -201,6 +209,7 @@
     subCompControlsEnable: boolean;
     subCompShow: boolean;
     subCompControlsShow: boolean;
+    isFullscreen: boolean;
     curPos: number;
     endPos: number;
     // 自动化测试
@@ -227,6 +236,8 @@
   const ICON_DANMU_ACTIVE = '\uea27';
   const ICON_VOLUME = '\uea30';
   const ICON_VOLUME_MUTE = '\uea31';
+  const ICON_FULLSCREEN_CLOSE = '\uea28';
+  const ICON_FULLSCREEN = '\uea29';
 
   // 使用reactive避免ref数据在自动化测试中无法访问
   const data = reactive({
@@ -307,6 +318,7 @@
     subCompControlsEnable: false,
     subCompShow: false,
     subCompControlsShow: false,
+    isFullscreen: false,
     curPos: 0,
     endPos: 0,
     // 自动化测试
@@ -424,6 +436,14 @@
 
   const toggleMute = () => {
     data.muted = !data.muted;
+  }
+
+  const toggleFullscreen = () => {
+    if (data.isFullscreen) {
+      exitFullScreen()
+    } else {
+      requestFullScreen();
+    }
   }
 
   const fastBackward = () => {
@@ -688,6 +708,7 @@
     const detail = res.detail
     console.log(res.type + " -> " + JSON.stringify(detail));
     data.subCompShow = detail.fullScreen;
+    data.isFullscreen = detail.fullScreen;
     isHorizontalFullscreen.value = detail.fullScreen && detail.direction === 'horizontal'
     if (data.autoTest) {
       data.eventFullscreenchange = {
@@ -776,8 +797,9 @@
 
   // #ifdef APP-ANDROID
   const hasSubComponent = () : boolean => {
-    const view = uni.getElementById('video')?.getAndroidView<ViewGroup>();
-    return view == null ? false : view.getChildAt(0) instanceof ViewGroup;
+    const element = uni.getElementById('video')?.querySelector('.uni-video-slots');
+    if (element == null) return false;
+    return element.children.length > 0;
   }
   // #endif
 
@@ -850,18 +872,20 @@
   }
 
   .video-fullscreen_controls {
+    padding-left: var(--uni-safe-area-inset-left);
+    padding-right: var(--uni-safe-area-inset-right);
     position: absolute;
     left: 0;
     right: 0;
     bottom: 8px;
     height: 50px;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
   }
 
   .control-btn {
-    width: 60px;
+    width: 50px;
     height: 100%;
     justify-content: center;
     align-items: center;

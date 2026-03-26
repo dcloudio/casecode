@@ -54,7 +54,7 @@
                         <view class="nest-row b9" flatten>
                           <text class="tag-pill" flatten>L9</text>
                           <view class="nest-row b10" flatten>
-                            <time-format :timestamp="item.timestamp" format="relative" flatten></time-format>
+                            <uni-time-format :timestamp="item.timestamp" format="relative" flatten></uni-time-format>
                           </view>
                         </view>
                       </view>
@@ -109,7 +109,7 @@
                         <text class="tag-pill" flatten>L8</text>
                         <view class="nest-row b9" flatten>
                           <view class="nest-row b10" flatten>
-                            <time-format :timestamp="item.timestamp" format="relative" flatten></time-format>
+                            <uni-time-format :timestamp="item.timestamp" format="relative" flatten></uni-time-format>
                           </view>
                         </view>
                       </view>
@@ -172,7 +172,7 @@
                         <text class="author-text" flatten>{{ item.author }}</text>
                         <view class="nest-row b9" flatten>
                           <view class="nest-row b10" flatten>
-                            <time-format :timestamp="item.timestamp" format="date" flatten></time-format>
+                            <uni-time-format :timestamp="item.timestamp" format="date" flatten></uni-time-format>
                           </view>
                         </view>
                       </view>
@@ -210,7 +210,7 @@
                             <text class="card-info-text" flatten>进行中</text>
                             <view class="card-row b9" flatten>
                               <view class="card-row b10" flatten>
-                                <time-format :timestamp="item.timestamp" format="time" flatten></time-format>
+                                <uni-time-format :timestamp="item.timestamp" format="time" flatten></uni-time-format>
                               </view>
                             </view>
                           </view>
@@ -256,7 +256,7 @@
                         <text class="tag-pill" flatten>L8</text>
                         <view class="nest-row b9" flatten>
                           <view class="nest-row b10" flatten>
-                            <time-format :timestamp="item.timestamp" format="datetime" flatten></time-format>
+                            <uni-time-format :timestamp="item.timestamp" format="datetime" flatten></uni-time-format>
                           </view>
                         </view>
                       </view>

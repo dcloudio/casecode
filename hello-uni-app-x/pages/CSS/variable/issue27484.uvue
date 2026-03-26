@@ -1,0 +1,21 @@
+<template>
+    <text class="line2">测试css var line-height 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试</text>
+    <view style="background-color: red;height: 10px;"></view>
+    <text class="line">测试css var line-height 测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试</text>
+    <view style="background-color: red;height: 10px;"></view>
+</template>
+
+<script setup lang="uts">
+
+	onLoad(() => {
+  })
+
+</script>
+<style>
+    .line {
+    	line-height: var(--l-line-height, 2.666);
+    }
+    .line2 {
+    	line-height: 2.6666;
+    }
+</style>

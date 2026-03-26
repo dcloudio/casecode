@@ -43,8 +43,12 @@
 </template>
 
 <script setup lang="uts">
+  /**
+   * @description: 演示 uni-pay 自定义收银台页面，展示待支付金额并根据可用支付渠道发起支付。
+   * @logic: 页面加载时接收并解析订单参数，支付组件挂载后回填可用渠道与图标；用户选择支付渠道后调用 `createOrder` 发起支付，支付成功时跳转到成功页。
+   * @optimization: 将下单入口统一收口到 `createOrder`，并通过 `insideData` 管理支付组件返回的渠道能力，避免不同支付方式分散维护。
+   */
   import { objectAssign } from "../../js_sdk/js_sdk"
-
   const myOptions = ref({
     total_fee: "",
   } as UTSJSONObject)

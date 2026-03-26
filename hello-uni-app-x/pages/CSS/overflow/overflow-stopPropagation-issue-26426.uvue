@@ -1,0 +1,204 @@
+<template>
+	<view class="container">
+		<view class="test-info">
+			<text class="test-title">溢出元素点击事件测试</text>
+			<text class="test-desc">测试场景：list-item 内部元素溢出容器后的点击事件传递</text>
+		</view>
+
+		<list-view class="list-container">
+			<list-item :key="testItemKey" :type="0" @click="handleCellClick">
+				<view class="cell-wrapper">
+					<view class="cell-content">
+						<text class="cell-text">列表项主体区域</text>
+					</view>
+
+					<view class="overflow-container">
+						<view class="overflow-wrapper">
+							<view class="overflow-button" @click="handleOverflowClick($event as UniPointerEvent)">
+								<text class="overflow-text">溢出按钮</text>
+							</view>
+						</view>
+					</view>
+				</view>
+			</list-item>
+		</list-view>
+
+		<view class="log-container">
+			<view class="log-header">
+				<text class="log-title">点击日志：</text>
+				<text class="log-clear" @click="clearLog">清空</text>
+			</view>
+			<scroll-view class="log-list" :scroll-into-view="scrollIntoView">
+				<view v-for="(log, index) in clickLogs" :key="index" :id="`log-${index}`">
+					<text class="log-text">{{ log }}</text>
+				</view>
+				<text v-if="clickLogs.length === 0" class="log-empty">等待点击...</text>
+			</scroll-view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="uts">
+
+	const testItemKey = 1234
+	const clickLogs = ref<string[]>([])
+	const scrollIntoView = ref<string>('')
+
+	function scrollToBottom() {
+		const index = clickLogs.value.length - 1
+		if (index >= 0) {
+			scrollIntoView.value = `log-${index}`
+		}
+	}
+
+	function handleCellClick(event : UniPointerEvent) {
+		const timestamp = new Date().toLocaleTimeString()
+		const message = `[${timestamp}] Cell - 点击了列表项主体 | hashCode: ${event}`
+		console.log(message)
+		clickLogs.value.push(message)
+		scrollToBottom()
+	}
+
+	function handleOverflowClick(event : UniPointerEvent) {
+		event.stopPropagation()
+		const timestamp = new Date().toLocaleTimeString()
+		const message = `[${timestamp}] Overflow - 点击了溢出按钮 | hashCode: ${event}`
+		console.log(message)
+		clickLogs.value.push(message)
+		scrollToBottom()
+	}
+
+	function clearLog() {
+		clickLogs.value = []
+		scrollIntoView.value = ''
+	}
+</script>
+
+<style>
+	.container {
+		flex: 1;
+		background-color: #f5f5f5;
+		padding: 20px;
+		flex-direction: column;
+	}
+
+	.test-info {
+		background-color: #ffffff;
+		padding: 15px;
+		border-radius: 8px;
+		margin-bottom: 20px;
+	}
+
+	.test-title {
+		font-size: 18px;
+		font-weight: bold;
+		color: #333333;
+		margin-bottom: 8px;
+	}
+
+	.test-desc {
+		font-size: 14px;
+		color: #666666;
+		line-height: 20px;
+	}
+
+	.list-container {
+		width: 300px;
+		flex: 1;
+		background-color: #ffffff;
+		border-radius: 8px;
+		border: 1px solid #e0e0e0;
+	}
+
+	.cell-wrapper {
+		overflow: visible;
+		width: 60%;
+		height: 80px;
+		position: relative;
+	}
+
+	.cell-content {
+		height: 100%;
+		background-color: #e3f2fd;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.cell-text {
+		font-size: 16px;
+		color: #1976d2;
+	}
+
+	.overflow-container {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
+		overflow: visible;
+	}
+
+	.overflow-wrapper {
+		transform: translate(100%, 0);
+	}
+
+	.overflow-button {
+		background-color: #f44336;
+		width: 80px;
+		height: 80px;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.overflow-text {
+		color: #ffffff;
+		font-size: 15px;
+		font-weight: 500;
+	}
+
+	.log-container {
+		background-color: #ffffff;
+		padding: 15px;
+		border-radius: 8px;
+		margin-top: 20px;
+		flex-shrink: 0;
+		max-height: 200px;
+	}
+
+	.log-header {
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+
+	.log-title {
+		font-size: 14px;
+		font-weight: bold;
+		color: #333333;
+	}
+
+	.log-clear {
+		font-size: 13px;
+		color: #2196f3;
+		padding: 4px 8px;
+	}
+
+	.log-list {
+		flex: 1;
+		max-height: 150px;
+	}
+
+	.log-text {
+		font-size: 12px;
+		color: #4caf50;
+		font-family: monospace;
+		line-height: 20px;
+		margin-bottom: 4px;
+	}
+
+	.log-empty {
+		font-size: 13px;
+		color: #999999;
+		font-style: italic;
+	}
+</style>

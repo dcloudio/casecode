@@ -1,0 +1,23 @@
+const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
+const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
+
+describe('input-performance', () => {
+  if (isAppWebView || !isDom2) {
+  	it('skip', () => {
+      expect(1).toBe(1)
+    })
+  	return
+  }
+
+  let page;
+  beforeAll(async () => {
+    page = await program.reLaunch('/pages/component/input/input-performance')
+    await page.waitFor('view');
+  });
+
+  // 测试页面加载速度及 placeholder 字体大小是否正常 issue/26417
+  it("screenshot", async () => {
+    const image = await program.screenshot()
+    expect(image).toSaveImageSnapshot()
+  })
+});

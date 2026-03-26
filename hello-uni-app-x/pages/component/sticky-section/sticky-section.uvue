@@ -94,11 +94,8 @@
   }
 
   const gotoStickyHeader = (id : string) => {
-    // #ifdef APP
+    // #ifdef APP || WEB
     pageData.scrollIntoView = id
-    // #endif
-    // #ifdef WEB
-    console.log("web端不支持该功能")
     // #endif
   }
 

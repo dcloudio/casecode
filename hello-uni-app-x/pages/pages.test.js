@@ -9,8 +9,9 @@ const isWeb = platformInfo.startsWith('web')
 const isMP = platformInfo.startsWith('mp')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 
+// 【勿动】pages 由 const 改为 let，因为在其它任务会修改 pages 的值
 let pageIndex = 0
-const pages = [
+let pages = [
   // tabBar  //改动频繁，不再测试
   // '/pages/tabBar/component',
   // '/pages/tabBar/API',
@@ -292,41 +293,41 @@ const pages = [
 
   // template
   // 网络资源加载，单独测试例截图
-  // '/pages/template/list-news/list-news',
+  // '/pages/template/news-feed-list/news-feed-list',
   // 依赖网络资源加载
-  // '/pages/template/list-news/detail/detail',
+  // '/pages/template/news-feed-list/detail/detail',
   // 动画页面
-  // '/pages/template/drop-card/drop-card',
-  '/pages/template/swiper-list/swiper-list',
-  '/pages/template/swiper-list2/swiper-list2',
+  // '/pages/template/swipe-card-stack/swipe-card-stack',
+  '/pages/template/swipe-tabs-underline/swipe-tabs-underline',
+  '/pages/template/swipe-tabs-scale-highlight/swipe-tabs-scale-highlight',
   // 单独测试例截图
-  // '/pages/template/swiper-vertical-video/swiper-vertical-video',
+  // '/pages/template/vertical-video-feed/vertical-video-feed',
   // 单独测试例截图
-  // '/pages/template/scroll-fold-nav/scroll-fold-nav',
+  // '/pages/template/scroll-collapse-navbar/scroll-collapse-navbar',
   // 单独测试例截图
-  // '/pages/template/half-screen/half-screen',
+  // '/pages/template/draggable-half-modal/draggable-half-modal',
   // 动态内容
-  // '/pages/template/long-list/long-list',
+  // '/pages/template/search-header-long-list/search-header-long-list',
   // 动态内容
-  // '/pages/template/long-list2/long-list2',
+  // '/pages/template/banner-tabs-feed-nested-scroll/banner-tabs-feed-nested-scroll',
   // harmony 整体测试时截图异常，单独测试例截图
-  // '/pages/template/pull-zoom-image/pull-zoom-image',
-  '/pages/template/navbar-lite/navbar-lite',
-  '/pages/template/custom-tab-bar/custom-tab-bar',
+  // '/pages/template/pull-zoom-profile-page/pull-zoom-profile-page',
+  '/pages/template/custom-navbar-search/custom-navbar-search',
+  '/pages/template/tabbar-center-action/tabbar-center-action',
   // 动态内容
   // '/pages/template/calendar/calendar',
   // 不同平台存在差异，且页面简单
-  // '/pages/template/schema/schema',
+  // '/pages/template/external-link-launch/external-link-launch',
   // '/uni_modules/uni-pay-x/pages/success/success',
   // 依赖 onload 参数获取 web-view src
   // '/uni_modules/uni-pay-x/pages/ad-interactive-webview/ad-interactive-webview',
   // '/uni_modules/uni-pay-x/pages/pay-desk/pay-desk',
   // 页面内容不稳定
-  // '/pages/template/custom-long-list/custom-long-list',
+  // '/pages/template/recycle-long-list/recycle-long-list',
   // 单独测试例截图
   // '/pages/template/slider-100/slider-100',
   // 动态内容
-  // '/pages/template/long-list-nested/long-list-nested',
+  // '/pages/template/banner-tabs-long-list-nested-scroll/banner-tabs-long-list-nested-scroll',
   '/pages/template/issue-25934/issue-25934'
 ]
 
@@ -368,7 +369,7 @@ if (!isAppWebView) {
       // '/pages/API/get-uni-verify-manager/get-uni-verify-manager',
       // 非 UI 相关不截图
       // '/pages/API/request-payment/request-payment',
-      '/pages/template/scroll-sticky/scroll-sticky',
+      '/pages/template/scroll-view-sticky-section/scroll-view-sticky-section',
     )
   }
   if(isIos || isAndroid){
@@ -385,7 +386,7 @@ if (!isAppWebView) {
       // '/pages/component/waterflow/waterflow-fit-height',
       // 非 UI 相关不截图
       // '/pages/API/share-with-system/share-with-system',
-      '/pages/template/test-uts-button/test-uts-button',
+      '/pages/template/native-button-bridge/native-button-bridge',
       '/pages/component/loading/loading',
     )
   }
@@ -439,7 +440,7 @@ if (isWeb) {
     '/pages/component/canvas/canvas',
     // 动态内容
     // '/pages/component/canvas/canvas/ball',
-    '/pages/template/browser-element/browser-element',
+    '/pages/template/browser-built-in-elements/browser-built-in-elements',
   )
 }
 

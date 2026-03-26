@@ -315,7 +315,17 @@ describe('component-native-input', () => {
     expect(await input2.value()).toEqual("123")
   })
 
-  it("afterAllTestScreenshot", async () => {
+  it("screenshot full page", async () => {
+    const image = await program.screenshot({
+      fullPage: true
+    })
+    expect(image).toSaveImageSnapshot()
+  })
+  it("placeholder-class should clear style after update empty string", async () => {
+    await setPageData({
+      inputPlaceHolderClass: ""
+    })
+    await page.waitFor(1000)
     const image = await program.screenshot({
       fullPage: true
     })

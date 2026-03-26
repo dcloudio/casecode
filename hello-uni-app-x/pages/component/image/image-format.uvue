@@ -84,7 +84,7 @@
       src: '/static/test-image/logo.heic'
     },
     {
-      format: 'avif（iOS16+）',
+      format: 'avif（iOS16+，Android12+）',
       src: '/static/test-image/logo.avif'
     },
     {

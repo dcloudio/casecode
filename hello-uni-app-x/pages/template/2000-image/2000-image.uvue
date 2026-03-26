@@ -20,9 +20,9 @@
 </template>
 
 <script setup>
-    var isBackPress = false;
+    let isBackPress = false;
     const show = ref(false);
-    var startime = Date.now();
+    let startime = Date.now();
     const ShowEvent = (() => {
 			startime = Date.now();
       show.value = !show.value
