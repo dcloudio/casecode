@@ -515,6 +515,7 @@
             </view>
           </view>
         </template>
+        <!-- #ifndef MP-ALIPAY -->
         <text class="touches-title">event.changedTouches (变化的触摸点):</text>
         <template v-for="(touch, index) in longPressEvent!.changedTouches" :key="index">
           <view class="touch-item">
@@ -567,6 +568,7 @@
             </view>
           </view>
         </template>
+        <!-- #endif -->
       </view>
       <view v-if="tapEvent !== null" class="event-detail">
         <text class="event-title">tap Event（点击事件）</text>

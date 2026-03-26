@@ -41,6 +41,11 @@
 </template>
 
 <script setup lang="uts">
+/**
+ * @description: 展示 hello uni-app x 项目的二维码、源码获取方式、协议入口和当前版本信息。
+ * @logic: 页面根据平台显示源码地址、服务协议与隐私政策入口，并在加载时读取当前应用版本号展示在底部。
+ * @optimization: 通过统一的 `openUrl` 方法处理不同平台下的链接打开或复制逻辑，减少页面内重复的平台分支代码。
+ */
 
 // #ifdef APP
 import { openSchema } from '@/uni_modules/uts-openSchema'

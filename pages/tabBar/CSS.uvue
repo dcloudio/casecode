@@ -8,8 +8,8 @@
       </view>
       <view v-if="!hasLeftWin" class="uni-text-box">
         <text class="hello-text">uni-app x App平台支持的CSS，文档详见：</text>
-        <u-link class="hello-text" :href="'https://doc.dcloud.net.cn/uni-app-x/css/'" :text="'https://doc.dcloud.net.cn/uni-app-x/css/'"
-          :inWhiteList="true"></u-link>
+        <uni-link class="hello-text" href="https://doc.dcloud.net.cn/uni-app-x/css/" text="https://doc.dcloud.net.cn/uni-app-x/css/"
+          :inWhiteList="true"></uni-link>
       </view>
       <uni-collapse>
         <uni-collapse-item ref="categoryRef" v-for="menuItem in menu" :key="menuItem.id" :title="menuItem.name"

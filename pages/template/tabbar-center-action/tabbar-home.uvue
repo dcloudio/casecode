@@ -1,0 +1,82 @@
+<template>
+  <scroll-view ref="listView" class="list" :bounces="false" :scroll-with-animation="true" :scroll-top="newScrollTop" @scrolltolower="loadData()"
+    @scroll="onScroll">
+    <view class="list-item" v-for="(item, index) in dataList" :key="index">
+      <!-- <text class="title">{{item.title}}</text> -->
+      <view class="cell-item">
+        <text class="title">内容：{{item.title}}</text>
+        <input class="title" style="margin-top: 8px;" placeholder="备注:"/>
+      </view>
+    </view>
+  </scroll-view>
+</template>
+
+<script setup lang="uts">
+  /**
+   * @description: 作为自定义 TabBar 的首页子页面，展示可继续加载并可回到顶部的内容列表。
+   * @logic: 页面初始化后加载一批列表数据；滚动时把当前位置通过事件同步给父页面，父页面再次点击首页标签时可触发回顶。
+   * @optimization: 通过暴露 `scrollTop` 方法复用同一列表实例，避免切换标签页时销毁重建导致滚动位置丢失。
+   */
+  type ListItem = {
+    title : string
+  }
+
+  const dataList = ref([] as ListItem[])
+  const oldScrollTop = ref(0)
+  const newScrollTop = ref(0)
+
+  function loadData() {
+    let index = dataList.value.length
+    for (let i = 0; i < 20; i++) {
+      dataList.value.push({
+        title: index.toString(),
+      } as ListItem)
+      index++
+    }
+  }
+  function onScroll(e : ScrollEvent) {
+    uni.$emit('tabchange', e.detail.scrollTop)
+    oldScrollTop.value = e.detail.scrollTop
+  }
+  function scrollTop(top : number) {
+    // (getCurrentInstance()!.proxy!.$refs["listView"] as UniElement).scrollTop = top
+    // console.log("tab1 to top");
+    newScrollTop.value = oldScrollTop.value
+    nextTick(() => {
+      newScrollTop.value = top
+    })
+  }
+
+  onMounted(() => {
+    loadData()
+    // console.log("tab1 created");
+  })
+
+  // Expose methods to parent component
+  defineExpose({
+    scrollTop
+  })
+</script>
+
+<style>
+  .list {
+    flex: 1;
+    background-color: #ffffff;
+  }
+
+  .list-item {
+    flex-direction: row;
+    padding: 30px;
+    border-bottom: 1px solid #dbdbdb;
+  }
+
+  .title {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  .cell-item {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

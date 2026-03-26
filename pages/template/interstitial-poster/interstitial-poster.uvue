@@ -1,0 +1,331 @@
+<template>
+  <!-- #ifdef APP -->
+  <scroll-view class="page-scroll">
+  <!-- #endif -->
+    <view class="page">
+      <view class="hero-panel">
+        <text class="hero-title">插屏海报示例</text>
+        <text class="hero-desc">使用 page-container 实现一个居中的插屏海报。</text>
+        <button class="hero-button" type="primary" @click="openPoster">打开插屏海报</button>
+      </view>
+
+      <page-container
+        :show="showPoster"
+        position="center"
+        :overlay="true"
+        overlay-style="background-color: rgba(14, 20, 34, 0.68);"
+        :custom-style="alignContainerStyle"
+        @clickoverlay="closePoster"
+        @afterleave="onPosterAfterLeave">
+        <view class="poster-dialog">
+          <view class="poster-card">
+            <view class="poster-top-strip"></view>
+
+            <view class="poster-head">
+              <text class="poster-badge">活动海报</text>
+              <text class="poster-tag">INTERSTITIAL</text>
+            </view>
+
+            <view class="poster-body">
+              <text class="poster-title">插屏海报</text>
+              <text class="poster-subtitle">海报主体和底部关闭按钮都由多个 view 组合而成，其中关闭按钮的 X 使用两条旋转的 view 实现。</text>
+
+              <view class="poster-highlight">
+                <text class="poster-highlight-label">示例内容</text>
+                <text class="poster-highlight-main">新人立减 X 元</text>
+                <text class="poster-highlight-note">支持标题、说明、主按钮与关闭交互组合展示</text>
+              </view>
+
+              <view class="poster-mock-art">
+                <view class="mock-card mock-card-main">
+                  <text class="mock-card-title">POSTER</text>
+                </view>
+                <view class="mock-card mock-card-side"></view>
+                <view class="mock-line"></view>
+              </view>
+
+              <view class="poster-footer">
+                <button class="poster-action" type="primary" @click="closePoster">立即查看</button>
+                <text class="poster-footnote">活动说明：示例仅用于演示插屏布局与关闭交互</text>
+              </view>
+            </view>
+          </view>
+
+          <view class="poster-close-wrap" @click="closePoster">
+            <view class="poster-close-circle">
+              <view class="poster-close-line poster-close-line-a"></view>
+              <view class="poster-close-line poster-close-line-b"></view>
+            </view>
+          </view>
+        </view>
+      </page-container>
+    </view>
+  <!-- #ifdef APP -->
+  </scroll-view>
+  <!-- #endif -->
+</template>
+
+<script setup lang="uts">
+  /**
+   * @description: 演示使用 `page-container` 实现居中的插屏海报弹层，海报主体与关闭按钮都由 `view` 组合完成。
+   * @logic: 点击页面按钮后展示居中弹层，点击海报底部关闭按钮或遮罩层时关闭弹层，离场后同步重置显示状态。
+   * @optimization: 将弹层的打开、关闭和离场收口为统一状态控制，保持交互简单并方便复用当前海报结构。
+   */
+  const showPoster = ref<boolean>(false)
+  // 居中布局样式，为避免微信小程序端弹框不居中
+  const alignContainerStyle = ref('display: flex; justify-content: center; background-color: transparent;')
+
+  function openPoster() {
+    showPoster.value = true
+  }
+
+  function closePoster() {
+    showPoster.value = false
+  }
+
+  function onPosterAfterLeave() {
+    showPoster.value = false
+  }
+</script>
+
+<style>
+  .page-scroll {
+    flex: 1;
+  }
+
+  .page {
+    padding: 24px;
+    background-color: #f8f8f8;
+  }
+
+  .hero-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 12px;
+    background-color: #ffffff;
+  }
+
+  .hero-title {
+    color: #333333;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .hero-desc {
+    margin-top: 12px;
+    color: #666666;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .hero-button {
+    margin-top: 20px;
+  }
+
+  .poster-dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .poster-card {
+    position: relative;
+    width: 320px;
+    padding: 18px;
+    border-radius: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e5e5e5;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+
+  .poster-top-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background-color: #007aff;
+  }
+
+  .poster-head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .poster-badge {
+    margin-top: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background-color: #eef5ff;
+    color: #007aff;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .poster-tag {
+    margin-top: 6px;
+    color: #999999;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .poster-body {
+    display: flex;
+    flex-direction: column;
+    margin-top: 14px;
+  }
+
+  .poster-title {
+    color: #333333;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 34px;
+  }
+
+  .poster-subtitle {
+    margin-top: 10px;
+    color: #666666;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .poster-highlight {
+    display: flex;
+    flex-direction: column;
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    background-color: #f8f8f8;
+  }
+
+  .poster-highlight-label {
+    color: #007aff;
+    font-size: 12px;
+  }
+
+  .poster-highlight-main {
+    margin-top: 6px;
+    color: #333333;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 30px;
+  }
+
+  .poster-highlight-note {
+    margin-top: 6px;
+    color: #666666;
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .poster-mock-art {
+    position: relative;
+    height: 126px;
+    margin-top: 16px;
+    border-radius: 12px;
+    background-color: #f3f7ff;
+    overflow: hidden;
+  }
+
+  .mock-card {
+    position: absolute;
+    border-radius: 12px;
+  }
+
+  .mock-card-main {
+    top: 20px;
+    left: 20px;
+    width: 150px;
+    height: 82px;
+    padding-top: 50px;
+    padding-left: 14px;
+    background-color: #007aff;
+  }
+
+  .mock-card-title {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .mock-card-side {
+    top: 28px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #dceaff;
+  }
+
+  .mock-line {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 18px;
+    height: 8px;
+    border-radius: 10px;
+    background-color: #dceaff;
+  }
+
+  .poster-footer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+  }
+
+  .poster-action {
+    background-color: #007aff;
+    border-color: #007aff;
+    color: #ffffff;
+  }
+
+  .poster-footnote {
+    margin-top: 10px;
+    color: #999999;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .poster-close-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 18px;
+  }
+
+  .poster-close-circle {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.9);
+    border-radius: 42px;
+    background-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .poster-close-line {
+    position: absolute;
+    top: 20px;
+    left: 11px;
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #ffffff;
+  }
+
+  .poster-close-line-a {
+    transform: rotate(45deg);
+  }
+
+  .poster-close-line-b {
+    transform: rotate(-45deg);
+  }
+</style>

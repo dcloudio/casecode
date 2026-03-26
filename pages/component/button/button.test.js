@@ -168,6 +168,17 @@ describe('Buttonstatus.uvue', () => {
     await page.waitFor('button')
   })
 
+  test('button-hover', async () => {
+    const btn = await page.$('#test-button-hover-class')
+    await btn.longpress()
+    const image = await program.screenshot({
+      fullPage: true,
+    });
+    expect(image).toSaveImageSnapshot({customSnapshotIdentifier() {
+      return 'buttonstatus-button-hover-class-default-value'
+    }});
+  })
+
   test('newline', async () => {
     const image = await program.screenshot({
       fullPage: true,

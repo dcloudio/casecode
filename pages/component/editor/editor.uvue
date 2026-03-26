@@ -1,83 +1,145 @@
 <template>
   <view class="container">
     <page-intro content="本页演示 editor 富文本编辑器：工具栏可设置加粗、斜体、对齐、行高、字体等，支持插入图片与预览，展示内容变化与只读模式。"></page-intro>
-    <view class="page-body">
-      <view class='wrapper'>
-        <view class='toolbar' @tap="format">
-          <view :class="data.formats.bold ? 'ql-active' : ''" class="iconfont icon-zitijiacu" data-name="bold"></view>
-          <view :class="data.formats.italic ? 'ql-active' : ''" class="iconfont icon-zitixieti" data-name="italic"></view>
-          <view :class="data.formats.underline ? 'ql-active' : ''" class="iconfont icon-zitixiahuaxian"
-            data-name="underline"></view>
-          <view :class="data.formats.strike ? 'ql-active' : ''" class="iconfont icon-zitishanchuxian" data-name="strike">
+    <view class='toolbar'>
+      <scroll-view style="flex: 1">
+        <view style="flex-direction: row;flex-wrap: wrap;">
+          <view @click="format('bold')">
+            <!-- #ifdef MP -->
+            <text :class="data.formats.bold === 'strong' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8a;"}}</text>
+            <!-- #endif -->
+            <!-- #ifndef MP -->
+            <text :class="data.formats.bold ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8a;"}}</text>
+            <!-- #endif -->
+          </view>
+          <view @click="format('italic')">
+            <!-- #ifdef MP -->
+            <text :class="data.formats.italic === 'em' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8f;"}}</text>
+            <!-- #endif -->
+            <!-- #ifndef MP -->
+            <text :class="data.formats.italic ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8f;"}}</text>
+            <!-- #endif -->
+          </view>
+          <view @click="format('underline')">
+            <text :class="data.formats.underline ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8e;"}}</text>
+          </view>
+          <view @click="insertMention">
+            <text class="iconfont">@</text>
+          </view>
+          <view @click="format('strike')">
+            <!-- #ifdef MP -->
+            <text :class="data.formats.strike === 'del' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8b;"}}</text>
+            <!-- #endif -->
+            <!-- #ifndef MP -->
+            <text :class="data.formats.strike ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8b;"}}</text>
+            <!-- #endif -->
+          </view>
+          <!-- #ifndef MP-BAIDU -->
+          <view @click="format('align', 'left')">
+            <text :class="data.formats.align == 'left' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec91;"}}</text>
+          </view>
+          <!-- #endif -->
+          <view @click="format('align', 'center')">
+            <text :class="data.formats.align == 'center' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec84;"}}</text>
+          </view>
+          <view @click="format('align', 'right')">
+            <text :class="data.formats.align == 'right' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec87;"}}</text>
+          </view>
+          <view @click="format('align', 'justify')">
+            <text :class="data.formats.align == 'justify' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec94;"}}</text>
+          </view>
+          <!-- #ifndef MP-BAIDU -->
+          <view @click="format('lineHeight', '2')">
+            <text :class="data.formats.lineHeight == '2' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe7f8;"}}</text>
+          </view>
+          <view @click="format('letterSpacing', '2em')">
+            <text :class="data.formats.letterSpacing == '2em' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe964;"}}</text>
+          </view>
+          <view @click="format('marginTop', '20px')">
+            <text :class="data.formats.marginTop == '20px' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe660;"}}</text>
+          </view>
+          <view @click="format('marginBottom', '20px')">
+            <text :class="data.formats.marginBottom == '20px' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe65f;"}}</text>
+          </view>
+          <!-- #endif -->
+
+          <view @click="removeFormat">
+            <text class="iconfont">{{"&#xe67e;"}}</text>
           </view>
 
-          <view :class="data.formats.align === 'left' ? 'ql-active' : ''" class="iconfont icon-zuoduiqi" data-name="align"
-            data-value="left"></view>
+          <!-- #ifndef MP-BAIDU -->
+          <view @click="format('fontFamily', 'Pacifico')">
+            <text :class="data.formats.fontFamily == 'Pacifico' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe684;"}}</text>
+          </view>
+          <view @click="format('fontSize', '24px')">
+            <text :class="data.formats.fontSize == '24px' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe6fd;"}}</text>
+          </view>
+          <!-- #endif -->
+          <view @click="format('color', '#0000ff')">
+            <text :class="data.formats.color == '#0000ff' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe72c;"}}</text>
+          </view>
+          <view @click="format('backgroundColor', '#00ff00')" class="icon-fontbgcolor">
+            <text :class="data.formats.backgroundColor == '#00ff00' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe678;"}}</text>
+          </view>
+          <view @click="insertDate">
+            <text class="iconfont">{{"&#xe63e;"}}</text>
+          </view>
+          <view @click="format('list', 'check')">
+            <text class="iconfont">{{"&#xe664;"}}</text>
+          </view>
+          <view @click="format('list', 'ordered')">
+            <text :class="data.formats.list == 'ordered' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec86;"}}</text>
+          </view>
+          <view @click="format('list', 'bullet')">
+            <text :class="data.formats.list == 'bullet' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec83;"}}</text>
+          </view>
 
-          <view :class="data.formats.align === 'center' ? 'ql-active' : ''" class="iconfont icon-juzhongduiqi"
-            data-name="align" data-value="center"></view>
-          <view :class="data.formats.align === 'right' ? 'ql-active' : ''" class="iconfont icon-youduiqi" data-name="align"
-            data-value="right"></view>
-          <view :class="data.formats.align === 'justify' ? 'ql-active' : ''" class="iconfont icon-zuoyouduiqi"
-            data-name="align" data-value="justify"></view>
+          <view @click="undo">
+            <text class="iconfont">{{"&#xe633;"}}</text>
+          </view>
+          <view @click="redo">
+            <text class="iconfont">{{"&#xe627;"}}</text>
+          </view>
 
-          <view :class="data.formats.lineHeight ? 'ql-active' : ''" class="iconfont icon-line-height" data-name="lineHeight"
-            data-value="2"></view>
-          <view :class="data.formats.letterSpacing ? 'ql-active' : ''" class="iconfont icon-Character-Spacing"
-            data-name="letterSpacing" data-value="2em"></view>
-          <view :class="data.formats.marginTop ? 'ql-active' : ''" class="iconfont icon-722bianjiqi_duanqianju"
-            data-name="marginTop" data-value="20px"></view>
-          <view :class="data.formats.marginBottom ? 'ql-active' : ''" class="iconfont icon-723bianjiqi_duanhouju"
-            data-name="marginBottom" data-value="20px"></view>
+          <view @click="format('indent', '-1')">
+            <text class="iconfont">{{"&#xe6e8;"}}</text>
+          </view>
+          <view @click="format('indent', '+1')">
+            <text class="iconfont">{{"&#xeb28;"}}</text>
+          </view>
+          <view @click="insertDivider">
+            <text class="iconfont">{{"&#xec7f;"}}</text>
+          </view>
+          <view @click="chooseInsertImage">
+            <text class="iconfont">{{"&#xec82;"}}</text>
+          </view>
+          <view @click="format('header', 1)">
+            <text :class="data.formats.header == 1 ? 'iconfont ql-active' : 'iconfont'">{{"&#xe860;"}}</text>
+          </view>
+          <view @click="format('script', 'sub')">
+            <text :class="data.formats.script == 'sub' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec93;"}}</text>
+          </view>
+          <view @click="format('script', 'super')">
+            <text :class="data.formats.script == 'super' ? 'iconfont ql-active' : 'iconfont'">{{"&#xec8c;"}}</text>
+          </view>
 
-          <view :class="data.formats.fontFamily ? 'ql-active' : ''" class="iconfont icon-font" data-name="fontFamily"
-            data-value="Pacifico"></view>
-          <view :class="data.formats.fontSize === '24px' ? 'ql-active' : ''" class="iconfont icon-fontsize"
-            data-name="fontSize" data-value="24px"></view>
-          <view :class="data.formats.color === '#0000ff' ? 'ql-active' : ''" class="iconfont icon-text_color"
-            data-name="color" data-value="#0000ff"></view>
-          <view :class="data.formats.backgroundColor === '#00ff00' ? 'ql-active' : ''" class="iconfont icon-fontbgcolor"
-            data-name="backgroundColor" data-value="#00ff00"></view>
+          <view @click="clear">
+            <text class="iconfont">{{"&#xec7b;"}}</text>
+          </view>
 
-          <view class="iconfont icon--checklist" data-name="list" data-value="check"></view>
-          <view :class="data.formats.list === 'ordered' ? 'ql-active' : ''" class="iconfont icon-youxupailie"
-            data-name="list" data-value="ordered"></view>
-          <view :class="data.formats.list === 'bullet' ? 'ql-active' : ''" class="iconfont icon-wuxupailie" data-name="list"
-            data-value="bullet"></view>
-
-
-          <view class="iconfont icon-outdent" data-name="indent" data-value="-1"></view>
-          <view class="iconfont icon-indent" data-name="indent" data-value="+1"></view>
-
-
-          <view :class="data.formats.header === 1 ? 'ql-active' : ''" class="iconfont icon-format-header-1"
-            data-name="header" :data-value="1"></view>
-          <view :class="data.formats.script === 'sub' ? 'ql-active' : ''" class="iconfont icon-zitixiabiao"
-            data-name="script" data-value="sub"></view>
-          <view :class="data.formats.script === 'super' ? 'ql-active' : ''" class="iconfont icon-zitishangbiao"
-            data-name="script" data-value="super"></view>
-
-          <view :class="data.formats.direction === 'rtl' ? 'ql-active' : ''" class="iconfont icon-direction-rtl"
-            data-name="direction" data-value="rtl"></view>
-
-          <view class="iconfont icon-date" @tap="insertDate"></view>
-          <view class="iconfont icon-fengexian" @tap="insertDivider"></view>
-          <view class="iconfont icon-charutupian" @tap="chooseInsertImage"></view>
-          <view class="iconfont icon-clearedformat" @tap="removeFormat"></view>
-          <view class="iconfont icon-undo" @tap="undo"></view>
-          <view class="iconfont icon-redo" @tap="redo"></view>
-          <view class="iconfont icon-shanchu" @tap="clearShowModal"></view>
+          <view @click="format('direction', 'rtl')">
+            <text :class="data.formats.direction == 'rtl' ? 'iconfont ql-active' : 'iconfont'">{{"&#xe66e;"}}</text>
+          </view>
         </view>
+      </scroll-view>
+    </view>
 
-        <view class="editor-wrapper">
-          <editor id="editor" class="ql-container" placeholder="开始输入..." show-img-size show-img-toolbar show-img-resize
-            @statuschange="onStatusChange" :read-only="data.readOnly" @ready="onEditorReady">
-          </editor>
-        </view>
-        <view>
-          <button @tap="getCon">控制台打印文本内容</button>
-        </view>
-      </view>
+    <view class="editor-wrapper">
+      <editor id="editor" class="ql-container" placeholder="开始输入..." :type="data.type" show-img-size show-img-toolbar show-img-resize @statuschange="onStatusChange" :read-only="data.readOnly" @ready="onEditorReady" @focus="onEditorFocus" @blur="onEditorBlur" @input="onEditorInput"/>
+    </view>
+    <view style="flex-direction: row;justify-content: space-between;">
+      <button @click="changeType">聚焦{{data.type == 'none' ? '不' : ''}}弹出键盘</button>
+      <button @click="getCon">控制台打印文本内容</button>
     </view>
   </view>
 </template>
@@ -89,11 +151,11 @@
     underline?: boolean
     strike?: boolean
     align?: string
-    lineHeight?: boolean
-    letterSpacing?: boolean
-    marginTop?: boolean
-    marginBottom?: boolean
-    fontFamily?: boolean
+    lineHeight?: string
+    letterSpacing?: string
+    marginTop?: string
+    marginBottom?: string
+    fontFamily?: string
     fontSize?: string
     color?: string
     backgroundColor?: string
@@ -107,7 +169,12 @@
     readOnly: boolean;
     formats: Formats;
     // TODO 补充editorContext类型
-    editorCtx: any;
+    // #ifdef APP
+    editorCtx: EditorContext | null;
+    // #endif
+    // #ifdef MP || WEB
+    editorCtx: any | null;
+    // #endif
     // 自动化测试
     autoTest: boolean;
     undoTest: boolean;
@@ -115,6 +182,8 @@
     removeFormatTest: boolean;
     insertImageTest: boolean;
     blurTest: boolean;
+    clearTest: boolean;
+    type: string;
   }
   // 使用reactive避免ref数据在自动化测试中无法访问
   const data = reactive({
@@ -125,11 +194,11 @@
       underline: false,
       strike: false,
       align: '',
-      lineHeight: false,
-      letterSpacing: false,
-      marginTop: false,
-      marginBottom: false,
-      fontFamily: false,
+      lineHeight: '',
+      letterSpacing: '',
+      marginTop: '',
+      marginBottom: '',
+      fontFamily: '',
       fontSize: '',
       color: '',
       backgroundColor: '',
@@ -139,14 +208,16 @@
       direction: ''
     },
     // TODO 补充editorContext类型
-    editorCtx: {},
+    editorCtx: null,
     // 自动化测试
     autoTest: false,
     undoTest: false,
     redoTest: false,
     removeFormatTest: false,
     insertImageTest: false,
-    blurTest: false
+    blurTest: false,
+    clearTest: false,
+    type: ''
   } as DataType)
 
   onReady(() => {
@@ -162,19 +233,65 @@
     })
   })
 
+  const changeType = () => {
+    if (data.type.length <= 0) {
+      data.type = 'none'
+    } else {
+      data.type = ''
+    }
+  }
+
   const readOnlyChange = () => {
     data.readOnly = !data.readOnly
   }
 
   const onEditorReady = () => {
-    uni.createSelectorQuery().select('#editor').context((res) => {
-      data.editorCtx = res.context
-    }).exec()
+    uni.createEditorContextAsync({
+      id: 'editor',
+      success: (res) => {
+        data.editorCtx = res
+      },
+      fail: (err) => {
+        console.log('createEditorContextAsync fail', err)
+      }
+    })
+  }
+
+  function onEditorFocus(e: UniEditorFocusEvent) {
+    console.log('编辑器获得焦点')
+  }
+
+  function onEditorBlur(e: UniEditorBlurEvent) {
+    console.log('编辑器失去焦点')
+  }
+
+  function onEditorInput(e: UniEditorInputEvent) {
+    console.log(`内容改变: ${e?.detail.text.substring(0, 20)}...`)
+  }
+
+  const insertMention = () => {
+    data.editorCtx?.insertMention({
+      id: '123456',
+      name: 'uni-app',
+      success: (res: any) => {
+        console.log('insert mention success')
+      }
+    })
+    data.editorCtx?.insertMention({
+      id: '000',
+      name: 'uni-app x',
+      color: '#fff',
+      background: '#42b983',
+      radius: '10px',
+      success: (res: any) => {
+        console.log('insert mention success')
+      }
+    })
   }
 
   // 自动化测试专用
   const setContents = (options: any) => {
-    data.editorCtx.setContents({
+    data.editorCtx?.setContents({
       delta: {
         ops: options
       },
@@ -188,19 +305,21 @@
   }
 
   const blur = () => {
-    data.editorCtx.blur({
-      success: (res: any) => {
-        console.log('编辑器失焦：', res)
-        data.blurTest = true
-      },
-      fail: (err: any) => {
-        console.log(err)
+    data.editorCtx?.blur(
+      {
+        success: (res: any) => {
+          console.log('编辑器失焦：', res)
+          data.blurTest = true
+        },
+        fail: (err: any) => {
+          console.log(err)
+        }
       }
-    })
+    )
   }
 
   const getCon = () => {
-    data.editorCtx.getContents({
+    data.editorCtx?.getContents({
       success: (res: any) => {
         console.log('文本详情：', res)
       },
@@ -211,7 +330,7 @@
   }
 
   const undo = () => {
-    data.editorCtx.undo({
+    data.editorCtx?.undo({
       success: (res: any) => {
         data.undoTest = true
       },
@@ -222,7 +341,7 @@
   }
 
   const redo = () => {
-    data.editorCtx.redo({
+    data.editorCtx?.redo({
       success: (res: any) => {
         data.redoTest = true
       },
@@ -232,30 +351,53 @@
     })
   }
 
-  const format = (e: any) => {
-    let { name, value } = e.target.dataset
-    if (!name) return
-    // console.log('format', name, value)
-    data.editorCtx.format(name, value)
+  function format (name: string, value: string | number | null = null) {
+    if (name.length == 0) return
+    console.log('format', name, value)
+    data.editorCtx?.format(name, value)
   }
 
-  const onStatusChange = (e: any) => {
-    const formats = e.detail
-    data.formats = formats
+  const onStatusChange = (e: UniEditorStatusChangeEvent) => {
+    const statusDetail = e.detail
+    // #ifdef APP-ANDROID
+    data.formats = {
+      bold: statusDetail.bold,
+      italic: statusDetail.italic,
+      underline: statusDetail.underline,
+      strike: statusDetail.strike,
+      align: statusDetail.align,
+      lineHeight: statusDetail.lineHeight,
+      letterSpacing: statusDetail.letterSpacing,
+      marginTop: statusDetail.marginTop,
+      marginBottom: statusDetail.marginBottom,
+      fontFamily: statusDetail.fontFamily,
+      fontSize: statusDetail.fontSize,
+      color: statusDetail.color,
+      backgroundColor: statusDetail.backgroundColor,
+      list: statusDetail.list,
+      header: statusDetail.header,
+      script: statusDetail.script,
+      direction: statusDetail.direction,
+    } as Formats
+    // #endif
+    // #ifndef APP-ANDROID
+    data.formats = statusDetail as Formats
+    // #endif
   }
 
   const insertDivider = () => {
-    data.editorCtx.insertDivider({
-      success: function () {
+    data.editorCtx?.insertDivider({
+      success: function (res: any) {
         console.log('insert divider success')
       }
     })
   }
 
   const clear = () => {
-    data.editorCtx.clear({
+    data.editorCtx?.clear({
       success: function (res: any) {
         console.log("clear success",res)
+        data.clearTest = true
       }
     })
   }
@@ -264,7 +406,7 @@
     uni.showModal({
       title: '清空编辑器',
       content: '确定清空编辑器全部内容？',
-      success: (res: any) => {
+      success: (res) => {
         if (res.confirm) {
           clear()
         }
@@ -273,7 +415,7 @@
   }
 
   const removeFormat = () => {
-    data.editorCtx.removeFormat({
+    data.editorCtx?.removeFormat({
       success: (res: any) => {
         console.log('removeFormat-success', res)
         data.removeFormatTest = true
@@ -287,16 +429,16 @@
   const insertDate = () => {
     const date = new Date()
     const formatDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
-    data.editorCtx.insertText({
+    data.editorCtx?.insertText({
       text: formatDate
     })
   }
 
   const insertImage = (image: string) => {
-    data.editorCtx.insertImage({
+    data.editorCtx?.insertImage({
       src: image,
       alt: '图像',
-      success: () => {
+      success: (res: any) => {
         console.log('insert image success')
         data.insertImageTest = true
       }
@@ -306,7 +448,7 @@
   const chooseInsertImage = () => {
     uni.chooseImage({
       count: 1,
-      success: (res: any) => {
+      success: (res) => {
         insertImage(res.tempFilePaths[0])
       }
     })
@@ -328,47 +470,33 @@
 <style>
   @import "./editor-icon.css";
 
-  .page-body {
-    height: calc(100vh - var(--window-top) - var(--status-bar-height));
-  }
-
-  .wrapper {
+  .container {
+    flex: 1;
+    padding: 10px;
     height: 100%;
   }
 
   .editor-wrapper {
-    height: calc(100vh - var(--window-top) - var(--status-bar-height) - 140px - 46px);
+    flex: 1;
     background: #fff;
   }
 
   .iconfont {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
+    padding: 8px 8px;
     font-size: 20px;
-    margin: 0px 6px;
-    align-content: center;
   }
 
   .toolbar {
-    box-sizing: border-box;
+    height: 120px;
     border-bottom: 0;
-    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-    flex-direction: row;
-    flex-wrap: wrap;
-    height: 140px;
-    padding-left: 10px;
   }
 
   .ql-container {
     box-sizing: border-box;
     padding: 12px 15px;
     width: 100%;
-    min-height: 30vh;
+    min-height: 300px;
     height: 100%;
-    font-size: 16px;
-    line-height: 1.5;
   }
 
   .ql-active {

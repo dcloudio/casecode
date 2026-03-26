@@ -8,7 +8,8 @@
       <view class="uni-list-cell">
         <view class="uni-list-cell-left">当前选择</view>
         <view class="uni-list-cell-db">
-          <picker class="picker-selector--test" @change="bindPickerChange" :value="data.index" :range="data.selectorArray" range-key="name">
+          <picker class="picker-selector--test" @change="bindPickerChange" :value="data.index"
+            :range="data.selectorArray" range-key="name">
             <text class="uni-input picker-selector--value">{{data.selectorArray[data.index].name}}</text>
           </picker>
         </view>
@@ -20,7 +21,8 @@
       <view class="uni-list-cell">
         <text class="uni-list-cell-left">当前选择</text>
         <view class="uni-list-cell-db">
-          <picker class="picker-multi--test" mode="multiSelector" @columnchange="bindMultiPickerColumnChange" :value="data.multiIndex" :range="data.multiArray">
+          <picker class="picker-multi--test" mode="multiSelector" @columnchange="bindMultiPickerColumnChange"
+            :value="data.multiIndex" :range="data.multiArray">
             <text class="uni-input picker-multi--value">
               {{data.multiArray[0][data.multiIndex[0]]}}，{{data.multiArray[1][data.multiIndex[1]]}}，{{data.multiArray[2][data.multiIndex[2]]}}
             </text>
@@ -34,7 +36,8 @@
       <view class="uni-list-cell">
         <view class="uni-list-cell-left">当前选择</view>
         <view class="uni-list-cell-db">
-          <picker class="picker-time--test" mode="time" :value="data.time" start="09:01" end="21:01" @change="bindTimeChange">
+          <picker class="picker-time--test" mode="time" :value="data.time" start="09:01" end="21:01"
+            @change="bindTimeChange">
             <text class="uni-input">{{data.time}}</text>
           </picker>
         </view>
@@ -47,7 +50,8 @@
       <view class="uni-list-cell">
         <text class="uni-list-cell-left">当前选择 </text>
         <view class="uni-list-cell-db">
-          <picker class="picker-date-day--test" mode="date" :value="data.dayDate" :start="data.startDate" :end="data.endDate" @change="bindDayDateChange">
+          <picker class="picker-date-day--test" mode="date" :value="data.dayDate" :start="data.startDate"
+            :end="data.endDate" @change="bindDayDateChange">
             <text class="uni-input">{{data.dayDate}}</text>
           </picker>
         </view>
@@ -60,7 +64,8 @@
       <view class="uni-list-cell">
         <text class="uni-list-cell-left">当前选择 </text>
         <view class="uni-list-cell-db">
-          <picker class="picker-date-month--test" mode="date" fields="month" :value="data.monthDate" :start="data.startDate" :end="data.endDate" @change="bindMonthDateChange">
+          <picker class="picker-date-month--test" mode="date" fields="month" :value="data.monthDate"
+            :start="data.startDate" :end="data.endDate" @change="bindMonthDateChange">
             <text class="uni-input">{{data.monthDate}}</text>
           </picker>
         </view>
@@ -73,7 +78,8 @@
       <view class="uni-list-cell">
         <text class="uni-list-cell-left">当前选择 </text>
         <view class="uni-list-cell-db">
-          <picker class="picker-date-year--test" mode="date" fields="year" :value="data.yearDate" :start="data.startDate" :end="data.endDate" @change="bindYearDateChange">
+          <picker class="picker-date-year--test" mode="date" fields="year" :value="data.yearDate"
+            :start="data.startDate" :end="data.endDate" @change="bindYearDateChange">
             <text class="uni-input">{{data.yearDate}}</text>
           </picker>
         </view>
@@ -87,18 +93,19 @@
         <text class="uni-list-cell-left">当前选择</text>
         <view class="uni-list-cell-db" @click="initCityData">
           <!-- #ifndef MP-WEIXIN -->
-            <picker class="picker-city--test" mode="multiSelector" @columnchange="bindCityPickerColumnChange" :value="data.cityIndex" :range="data.cityArray">
-              <text class="uni-input picker-city--value">
-                {{data.cityArray[0][data.cityIndex[0]]}}{{data.cityArray[1][data.cityIndex[1]] ? '，' : ''}}{{data.cityArray[1][data.cityIndex[1]]}}{{data.cityArray[2][data.cityIndex[2]] ? '，' : ''}}{{data.cityArray[2][data.cityIndex[2]]}}
-              </text>
-            </picker>
+          <picker class="picker-city--test" mode="multiSelector" @columnchange="bindCityPickerColumnChange"
+            :value="data.cityIndex" :range="data.cityArray">
+            <text class="uni-input picker-city--value">
+              {{getCityDisplayText()}}
+            </text>
+          </picker>
           <!-- #endif -->
           <!-- #ifdef MP-WEIXIN -->
-            <picker class="picker-city--test" mode="region" @change="bindRegionChange" :value="data.region" >
-              <text class="uni-input picker-city--value">
-                {{data.region[0]}}{{data.region[1] ? '，' : ''}}{{data.region[1]}}{{data.region[2] ? '，' : ''}}{{data.region[2]}}
-              </text>
-            </picker>
+          <picker class="picker-city--test" mode="region" @change="bindRegionChange" :value="data.region">
+            <text class="uni-input picker-city--value">
+              {{data.region[0]}}{{data.region[1] ? '，' : ''}}{{data.region[1]}}{{data.region[2] ? '，' : ''}}{{data.region[2]}}
+            </text>
+          </picker>
           <!-- #endif -->
         </view>
       </view>
@@ -110,7 +117,8 @@
       <view class="uni-list-cell">
         <view class="uni-list-cell-left">当前选择</view>
         <view class="uni-list-cell-db">
-          <picker class="picker-disabled--test" @change="bindPickerChange" disabled :value="data.index" :range="data.selectorArray" range-key="name">
+          <picker class="picker-disabled--test" @change="bindPickerChange" disabled :value="data.index"
+            :range="data.selectorArray" range-key="name">
             <text class="uni-input picker-disabled--value">{{data.selectorArray[data.index].name}}</text>
           </picker>
         </view>
@@ -123,7 +131,6 @@
   <!-- #endif -->
 </template>
 <script setup lang="uts">
-  import { state, setEventCallbackNum } from '@/store/index.uts'
   // #ifndef MP-WEIXIN
   import { cityData } from './city.uts'
   // #endif
@@ -133,28 +140,28 @@
   }
 
   type CityItemData = {
-    title: string
-    id: string
-    disabled?: boolean
-    children: Array<CityItemData>
+    title : string
+    id : string
+    disabled ?: boolean
+    children : Array<CityItemData>
   }
 
   type PageDataType = {
-    title: string;
-    selectorArray: DataType[];
-    index: number;
-    multiArray: Array<string[]>;
-    multiIndex: number[];
-    cityArray: Array<string[]>;
-    allCityData: CityItemData[];
-    cityIndex: number[];
-    region: string[];
-    dayDate: string;
-    monthDate: string;
-    yearDate: string;
-    startDate: string;
-    endDate: string;
-    time: string;
+    title : string;
+    selectorArray : DataType[];
+    index : number;
+    multiArray : Array<string[]>;
+    multiIndex : number[];
+    cityArray : Array<string[]>;
+    allCityData : CityItemData[];
+    cityIndex : number[];
+    region : string[];
+    dayDate : string;
+    monthDate : string;
+    yearDate : string;
+    startDate : string;
+    endDate : string;
+    time : string;
   }
 
   function getDate(date_text : string = 'day', type ?: string) : string {
@@ -190,21 +197,49 @@
       ['北京', '上海', '广州']
     ],
     multiIndex: [0, 0, 0],
-    cityArray: [[],[],[]],
+    cityArray: [[], [], []],
     allCityData: [],
     region: [],
     cityIndex: [0, 0, 0],
-    dayDate: getDate('day'),
-    monthDate: getDate('month'),
-    yearDate: getDate('year'),
+    dayDate: getDate('day', ''),
+    monthDate: getDate('month', ''),
+    yearDate: getDate('year', ''),
     startDate: getDate('day', 'start'),
     endDate: getDate('day', 'end'),
     time: '12:01'
   } as PageDataType)
 
   // #ifndef MP-WEIXIN
+  function getSafeCityValue(column : number, index : number) : string {
+    if (column < 0 || column >= data.cityArray.length) {
+      return ''
+    }
+    const columnData = data.cityArray[column]
+    if (index < 0 || index >= columnData.length) {
+      return ''
+    }
+    return columnData[index]
+  }
+
+  function getCityDisplayText() : string {
+    const province = getSafeCityValue(0, data.cityIndex[0])
+    const city = getSafeCityValue(1, data.cityIndex[1])
+    const district = getSafeCityValue(2, data.cityIndex[2])
+    let text = province
+    if (city != '') {
+      text += '，' + city
+    }
+    if (district != '') {
+      text += '，' + district
+    }
+    return text
+  }
+
   function initCityData() {
-    const cityDataList = JSON.parse(cityData) as CityItemData[]
+    const cityDataList = JSON.parse<CityItemData[]>(cityData)
+    if (cityDataList == null) {
+      return
+    }
     data.allCityData = cityDataList
     data.cityArray[0] = cityDataList.map(item => item.title)
     // 使用当前选择的省份索引来初始化城市数据
@@ -233,7 +268,7 @@
 
   const bindPickerChange = (e : UniPickerChangeEvent) => {
     console.log('picker发送选择改变，携带值为：' + e.detail.value)
-    data.index = e.detail.value
+    data.index = e.detail.value as number
   }
 
   const bindMultiPickerColumnChange = (e : UniPickerColumnChangeEvent) => {
@@ -336,15 +371,6 @@
   // 自动化函数
   const setSelectorValue = () => {
     data.index = 2
-  }
-
-  const getEventCallbackNum = () : number => {
-    return state.eventCallbackNum
-  }
-
-  // 自动化测试
-  const setEventCallbackNum = (num : number) => {
-    setEventCallbackNum(num)
   }
 
   defineExpose({

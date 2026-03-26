@@ -172,4 +172,18 @@ describe('component-native-textarea', () => {
       expect(rect.width).toBe(100)
     })
   }
+  it("placeholder-class should clear style after update empty string", async () => {
+    const hasPlaceholderClassImage = await program.screenshot({
+      fullPage: true
+    })
+    expect(hasPlaceholderClassImage).toSaveImageSnapshot()
+    await setPageData({
+      textareaPlaceholderClass: ""
+    })
+    await page.waitFor(1000)
+    const noPlaceholderClassImage = await program.screenshot({
+      fullPage: true
+    })
+    expect(noPlaceholderClassImage).toSaveImageSnapshot()
+  })
 });

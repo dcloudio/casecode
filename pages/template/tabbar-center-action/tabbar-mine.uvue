@@ -1,0 +1,19 @@
+<template>
+  <view class="page">
+    <button type="primary">登录</button>
+  </view>
+</template>
+
+<script setup lang="uts">
+  /**
+   * @description: 作为自定义 TabBar 的“我的”子页面，提供最小化的账号入口示例。
+   * @logic: 页面只渲染一个登录按钮，用于配合主页面验证 TabBar 切换后不同子页面内容的展示效果。
+   * @optimization: 子页面保持最小结构，聚焦验证 TabBar 切换与中间操作按钮布局，不引入额外业务逻辑干扰示例目的。
+   */
+</script>
+
+<style>
+  .page {
+    padding: 15px;
+  }
+</style>

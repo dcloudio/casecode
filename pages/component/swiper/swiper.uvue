@@ -121,6 +121,9 @@
         		更多 swiper
         	</button>
         </navigator>
+        <navigator url="/pages/component/swiper/swiper-item-100" style="margin-top: 10px;">
+          <button>组件性能测试</button>
+        </navigator>
         <!-- #endif -->
       </view>
     </view>

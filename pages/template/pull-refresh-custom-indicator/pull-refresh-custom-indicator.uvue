@@ -1,0 +1,96 @@
+<template>
+<!-- #ifdef WEB -->
+  <view>
+  <!-- #endif -->
+    <list-view class="list-view" :refresher-enabled="true" :refresher-triggered="refresherTriggered"
+      refresher-default-style="none" @refresherpulling="onRefresherpulling" @refresherrefresh="onRefresherrefresh"
+      @refresherrestore="onRefreshrestore" :refresher-threshold="refresherThreshold" refresher-max-drag-distance="200px">
+
+      <page-intro content="本页演示自定义下拉刷新：sticky header、列表项与自定义 refresher 插槽（refresh-box），下拉触发刷新。"></page-intro>
+      <sticky-header>
+        <view class="header">
+          <text>sticky header</text>
+        </view>
+      </sticky-header>
+      <list-item v-for="i in 20" :key="i" class="content-item">
+        <text class="text">item-{{i}}</text>
+      </list-item>
+      <refresh-box slot="refresher" :state="state" :pullingDistance="pullingDistance"></refresh-box>
+    </list-view>
+  <!-- #ifdef WEB -->
+  </view>
+  <!-- #endif -->
+</template>
+
+<script setup lang="uts">
+/**
+ * @description: 支持为 list-view 提供自定义下拉刷新指示器，并同时演示 sticky header 与 refresher 插槽协同工作的页面。
+ * @logic: 页面监听下拉刷新过程中的 pulling、refresh、restore 事件，驱动自定义刷新状态变化，并通过 refresher 插槽展示刷新盒子。
+ * @optimization: 刷新状态统一收敛到 `state` 计算属性中，减少模板层对多种刷新状态的重复判断。
+ */
+
+import refreshBox from './refresh-box/refresh-box.uvue';
+
+const refresherTriggered = ref(false)
+const refresherThreshold = ref(40)
+const pullingDistance = ref(0)
+const resetting = ref(false)
+
+const state = computed(() : number => {
+  if (resetting.value) {
+    return 3;
+  }
+  if (refresherTriggered.value) {
+    return 2
+  }
+  if (pullingDistance.value > refresherThreshold.value) {
+    return 1
+  } else {
+    return 0
+  }
+})
+
+function onRefresherpulling(e : RefresherEvent) {
+  // console.log('onRefresherpulling',e.detail.dy)
+  pullingDistance.value = e.detail.dy
+}
+
+function onRefresherrefresh() {
+  refresherTriggered.value = true
+  setTimeout(() => {
+    refresherTriggered.value = false
+    resetting.value = true
+  }, 1500)
+}
+
+function onRefreshrestore() {
+  pullingDistance.value = 0
+  resetting.value = false;
+}
+</script>
+
+<style>
+  .list-view {
+    flex: 1;
+    background-color: #f5f5f5;
+  }
+
+  .header {
+    justify-content: center;
+    height: 50px;
+    background-color: #f5f5f5;
+    padding: 15px;
+  }
+
+  .content-item {
+    padding: 15px;
+    margin: 5px 0;
+    background-color: #fff;
+  }
+
+  .text {
+    font-size: 14px;
+    color: #666;
+    line-height: 20px;
+  }
+</style>

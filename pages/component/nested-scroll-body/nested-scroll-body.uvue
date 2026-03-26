@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="uts">
-  import refreshBox from '../../template/custom-refresher/refresh-box/refresh-box.uvue';
+  import refreshBox from '../../template/pull-refresh-custom-indicator/refresh-box/refresh-box.uvue';
 
   type DataType = {
     scrollData: Array<string>;

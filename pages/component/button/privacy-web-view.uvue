@@ -8,7 +8,7 @@
 const src = ref('')
 const updateTitle = ref(true)
 
-function onLoad(options : OnLoadOptions) {
+onLoad((options : OnLoadOptions) => {
   if (typeof options['url'] === 'string' && options['url']!.length > 0) {
     const srcValue = decodeURIComponent(options['url'] as string)
     if (srcValue != null) {
@@ -21,7 +21,7 @@ function onLoad(options : OnLoadOptions) {
       title: options['title']!
     });
   }
-}
+})
 </script>
 
 <style>

@@ -47,6 +47,8 @@
       </button>
       <button class="margin-10" type="primary" :disabled="disabled_boolean" hover-class="none">hover-class none</button>
 
+      <button id="test-button-hover-class" class="margin-10" :disabled="disabled_boolean" hover-class="button-hover">hover-class button-hover</button>
+
       <button class="margin-10" type="primary" :disabled="disabled_boolean">uni-app x</button>
       <button id="changeDisabledButton" class="margin-10" type="primary" @click="change_disabled_boolean">修改disabled为{{!disabled_boolean}}</button>
       <!--disable-->
@@ -107,6 +109,10 @@
     color: rgba(255, 255, 255, 0.6);
     background-color: rgba(26, 173, 25, 0.7);
     border-color: rgba(26, 173, 25, 0.7);
+  }
+
+  .button-hover {
+    color: rgba(26, 173, 25, 0.7);
   }
 
   /* #ifdef VUE3-VAPOR */

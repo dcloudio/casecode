@@ -72,8 +72,12 @@
             placeholder="占位符文字颜色为红色" />
         </view>
         <view class="input-wrapper">
-          <input id="uni-input-placeholder2" class="uni-input" :placeholder-class="data.inputPlaceHolderClass"
-            placeholder="占位符字体大小为10px" />
+          <input id="uni-input-placeholder-class-dynamic" class="uni-input" :placeholder-class="data.inputPlaceHolderClass"
+            :placeholder="`占位符字体大小为${data.inputPlaceHolderClass == '' ? '15px' : '10px'}`" />
+        </view>
+        <button @click="togglePlaceholderClass">切换 placeholder-class</button>
+        <view class="input-wrapper">
+          <input class="uni-input" placeholder="占位符字体大小为15px" />
         </view>
         <view class="input-wrapper">
           <input id="uni-input-placeholder3" class="uni-input" placeholder-class=""
@@ -84,7 +88,7 @@
             value="不设置placeholder只设置placeholder-style" />
         </view>
         <view class="input-wrapper">
-          <input id="uni-input-placeholder2" style="font-family: AlimamaDaoLiTiOTF;font-weight: bold;text-align: right;" class="uni-input" :placeholder-style="data.placeholderStyle"
+          <input id="uni-input-placeholder-align" style="font-family: AlimamaDaoLiTiOTF;font-weight: bold;text-align: right;" class="uni-input" :placeholder-style="data.placeholderStyle"
             placeholder="占位符以及内容右对齐" />
         </view>
       </view>
@@ -391,6 +395,24 @@
         <input class="input-all-styles" value="样式效果：文本颜色深蓝色、字号16px、字重400、文本居左对齐；外边距10px、内边距10px；圆角8px；浅蓝色渐变背景、蓝色边框、透明度70%、阴影效果。" />
       </view>
 
+      <view>
+        <view class="uni-title">
+          <text class="uni-title-text">font-size:30px</text>
+        </view>
+        <view class="input-wrapper">
+          <input style="border: 1px solid #ccc;border-radius: 4px;font-size:30px" placeholder="请输入..." value="font-size 超出默认高度" />
+        </view>
+      </view>
+
+      <view>
+        <view class="uni-title">
+          <text class="uni-title-text">color: green</text>
+        </view>
+        <view class="input-wrapper">
+          <input style="border: 1px solid #ccc;border-radius: 4px;color: green;" placeholder="请输入..." value="字体颜色为绿色" />
+        </view>
+      </view>
+
       <!-- 保证这个示例在页面底部，添加新的示例时请放在上面 -->
       <navigator url="/pages/component/input/input-performance" style="margin-top: 10px;">
         <button type="primary">
@@ -485,6 +507,10 @@
     triggerBlur: false,
     showTypeNoneAndFocusCase: false
   } as DataType)
+
+  const togglePlaceholderClass = () => {
+    data.inputPlaceHolderClass = data.inputPlaceHolderClass == "uni-input-placeholder-class" ? "" : "uni-input-placeholder-class"
+  }
 
   const inputFocusKeyBoardChange = (e : UniInputKeyboardHeightChangeEvent) => {
     data.inputFocusKeyBoardChangeValue = e.detail.height > 50

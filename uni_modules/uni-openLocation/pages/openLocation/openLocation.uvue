@@ -36,6 +36,11 @@
 </template>
 
 <script lang="uts" setup>
+  /**
+   * @description: 提供地图位置展示与导航能力，支持根据传入坐标渲染地图、标记点和底部地址信息。
+   * @logic: 页面初始化后监听外部传入的定位参数，更新地图中心点、标记与文案信息；用户可重置地图位置、关闭当前页面，或根据平台能力唤起第三方地图进行导航。
+   * @optimization: 将主题、语言、安全区和地图交互状态统一集中管理，并通过事件名解耦参数传递与回调通知，方便跨端复用同一套页面逻辑。
+   */
   import { openSchema } from '@/uni_modules/uts-openSchema'
   // #ifdef APP
   import { canOpenURL } from '@/uni_modules/uts-openSchema'

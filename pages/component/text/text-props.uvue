@@ -75,10 +75,10 @@
         </view>
         <view class="text-box">
           <!-- #ifndef VUE3-VAPOR && APP-HARMONY -->
-          <text :decode="true">{{ decodeStr }}</text>
-          <text :decode="true">uni-app&nbsp;x，终极跨平台方案</text>
-          <text :decode="true">uni-app&ensp;x，终极跨平台方案</text>
-          <text :decode="true">uni-app&emsp;x，终极跨平台方案</text>
+          <text :decode="data.decode">{{ decodeStr }}</text>
+          <text :decode="data.decode">uni-app&nbsp;x，终极跨平台方案</text>
+          <text :decode="data.decode">uni-app&ensp;x，终极跨平台方案</text>
+          <text :decode="data.decode">uni-app&emsp;x，终极跨平台方案</text>
           <!-- #endif -->
           <!-- #ifdef VUE3-VAPOR && APP-HARMONY -->
           <text>{{ decodeStr }}</text>
@@ -257,6 +257,7 @@ type DataType = {
   heightText: string,
   isNestedText1TapTriggered: boolean,
   isNestedText2TapTriggered: boolean,
+  decode: boolean
 }
 
 // 自动化测试
@@ -267,6 +268,7 @@ const data = reactive({
   heightText: '设置高度文本',
   isNestedText1TapTriggered: false,
   isNestedText2TapTriggered: false,
+  decode: true
 } as DataType)
 
 function nestedText1Tap() {

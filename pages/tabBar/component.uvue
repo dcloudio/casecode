@@ -8,8 +8,8 @@
       </view>
       <view v-if="!hasLeftWin" class="uni-text-box">
         <text class="hello-text">uni-app x内置组件，展示样式仅供参考，文档详见：</text>
-        <u-link class="hello-text" :href="'https://doc.dcloud.net.cn/uni-app-x/component/'"
-          :text="'https://doc.dcloud.net.cn/uni-app-x/component/'" :inWhiteList="true"></u-link>
+        <uni-link class="hello-text" href="https://doc.dcloud.net.cn/uni-app-x/component/"
+          text="https://doc.dcloud.net.cn/uni-app-x/component/" :inWhiteList="true"></uni-link>
       </view>
       <uni-collapse>
         <uni-collapse-item ref="categoryRef" v-for="menuItem in menu" :key="menuItem.id" :title="menuItem.name"

@@ -1,30 +1,58 @@
 <template>
-  <view id="var_1" style="flex:1;--var_margin: 2px;" class="var_1" :class="var_bind">
-    <view>
-      <view class="var_1_1_1">
-        <text class="firstParagraph">此段落应有蓝色背景和绿色文本。</text>
+  <!-- #ifdef APP -->
+  <scroll-view style="flex: 1">
+  <!-- #endif -->
+  <view style="flex-grow: 1;">
+    <view id="var_1" style="flex:1;--var_margin: 2px;" class="var_1" :class="var_bind">
+      <view>
+        <view class="var_1_1_1">
+          <text class="firstParagraph">此段落应有蓝色背景和绿色文本。</text>
+        </view>
+        <text class="secondParagraph">此段落应有黑色半透明背景和黄色文本。</text>
       </view>
-      <text class="secondParagraph">此段落应有黑色半透明背景和黄色文本。</text>
-    </view>
-    <text style="width: var(--var_width_invalid, 375rpx);background-color:yellowgreen;">无效值width应为375rpx</text>
-    <view id="chanageVarBox" :class="text_style_var_def">
-      <text class="text_style"
-        v-if="text_style_var_1_on">font-size:26px;style:normal;color:#ccc;background-color:#488cff</text>
-      <text class="text_style" v-else>font-size:16px;style:italic;color:#803390;background-color:#48ff32</text>
-    </view>
+      <text style="width: var(--var_width_invalid, 375rpx);background-color:yellowgreen;">无效值width应为375rpx</text>
+      <view id="chanageVarBox" :class="text_style_var_def">
+        <text class="text_style"
+          v-if="text_style_var_1_on">font-size:26px;style:normal;color:#ccc;background-color:#488cff</text>
+        <text class="text_style" v-else>font-size:16px;style:italic;color:#803390;background-color:#48ff32</text>
+      </view>
 
-    <view class="view_layout_style_container" id="view_container">
-      <view class="view_layout_style"></view>
-      <view class="view_layout_style" style="background-color: blue;--var_align_self: flex-start;"></view>
-    </view>
+      <view class="view_layout_style_container" id="view_container">
+        <view class="view_layout_style"></view>
+        <view class="view_layout_style" style="background-color: blue;--var_align_self: flex-start;"></view>
+      </view>
 
-    <button id="changeVarButton" @tap="do_change_var()">修改自定义变量</button>
-    <view class="test-v-if">
-      <view v-if="var_v_if" style="height:var(--var_height);background-color: var(--var_backgroundColor);">
+      <button id="changeVarButton" @tap="do_change_var()">修改自定义变量</button>
+      <view class="test-v-if">
+        <view v-if="var_v_if" style="height:var(--var_height);background-color: var(--var_backgroundColor);">
+        </view>
+      </view>
+      <button class="test-v-if-button" @tap="do_vif()">v-if测试</button>
+    </view>
+    <view class="shorthand_var_suite" :class="shorthand_var_state_class">
+      <text class="shorthand_var_title">简写交叉测试</text>
+      <text id="shorthandVarStateText" class="shorthand_var_desc">{{ shorthand_var_state_text }}</text>
+      <text class="shorthand_var_desc">
+        预期：默认 state-1 时，红色2px实线边框，宽度120px，margin为10px，padding为8px，横排，蓝色子项 flex-basis 为 50px。
+      </text>
+      <text class="shorthand_var_desc">
+        点击切换后变为 state-2：蓝色4px实线边框，宽度240px，margin为20px，padding为16px，竖排，蓝色子项 flex-basis 为 100px。
+      </text>
+      <button id="toggleShorthandVarButton" @tap="toggle_shorthand_var_suite()">切换简写变量状态</button>
+      <text class="shorthand_var_case_title">复合场景：padding + margin + border + flex + flex-flow</text>
+      <view class="shorthand_composite_stage">
+        <view id="shorthandCompositeContainer" class="shorthand_composite_container">
+          <view id="shorthandCompositeItemMain" class="shorthand_composite_item shorthand_composite_item_main"></view>
+          <view class="shorthand_composite_item shorthand_composite_item_side"></view>
+          <view class="shorthand_composite_item shorthand_composite_item_tail"></view>
+        </view>
       </view>
     </view>
-    <button class="test-v-if-button" @tap="do_vif()">v-if测试</button>
   </view>
+
+  <!-- #ifdef APP -->
+  </scroll-view>
+  <!-- #endif -->
 </template>
 <script setup lang="uts">
 
@@ -32,6 +60,8 @@
   const var_v_if = ref(false)
   const text_style_var_def = ref("text_style_var_1")
   const text_style_var_1_on = ref(true)
+  const shorthand_var_state_class = ref("shorthand_var_state_1")
+  const shorthand_var_state_text = ref("state-1")
 
   const do_change_var = () => {
     const view_container = uni.getElementById("view_container")
@@ -57,6 +87,16 @@
 
   const do_vif = () => {
     var_v_if.value = !var_v_if.value
+  }
+
+  const toggle_shorthand_var_suite = () => {
+    if (shorthand_var_state_class.value == "shorthand_var_state_1") {
+      shorthand_var_state_class.value = "shorthand_var_state_2"
+      shorthand_var_state_text.value = "state-2"
+    } else {
+      shorthand_var_state_class.value = "shorthand_var_state_1"
+      shorthand_var_state_text.value = "state-1"
+    }
   }
 </script>
 
@@ -138,5 +178,85 @@
     height: 50px;
     background-color: brown;
     align-self: var(--var_align_self);
+  }
+
+  .shorthand_var_suite {
+    margin-top: 24px;
+    padding: 12px;
+    border: 1px solid #d0d7de;
+    background-color: #f6f8fa;
+  }
+
+  .shorthand_var_state_1 {
+    --composite-width: 120px;
+    --composite-margin: 10px;
+    --composite-padding: 8px;
+    --composite-border: 2px solid #f00;
+    --composite-flex: 1 0 50px;
+    --composite-flow: row;
+  }
+
+  .shorthand_var_state_2 {
+    --composite-width: 240px;
+    --composite-margin: 20px;
+    --composite-padding: 16px;
+    --composite-border: 4px solid #00f;
+    --composite-flex: 2 0 100px;
+    --composite-flow: column;
+  }
+
+  .shorthand_var_title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .shorthand_var_desc {
+    margin-top: 6px;
+    margin-bottom: 8px;
+    color: #57606a;
+    font-size: 13px;
+  }
+
+  .shorthand_var_case_title {
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-size: 13px;
+    color: #24292f;
+  }
+
+  .shorthand_composite_stage {
+    padding: 8px;
+    background-color: #fff;
+  }
+
+  .shorthand_composite_container {
+    width: var(--composite-width);
+    margin: var(--composite-margin);
+    padding: var(--composite-padding);
+    border: var(--composite-border);
+    display: flex;
+    flex-flow: var(--composite-flow);
+    align-content: flex-start;
+    background-color: #eef6ff;
+  }
+
+  .shorthand_composite_item {
+    height: 24px;
+    margin: 2px;
+  }
+
+  .shorthand_composite_item_main {
+    flex: var(--composite-flex);
+    background-color: #93c5fd;
+  }
+
+  .shorthand_composite_item_side {
+    width: 40px;
+    background-color: #fca5a5;
+  }
+
+  .shorthand_composite_item_tail {
+    width: 40px;
+    background-color: #c4b5fd;
   }
 </style>

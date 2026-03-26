@@ -1,0 +1,43 @@
+<template>
+  <view class="page">
+    <page-head :title="title"></page-head>
+    <view class="page-body">
+      <text class="title">使用浏览器内置的 a 标签</text>
+      <view>
+        <a href="https://doc.dcloud.net.cn/uni-app-x/" target="uni-app-x">uni-app x，是下一代 uni-app，是一个跨平台应用开发引擎</a>
+      </view>
+
+      <text class="title">使用浏览器内置的 button 标签(浏览器内置标签和 uni-app 重名的情况)</text>
+      <view ref="htmlElementAreaRef"></view>
+    </view>
+  </view>
+</template>
+
+<script setup lang="uts">
+  /**
+   * @description: 演示在 Web 平台中混合使用浏览器原生 HTML 元素与 uni-app x 页面内容。
+   * @logic: 页面先展示原生 a 标签链接，再在 onReady 阶段动态创建浏览器原生 button 元素并挂载到占位容器中。
+   * @optimization: 使用独立占位容器承接原生元素插入，减少对页面其他结构的影响，便于隔离浏览器内置元素的行为验证。
+   */
+
+  const title = '浏览器内置元素'
+  const htmlElementAreaRef = ref<HTMLElement | null>(null)
+
+  onReady(() => {
+    if (htmlElementAreaRef.value != null) {
+      const buttonElement = document.createElement('button') as HTMLButtonElement;
+      buttonElement.innerText = 'browser button';
+      htmlElementAreaRef.value!.appendChild(buttonElement);
+    }
+  })
+</script>
+
+<style>
+  .page {
+    padding: 15px;
+  }
+
+  .title {
+    margin-top: 15px;
+  }
+</style>

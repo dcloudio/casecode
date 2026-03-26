@@ -38,7 +38,7 @@
           indexPageUrl: '/pages/CSS/layout/width'
         }, {
           tabBar: '/pages/tabBar/template',
-          indexPageUrl: '/pages/template/long-list2/long-list2'
+          indexPageUrl: '/pages/template/banner-tabs-feed-nested-scroll/banner-tabs-feed-nested-scroll'
         }] as IndexPageItem[]
       }
     },

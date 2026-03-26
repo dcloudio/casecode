@@ -469,6 +469,7 @@
     data,
     getLifeCycleNum,
     setLifeCycleNum: setLifeCycleNumFunc,
+    goNextPage,
     openDialog1,
     openDialog11,
     openDialog2,

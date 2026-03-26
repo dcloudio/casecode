@@ -6,17 +6,15 @@
     <view id="main" style="width: 100px;height: 100px; background-color: brown; transform: scale(1);"></view>
 
     <button @click="startAnimate">开始动画</button>
-    <!-- #ifndef APP-HARMONY -->
     <!-- #ifndef MP-WEIXIN -->
     <button @click="pauseAnimate">暂停动画</button>
     <button @click="resumeAnimate">恢复动画</button>
     <!-- #endif -->
     <button @click="cancelAnimate">取消动画</button>
-    <!-- #endif -->
 
     <image src="/static/test-image/logo.png" id="roll" style="width: 100px; height: 100px;margin: 10px;"></image>
 
-    <!-- #ifndef APP-HARMONY -->
+
    <view
      style="border-radius: 5px;margin: 4px;padding: 4px;border-style: solid;background-color: #eee;border-color: #eee;">
      <text style="margin-bottom: 4px;">修改宽度</text>
@@ -56,15 +54,12 @@
      <text style="margin-bottom: 4px;">修改position</text>
      <view id="positionProperty" style="width: 100px;height: 100px;background-color: brown;" @click="positionProperty"></view>
    </view>
-   <!-- #endif -->
    <!-- #ifndef MP-WEIXIN -->
-   <!-- #ifndef APP-HARMONY -->
    <view
      style="border-radius: 5px;margin: 4px;padding: 4px;border-style: solid;background-color: #eee;border-color: #eee;">
      <text style="margin-bottom: 4px;">修改背景色和宽度</text>
      <view id="backgroundAndWidthProperty" style="width: 100px;height: 100px;background-color: brown;" @click="backgroundAndWidthProperty"></view>
    </view>
-   <!-- #endif -->
    <view
      style="border-radius: 5px;margin: 4px;padding: 4px;border-style: solid;background-color: #eee;border-color: #eee;">
      <text style="margin-bottom: 4px;">执行的动画只有一个值1</text>
@@ -96,22 +91,30 @@
      <text style="margin-bottom: 4px;">修改opacity(关键帧)</text>
      <view id="opacityProperty" style="width: 100px;height: 100px;background-color: brown;" @click="opacityProperty"></view>
    </view>
-   <!-- #ifndef APP-HARMONY -->
    <view
      style="border-radius: 5px;margin: 4px;padding: 4px;border-style: solid;background-color: #eee;border-color: #eee;">
      <text style="margin-bottom: 4px;">修改border-color和margin-left(关键帧)</text>
      <view id="borderColorMarginLeftProperty" style="width: 100px;height: 100px;background-color: brown;border-width: 5px;border-style: solid;"
        @click="borderColorMarginLeftProperty"></view>
    </view>
-   <!-- #endif -->
   <!-- #ifdef APP -->
   </scroll-view>
   <!-- #endif -->
 </template>
 
 <script setup lang="uts">
-  let mainView: UniElement | null = null
-  let animation: UniAnimation | null = null
+  let mainView : UniElement | null = null
+  let animation : UniAnimation | null = null
+
+  type Data = {
+    testTriggerFinishEvent : boolean,
+    testTriggerCancelEvent : boolean
+  }
+
+  const data = {
+    testTriggerFinishEvent: false,
+    testTriggerCancelEvent: false
+  } as Data
 
   function startAnimate() {
     animation = mainView!.animate([
@@ -132,11 +135,13 @@
 
     })
     animation!.oncancel = (_ : UniAnimationPlaybackEvent) => {
+      data.testTriggerCancelEvent = true
       uni.showToast({
         title: "动画被取消了"
       })
     }
     animation!.onfinish = (_ : UniAnimationPlaybackEvent) => {
+      data.testTriggerFinishEvent = true
       uni.showToast({
         title: "动画播放完成"
       })
@@ -157,7 +162,7 @@
 
   function widthProperty(e : UniPointerEvent) {
     e.currentTarget?.animate({
-      width: ["100px", "200px", "100px"]
+      width: ["100px", "200px", "150px"]
     }, {
       duration: 1000,
       fill: "forwards"
@@ -184,7 +189,7 @@
 
   function paddingProperty(e : UniPointerEvent) {
     e.currentTarget?.animate({
-      padding: ["0px", "16px", "32px", "0px"]
+      padding: ["0px", "16px", "32px", "16px"]
     }, {
       duration: 1000,
       fill: "forwards"
@@ -248,7 +253,7 @@
 
   function positionProperty(e : UniPointerEvent) {
     e.currentTarget?.animate({
-      left: ["0px", "16px", "32px", "0px"]
+      left: ["0px", "16px", "32px", "16px"]
     }, {
       duration: 1000,
       fill: "forwards"
@@ -343,7 +348,7 @@
     })
   }
 
-  function opacityProperty(e : UniPointerEvent){
+  function opacityProperty(e : UniPointerEvent) {
     e.currentTarget?.animate([
       {
         offset: 0.3,
@@ -354,7 +359,7 @@
         opacity: "0.1"
       },
       {
-        opacity: "1"
+        opacity: "0.5"
       }
     ], {
       duration: 1000,
@@ -376,6 +381,12 @@
         iterations: Infinity,
       },
     )
+  })
+
+  defineExpose({
+    data,
+    startAnimate,
+    cancelAnimate
   })
 </script>
 
