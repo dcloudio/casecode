@@ -363,6 +363,14 @@
 				"navigationBarTitleText": "rich-text-list"
 			}
 		},
+        // #endif
+        // #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+        {
+        	"path": "pages/component/rich-text/rich-text-dialog-page",
+        	"style": {
+        		"navigationBarTitleText": "rich-text-dialog-page"
+        	}
+        },
 		// #endif
 		// #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
 		{

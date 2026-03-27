@@ -345,9 +345,9 @@
 
         // #ifndef MP-WEIXIN
         const windowInfo = uni.getWindowInfo()
-        const offsetX = targetLeft - windowInfo.windowWidth / 2
-        const offsetY = targetTop - windowInfo.windowHeight / 2
-        alignContainerStyle.value = `transform: translate(${offsetX}px, ${offsetY}px); background-color: transparent; transition: none`
+        const maxLeft = Math.max(0, windowInfo.windowWidth - containerWidth)
+        const popupLeft = Math.max(0, Math.min(targetLeft, maxLeft))
+        alignContainerStyle.value = `transform: translate(${popupLeft}px, ${targetTop}px); background-color: transparent; transition: none`
         // #endif
 
         showAlignContainer.value = true
