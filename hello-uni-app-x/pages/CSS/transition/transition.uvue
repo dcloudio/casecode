@@ -113,6 +113,14 @@
     </view>
 
     <view class="container">
+      <text class="text">测试在style中同时修改transform的translateX/Y的百分比</text>
+      <view style="width:100%;height: 100%;">
+        <view class="base-style transition-transform-translate" :style="{transform:`translateX(${translatePercent}) translateY(${translatePercent})`}" @click="changeTransform27520">
+        </view>
+      </view>
+    </view>
+
+    <view class="container">
       <text class="text">点击修改宽度(值为auto有无动画交替出现)</text>
       <view class="base-style transition-width" id="widthOrHeightAuto" @click="changeWidthOrHeightAuto"></view>
     </view>
@@ -314,6 +322,7 @@
   let isTransitionAll = false
   const lineLeft = ref(0)
   const lineWidth = ref(200)
+  const translatePercent = ref('0%')
   let changeWidthInEnd: UniElement | null = null
   let changeWidthInEndCount = 0
   let isTextTransform = false
@@ -583,6 +592,14 @@
     } else {
       lineLeft.value = 0
       lineWidth.value = 200
+    }
+  }
+
+  const changeTransform27520 = () => {
+    if (translatePercent.value === '0%') {
+      translatePercent.value = '50%'
+    } else {
+      translatePercent.value = '0%'
     }
   }
 
@@ -909,6 +926,11 @@
   .transition-transform-width {
     transform: rotate(0deg);
     transition-property: transform, width;
+    transition-duration: 1s;
+  }
+
+  .transition-transform-translate {
+    transition-property: transform;
     transition-duration: 1s;
   }
 

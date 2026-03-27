@@ -107,4 +107,12 @@ describe('rich-text-test', () => {
     })
     await page.waitFor(300)
   })
+
+  it('test dialogPage', async () => {
+    await page.callMethod('testOpenDialogPage');
+    await page.waitFor(1000);
+    const image = await program.screenshot({ deviceShot: true });
+    expect(image).toSaveImageSnapshot();
+    await page.callMethod('testCloseDialogPage');
+  })
 })
