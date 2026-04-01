@@ -426,8 +426,8 @@ export function testUTSJSONObject(): Result {
 
       const choose = true ? { a: { b: 1 } } : { a: { b: 2 } }
       expect(choose.a.b).toEqual(1)
-
-      // #ifdef APP-ANDROID || WEB
+      
+      // #ifdef UNI-APP-X && (APP-ANDROID || WEB)
       const refObj = ref({
         a: {
           b: {
