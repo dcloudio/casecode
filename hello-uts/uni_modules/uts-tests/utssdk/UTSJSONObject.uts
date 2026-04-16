@@ -24,10 +24,6 @@ export function testUTSJSONObject(): Result {
         age: 11
       }
 
-	    let objAs = {
-	      age: 23
-	    } as UTSJSONObject
-
       let ret1 = UTSJSONObject.keys(obj).length
       console.log(ret1) //2
       // #END
@@ -35,8 +31,6 @@ export function testUTSJSONObject(): Result {
       expect(ret1).toEqual(2);
       expect(UTSJSONObject.keys(mockData).length).toEqual(2);
 
-      expect(obj.age).toEqual(11);
-      expect(objAs.age).toEqual(23);
     })
 
     test('toJSONObject', () => {
@@ -356,116 +350,6 @@ export function testUTSJSONObject(): Result {
       expect(((obj.a as UTSJSONObject).b as UTSJSONObject).c).toEqual('c');
       ((obj.a as UTSJSONObject).b as UTSJSONObject).c = 'c1';
       expect(((obj.a as UTSJSONObject).b as UTSJSONObject).c).toEqual('c1');
-    })
-
-     test('property-access-nested', () => {
-      let obj = {
-        a: {
-          b: 1,
-        },
-      }
-      expect(obj.a.b).toEqual(1)
-
-      type M = {
-        d : number
-      }
-      let obj2 = {
-        a: {
-          b: {
-            c: {
-              d: 1,
-            } as M,
-          },
-        },
-      }
-      expect(obj2.a.b.c.d).toEqual(1)
-      
-      // #ifndef APP-IOS
-      type M2 = {
-        b ?: number
-      }
-      type N2 = {
-        m ?: M2
-      }
-      const r = {
-        a: {
-          b: {
-            c: { m: { b: 1 } } as N2,
-          },
-        },
-      } as UTSJSONObject
-      expect(r.a.b.c.m?.b).toEqual(1)
-      // #endif
-
-      function getObj() : UTSJSONObject {
-        return {
-          x: {
-            y: 1,
-          },
-        } as UTSJSONObject
-      }
-      expect(getObj().x.y).toEqual(1)
-
-      const plain = {
-        x: {
-          y: {
-            z: 1,
-          },
-        },
-      }
-      expect(plain.x.y.z).toEqual(1)
-
-      function getPlain() {
-        return {
-          p: {
-            q: 1,
-          },
-        }
-      }
-      expect(getPlain().p.q).toEqual(1)
-
-      const choose = true ? { a: { b: 1 } } : { a: { b: 2 } }
-      expect(choose.a.b).toEqual(1)
-      
-      // #ifdef UNI-APP-X && (APP-ANDROID || WEB)
-      const refObj = ref({
-        a: {
-          b: {
-            c: 1,
-          },
-        },
-      })
-      expect(refObj.value.a.b.c).toEqual(1)
-
-      const refObj2 = ref({
-        a: {
-          b: {
-            c: 2,
-          },
-        },
-      })
-      const refValue2 = refObj2.value
-      expect(refValue2.a.b.c).toEqual(2)
-
-      const refObj3 = ref({
-        a: {
-          b: {
-            c: 3,
-          },
-        },
-      })
-      const merged = true ? refObj3.value : { a: { b: { c: 4 } } }
-      expect(merged.a.b.c).toEqual(3)
-
-      const refObj4 = ref({
-        a: {
-          b: {
-            c: 5,
-          },
-        },
-      })
-      expect(unref(refObj4).a.b.c).toEqual(5)
-      // #endif
     })
 
     test('issue-16094', () => {

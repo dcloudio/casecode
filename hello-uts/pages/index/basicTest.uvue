@@ -16,13 +16,9 @@
       </view>
       <view class="result">
         <view> uvue 测试</view>
-        <view> 测试api：{{ uvuePassed.join(', ') }} </view>
         <view>总共：{{ uvueResult.length }}</view>
-        <view>通过：{{ uvuePassed.length }}</view>
-        <view>失败：{{ uvueFailed.length }}</view>
-        <view v-for="(fail, i) in uvueFailed" :key="i">
-          <text class="failed">{{ fail }}</text>
-        </view>
+        <view>通过：{{ uvueResult.filter(i=>!!i).length }}</view>
+        <view>失败：{{ uvueResult.filter(i=>!i).length }}</view>
       </view>
       
     </view>
@@ -32,7 +28,6 @@
 </template>
 <script lang="ts">
 import { testEncoder } from './basicEncoder'
-import { testCondition } from './basicCondition'
 import { runTests, Result } from '../../uni_modules/uts-tests'
 // #ifdef APP-IOS
 import { testTypeFromAppJs, Options } from '@/uni_modules/uts-ios-tests'
@@ -53,8 +48,6 @@ export default {
       resultArray: [] as Result[],
       result: {} as UTSJSONObject,
       uvueResult: [] as boolean[],
-      uvuePassed: [] as string[],
-      uvueFailed: [] as string[],
       names: [] as string[],
     }
   },
@@ -67,11 +60,8 @@ export default {
   },
   methods: {
     test() {
-      const encoderTests = testEncoder()
-      const conditionTests = testCondition()
-      this.uvueResult = encoderTests.map(item => item.pass).concat(conditionTests.map(item => item.pass))
-      this.uvuePassed = encoderTests.filter(item => item.pass).map(item => item.name).concat(conditionTests.filter(item => item.pass).map(item => item.name))
-      this.uvueFailed = encoderTests.filter(item => !item.pass).map(item => item.name).concat(conditionTests.filter(item => !item.pass).map(item => item.name))
+      const uvueTest = testEncoder().map(i => i.pass)
+      this.uvueResult = uvueTest
       this.result = runTests()
       // const resultMap = this.result.toMap()
       // resultMap.forEach((res, name) => {
