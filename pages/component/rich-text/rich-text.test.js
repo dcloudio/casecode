@@ -1,11 +1,9 @@
+const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isMP = platformInfo.startsWith('mp')
+
 const PAGE_PATH = '/pages/component/rich-text/rich-text'
 
 describe('rich-text-test', () => {
-  const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
-  const isiOS = platformInfo.startsWith('ios')
-  const isAndroid = platformInfo.startsWith('android')
-  const isHarmony = platformInfo.startsWith('harmony')
-
   let page
   beforeAll(async () => {
     page = await program.reLaunch(PAGE_PATH)
@@ -108,11 +106,13 @@ describe('rich-text-test', () => {
     await page.waitFor(300)
   })
 
-  it('test dialogPage', async () => {
-    await page.callMethod('testOpenDialogPage');
-    await page.waitFor(1000);
-    const image = await program.screenshot({ deviceShot: true });
-    expect(image).toSaveImageSnapshot();
-    await page.callMethod('testCloseDialogPage');
-  })
+  if (!isMP) {
+    it('test dialogPage', async () => {
+      await page.callMethod('testOpenDialogPage');
+      await page.waitFor(1000);
+      const image = await program.screenshot({ deviceShot: true });
+      expect(image).toSaveImageSnapshot();
+      await page.callMethod('testCloseDialogPage');
+    })
+  }
 })

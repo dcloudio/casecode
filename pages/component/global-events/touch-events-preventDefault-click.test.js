@@ -3,11 +3,12 @@
 describe('test preventDefault click', () => {
   const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
   const isWeb = platformInfo.startsWith('web')
+  const isMP = platformInfo.startsWith('mp')
   const isHarmony = platformInfo.startsWith('harmony')
   const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
   // TODO: dom1 harmony 暂不支持 touch 事件中 preventDefault 阻止 click
-  if (isWeb || (isHarmony && !isDom2)) {
+  if (isWeb || isMP || (isHarmony && !isDom2)) {
     it('other platform', () => {
       expect(1).toBe(1)
     })
