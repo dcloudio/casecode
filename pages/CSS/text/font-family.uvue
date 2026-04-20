@@ -115,7 +115,8 @@
   })
 
   defineExpose({
-    data
+    data,
+    radioChangeFontFamily
   })
 </script>
 

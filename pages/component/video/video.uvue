@@ -6,8 +6,8 @@
       :show-fullscreen-btn="data.showFullscreenBtn && fullscreenShowFullscreenBtn" :show-play-btn="data.showPlayBtn && fullscreenShowPlayBtn" :show-center-play-btn="data.showCenterPlayBtn"
       :show-loading="data.showLoading" :enable-progress-gesture="data.enableProgressGesture" :object-fit="data.objectFit"
       :poster="data.poster" :show-mute-btn="data.showMuteBtn && fullscreenShowMuteBtn" :title="data.title" :enable-play-gesture="data.enablePlayGesture"
-      :vslide-gesture="data.vslideGesture" :vslide-gesture-in-fullscreen="data.vslideGestureInFullscreen" :codec="data.codec"
-      :http-cache="data.httpCache" :play-strategy="data.playStrategy" :danmu-list="data.danmuList" @play="onPlay" @pause="onPause"
+      :vslide-gesture="data.vslideGesture" :vslide-gesture-in-fullscreen="data.vslideGestureInFullscreen"
+      :http-cache="data.httpCache" :danmu-list="data.danmuList" @play="onPlay" @pause="onPause"
       @ended="onEnded" @timeupdate="onTimeUpdate" @waiting="onWaiting" @error="onError" @progress="onProgress"
       @fullscreenclick="onFullScreenClick" @controlstoggle="onControlsToggle" @fullscreenchange="onFullScreenChange">
 
@@ -144,9 +144,6 @@
       <!-- #ifndef APP-HARMONY -->
       <boolean-data title="设置是否对http、https视频源开启本地缓存（仅 Android、iOS 平台，播放前设置有效）" :defaultValue="data.httpCache"
         @change="onHttpCacheChange"></boolean-data>
-      <enum-data title="设置解码器（仅 Android、iOS 平台，播放前设置有效）" :items="data.codecItemTypes" @change="onCodecChange"></enum-data>
-      <enum-data title="设置播放策略（仅 Android、iOS 平台，播放前设置有效）" :items="data.playStrategyItemTypes"
-        @change="onPlayStrategyChange"></enum-data>
       <!-- #endif -->
     </scroll-view>
   </view>
@@ -190,13 +187,7 @@
     enablePlayGesture: boolean;
     vslideGesture: boolean;
     vslideGestureInFullscreen: boolean;
-    codec: string;
-    codecItemTypes: ItemType[];
-    codecItems: string[];
     httpCache: boolean;
-    playStrategy: number;
-    playStrategyItemTypes: ItemType[];
-    playStrategyItems: number[];
     header: UTSJSONObject;
     // API
     pos: number;
@@ -292,13 +283,7 @@
     enablePlayGesture: false,
     vslideGesture: false,
     vslideGestureInFullscreen: true,
-    codec: "hardware",
-    codecItemTypes: [{ "value": 0, "name": "hardware(硬解码)" }, { "value": 1, "name": "software(软解码)" }],
-    codecItems: ["hardware", "software"],
     httpCache: true,
-    playStrategy: 0,
-    playStrategyItemTypes: [{ "value": 0, "name": "0(普通模式)" }, { "value": 1, "name": "1(平滑播放模式)" }, { "value": 2, "name": "2(M3U8优化模式)" }],
-    playStrategyItems: [0, 1, 2],
     header: {
       'User-Agent': 'User-Agent test',
       'header': 'header test',
@@ -611,19 +596,9 @@
     console.log("vslideGestureInFullscreen -> " + data.vslideGestureInFullscreen)
   }
 
-  const onCodecChange = (value : number) => {
-    data.codec = data.codecItems[value];
-    console.log("codec -> " + data.codec)
-  }
-
   const onHttpCacheChange = (value : boolean) => {
     data.httpCache = value;
     console.log("httpCache -> " + data.httpCache)
-  }
-
-  const onPlayStrategyChange = (value : number) => {
-    data.playStrategy = data.playStrategyItems[value];
-    console.log("playStrategy -> " + data.playStrategy)
   }
 
   const onHeaderComfirm = (event : UniInputConfirmEvent) => {

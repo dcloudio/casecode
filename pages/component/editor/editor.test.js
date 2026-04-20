@@ -55,7 +55,7 @@ describe('editor.uvue', () => {
       // await page.waitFor(500)
       const getFormats = await page.data('data.formats')
       options.push({
-        insert: '文本内容ABC123defgpqif',
+        insert: '文本内容font',
         attributes: getFormats
       })
       await page.callMethod('setContents', options)
@@ -111,6 +111,42 @@ describe('editor.uvue', () => {
     await page.waitFor(waitTime)
     expect(await program.screenshot()).toSaveImageSnapshot();
   })
+
+  if (!isMP) {
+    it('mention', async () => {
+      await page.setData({
+        data: {
+          clearTest: false
+        }
+      })
+      await page.callMethod('clear')
+      const start = Date.now();
+      await page.waitFor(async () => {
+        return await page.data('data.clearTest') === true || (Date.now() - start > 2000)
+      })
+
+      await page.callMethod('insertMention')
+      await page.waitFor(1000)
+      await page.callMethod('getCon')
+      await page.waitFor(1000)
+      const start1 = Date.now();
+      await page.waitFor(async () => {
+        return await page.data('data.getContentDeltaTest') || (Date.now() - start1 > 2000)
+      })
+
+      const delta = await page.data('data.getContentDeltaTest')
+      const ops = delta.ops
+      expect(ops.length).toBeGreaterThanOrEqual(2)
+      expect(ops[0].insert.mention).toMatchObject({
+        "id": "123456",
+        "name": "uni-app"
+      })
+      expect(ops[1].insert.mention).toMatchObject({
+        "id": "000",
+        "name": "uni-app x"
+      })
+    })
+  }
 
   it('removeFormat', async () => {
     const bgcolorEl = await page.$('.icon-fontbgcolor');

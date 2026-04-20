@@ -1,9 +1,8 @@
 <template>
   <view class="container">
-    <page-intro content="本页为一键登录自定义 uvue 页面：展示号码与 slogan、本机一键登录、隐私协议与其他登录方式。"></page-intro>
     <view class="safe_content">
       <text class="close_icon" @click="closePage">{{closeIcon}}</text>
-      <text class="title">这是一个普通uvue的dialogPage页面</text>
+      <text class="title">这是一键登录自定义 uvue 页面</text>
       <view class="number">
         <text id="number-text" class="number-text" ref="number-text">{{phone}}</text>
         <text id="slogan-text" class="slogan-text">{{slogan}}</text>
