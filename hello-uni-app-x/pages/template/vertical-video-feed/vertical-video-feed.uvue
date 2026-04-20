@@ -7,7 +7,7 @@
         <video @click="changeState(i)" ref="video" class="video-box" :id="'video-'+i"
           @loadstart="onLoadstart(i)" :src="item.src" :poster="item.poster_src" :autoplay="false"
           :show-progress="false" :show-fullscreen-btn="false" :show-play-btn="false"
-          :show-center-play-btn="false" :loop="true" @play="onPlay(i)" @pause="onPause(i)" http-cache="true"></video>
+          :show-center-play-btn="false" :loop="true" @play="onPlay(i)" @pause="onPause(i)" :http-cache="true"></video>
         <view class="video-cover" @click="changeState(i)">
           <image v-if="stateList[i] === 'pause'" class="play-btn" src="/static/template/swiper-vertical-video/play.png"
             mode="widthFix"></image>
