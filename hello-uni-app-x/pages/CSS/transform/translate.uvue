@@ -240,6 +240,7 @@
   })
 
   defineExpose({
+    radioChangeTransform,
     data
   })
 </script>

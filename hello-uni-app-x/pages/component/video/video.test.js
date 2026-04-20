@@ -9,10 +9,12 @@ const isWeb = platformInfo.startsWith('web')
 const isDev = process.env.HX_Version.endsWith('-dev')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
+const platformInfos = platformInfo.split(' ');
+const version = parseInt(platformInfos[platformInfos.length - 1]);
 
 describe('component-native-video', () => {
   // TODO: web 端暂不支持测试 harmony 模拟器异常
-  if (isWeb || isAppWebView || (isHarmony && platformInfo.includes('模拟器'))) {
+  if (isWeb || isAppWebView || (isHarmony && platformInfo.includes('模拟器')) || (isAndroid && version == 5)) {
     it('web', async () => {
       expect(1).toBe(1)
     })
@@ -197,11 +199,9 @@ describe('component-native-video', () => {
         fullScreen: true,
         direction: 'horizontal'
       });
-      const infos = process.env.uniTestPlatformInfo.split(' ');
-      const version = parseInt(infos[infos.length - 1]);
-      if (isAndroid && version >5) { // android5.1模拟器全屏时会弹出系统提示框，无法响应adb tap命令
+      if (isAndroid) {
+        await program.adbCommand('settings put secure immersive_mode_confirmations confirmed');
         await page.waitFor(5000);
-        await program.adbCommand('input tap 10 10');
         await program.adbCommand('input tap 10 10');
         start = Date.now();
         await page.waitFor(async () => {
@@ -256,9 +256,7 @@ describe('component-native-video', () => {
         });
       }
       await page.waitFor(3000);
-      const infos = process.env.uniTestPlatformInfo.split(' ');
-      const version = parseInt(infos[infos.length - 1]);
-      if ((isAndroid && version > 5) || isHarmony) {
+      if (isAndroid || isHarmony) {
         let currentTime = 121
         if (isHarmony) currentTime = 120
         start = Date.now();

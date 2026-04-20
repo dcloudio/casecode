@@ -25,11 +25,11 @@
         <text class="uni-title-text">分享类型：</text>
       </view>
       <radio-group class="uni-flex" @change="typeChange">
-        <radio class="uni-common-mt" :value="0" :checked="true">
+        <radio class="uni-common-mt" value="0" :checked="true">
           图文
         </radio>
-        <radio class="uni-common-mt" :value="1">纯文字</radio>
-        <radio class="uni-common-mt" :value="2">纯图片</radio>
+        <radio class="uni-common-mt" value="1">纯文字</radio>
+        <radio class="uni-common-mt" value="2">纯图片</radio>
       </radio-group>
     </view>
     <view class="uni-list-cell-padding status-box">

@@ -80,6 +80,12 @@
       <view class="base-style transition-position" id="stylePosition" @click="changestylePosition"></view>
     </view>
     <view class="container">
+      <text class="text">点击修改bottom</text>
+      <view>
+        <view class="base-style transition-bottom" id="styleBottom" @click="changeStyleBottom"></view>
+      </view>
+    </view>
+    <view class="container">
       <text class="text">点击修改Scale
       </text>
       <view class="base-style transition-transform" id="styleChangScale" @click="changestyleScale"></view>
@@ -306,6 +312,8 @@
   let styleBorder: UniElement | null = null
   let isTransitionstylePosition = false
   let stylePosition: UniElement | null = null
+  let isTransitionStyleBottom = false
+  let styleBottom: UniElement | null = null
   let isSetTransition = false
   let isTransitionpropertystyleBackground = false
   let propertyStyleBackground: UniElement | null = null
@@ -356,6 +364,7 @@
     styleTransform = uni.getElementById("styleTransform")
     styleBorder = uni.getElementById("styleBorder")
     stylePosition = uni.getElementById("stylePosition")
+    styleBottom = uni.getElementById("styleBottom")
     propertyStyleBackground = uni.getElementById("propertyStyleBackground")
     styleTransformWithOrigin = uni.getElementById("styleTransformWithOrigin")
     styleTransformWithWidth = uni.getElementById("styleTransformWithWidth")
@@ -530,6 +539,18 @@
       : '100px'
     )
     isTransitionstylePosition = !isTransitionstylePosition
+  }
+
+  const changeStyleBottom = () => {
+    styleBottom?.style?.setProperty("bottom", isTransitionStyleBottom
+      ? '0px'
+      : '-60px'
+    )
+    isTransitionStyleBottom = !isTransitionStyleBottom
+  }
+
+  const getStyleBottom = (): string => {
+    return styleBottom?.style?.getPropertyValue('bottom') ?? ''
   }
 
   const changestyleScale = () => {
@@ -835,9 +856,11 @@
 	  changeTransformWithOrigin,
 	  changeBorder,
 	  changestylePosition,
+	  changeStyleBottom,
 	  changeTransitionAll,
 	  changeWidthInEndFun,
 	  getChangeWidthInEndCount,
+    getStyleBottom,
     changeBorderAndBackgroundColor,
 	  data
 	})
@@ -920,6 +943,13 @@
   .transition-position {
     left: 0px;
     transition-property: left;
+    transition-duration: 1s;
+  }
+
+  .transition-bottom {
+    position: relative;
+    bottom: 0px;
+    transition-property: bottom;
     transition-duration: 1s;
   }
 

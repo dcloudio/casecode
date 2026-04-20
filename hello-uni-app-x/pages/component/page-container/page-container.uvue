@@ -250,7 +250,7 @@
   function showGreenTransparentOverlay() {
     resetConfig()
     containerOverlay.value = true
-    containerPosition.value = 'center'
+    containerPosition.value = 'bottom'
     containerOverlayStyle.value = 'background-color: rgba(76, 175, 80, 0.3);'
     containerTitle.value = '绿色半透明蒙层'
     containerContent.value = '蒙层开启但为绿色半透明，可以点击蒙层区域关闭'

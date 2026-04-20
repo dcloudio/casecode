@@ -22,6 +22,7 @@ describe('/pages/CSS/transition/transition.uvue', () => {
     await page.callMethod('changeTransformWithOrigin')
     await page.callMethod('changeBorder')
     await page.callMethod('changestylePosition')
+    await page.callMethod('changeStyleBottom')
     // changeTransitionAll
     await page.callMethod('changeTransitionAll')
     await page.callMethod('changeWidthInEndFun')

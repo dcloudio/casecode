@@ -152,6 +152,7 @@
     getLineHeight,
     plusLineHeight,
     minusLineHeight,
+    radioChangeLineHeight,
     data
   })
   /**

@@ -66,11 +66,6 @@
     data.fontSize = '30px'
   }
 
-  defineExpose({
-    setFontSize,
-    data
-  })
-
   const fontSizeEnum: ItemType[] = [
     { value: 0, name: '' },
     { value: 1, name: '0' },
@@ -112,6 +107,12 @@
 
   onReady(() => {
     getPropertyValues()
+  })
+
+  defineExpose({
+    setFontSize,
+    radioChangeFontSize,
+    data
   })
 </script>
 
