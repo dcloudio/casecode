@@ -2068,7 +2068,14 @@
 			}
 		},
 		// #endif
-		// #ifdef MP-WEIXIN || APP-HARMONY || APP-IOS || APP-ANDROID
+    {
+    	"path": "pages/API/screen-brightness/screen-brightness",
+    	"group": "1,6,22",
+    	"style": {
+    		"navigationBarTitleText": "screenBrightness | 屏幕亮度"
+    	}
+    },
+		// #ifdef APP-HARMONY || (!VUE3-VAPOR && (APP-ANDROID || APP-IOS || MP-WEIXIN))
 		{
 			"path": "pages/API/oauth/oauth",
 			"group": "1,12,0",
@@ -2251,6 +2258,14 @@
 				"navigationBarTitleText": "requestTask | 发起流式请求"
 			}
 		}
+		// #ifdef APP-HARMONY || APP-IOS || (!VUE3-VAPOR && APP-ANDROID)
+		{
+			"path": "pages/API/vibrate/vibrate",
+			"style": {
+				"navigationBarTitleText": "uni-app x"
+			}
+		}
+		// #endif
 	],
 	"subPackages": [
 		{
@@ -3257,7 +3272,7 @@
 				// #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
 				{
 					"path": "transition/transition-duration",
-					"group": "2,16,1",
+					"group": "2,16,2",
 					"style": {
 						"navigationBarTitleText": "transition-duration"
 					}
@@ -3266,7 +3281,7 @@
 				// #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
 				{
 					"path": "transition/transition-timing-function",
-					"group": "2,16,2",
+					"group": "2,16,3",
 					"style": {
 						"navigationBarTitleText": "transition-timing-function"
 					}
@@ -3275,7 +3290,7 @@
 				// #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
 				{
 					"path": "transition/transition-delay",
-					"group": "2,16,3",
+					"group": "2,16,4",
 					"style": {
 						"navigationBarTitleText": "transition-delay"
 					}
@@ -3982,6 +3997,10 @@
 						{
 							"id": "api.device.keyboard",
 							"name": "keyboard"
+						},
+						{
+							"id": "api.device.screenBrightness",
+							"name": "screenBrightness"
 						}
 					]
 				},
@@ -4572,17 +4591,18 @@
 							"id": "css.properties.transition.transition",
 							"name": "transition"
 						},
+						null,
 						{
-						  "id": "css.properties.transition.transition-duration",
-						  "name": "transition-duration"
+							"id": "css.properties.transition.transition-duration",
+							"name": "transition-duration"
 						},
 						{
 							"id": "css.properties.transition.transition-timing-function",
-						  "name": "transition-timing-function"
+							"name": "transition-timing-function"
 						},
 						{
 							"id": "css.properties.transition.transition-delay",
-						  "name": "transition-delay"
+							"name": "transition-delay"
 						}
 					]
 				},
@@ -4609,10 +4629,10 @@
 						}
 					]
 				},
-        {
-        	"id": "css.properties.style-isolation",
-        	"name": "样式隔离style-isolation"
-        }
+				{
+					"id": "css.style.isolation",
+					"name": "样式隔离 style-isolation"
+				}
 			]
 		}
 	]
