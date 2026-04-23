@@ -151,9 +151,6 @@
 
 <script setup lang="uts">
   import { ItemType } from '@/components/enum-data/enum-data-types';
-  // #ifdef APP-ANDROID
-  import ViewGroup from 'android.view.ViewGroup';
-  // #endif
 
   type DataType = {
     videoContext: VideoContext | null;
