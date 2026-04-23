@@ -207,10 +207,10 @@
 	}
 
 	onLoad(() => {
-		// uni.showLoading()
-		// setTimeout(() => {
-		// 	uni.hideLoading()
-		// }, 2000);
+		uni.showLoading()
+		setTimeout(() => {
+			uni.hideLoading()
+		}, 2000);
 	})
 
 	defineExpose({

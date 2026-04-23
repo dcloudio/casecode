@@ -127,7 +127,6 @@
     <!-- #endif -->
     <button class="btnstyle" type="primary" @tap="gotoExplore()">前往沙盒文件管理器</button>
     <button class="btnstyle" type="primary" @tap="gotoTestStatic()">前往Static文件测试</button>
-    <button class="btnstyle" type="primary" @tap="gotoIssue26433()">test issue-26433</button>
     <view style="height: 4px;"></view>
   <!-- #ifdef APP -->
   </scroll-view>
@@ -2046,11 +2045,7 @@
       url: "/pages/API/get-file-system-manager/testStatic"
     })
   }
-  const gotoIssue26433 = () => {
-    uni.navigateTo({
-      url: "/pages/API/get-file-system-manager/rename-issue-26433"
-    })
-  }
+
   const getFileInfoByContent = (event : UniPointerEvent) => {
     uni.chooseFile({
       count: 1,
