@@ -65,22 +65,16 @@ describe('Button.uvue', () => {
   })
   it('plain', async () => {
     const btn = await page.$('.btn')
-    // TODO
-    const newValue1 = await btn.property('plain')
-    expect(newValue1.toString()).toBe(false + '')
+    expect(await btn.property('plain')).toBe(false)
     await setPageData({plain_boolean: true})
-    const newValue2 = await btn.property('plain')
-    expect(newValue2.toString()).toBe(true + '')
+    expect(await btn.property('plain')).toBe(true)
   })
   it('disabled', async () => {
     const btn = await page.$('.btn')
-    // TODO
     await setPageData({disabled_boolean: false})
-    const newValue1 = await btn.property('disabled')
-    expect(newValue1.toString()).toBe(false + '')
+    expect(await btn.property('disabled')).toBe(false)
     await setPageData({disabled_boolean: true})
-    const newValue2 = await btn.property('disabled')
-    expect(newValue2.toString()).toBe(true + '')
+    expect(await btn.property('disabled')).toBe(true)
   })
 
   it("checkUniButtonElement", async () => {
@@ -116,7 +110,7 @@ describe('Button.uvue', () => {
     })
     await page.waitFor(100);
     expect(await btn.property('size')).toBe('default')
-    expect(await btn.property('plain')).toBe('true')
+    expect(await btn.property('plain')).toBe(true)
     expect(await btn.property('type')).toBe('primary')
     const image1 = await program.screenshot({
       fullPage: true
@@ -193,7 +187,7 @@ describe('Buttonstatus.uvue', () => {
       expect(1).toBe(1)
       return
     }
-    
+
     const btn = await page.$('.loading-class')
     expect(await btn.attribute('loading-class')).toContain('custom-loading')
   })
