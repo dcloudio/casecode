@@ -1674,6 +1674,15 @@
 			}
 		},
 		// #endif
+		// #ifdef WEB || MP-WEIXIN
+		{
+			"path": "pages/API/compass/compass",
+			"group": "1,6,12",
+			"style": {
+				"navigationBarTitleText": "compass | 罗盘"
+			}
+		},
+		// #endif
 		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
 		{
 			"path": "pages/API/scan-code/scan-code",
