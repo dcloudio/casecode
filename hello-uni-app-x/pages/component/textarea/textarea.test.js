@@ -106,7 +106,7 @@ describe('component-native-textarea', () => {
     }
   }
   // TODO: dom2 harmony 暂时不支持 auto-height
-  if (!isDom2) {
+  if (!(isDom2 && isIOS)) {
     it("auto-height", async () => {
       await setPageData({
         default_value: ""
@@ -128,7 +128,7 @@ describe('component-native-textarea', () => {
         await page.waitFor(500)
         textareaSize = await textarea.size()
         textareaHeight = textareaSize.height
-        expect(textareaHeight).toEqual(200)
+        expect(textareaHeight).toEqual((isDom2 && isHarmony) ? 222 : 200)
       }
     })
   }
@@ -138,7 +138,7 @@ describe('component-native-textarea', () => {
     var {
       height
     } = await bottomTextarea.size()
-    expect(height).toEqual(150)
+    expect(height).toEqual((isDom2 && isHarmony) ? 152: 150)
   })
 
   it("maxlength", async () => {

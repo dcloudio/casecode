@@ -35,7 +35,7 @@ describe('/pages/CSS/layout/width.uvue', () => {
         emptyNativeViewHeight: 'auto'
       })
     }
-    if(isDom2 && isiOS){
+    else if(isDom2 && isiOS){
       expect(emptyValues).toMatchObject({
         emptyViewWidth: 'auto',
         emptyViewHeight: 'auto',
