@@ -310,7 +310,6 @@ let pages = [
   // harmony 整体测试时截图异常，单独测试例截图
   // '/pages/template/pull-zoom-profile-page/pull-zoom-profile-page',
   '/pages/template/custom-navbar-search/custom-navbar-search',
-  '/pages/template/tabbar-center-action/tabbar-center-action',
   // 动态内容
   // '/pages/template/calendar/calendar',
   // 不同平台存在差异，且页面简单

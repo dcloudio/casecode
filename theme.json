@@ -19,7 +19,9 @@
     "tabBarCSSIconPath": "static/css.png",
     "tabBarCSSSelectedIconPath": "static/cssHL.png",
     "tabBarTemplateIconPath": "static/template.png",
-    "tabBarTemplateSelectedIconPath": "static/templateHL.png"
+    "tabBarTemplateSelectedIconPath": "static/templateHL.png",
+    "tabBarUniUIIconPath": "static/extui.png",
+    "tabBarUniUISelectedIconPath": "static/extuiHL.png"
   },
   "dark": {
     "navigationBarTextStyle": "white",
@@ -41,6 +43,8 @@
     "tabBarCSSIconPath": "static/css.png",
     "tabBarCSSSelectedIconPath": "static/cssHL.png",
     "tabBarTemplateIconPath": "static/template.png",
-    "tabBarTemplateSelectedIconPath": "static/templateHL.png"
+    "tabBarTemplateSelectedIconPath": "static/templateHL.png",
+    "tabBarUniUIIconPath": "static/extui.png",
+    "tabBarUniUISelectedIconPath": "static/extuiHL.png"
   }
 }

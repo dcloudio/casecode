@@ -8,8 +8,16 @@
       </view>
       <view v-if="!hasLeftWin" class="uni-text-box">
         <text class="hello-text">以下将演示uni-app x接口能力，详细文档见：</text>
-        <uni-link class="hello-text" href="https://doc.dcloud.net.cn/uni-app-x/api/" text="https://doc.dcloud.net.cn/uni-app-x/api/"
-          :inWhiteList="true"></uni-link>
+        <!-- #ifndef MP -->
+        <uni-link class="hello-text" href="https://doc.dcloud.net.cn/uni-app-x/api/" target="_blank">
+          https://doc.dcloud.net.cn/uni-app-x/api/
+        </uni-link>
+        <!-- #endif -->
+        <!-- #ifdef MP -->
+        <uni-link class="hello-text" href="https://doc.dcloud.net.cn/uni-app-x/api/">
+          https://doc.dcloud.net.cn/uni-app-x/api/
+        </uni-link>
+        <!-- #endif -->
       </view>
       <uni-collapse>
         <uni-collapse-item ref="categoryRef" v-for="menuItem in menu" :key="menuItem.id" :title="menuItem.name"

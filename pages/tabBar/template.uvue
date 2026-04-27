@@ -8,31 +8,34 @@
       </view>
       <view v-if="!hasLeftWin" class="uni-text-box">
         <text class="hello-text">以下是部分模板示例，更多模板见插件市场：</text>
-        <uni-link class="hello-text" href="https://ext.dcloud.net.cn" text="https://ext.dcloud.net.cn" :inWhiteList="true"></uni-link>
+        <!-- #ifndef MP -->
+        <uni-link class="hello-text" href="https://ext.dcloud.net.cn" target="_blank">https://ext.dcloud.net.cn</uni-link>
+        <!-- #endif -->
+        <!-- #ifdef MP -->
+        <uni-link class="hello-text" href="https://ext.dcloud.net.cn">https://ext.dcloud.net.cn</uni-link>
+        <!-- #endif -->
       </view>
-      <view class="uni-panel" v-for="(item, index) in list" :key="item.id">
-        <view hover-class="is--active" class="uni-panel-h" @click="triggerCollapse(index, item)">
-          <text class="uni-panel-text"
-            :class="item.enable == false || item.open == true ? 'text-disabled' : '',item.url == leftWinActive && item.pages.length == 0 ? 'left-win-active' : ''">{{ item.name }}</text>
-          <image :src="
-              item.pages.length > 0
-                ? item.open
-                  ? arrowUpIcon
-                  : arrowDownIcon
-                : arrowRightIcon
-            " class="uni-icon-size">
-          </image>
-        </view>
-        <view v-if="item.open">
-          <view style="padding-left: 18px;" class="uni-navigate-item"
-            :hover-class="page.enable == false ? '' : 'is--active'" v-for="(page, key) in item.pages" :key="key"
-            @click="goDetailPage(page)">
-            <text class="uni-navigate-text"
-              :class="{'left-win-active': leftWinActive === page.url  && hasLeftWin,'text-disabled' : page.enable == false}">{{ page.name }}</text>
-            <image :src="arrowRightIcon" class="uni-icon-size"></image>
+      <uni-collapse>
+        <template v-for="(item, index) in list" :key="item.id">
+          <uni-collapse-item v-if="item.pages.length > 0" class="uni-panel" :open="item.open" :title="item.name"
+            @change="syncCollapseState(index, $event as boolean)">
+            <view style="padding-left: 18px;" class="uni-navigate-item"
+              :hover-class="page.enable == false ? '' : 'is--active'" v-for="(page, key) in item.pages" :key="key"
+              @click="goDetailPage(page)">
+              <text class="uni-navigate-text"
+                :class="{'left-win-active': leftWinActive === getPageKey(page.url)  && hasLeftWin,'text-disabled' : page.enable == false}">{{ page.name }}</text>
+              <view class="right_arrow"></view>
+            </view>
+          </uni-collapse-item>
+          <view v-else class="uni-panel">
+            <view hover-class="is--active" class="uni-panel-h" @click="triggerCollapse(index, item)">
+              <text class="uni-panel-text"
+                :class="item.enable == false || item.open == true ? 'text-disabled' : '',item.url == leftWinActive && item.pages.length == 0 ? 'left-win-active' : ''">{{ item.name }}</text>
+              <view class="right_arrow"></view>
+            </view>
           </view>
-        </view>
-      </view>
+        </template>
+      </uni-collapse>
     </view>
   <!-- #ifdef APP -->
   </scroll-view>
@@ -209,7 +212,7 @@
     {
       id: 'custom-navbar-search',
       url: 'custom-navbar-search',
-      name: '带搜索框的自定义导航栏',
+      name: '自定义导航栏输入框上推示例',
       open: false,
       pages: [] as Page[],
     },
@@ -221,13 +224,6 @@
       pages: [] as Page[],
     },
     {
-      id: 'tabbar-center-action',
-      url: 'tabbar-center-action',
-      name: '带中间操作按钮的自定义 TabBar',
-      open: false,
-      enable: true,
-      pages: [] as Page[],
-    },{
       id: 'vertical-video-feed',
       url: 'vertical-video-feed',
       name: '竖滑切换的视频信息流',
@@ -318,10 +314,6 @@
       pages: [] as Page[],
     }
   ] as ListItem[])
-  const arrowUpIcon = ref('/static/icons/arrow-up.png')
-  const arrowDownIcon = ref('/static/icons/arrow-down.png')
-  const arrowRightIcon = ref('/static/icons/arrow-right.png')
-
   const hasLeftWin = computed(() : boolean => {
     return !state.noMatchLeftWindow
   })
@@ -335,6 +327,23 @@
     return state.netless
   })
 
+  function getPageKey(url : string) : string {
+    if (url.indexOf('/pages/') == 0) {
+      const parts = url.split('/')
+      if (parts.length > 1) {
+        return parts[parts.length - 2]
+      }
+    }
+    return url
+  }
+
+  function resolvePageUrl(url : string) : string {
+    if (url.indexOf('platform') > -1 || url.indexOf('/pages/') == 0) {
+      return url
+    }
+    return `/pages/template/${url}/${url}`
+  }
+
   function goDetailPage(e : Page) {
     if (e.enable == false) {
       uni.showToast({
@@ -343,10 +352,7 @@
       })
       return
     }
-    const url =
-      e.url.indexOf('platform') > -1
-        ? e.url
-        : `/pages/template/${e.url}/${e.url}`
+    const url = resolvePageUrl(e.url)
     if (hasLeftWin.value) {
       uni.reLaunch({ url })
     } else {
@@ -377,6 +383,12 @@
     }
   }
 
+  function syncCollapseState(index : number, open : boolean) {
+    for (var i = 0; i < list.value.length; ++i) {
+      list.value[i].open = open && index == i
+    }
+  }
+
   // #ifdef APP-HARMONY
   watch(() => netless.value, (netless) => {
     if (netless) {
@@ -394,7 +406,7 @@
       for (const item of list.value) {
         if (Array.isArray(item.pages)) {
           for (const page of item.pages) {
-            if (page.url && page.url === path) {
+            if (page.url && getPageKey(page.url) === path) {
               item.open = true
             }
           }
@@ -426,6 +438,21 @@
 
 <style>
   .uni-panel-h {
+    flex-direction: row;
+    align-items: center;
     padding: 12px 18px;
+  }
+
+  .right_arrow {
+    width: 8px;
+    height: 8px;
+    margin-left: 12px;
+    transform: rotate(-45deg);
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: var(--arrow-color, #999999);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--arrow-color, #999999);
   }
 </style>

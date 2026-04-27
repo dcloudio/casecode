@@ -1,7 +1,11 @@
 <template>
 	<!-- TODO  Android/iOS平台不支持裁剪显示半个文字，高性能场景包裹一层view不合适，需要等App平台解决-->
 	<text v-if="props.full!=true" class="active-color" :class="props.starActiveClass ?? ''" :style="props.starActiveStyle ?? ''">{{ stars }}</text> <!-- 高性能，单层，只读，不显示灰星，不支持小数。必须给value-->
-  <view v-else style="position: relative;align-self: flex-start;" @click="onTap">
+  <view v-else
+    <!-- #ifdef MP -->
+    :id="containerId"
+    <!-- #endif -->
+    style="position: relative;align-self: flex-start;" @click="onTap">
     <text class="stars-pos gray-stars" :class="props.starClass ?? ''" :style="props.starStyle ?? ''">{{ stars }}</text> <!-- 背景灰星-->
     <!-- Android/iOS平台不支持裁剪显示半个文字，需通过包裹一层view裁剪实现 -->
 		<view class="stars-pos active-init-width" :style="'width:'+calculatedWidth">
@@ -15,41 +19,41 @@
 <script setup lang="uts">
 const props = defineProps<{
   /**
-	 * @description 当前评分。值域为大于等于0、小于等于5的数字
-	 */
-	value?: number,
-  /**
-   * @description v-model绑定值
+   * @description 当前评分，取值范围 0~5 的数字
    */
-	modelValue?: number,
-	/**
-	 * @description 是否显示全部5颗星。当黄色不够5星时，是否填充灰星以达到5星的固定长度。不填充灰星性能更高
-	 */
-	full?: boolean,
-	/**
-	 * @description 是否响应点击变化。full属性为false时不生效，即无灰星时一定只读
-	 */
-	readonly?: boolean,
-	/**
-	 * @description 灰星是否镂空
-	 */
-	plain?: boolean,
-	/**
-	 * @description 灰星的样式类
-	 */
-	starClass?: string.ClassString,
-	/**
-	 * @description 灰星的内联样式
-	 */
-	starStyle?: string
-	/**
-	 * @description 选中星星的样式类
-	 */
-	starActiveClass?: string.ClassString,
-	/**
-	 * @description 选中星星的内联样式
-	 */
-	starActiveStyle?: string
+  value?: number,
+  /**
+   * @description v-model 绑定值，支持双向绑定，优先级高于 value
+   */
+  modelValue?: number,
+  /**
+   * @description 是否显示完整 5 颗星。为 true 时用灰星填充未选中位置；为 false 时仅显示亮星，性能更高但不支持点击交互
+   */
+  full?: boolean,
+  /**
+   * @description 是否只读，为 true 时不响应点击评分（full 为 false 时始终只读）
+   */
+  readonly?: boolean,
+  /**
+   * @description 灰星是否使用镂空样式（☆），为 false 时使用实心灰星（★）
+   */
+  plain?: boolean,
+  /**
+   * @description 灰星（未选中）的自定义样式类
+   */
+  starClass?: string.ClassString,
+  /**
+   * @description 灰星（未选中）的内联样式
+   */
+  starStyle?: string
+  /**
+   * @description 亮星（选中）的自定义样式类
+   */
+  starActiveClass?: string.ClassString,
+  /**
+   * @description 亮星（选中）的内联样式
+   */
+  starActiveStyle?: string
 }>()
 
 // 计算星星显示
@@ -68,6 +72,11 @@ const emit = defineEmits<{
   change: [value: number]
   'update:modelValue': [value: number]
 }>()
+
+// #ifdef MP
+const instance = getCurrentInstance()
+const containerId = `uni_rate_${instance?.uid || 'default'}`
+// #endif
 
 // 响应式数据 - 优先使用modelValue，其次使用value
 const currentValue = ref<number>(0)
@@ -102,6 +111,7 @@ const calculatedWidth = computed(() => {
   return `${(rate / 5) * 100}%`
 })
 
+// #ifndef MP
 // 处理点击事件
 function onTap(event: UniPointerEvent) : void {
   // 如果是禁用模式，不处理点击
@@ -151,6 +161,32 @@ function onTap(event: UniPointerEvent) : void {
   // 触发v-model更新
   emit('update:modelValue', finalValue)
 }
+// #endif
+
+// #ifdef MP
+async function onTap(event: UniPointerEvent) : Promise<void> {
+  if (props.readonly == true) {
+    return
+  }
+
+  const rect = await uni.getElementById(containerId)?.getBoundingClientRectAsync()
+  if (rect == null || rect.width <= 0) {
+    return
+  }
+
+  const localX = event.clientX - rect.left
+  if (!isFinite(localX)) {
+    return
+  }
+
+  const clampedX = Math.max(0, Math.min(rect.width, localX))
+  const finalValue = Math.max(0, Math.min(5, Math.round(clampedX / rect.width * 5)))
+
+  currentValue.value = finalValue
+  emit('change', finalValue)
+  emit('update:modelValue', finalValue)
+}
+// #endif
 
 // TODO 接入form表单规范，可以submit
 </script>

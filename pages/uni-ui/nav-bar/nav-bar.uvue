@@ -1,0 +1,78 @@
+<template>
+	<!-- 正常使用场景应把uni-nav-bar放在template的根节点，下方并列方式scroll-view滚动容器。本示例为了演示多种导航栏效果把导航栏组件放到了scroll-view里了 -->
+	<scroll-view style="flex: 1;padding-bottom: var(--uni-safe-area-inset-bottom);">
+		<uni-nav-bar></uni-nav-bar>
+		<uni-nav-bar navigationBarTextStyle="black" title="黑色标题"></uni-nav-bar>
+		<uni-nav-bar navigationBarTextStyle="white" title="青色背景白色标题" style="background-color: cyan;"></uni-nav-bar>
+		<uni-nav-bar :navigationBarTextStyle="navigationBarTextStyle" title="下边带灰线" style="border-bottom: 0.5px #ccc solid;"></uni-nav-bar>
+		<uni-nav-bar :navigationBarTextStyle="navigationBarTextStyle" hideDefaultBack title="隐藏左侧返回箭头"></uni-nav-bar>
+		<uni-nav-bar :navigationBarTextStyle="navigationBarTextStyle" title="标题居左" mid-class="left-title"></uni-nav-bar>
+		<uni-nav-bar :navigationBarTextStyle="navigationBarTextStyle" title="右边有按钮">
+			<template #right>
+				<text class="txt-button" @click="clickButton">⋯</text>
+			</template>
+		</uni-nav-bar>
+		<uni-nav-bar :navigationBarTextStyle="navigationBarTextStyle" title="右边有2个按钮" right-class="two-buttons">
+			<template #right>
+				<text class="txt-button" @click="clickButton">+</text>
+				<text class="txt-button" @click="clickButton">⋯</text>
+			</template>
+		</uni-nav-bar>
+		<uni-nav-bar :navigationBarTextStyle="navigationBarTextStyle" title="左边有按钮">
+			<template #left>
+				<text class="txt-button" @click="clickButton">+</text>
+			</template>
+		</uni-nav-bar>
+		<uni-nav-bar :navigationBarTextStyle="navigationBarTextStyle" title="左右各1个按钮">
+			<template #left>
+				<text class="txt-button" @click="clickButton">+</text>
+			</template>
+			<template #right>
+				<text class="txt-button" @click="clickButton">⋯</text>
+			</template>
+		</uni-nav-bar>
+		<uni-nav-bar :navigationBarTextStyle="navigationBarTextStyle">
+			<template #mid>
+				<text :style="{ color: navigationBarTextStyle }">插槽右箭头可以点</text>
+				<text style="padding: 3px;font-size: 10px;" @click="clickButton">▼</text>
+			</template>
+		</uni-nav-bar>
+		<uni-nav-bar :navigationBarTextStyle="navigationBarTextStyle">
+			<template #left>
+				<text class="txt-button" @click="clickButton">+</text>
+			</template>
+			<template #mid>
+				<input placeholder="左中右都是插槽，中间是input" style="border: #ccc 0.5px solid;"/>
+			</template>
+			<template #right>
+				<text class="txt-button" @click="clickButton">⋯</text>
+			</template>
+		</uni-nav-bar>
+	</scroll-view>
+</template>
+
+<script setup>
+	const navigationBarTextStyle = 'black'
+
+	function clickButton() {
+		uni.showToast({
+			title: '点击了按钮'
+		});
+	}
+</script>
+
+<style>
+.left-title{
+	justify-content: flex-start;
+}
+.two-buttons{
+	width: 88px;
+}
+.txt-button{
+	font-weight: bold;
+	width: 44px;
+	height: 44px;
+	line-height: 44px;
+	text-align: center;
+}
+</style>

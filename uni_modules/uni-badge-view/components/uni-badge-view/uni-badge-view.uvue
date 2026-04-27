@@ -2,9 +2,9 @@
 	<!-- 如果不显示badge，则不包裹，直接显示子内容。保证常态下的高性能。但如果设置了alwaysWrapWithContent且有slot内容，则仍然保持包裹层 -->
 	<slot v-if="text == '0' && alwaysWrapWithContent== false"></slot>
 	<!-- 如果有多个子slot，且不设badge，去掉包裹层直接露出slot，会导致flex方向错乱。此时应设置alwaysWrapWithContent为true，总是保留包裹层 -->
-
+	
 	<!-- 微信小程序不支持外部绑定事件 -->
-
+	
 	<template v-else>
 		<view v-if="hasDefaultSlot" style="overflow: visible;" class="badge-wrap" v-bind="$attrs">
 			<!-- 目标内容插槽 -->
@@ -39,23 +39,27 @@
 	// 定义组件属性接口
 	type Props = {
 		/**
-		 * @description badge的内容，为0表示不显示badge；为空表示圆点；有文字则显示文字
+		 * @description badge 的内容。为 "0" 时不显示 badge；为空字符串时显示圆点；有文字则显示文字
+		 * @default ""
 		 */
 		text? : string,
 		/**
-		 * @description 暴露给外部用于覆盖style
+		 * @description badge 的内联样式，用于覆盖内置 style
+		 * @default ""
 		 */
 		badgeStyle? : string,
 		/**
-		 * @description 暴露给外部用于覆盖class
+		 * @description badge 的样式类，用于覆盖内置 class
+		 * @default ""
 		 */
 		badgeClass? : string.ClassString,
 		/**
-		 * @description 当有slot内容时，即使text为0也保持包裹层（badge-wrap）
+		 * @description 当有 slot 内容时，即使 text 为 "0" 也保留包裹层（badge-wrap），避免多个子 slot 时 flex 方向错乱
+		 * @default false
 		 */
 		alwaysWrapWithContent? : boolean
 	}
-
+	
 	// 使用 withDefaults 设置默认值
 	const props = withDefaults(defineProps<Props>(), {
 		text: '',
@@ -63,7 +67,7 @@
 		badgeClass: '',
 		alwaysWrapWithContent: false
 	})
-
+	
 	// 1. 获取插槽对象
 	const slots = useSlots();
 	// 2. 定义计算属性来判断默认插槽是否有内容
@@ -78,13 +82,13 @@
 	.text {
 		/* background-color: rgba(225, 80, 80, 0.9); */ /* 有透明度*/
 		background-color: rgb(225, 80, 80); /* 无透明度*/
-		min-width: 12px;
-		height: 12px;
-		line-height: 12px;
-		border-radius: 6px;
+		min-width: 14px;
+		height: 14px;
+		line-height: 14px;
+		border-radius: 7px;
 		/* padding-left: 4px; *//* 保证圆角不裁剪文字 */
 		/* padding-right: 4px; *//* 保证圆角不裁剪文字 */
-		font-size: 9px;
+		font-size: 10px;
 		color: white;
 		text-align: center;
 		white-space: nowrap;
@@ -96,7 +100,7 @@
 		height: 8px;
 		border-radius: 4px;
 	}
-
+	
 	/* 有包裹内容，才定位在右上角。所以这个样式是一个单独的class，在slot有内容时才生效 */
 	.postion {
 		position: absolute;
@@ -104,7 +108,7 @@
 		right: 0px; /* 定位在右边*/
 		transform: translate(50%, -50%); /* 中心向右上角偏移，保证中心在元素右上角顶点*/
 	}
-
+	
 	.badge-wrap{
 		/* #ifdef WEB */
 		/* width: fit-content; */

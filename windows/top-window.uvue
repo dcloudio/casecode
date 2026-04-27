@@ -24,7 +24,8 @@
           component: 0,
           API: 1,
           CSS: 2,
-          template: 3
+          'uni-ui': 3,
+          template: 4
         },
         current: 0,
         indexPage: [{
@@ -36,6 +37,9 @@
         }, {
           tabBar: '/pages/tabBar/CSS',
           indexPageUrl: '/pages/CSS/layout/width'
+        }, {
+          tabBar: '/pages/tabBar/uni-ui',
+          indexPageUrl: '/pages/uni-ui/time-format/time-format'
         }, {
           tabBar: '/pages/tabBar/template',
           indexPageUrl: '/pages/template/banner-tabs-feed-nested-scroll/banner-tabs-feed-nested-scroll'
