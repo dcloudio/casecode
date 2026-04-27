@@ -42,12 +42,8 @@
     serviceList: [
       { service: "payment", name: "支付", provider: [], providerObj: [] },
       { service: "location", name: "定位", provider: [], providerObj: [] },
-      // #ifdef APP-HARMONY
       { service: "oauth", name: "登录", provider: [], providerObj: [] },
-      // #endif
-      // #ifdef APP-HARMONY
       { service: "share", name: "分享", provider: [], providerObj: [] }
-      // #endif
     ],
     //自动化测试使用
     providerIds: [],
