@@ -3,10 +3,12 @@ const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isIOS = platformInfo.startsWith('ios')
 const isAndroid = platformInfo.startsWith('android')
 const isHarmony = platformInfo.startsWith('harmony')
-describe('test title', () => {
+const isApp = isIOS || isAndroid || isHarmony
+const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
-  if (!isIOS && !isAndroid && !isHarmony) {
-    it('app', async () => {
+describe('test title', () => {
+  if (!isApp) {
+    it('not app skip', async () => {
       expect(1).toBe(1)
     })
     return
@@ -54,18 +56,21 @@ describe('test title', () => {
     })
     expect(image).toSaveImageSnapshot();
   });
-  it('finish event', async () => {
-    await page.callMethod('startAnimate');
-    await page.waitFor(5100);
-    var testTriggerFinishEvent = await page.data('data.testTriggerFinishEvent')
-    expect(testTriggerFinishEvent).toEqual(true)
-  });
-  it('cancel event', async () => {
-    await page.callMethod('startAnimate');
-    await page.waitFor(1100);
-    await page.callMethod('cancelAnimate');
-    await page.waitFor(300);
-    var testTriggerCancelEvent = await page.data('data.testTriggerCancelEvent')
-    expect(testTriggerCancelEvent).toEqual(true)
-  });
+
+  if (!(isHarmony && !isDom2)) {
+    it('finish event', async () => {
+      await page.callMethod('startAnimate');
+      await page.waitFor(5100);
+      var testTriggerFinishEvent = await page.data('data.testTriggerFinishEvent')
+      expect(testTriggerFinishEvent).toEqual(true)
+    });
+    it('cancel event', async () => {
+      await page.callMethod('startAnimate');
+      await page.waitFor(1100);
+      await page.callMethod('cancelAnimate');
+      await page.waitFor(300);
+      var testTriggerCancelEvent = await page.data('data.testTriggerCancelEvent')
+      expect(testTriggerCancelEvent).toEqual(true)
+    });
+  }
 });
