@@ -1,3 +1,5 @@
+## 0.9.10（2026-04-27）
+- 修复 uni-app-x 项目编译时 warning
 ## 0.9.9（2026-02-03）
 - 修复 安卓端非强制更新 kotlin 报错 `onClick has not been intialized`
 ## 0.9.8（2026-01-05）

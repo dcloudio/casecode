@@ -70,8 +70,7 @@
   import { UniUpgradeCenterResult, StoreListItem } from '../../utils/call-check-version'
   import { platform_iOS, platform_Android, platform_Harmony } from '../../utils/utils'
   // #ifdef APP-ANDROID
-  import { createNotificationProgress, cancelNotificationProgress, finishNotificationProgress } from '@/uni_modules/uts-progressNotification'
-  import { type CreateNotificationProgressOptions, type FinishNotificationProgressOptions } from '@/uni_modules/uts-progressNotification/utssdk/interface.uts'
+  import { createNotificationProgress, cancelNotificationProgress, finishNotificationProgress, CreateNotificationProgressOptions, FinishNotificationProgressOptions } from '@/uni_modules/uts-progressNotification'
   // #endif
 
   const requiredKey = ['version', 'url', 'type']

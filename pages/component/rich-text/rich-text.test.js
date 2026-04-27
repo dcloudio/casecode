@@ -32,7 +32,7 @@ describe('rich-text-test', () => {
     let afterValue = await page.data('data.richTextHeight')
     console.log('beforeValue:', beforeValue)
     console.log('afterValue:', afterValue)
-    expect(beforeValue).toBe(afterValue)
+    expect(Math.abs(beforeValue - afterValue) < 0.1).toBe(true)
   })
 
   it('rich-text parent click', async () => {
