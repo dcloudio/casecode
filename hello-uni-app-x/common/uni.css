@@ -5,6 +5,7 @@
 	--active-color:#a0a0a0;
 	--active-background-color: #f8f8f8;
 	--text-color: #333333;
+	--arrow-color: #999999;
 	--border-color: rgba(0, 0, 0, .06);
 }
 
@@ -14,6 +15,7 @@
 	--active-color:#8f8f8f;
 	--active-background-color: #3b3b3b;
 	--text-color: #ffffff;
+	--arrow-color: #ffffff;
 	--border-color: rgba(255, 255, 255, 0.1);
 }
 

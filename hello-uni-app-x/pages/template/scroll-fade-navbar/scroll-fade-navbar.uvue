@@ -302,10 +302,17 @@
     position: relative;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     height: 45px;
   }
 
   /* uni-back-arrow-circle组件 自定义样式 */
+  .arrow-gray,
+  .arrow-white {
+    border-left-width: 1px !important;
+    border-bottom-width: 1px !important;
+  }
+
   .arrow-gray {
     border-left-color: #999999 !important;
     border-bottom-color: #999999 !important;
@@ -331,6 +338,8 @@
   .content-inner-text {
     opacity: 0;
     color: #f5f5f5;
+    line-height: 20px;
+    margin-top: -2px;
   }
 
   .list-tab {

@@ -1,0 +1,44 @@
+<template>
+	<view style="align-items: center; justify-content: center;" class="fab" @click="handleClick">
+		<view flatten class="plus" :class="plusClass" style="position: absolute;"></view>
+		<view flatten class="plus" :class="plusClass" style="position: absolute;transform: rotate(90deg);"></view>
+	</view>
+</template>
+<script lang="uts" setup>
+	defineOptions({
+		externalClasses: ['plus-class']
+	})
+	const props = defineProps({
+		/**
+		 * @description 加号图标的自定义样式类，用于调整加号颜色、尺寸等样式
+		 * @default ""
+		 */
+		plusClass: { type: String, default: "" }
+	})
+	const emit = defineEmits(['click'])
+
+	const handleClick = () => {
+		emit('click')
+	}
+</script>
+<style>
+	.fab {
+		position: relative; 
+		width: 44px;
+		height: 44px;
+		background-color: #007AFF;
+		border-radius: 50%;
+		box-shadow: 0 1px 5px 2px rgba(0, 0, 0, .3);
+		/* #ifdef WEB */
+		cursor: pointer;
+		/* #endif */
+	}
+
+	.plus {
+		background-color: white;
+		border-radius: 2px; 	/* 给加号边缘一点圆角 */
+		width: 40%;
+		height: 2px;
+	}
+
+</style>

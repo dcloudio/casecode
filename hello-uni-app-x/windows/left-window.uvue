@@ -13,6 +13,7 @@
   import API from '@/pages/tabBar/API.uvue'
   import CSS from '@/pages/tabBar/CSS.uvue'
   import templatePage from '@/pages/tabBar/template.uvue'
+  import uniUiPage from '@/pages/tabBar/uni-ui.uvue'
   import { state, setMatchLeftWindow, setActive, setLeftWinActive } from '@/store/index.uts'
   let isPcObserver
   export default {
@@ -22,6 +23,7 @@
           'component',
           'API',
           'CSS',
+          'uni-ui',
           'template'
         ],
         isPC: false
@@ -31,7 +33,8 @@
       componentPage,
       API,
       CSS,
-      templatePage
+      templatePage,
+      uniUiPage
     },
     computed: {
       active() : string {
@@ -100,6 +103,9 @@
               }
               if (active === 'template') {
                 active = 'templatePage'
+              }
+              if (active === 'uni-ui') {
+                active = 'uniUiPage'
               }
               setActive(active)
             }

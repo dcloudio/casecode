@@ -1,0 +1,282 @@
+<template>
+  <!-- #ifdef APP -->
+  <scroll-view style="flex: 1;" enable-back-to-top="true">
+  <!-- #endif -->
+    <view class="uni-container" :class="isDarkMode ? 'theme-dark' : 'theme-light'">
+      <view v-if="!hasLeftWin" class="uni-header-logo">
+        <image class="uni-header-image" src="/static/componentIndex.png"></image>
+      </view>
+      <view v-if="!hasLeftWin" class="uni-text-box">
+        <text class="hello-text">以下是 uni-ui 示例：</text>
+      </view>
+      <uni-collapse>
+        <template v-for="(item, index) in list" :key="item.id">
+          <uni-collapse-item v-if="item.pages.length > 0" class="uni-panel" :open="item.open" :title="item.name"
+            @change="syncCollapseState(index, $event as boolean)">
+            <view style="padding-left: 18px;" class="uni-navigate-item"
+              :hover-class="page.enable == false ? '' : 'is--active'" v-for="(page, key) in item.pages" :key="key"
+              @click="goDetailPage(page)">
+              <text class="uni-navigate-text"
+                :class="{'left-win-active': leftWinActive === getPageKey(page.url) && hasLeftWin,'text-disabled' : page.enable == false}">{{ page.name }}</text>
+              <view class="right_arrow"></view>
+            </view>
+          </uni-collapse-item>
+          <view v-else class="uni-panel">
+            <view hover-class="is--active" class="uni-panel-h" @click="triggerCollapse(index, item)">
+              <text class="uni-panel-text"
+                :class="{
+                  'text-disabled': item.enable == false || item.open == true,
+                  'left-win-active': getPageKey(item.url!) == leftWinActive && hasLeftWin
+                }">{{ item.name }}</text>
+              <view class="right_arrow"></view>
+            </view>
+          </view>
+        </template>
+      </uni-collapse>
+    </view>
+  <!-- #ifdef APP -->
+  </scroll-view>
+  <!-- #endif -->
+</template>
+
+<script setup lang="uts">
+  defineOptions({
+    styleIsolation: 'app'
+  })
+
+  const instance = getCurrentInstance()?.proxy
+
+  type Page = {
+    name : string
+    enable ?: boolean
+    url : string
+  }
+
+  type ListItem = {
+    id : string
+    name : string
+    open : boolean
+    pages : Page[]
+    url ?: string
+    enable ?: boolean
+  }
+
+  import { state } from '@/store/index.uts'
+
+  const list = ref<ListItem[]>([
+    {
+      id: 'badge',
+      name: 'uni-badge-view 数字角标',
+      open: false,
+      url: '/pages/uni-ui/badge/badge',
+      pages: [] as Page[]
+    },
+    {
+      id: 'collapse',
+      name: 'uni-collapse 折叠面板',
+      open: false,
+      url: '/pages/uni-ui/collapse/collapse',
+      pages: [] as Page[]
+    },
+    {
+      id: 'drag-cell',
+      name: 'uni-drag-cell 拖拽排序',
+      open: false,
+      url: '/pages/uni-ui/drag-cell/drag-cell',
+      pages: [] as Page[]
+    },
+    {
+      id: 'fab-button',
+      name: 'uni-fab-button 悬浮按钮',
+      open: false,
+      url: '/pages/uni-ui/fab-button/fab-button',
+      pages: [] as Page[]
+    },
+    {
+      id: 'index-bar',
+      name: 'uni-index-bar 索引栏',
+      open: false,
+      url: '/pages/uni-ui/index-bar/index-bar',
+      pages: [] as Page[]
+    },
+    {
+      id: 'link',
+      name: 'uni-link 链接',
+      open: false,
+      url: '/pages/uni-ui/link/link',
+      pages: [] as Page[]
+    },
+    {
+      id: 'nav-bar',
+      name: 'uni-nav-bar 导航栏',
+      open: false,
+      url: '/pages/uni-ui/nav-bar/nav-bar',
+      pages: [] as Page[]
+    },
+    {
+      id: 'number-box',
+      name: 'uni-number-box 数字输入框',
+      open: false,
+      url: '/pages/uni-ui/number-box/number-box',
+      pages: [] as Page[]
+    },
+    {
+      id: 'rate',
+      name: 'uni-rate 评分组件',
+      open: false,
+      url: '/pages/uni-ui/rate/rate',
+      pages: [] as Page[]
+    },
+    {
+      id: 'refresh-box',
+      name: 'uni-refresh-box 下拉刷新组件',
+      open: false,
+      url: '/pages/uni-ui/refresh-box/refresh-box',
+      pages: [] as Page[]
+    },
+    {
+      id: 'tab-bar',
+      name: 'uni-tab-bar 底部选项卡',
+      open: false,
+      pages: [
+        {
+          name: '默认样式',
+          url: '/pages/uni-ui/tab-bar/tab-bar'
+        },
+        {
+          name: '暗色风格',
+          url: '/pages/uni-ui/tab-bar/tab-bar-dark'
+        },
+        {
+          name: '自定义样式',
+          url: '/pages/uni-ui/tab-bar/tab-bar-custom'
+        },
+        {
+          name: '中间按钮',
+          url: '/pages/uni-ui/tab-bar/tab-bar-midbutton'
+        },
+        {
+          name: '中间按钮镂空',
+          url: '/pages/uni-ui/tab-bar/tab-bar-midbutton-notch'
+        }
+      ] as Page[]
+    },
+    {
+      id: 'time-format',
+      name: 'uni-time-format 时间格式化',
+      open: false,
+      url: '/pages/uni-ui/time-format/time-format',
+      pages: [] as Page[]
+    },
+  ] as ListItem[])
+
+  const hasLeftWin = computed(() : boolean => {
+    return !state.noMatchLeftWindow
+  })
+  const leftWinActive = computed(() : string => {
+    const parts = state.leftWinActive.split('/').filter((item) : boolean => {
+      return item.length > 0
+    })
+    return parts.length > 0 ? parts[parts.length - 1] : ''
+  })
+  const isDarkMode = computed(() : boolean => {
+    return state.isDarkMode
+  })
+
+  function getPageKey(url : string) : string {
+    const parts = url.split('/').filter((item) : boolean => {
+      return item.length > 0
+    })
+    return parts.length > 0 ? parts[parts.length - 1] : url
+  }
+
+  function goDetailPage(page : Page) {
+    if (page.enable == false) {
+      uni.showToast({
+        icon: 'none',
+        title: '暂不支持',
+      })
+      return
+    }
+    if (hasLeftWin.value) {
+      uni.reLaunch({ url: page.url })
+    } else {
+      uni.navigateTo({
+        url: page.url,
+        fail() {
+          console.log('页面跳转失败：' + page.url)
+        }
+      })
+    }
+  }
+
+  function triggerCollapse(index : number, item : ListItem) {
+    if (item.pages.length == 0) {
+      const page : Page = {
+        name: item.name,
+        enable: item.enable,
+        url: item.url!
+      }
+      goDetailPage(page)
+      return
+    }
+    for (let i = 0; i < list.value.length; i++) {
+      list.value[i].open = index == i ? !list.value[i].open : false
+    }
+  }
+
+  function syncCollapseState(index : number, open : boolean) {
+    for (let i = 0; i < list.value.length; i++) {
+      list.value[i].open = open && index == i
+    }
+  }
+
+  function syncActiveGroup(path : string) {
+    for (const item of list.value) {
+      item.open = false
+      for (const page of item.pages) {
+        if (getPageKey(page.url) == path) {
+          item.open = true
+          break
+        }
+      }
+    }
+  }
+
+  watch(() : string => leftWinActive.value, (path : string) => {
+    syncActiveGroup(path)
+  }, { immediate: true })
+
+  // #ifdef WEB
+  watch(() => (instance as any).$route, (newRoute) => {
+    if (newRoute && newRoute.matched.length) {
+      syncActiveGroup(newRoute.path.split('/')[3])
+    }
+  }, { immediate: true })
+  // #endif
+</script>
+
+<style>
+  .uni-panel-h {
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 18px;
+  }
+
+  .uni-ui-navigate-item {
+    border-top-style: none;
+  }
+
+  .right_arrow {
+    width: 8px;
+    height: 8px;
+    margin-left: 12px;
+    transform: rotate(-45deg);
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: var(--arrow-color, #999999);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--arrow-color, #999999);
+  }
+</style>

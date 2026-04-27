@@ -47,6 +47,9 @@
         <button class="mt-5" @click="showOverlay(true)">显示蒙层</button>
         <button class="mt-5" @click="showTransparentOverlay">透明蒙层</button>
         <button class="mt-5" @click="showGreenTransparentOverlay">绿色半透明蒙层</button>
+        <!-- #ifndef APP-ANDROID -->
+        <button class="mt-5" @click="showOverlayPointerEventsNone">蒙层穿透（点击蒙层不关闭）</button>
+        <!-- #endif -->
       </view>
     </view>
 
@@ -254,6 +257,16 @@
     containerOverlayStyle.value = 'background-color: rgba(76, 175, 80, 0.3);'
     containerTitle.value = '绿色半透明蒙层'
     containerContent.value = '蒙层开启但为绿色半透明，可以点击蒙层区域关闭'
+    containerShow.value = true
+  }
+
+  function showOverlayPointerEventsNone() {
+    resetConfig()
+    containerOverlay.value = true
+    containerPosition.value = 'bottom'
+    containerOverlayStyle.value = 'background-color: rgba(0, 0, 0, 0.3); pointer-events: none;'
+    containerTitle.value = 'overlay-style: pointer-events: none'
+    containerContent.value = '蒙层已开启并设置 pointer-events: none，点击蒙层区域不会关闭容器'
     containerShow.value = true
   }
 

@@ -2092,7 +2092,16 @@
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
 			}
 		},
-    // #endif
+		// #endif
+		// #ifndef VUE3-VAPOR
+		{
+			"path": "pages/tabBar/uni-ui",
+			"style": {
+				"navigationBarTitleText": "uni-ui",
+				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
+			}
+		},
+		// #endif
 		{
 			"path": "uni_modules/uni-pay-x/pages/success/success",
 			"style": {
@@ -2249,6 +2258,12 @@
 			"path": "pages/API/request/requestTask",
 			"style": {
 				"navigationBarTitleText": "requestTask | 发起流式请求"
+			}
+		},
+		{
+			"path": "uni_modules/uni-link/pages/link-webview",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		}
 	],
@@ -2529,12 +2544,6 @@
 						"navigationStyle": "custom"
 					}
 				},
-				{
-					"path": "tabbar-center-action/tabbar-center-action",
-					"style": {
-						"navigationBarTitleText": "带中间操作按钮的自定义 TabBar"
-					}
-				},
 				// #ifdef APP && !VUE3-VAPOR
 				{"path": "calendar/calendar","style": {"navigationBarTitleText": "日历"}},
 				// #endif
@@ -2623,6 +2632,114 @@
 					"path": "loading-100/loading-100",
 					"style": {
 						"navigationBarTitleText": "loading-100"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages/uni-ui",
+			"pages": [
+				{
+					"path": "time-format/time-format",
+					"style": {
+						"navigationBarTitleText": "uni-time-format"
+					}
+				},
+				{
+					"path": "refresh-box/refresh-box",
+					"style": {
+						"navigationBarTitleText": "uni-refresh-box"
+					}
+				},
+				{
+					"path": "number-box/number-box",
+					"style": {
+						"navigationBarTitleText": "uni-number-box"
+					}
+				},
+				{
+					"path": "fab-button/fab-button",
+					"style": {
+						"navigationBarTitleText": "uni-fab-button"
+					}
+				},
+				{
+					"path": "rate/rate",
+					"style": {
+						"navigationBarTitleText": "uni-rate"
+					}
+				},
+				{
+					"path": "collapse/collapse",
+					"style": {
+						"navigationBarTitleText": "uni-collapse"
+					}
+				},
+				{
+					"path": "link/link",
+					"style": {
+						"navigationBarTitleText": "uni-link"
+					}
+				},
+				{
+					"path": "drag-cell/drag-cell",
+					"style": {
+						"navigationBarTitleText": "uni-drag-cell"
+					}
+				},
+				{
+					"path": "nav-bar/nav-bar",
+					"style": {
+						"navigationBarTitleText": "uni-nav-bar",
+						"navigationBarTextStyle": "black"
+					}
+				},
+				{
+					"path": "tab-bar/tab-bar",
+					"style": {
+						"navigationBarTitleText": "uni-tab-bar"
+					}
+				},
+				{
+					"path": "tab-bar/tab-bar-dark",
+					"style": {
+						"navigationBarTitleText": "uni-tab-bar-dark",
+						"navigationBarBackgroundColor": "#0f172a",
+						"navigationBarTextStyle": "white",
+						"backgroundColorContent": "#0f172a"
+					}
+				},
+				{
+					"path": "tab-bar/tab-bar-custom",
+					"style": {
+						"navigationBarTitleText": "uni-tab-bar-custom",
+						"navigationBarBackgroundColor": "#dff3e8",
+						"navigationBarTextStyle": "black",
+						"backgroundColorContent": "#dff3e8"
+					}
+				},
+				{
+					"path": "tab-bar/tab-bar-midbutton",
+					"style": {
+						"navigationBarTitleText": "uni-tab-bar-midbutton"
+					}
+				},
+				{
+					"path": "tab-bar/tab-bar-midbutton-notch",
+					"style": {
+						"navigationBarTitleText": "uni-tab-bar-midbutton-notch"
+					}
+				},
+				{
+					"path": "badge/badge",
+					"style": {
+						"navigationBarTitleText": "uni-badge-view"
+					}
+				},
+				{
+					"path": "index-bar/index-bar",
+					"style": {
+						"navigationBarTitleText": "uni-index-bar"
 					}
 				}
 			]
@@ -3453,6 +3570,12 @@
 				"iconPath": "@tabBarCSSIconPath",
 				"selectedIconPath": "@tabBarCSSSelectedIconPath",
 				"text": "CSS"
+			},
+			{
+				"pagePath": "pages/tabBar/uni-ui",
+				"iconPath": "@tabBarUniUIIconPath",
+				"selectedIconPath": "@tabBarUniUISelectedIconPath",
+				"text": "uni-ui"
 			},
 			{
 				"pagePath": "pages/tabBar/template",
