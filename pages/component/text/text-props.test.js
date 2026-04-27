@@ -3,6 +3,7 @@ const PAGE_PATH = '/pages/component/text/text-props'
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
+const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe('text-props', () => {
   let page
@@ -50,6 +51,10 @@ describe('text-props', () => {
       await page.waitFor(100)
       const element = await page.$('#nested-text')
       if (!isMP && element != null) {
+        if(isDom2){
+          //Dom2为多线程等render之后再获取值
+          await page.waitFor('view');
+        }
         // TODO 微信小程序端疑似自动化测试框架Bug，此处text方法会返回`"修改三级节点文本修改三级节点文本"`,手动测试未发现问题
         expect(await element.text()).toBe("修改三级节点文本")
       }
