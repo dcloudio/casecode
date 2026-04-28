@@ -2691,7 +2691,7 @@
 					"path": "nav-bar/nav-bar",
 					"style": {
 						"navigationBarTitleText": "uni-nav-bar",
-						"navigationBarTextStyle": "black"
+						"navigationStyle": "custom"
 					}
 				},
 				{
