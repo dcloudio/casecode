@@ -4,8 +4,26 @@ const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
 const isHarmony = platformInfo.startsWith('harmony')
 const isAndroid = platformInfo.startsWith('android')
-const isiOS = platformInfo.startsWith('ios')
-const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
+const isDom2 = process.env.UNI_APP_X_DOM2 === 'true'
+
+const defaultFormats = {
+  bold: false,
+  italic: false,
+  underline: false,
+  strike: false,
+  header: 0,
+  list: '',
+  align: '',
+  textIndent: '',
+  marginLeft: '',
+  marginRight: '',
+  lineHeight: '',
+  letterSpacing: '',
+  fontFamily: '',
+  fontSize: '',
+  color: '',
+  backgroundColor: ''
+}
 
 describe('editor.uvue', () => {
   if (!isHarmony && !isAndroid && (isDom2 || (!isWeb && !isMP))) {
@@ -14,176 +32,322 @@ describe('editor.uvue', () => {
     })
     return
   }
-  let page, editor, options = [];
-  beforeAll(async () => {
-    page = await program.reLaunch("/pages/component/editor/editor");
-    await page.waitFor('view');
-    const time = isWeb ? 3000 : 6000
-    await page.waitFor(time);
-    editor = await page.$('#editor');
-    await page.setData({
-      data: {
-        autoTest: true
-      }
-    })
-  });
 
-  async function setBlur() {
-    const start = Date.now();
-    await page.callMethod('blur')
+  let page
+  let editor
+
+  async function loadPage() {
+    page = await program.reLaunch('/pages/component/editor/editor')
+    await page.waitFor('view')
+    await page.waitFor(isWeb ? 3000 : 6000)
+    editor = await page.$('#editor')
+    await updateData({
+      autoTest: true
+    })
+    await ensureToolbarVisible()
+  }
+
+  async function waitForData(path, matcher, timeout = 3000) {
+    const start = Date.now()
     await page.waitFor(async () => {
-      return await page.data('data.blurTest') === true || (Date.now() - start > 2000)
+      const value = await page.data(path)
+      return matcher(value) || (Date.now() - start > timeout)
     })
   }
 
-  it('editor-wrapper', async () => {
-    if (isWeb || isMP) {
-      expect(await editor.attribute("placeholder")).toBe("开始输入...")
-      if (isMP) {
-        expect(await page.data("data.readOnly")).toBe(false)
-      } else {
-        expect(await editor.attribute("read-only")).toBe("false")
-      }
+  async function updateData(partial) {
+    await page.setData({
+      data: partial
+    })
+  }
+
+  async function applyToolbarPresetState(preset) {
+    await page.callMethod('applyToolbarPresetForTest', preset)
+  }
+
+  async function ensureToolbarVisible() {
+    if (isWeb) {
+      return
     }
-    expect(await program.screenshot()).toSaveImageSnapshot();
-  });
+    await editor.tap()
+    await waitForData('data.toolbarVisible', value => value === true, 4000)
+  }
+
+  async function openSheet(methodName, sheetName, titleText, subtitleText) {
+    await ensureToolbarVisible()
+    await page.callMethod(methodName)
+    await waitForData('data.activeSheet', value => value === sheetName, 2000)
+    await page.waitFor(300)
+    const title = await page.$('.toolbar-panel-title')
+    const subtitle = await page.$('.toolbar-panel-subtitle')
+    expect(await title.text()).toBe(titleText)
+    expect(await subtitle.text()).toBe(subtitleText)
+  }
+
+  async function closeSheet() {
+    await page.callMethod('closeSheets')
+    await waitForData('data.activeSheet', value => value === '', 2000)
+  }
+
+  async function waitForFlag(path, timeout = 3000) {
+    await waitForData(path, value => value === true, timeout)
+    expect(await page.data(path)).toBe(true)
+  }
+
+  async function waitForFormats(partial, timeout = 3000) {
+    const keys = Object.keys(partial)
+    await waitForData('data.formats', value => {
+      return keys.every(key => value != null && value[key] === partial[key])
+    }, timeout)
+    expect(await page.data('data.formats')).toMatchObject(partial)
+  }
+
+  async function waitForChecklistFormat(timeout = 3000) {
+    await waitForData('data.formats', value => {
+      return value != null && (value.list === 'check' || value.list === 'unchecked')
+    }, timeout)
+    const formats = await page.data('data.formats')
+    expect(['check', 'unchecked']).toContain(formats.list)
+  }
+
+  async function setBlur() {
+    await updateData({
+      blurTest: false
+    })
+    await page.callMethod('blur')
+    await waitForFlag('data.blurTest', 2000)
+  }
+
+  async function setEditorContents(ops) {
+    await page.callMethod('setContents', ops)
+    await page.waitFor(500)
+  }
+
+  async function getDelta() {
+    await updateData({
+      getContentDeltaTest: null
+    })
+    await page.callMethod('getCon')
+    await waitForData('data.getContentDeltaTest', value => value != null, 3000)
+    return await page.data('data.getContentDeltaTest')
+  }
+
+  beforeAll(async () => {
+    await loadPage()
+  })
+
+  it('editor-wrapper', async () => {
+    await loadPage()
+    expect(await page.data('data.activeSheet')).toBe('')
+    expect(await page.data('data.formats')).toEqual(defaultFormats)
+    if (isWeb) {
+      expect(await editor.attribute('placeholder')).toBe('请输入正文内容...')
+    }
+    expect(await program.screenshot()).toSaveImageSnapshot()
+  })
 
   it('editor-toolbar', async () => {
-    const iconfontsEl = await page.$$('.iconfont');
-    for (var i = 0; i < iconfontsEl.length - 7; i++) {
-      await iconfontsEl[i].tap()
-      // await page.waitFor(500)
-      const getFormats = await page.data('data.formats')
-      options.push({
-        insert: '文本内容font',
-        attributes: getFormats
-      })
-      await page.callMethod('setContents', options)
-      await page.setData({
-        data: {
-          formats: null
-        }
-      })
-      await iconfontsEl[i].tap()
-    }
-  });
+    await loadPage()
+    await openSheet('openMoreSheet', 'more', '更多操作', '插入与编辑快捷操作')
+    await openSheet('openTitleSheet', 'title', '设置标题', '当前为正文')
+    await openSheet('openStyleSheet', 'style', '设置字格式', '当前未设置字格式')
+    await openSheet('openTextColorSheet', 'text-color', '设置文字颜色', '当前使用默认文字颜色')
+    await openSheet('openBackgroundColorSheet', 'background-color', '设置背景颜色', '当前未设置文字背景颜色')
+    await openSheet('openLineHeightSheet', 'line-height', '设置行间距', '当前使用默认行间距')
+    await openSheet('openLetterSpacingSheet', 'letter-spacing', '设置字间距', '当前使用默认字间距')
+    await openSheet('openFontSizeSheet', 'font-size', '设置字号', '当前使用默认字号 17px')
+    await openSheet('openFontFamilySheet', 'font-family', '设置字体', '当前使用默认字体')
+    await openSheet('openAlignSheet', 'align', '对齐方式', '当前为默认对齐')
+    await openSheet('openBlockIndentSheet', 'block-indent', '设置两端缩进', '当前未设置两端缩进')
+    await openSheet('openListSheet', 'list', '设置列表', '当前未设置列表')
+    await closeSheet()
+  })
 
   it('editor-screenshot', async () => {
-    await setBlur()
-    await page.waitFor(500);
-    expect(await program.screenshot()).toSaveImageSnapshot();
+    await loadPage()
+    await openSheet('openStyleSheet', 'style', '设置字格式', '当前未设置字格式')
+    expect(await program.screenshot()).toSaveImageSnapshot()
+    await closeSheet()
+  })
+
+  it('title-toolbar-actions', async () => {
+    await loadPage()
+    await applyToolbarPresetState('title-h2')
+    await waitForFormats({
+      header: 2,
+      list: ''
+    })
+    await openSheet('openTitleSheet', 'title', '设置标题', '当前为大标题2')
+    await closeSheet()
+    await applyToolbarPresetState('title-h1')
+    await waitForFormats({
+      header: 1,
+      list: ''
+    })
+    await openSheet('openTitleSheet', 'title', '设置标题', '当前为大标题1')
+    await closeSheet()
+  })
+
+  it('style-toolbar-actions', async () => {
+    await loadPage()
+    await page.callMethod('toggleBold')
+    await page.callMethod('toggleItalic')
+    await page.callMethod('toggleUnderline')
+    await page.callMethod('toggleStrike')
+    await waitForFormats({
+      bold: true,
+      italic: true,
+      underline: true,
+      strike: true
+    })
+    await openSheet('openStyleSheet', 'style', '设置字格式', '加粗 / 斜体 / 下划线 / 删除线')
+    await page.callMethod('toggleBold')
+    await page.callMethod('toggleItalic')
+    await page.callMethod('toggleUnderline')
+    await page.callMethod('toggleStrike')
+    await waitForFormats({
+      bold: false,
+      italic: false,
+      underline: false,
+      strike: false
+    })
+    await closeSheet()
+  })
+
+  it('extended-style-toolbar-actions', async () => {
+    await loadPage()
+    await page.callMethod('setTextColorAndClose', '#3553ff')
+    await waitForFormats({ color: '#3553ff' })
+    await openSheet('openTextColorSheet', 'text-color', '设置文字颜色', '当前文字颜色 #3553ff')
+    await page.callMethod('setBackgroundColorAndClose', '#fff7db')
+    await waitForFormats({ backgroundColor: '#fff7db' })
+    await openSheet('openBackgroundColorSheet', 'background-color', '设置背景颜色', '当前背景颜色 #fff7db')
+    await page.callMethod('setLineHeightAndClose', '1.8')
+    await page.callMethod('setLetterSpacingAndClose', '2px')
+    await page.callMethod('setFontSizeAndClose', '24px')
+    await page.callMethod('setFontFamilyAndClose', 'Georgia')
+    await waitForFormats({
+      lineHeight: '1.8',
+      letterSpacing: '2px',
+      fontSize: '24px',
+      fontFamily: 'Georgia'
+    })
+    await openSheet('openStyleSheet', 'style', '设置字格式', '行间距 1.8 / 字间距 2px / 字号 24px / 字体 Geo')
+    await closeSheet()
+  })
+
+  it('layout-toolbar-actions', async () => {
+    await loadPage()
+    await page.callMethod('setAlignCenter')
+    await waitForFormats({ align: 'center' })
+    await openSheet('openAlignSheet', 'align', '对齐方式', '当前为居中')
+    await page.callMethod('toggleTextIndent')
+    await waitForFormats({ textIndent: '2em' })
+    await page.callMethod('setBlockIndentAndClose', '16px')
+    await waitForFormats({
+      marginLeft: '16px',
+      marginRight: '16px'
+    })
+    await openSheet('openBlockIndentSheet', 'block-indent', '设置两端缩进', '当前两端缩进 16px')
+    await closeSheet()
+  })
+
+  it('list-toolbar-actions', async () => {
+    await loadPage()
+    await applyToolbarPresetState('list-bullet')
+    await waitForFormats({
+      header: 0,
+      list: 'bullet'
+    })
+    await openSheet('openListSheet', 'list', '设置列表', '当前列表 无序列表')
+    await closeSheet()
+    await applyToolbarPresetState('list-ordered')
+    await waitForFormats({
+      header: 0,
+      list: 'ordered'
+    })
+    await openSheet('openListSheet', 'list', '设置列表', '当前列表 有序列表')
+    await closeSheet()
+    await applyToolbarPresetState('list-unchecked')
+    await waitForChecklistFormat()
+    await applyToolbarPresetState('list-none')
+    await waitForFormats({ list: '' })
+    await closeSheet()
   })
 
   it('clear', async () => {
-    await page.callMethod('clear')
-    const start = Date.now();
-    await page.waitFor(async () => {
-      return await page.data('data.clearTest') === true || (Date.now() - start > 2000)
+    await loadPage()
+    await setEditorContents([
+      { insert: '清空前的内容' },
+      { insert: '\n' }
+    ])
+    await updateData({
+      clearTest: false
     })
-    if (isWeb || isMP) {
-      expect(await editor.attribute("placeholder")).toBe("开始输入...")
+    await page.callMethod('clear')
+    await waitForFlag('data.clearTest', 2000)
+    const delta = await getDelta()
+    const ops = Array.isArray(delta.ops) ? delta.ops : []
+    expect(ops.length <= 1).toBe(true)
+    if (ops.length === 1) {
+      expect(ops[0].insert).toBe('\n')
     }
   })
 
   it('undo-redo', async () => {
+    await loadPage()
+    await setEditorContents([
+      { insert: '撤销重做验证' },
+      { insert: '\n' }
+    ])
+    await updateData({
+      undoTest: false,
+      redoTest: false
+    })
     await page.callMethod('insertDivider')
     await page.waitFor(500)
     await page.callMethod('undo')
-    await page.waitFor(1000)
-    expect(await page.data('data.undoTest')).toBe(true)
+    await waitForFlag('data.undoTest', 2000)
     await page.callMethod('redo')
-    await page.waitFor(1000)
-    expect(await page.data('data.redoTest')).toBe(true)
+    await waitForFlag('data.redoTest', 2000)
   })
 
   it('insertImage', async () => {
-    await page.waitFor(500)
-    await page.callMethod('insertImage', 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app.png')
-    const start1 = Date.now();
-    await page.waitFor(async () => {
-      return await page.data('data.insertImageTest') === true || (Date.now() - start1 > 2000)
+    await loadPage()
+    await updateData({
+      insertImageTest: false
     })
+    await page.callMethod('insertImage', 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app.png')
+    await waitForFlag('data.insertImageTest', 5000)
+    const delta = await getDelta()
+    const ops = Array.isArray(delta.ops) ? delta.ops : []
+    const imageOp = ops.find(item => item.insert && typeof item.insert === 'object' && item.insert.image)
+    expect(Boolean(imageOp)).toBe(true)
   })
 
   it('insertImage-screenshot', async () => {
     await setBlur()
     const waitTime = process.env.uniTestPlatformInfo.includes('firefox') ? 5000 : 2000
     await page.waitFor(waitTime)
-    expect(await program.screenshot()).toSaveImageSnapshot();
+    expect(await program.screenshot()).toSaveImageSnapshot()
   })
-
-  if (!isMP) {
-    it('mention', async () => {
-      await page.setData({
-        data: {
-          clearTest: false
-        }
-      })
-      await page.callMethod('clear')
-      const start = Date.now();
-      await page.waitFor(async () => {
-        return await page.data('data.clearTest') === true || (Date.now() - start > 2000)
-      })
-
-      await page.callMethod('insertMention')
-      await page.waitFor(1000)
-      await page.callMethod('getCon')
-      await page.waitFor(1000)
-      const start1 = Date.now();
-      await page.waitFor(async () => {
-        return await page.data('data.getContentDeltaTest') || (Date.now() - start1 > 2000)
-      })
-
-      const delta = await page.data('data.getContentDeltaTest')
-      const ops = delta.ops
-      expect(ops.length).toBeGreaterThanOrEqual(2)
-      expect(ops[0].insert.mention).toMatchObject({
-        "id": "123456",
-        "name": "uni-app"
-      })
-      expect(ops[1].insert.mention).toMatchObject({
-        "id": "000",
-        "name": "uni-app x"
-      })
-    })
-  }
 
   it('removeFormat', async () => {
-    const bgcolorEl = await page.$('.icon-fontbgcolor');
-    await bgcolorEl.tap()
-    await page.waitFor(500)
-    const getFormats = await page.data('data.formats')
-    await page.callMethod('setContents', [{
-      insert: '设置字体样式bgcolor',
-      attributes: getFormats
-    }])
-    await page.waitFor(500)
+    await loadPage()
+    await setEditorContents([
+      {
+        insert: '设置字体样式',
+        attributes: {
+          bold: true,
+          color: '#3553ff'
+        }
+      },
+      { insert: '\n' }
+    ])
+    await updateData({
+      removeFormatTest: false
+    })
     await page.callMethod('removeFormat')
-    await page.waitFor(1000)
-    expect(await page.data('data.removeFormatTest')).toBe(true)
-    if (!isAndroid) {
-      expect(await page.data('data.formats')).toEqual({})
-    } else {
-      expect(await page.data('data.formats')).toEqual({
-        bold: null,
-        italic: null,
-        underline: null,
-        strike: null,
-        align: null,
-        lineHeight: null,
-        letterSpacing: null,
-        marginTop: null,
-        marginBottom: null,
-        fontFamily: null,
-        fontSize: null,
-        color: null,
-        backgroundColor: null,
-        list: null,
-        header: null,
-        script: null,
-        direction: null,
-      })
-    }
+    await waitForFlag('data.removeFormatTest', 2000)
   })
-
-});
+})
