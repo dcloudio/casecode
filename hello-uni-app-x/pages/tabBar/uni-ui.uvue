@@ -4,7 +4,7 @@
   <!-- #endif -->
     <view class="uni-container" :class="isDarkMode ? 'theme-dark' : 'theme-light'">
       <view v-if="!hasLeftWin" class="uni-header-logo">
-        <image class="uni-header-image" src="/static/componentIndex.png"></image>
+        <image class="uni-header-image" src="/static/extuiIndex.png"></image>
       </view>
       <view v-if="!hasLeftWin" class="uni-text-box">
         <text class="hello-text">以下是 uni-ui 示例：</text>
