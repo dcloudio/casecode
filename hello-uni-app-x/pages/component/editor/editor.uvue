@@ -455,6 +455,7 @@ type DataType = {
   toolbarKeepVisible: boolean;
   activeSheet: string;
   autoTest: boolean;
+  editorReadyTest: boolean;
   undoTest: boolean;
   redoTest: boolean;
   removeFormatTest: boolean;
@@ -487,6 +488,7 @@ const data = reactive<DataType>({
   toolbarKeepVisible: false,
   activeSheet: '',
   autoTest: false,
+  editorReadyTest: false,
   undoTest: false,
   redoTest: false,
   removeFormatTest: false,
@@ -538,6 +540,7 @@ const editorContext = ref<EditorContext | null>(null)
 
 let keyboardChangeListenerId: number | null = null
 let toolbarHideTimer = 0
+let statusSyncLockedUntil = 0
 
 function clearToolbarHideTimer() {
   if (toolbarHideTimer > 0) {
@@ -1032,6 +1035,7 @@ function onEditorReady() {
     id: 'editor',
     success: (context: EditorContext) => {
       editorContext.value = context
+      data.editorReadyTest = true
     },
     fail: (error: UniError) => {
       console.log('createEditorContextAsync fail', error)
@@ -1044,6 +1048,9 @@ function applyFormat(name: string, value: string | number | null | undefined) {
   const editor = getEditor()
   if (editor == null) {
     return
+  }
+  if (!isWebToolbarMode()) {
+    statusSyncLockedUntil = Date.now() + 400
   }
   editor.format(name, value)
   editor.scrollIntoView(null)
@@ -2206,26 +2213,60 @@ function onEditorBlur(event: UniEditorBlurEvent) {
 }
 
 function onStatusChange(event: UniEditorStatusChangeEvent) {
+  if (!isWebToolbarMode() && Date.now() < statusSyncLockedUntil) {
+    // 小程序端通过 context.format 触发的 statuschange 可能回传非完整状态，优先保留本地同步结果。
+    return
+  }
+  if (!isWebToolbarMode() && data.activeSheet != '') {
+    // 移动端打开面板会收起键盘，忽略这类抖动的状态回写，保留本地格式快照。
+    return
+  }
   const formats = event.detail
   console.log(formats)
 
-  data.formats.bold = formats.bold == true
-  data.formats.italic = formats.italic == true
-  data.formats.underline = formats.underline == true
-  data.formats.strike = formats.strike == true
+  if (formats.bold != null) {
+    data.formats.bold = formats.bold == true
+  }
+  if (formats.italic != null) {
+    data.formats.italic = formats.italic == true
+  }
+  if (formats.underline != null) {
+    data.formats.underline = formats.underline == true
+  }
+  if (formats.strike != null) {
+    data.formats.strike = formats.strike == true
+  }
   // data.formats.blockquote = formats.blockquote == true
-  data.formats.header = formats.header != null ? formats.header : 0
-  data.formats.list = formats.list != null ? formats.list : ''
-  data.formats.align = formats.align != null ? formats.align : ''
+  if (formats.header != null) {
+    data.formats.header = formats.header
+  }
+  if (formats.list != null) {
+    data.formats.list = formats.list
+  }
+  if (formats.align != null) {
+    data.formats.align = formats.align
+  }
   // data.formats.textIndent = formats.textIndent != null ? formats.textIndent : ''
   // data.formats.marginLeft = formats.marginLeft != null ? formats.marginLeft : ''
   // data.formats.marginRight = formats.marginRight != null ? formats.marginRight : ''
-  data.formats.lineHeight = formats.lineHeight != null ? formats.lineHeight : ''
-  data.formats.letterSpacing = formats.letterSpacing != null ? formats.letterSpacing : ''
-  data.formats.fontFamily = formats.fontFamily != null ? formats.fontFamily : ''
-  data.formats.fontSize = formats.fontSize != null ? formats.fontSize : ''
-  data.formats.color = formats.color != null ? formats.color : ''
-  data.formats.backgroundColor = formats.backgroundColor != null ? formats.backgroundColor : ''
+  if (formats.lineHeight != null) {
+    data.formats.lineHeight = formats.lineHeight
+  }
+  if (formats.letterSpacing != null) {
+    data.formats.letterSpacing = formats.letterSpacing
+  }
+  if (formats.fontFamily != null) {
+    data.formats.fontFamily = formats.fontFamily
+  }
+  if (formats.fontSize != null) {
+    data.formats.fontSize = formats.fontSize
+  }
+  if (formats.color != null) {
+    data.formats.color = formats.color
+  }
+  if (formats.backgroundColor != null) {
+    data.formats.backgroundColor = formats.backgroundColor
+  }
 }
 
 onLoad(() => {

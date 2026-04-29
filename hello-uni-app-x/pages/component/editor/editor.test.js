@@ -39,11 +39,33 @@ describe('editor.uvue', () => {
   async function loadPage() {
     page = await program.reLaunch('/pages/component/editor/editor')
     await page.waitFor('view')
-    await page.waitFor(isWeb ? 3000 : 6000)
+    await waitForData('data.editorReadyTest', value => value === true, isWeb ? 4000 : 8000)
     editor = await page.$('#editor')
     await updateData({
       autoTest: true
     })
+    await ensureToolbarVisible()
+  }
+
+  async function resetPageState() {
+    await page.callMethod('closeSheets')
+    await updateData({
+      autoTest: true,
+      undoTest: false,
+      redoTest: false,
+      removeFormatTest: false,
+      insertImageTest: false,
+      blurTest: false,
+      clearTest: false,
+      getContentDeltaTest: null,
+      formatPainterActive: false,
+      activeSheet: '',
+      toolbarKeepVisible: false,
+      formats: { ...defaultFormats }
+    })
+    await setEditorContents([
+      { insert: '\n' }
+    ])
     await ensureToolbarVisible()
   }
 
@@ -136,8 +158,11 @@ describe('editor.uvue', () => {
     await loadPage()
   })
 
+  beforeEach(async () => {
+    await resetPageState()
+  })
+
   it('editor-wrapper', async () => {
-    await loadPage()
     expect(await page.data('data.activeSheet')).toBe('')
     expect(await page.data('data.formats')).toEqual(defaultFormats)
     if (isWeb) {
@@ -147,7 +172,6 @@ describe('editor.uvue', () => {
   })
 
   it('editor-toolbar', async () => {
-    await loadPage()
     await openSheet('openMoreSheet', 'more', '更多操作', '插入与编辑快捷操作')
     await openSheet('openTitleSheet', 'title', '设置标题', '当前为正文')
     await openSheet('openStyleSheet', 'style', '设置字格式', '当前未设置字格式')
@@ -164,14 +188,12 @@ describe('editor.uvue', () => {
   })
 
   it('editor-screenshot', async () => {
-    await loadPage()
     await openSheet('openStyleSheet', 'style', '设置字格式', '当前未设置字格式')
     expect(await program.screenshot()).toSaveImageSnapshot()
     await closeSheet()
   })
 
   it('title-toolbar-actions', async () => {
-    await loadPage()
     await applyToolbarPresetState('title-h2')
     await waitForFormats({
       header: 2,
@@ -189,7 +211,6 @@ describe('editor.uvue', () => {
   })
 
   it('style-toolbar-actions', async () => {
-    await loadPage()
     await page.callMethod('toggleBold')
     await page.callMethod('toggleItalic')
     await page.callMethod('toggleUnderline')
@@ -215,7 +236,6 @@ describe('editor.uvue', () => {
   })
 
   it('extended-style-toolbar-actions', async () => {
-    await loadPage()
     await page.callMethod('setTextColorAndClose', '#3553ff')
     await waitForFormats({ color: '#3553ff' })
     await openSheet('openTextColorSheet', 'text-color', '设置文字颜色', '当前文字颜色 #3553ff')
@@ -237,7 +257,6 @@ describe('editor.uvue', () => {
   })
 
   it('layout-toolbar-actions', async () => {
-    await loadPage()
     await page.callMethod('setAlignCenter')
     await waitForFormats({ align: 'center' })
     await openSheet('openAlignSheet', 'align', '对齐方式', '当前为居中')
@@ -253,7 +272,6 @@ describe('editor.uvue', () => {
   })
 
   it('list-toolbar-actions', async () => {
-    await loadPage()
     await applyToolbarPresetState('list-bullet')
     await waitForFormats({
       header: 0,
@@ -276,7 +294,6 @@ describe('editor.uvue', () => {
   })
 
   it('clear', async () => {
-    await loadPage()
     await setEditorContents([
       { insert: '清空前的内容' },
       { insert: '\n' }
@@ -295,7 +312,6 @@ describe('editor.uvue', () => {
   })
 
   it('undo-redo', async () => {
-    await loadPage()
     await setEditorContents([
       { insert: '撤销重做验证' },
       { insert: '\n' }
@@ -313,7 +329,6 @@ describe('editor.uvue', () => {
   })
 
   it('insertImage', async () => {
-    await loadPage()
     await updateData({
       insertImageTest: false
     })
@@ -326,6 +341,11 @@ describe('editor.uvue', () => {
   })
 
   it('insertImage-screenshot', async () => {
+    await updateData({
+      insertImageTest: false
+    })
+    await page.callMethod('insertImage', 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app.png')
+    await waitForFlag('data.insertImageTest', 5000)
     await setBlur()
     const waitTime = process.env.uniTestPlatformInfo.includes('firefox') ? 5000 : 2000
     await page.waitFor(waitTime)
@@ -333,7 +353,6 @@ describe('editor.uvue', () => {
   })
 
   it('removeFormat', async () => {
-    await loadPage()
     await setEditorContents([
       {
         insert: '设置字体样式',
