@@ -32,7 +32,7 @@
                 <image :src="arrowRightIcon" class="uni-icon-size"></image>
               </template>
             </view>
-            <uni-collapse v-else style="width: 100%;border-top: 1px solid #f0f0f0;">
+            <uni-collapse v-else style="width: 100%;border-top: 1px solid var(--border-color);">
               <uni-collapse-item :title="childMenuItem.name" class="uni-panel"
                 style="margin-bottom: 0;">
                 <view class="uni-navigate-item pl" hover-class="is--active"

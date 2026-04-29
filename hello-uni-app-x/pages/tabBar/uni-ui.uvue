@@ -68,7 +68,7 @@
       id: 'badge',
       name: 'uni-badge-view 数字角标',
       open: false,
-      url: '/pages/uni-ui/badge/badge',
+      url: '/pages/uni-ui/badge-view/badge-view',
       pages: [] as Page[]
     },
     {
