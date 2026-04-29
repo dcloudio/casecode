@@ -259,7 +259,7 @@
   align-items: center;
   background-color: var(--list-background-color);
   border-top-style: solid;
-  border-top-color: #f0f0f0;
+  border-top-color: var(--border-color);
   border-top-width: 1px;
   padding: 12px;
   justify-content: space-between;
