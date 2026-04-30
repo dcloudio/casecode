@@ -1674,7 +1674,6 @@
 			}
 		},
 		// #endif
-		// #ifdef WEB || MP-WEIXIN
 		{
 			"path": "pages/API/compass/compass",
 			"group": "1,6,12",
@@ -1682,8 +1681,7 @@
 				"navigationBarTitleText": "compass | 罗盘"
 			}
 		},
-		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
 		{
 			"path": "pages/API/scan-code/scan-code",
 			"group": "1,6,18",
@@ -2258,6 +2256,86 @@
 			"path": "pages/API/request/requestTask",
 			"style": {
 				"navigationBarTitleText": "requestTask | 发起流式请求"
+			}
+		},
+		{
+			"path": "pages/API/accelerometer/accelerometer",
+			"group": "1,6,13",
+			"style": {
+				"navigationBarTitleText": "accelerometer | 加速度计"
+			}
+		},
+		{
+			"path": "pages/API/accelerometer/shake",
+			"style": {
+				"navigationBarTitleText": "shake | 摇一摇"
+			}
+		},
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
+		{
+			"path": "pages/API/calendar/calendar",
+			"group": "1,6,24",
+			"style": {
+				"navigationBarTitleText": "calendar | 日历"
+			}
+		},
+		// #endif
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
+		{
+			"path": "pages/API/gyroscope/gyroscope",
+			"group": "1,6,25",
+			"style": {
+				"navigationBarTitleText": "gyroscope | 陀螺仪"
+			}
+		},
+		// #endif
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
+		{
+			"path": "pages/API/gyroscope/panorama",
+			"style": {
+				"navigationBarTitleText": "panorama | 全景"
+			}
+		},
+		// #endif
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
+		{
+			"path": "pages/API/phoneContact/addPhoneContact",
+			"group": "1,6,10",
+			"style": {
+				"navigationBarTitleText": "addPhoneContact"
+			}
+		},
+		// #endif
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
+		{
+			"path": "pages/API/phoneContact/chooseContact",
+			"group": "1,6,10",
+			"style": {
+				"navigationBarTitleText": "chooseContact"
+			}
+		},
+		// #endif
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
+		{
+			"path": "pages/API/screen-brightness/screen-brightness",
+			"group": "1,6,22",
+			"style": {
+				"navigationBarTitleText": "screenBrightness | 屏幕亮度"
+			}
+		},
+		// #endif
+		{
+			"path": "pages/API/vibrate/vibrate",
+			"group": "1,6,23",
+			"style": {
+				"navigationBarTitleText": "vibrate | 振动"
+			}
+		},
+		{
+			"path": "pages/API/onMemoryWarning/onMemoryWarning",
+			"group": "1,6,15",
+			"style": {
+				"navigationBarTitleText": "onMemoryWarning"
 			}
 		},
 		{
@@ -4070,7 +4148,20 @@
 							"id": "api.device.makePhoneCall",
 							"name": "uni.makePhoneCall"
 						},
-						null,
+						{
+							"id": "api.device.contact",
+							"name": "contact | 手机联系人",
+							"children": [
+								{
+									"id": "api.device.contact.addPhoneContact",
+									"name": "uni.addPhoneContact"
+								},
+								{
+									"id": "api.device.contact.chooseContact",
+									"name": "uni.chooseContact"
+								}
+							]
+						},
 						{
 							"id": "api.device.clipboard",
 							"name": "clipboard"
@@ -4079,9 +4170,21 @@
 							"id": "api.device.compass",
 							"name": "compass"
 						},
+						{
+							"id": "api.device.accelerometer",
+							"name": "accelerometer"
+						},
 						null,
-						null,
-						null,
+						{
+							"id": "api.device.memory",
+							"name": "memory | 内存",
+							"children": [
+								{
+									"id": "api.device.memory.onMemoryWarning",
+									"name": "uni.onMemoryWarning"
+								}
+							]
+						},
 						{
 							"id": "api.device.captureScreen",
 							"name": "captureScreen"
@@ -4109,6 +4212,18 @@
 						{
 							"id": "api.device.screenBrightness",
 							"name": "screenBrightness"
+						},
+						{
+							"id": "api.device.vibrate",
+							"name": "vibrate"
+						},
+						{
+							"id": "api.device.calendar",
+							"name": "calendar"
+						},
+						{
+							"id": "api.device.gyroscope",
+							"name": "gyroscope"
 						}
 					]
 				},
