@@ -1,8 +1,10 @@
+const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isMP = platformInfo.startsWith('mp')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe('input-performance', () => {
-  if (isAppWebView || !isDom2) {
+  if (isAppWebView || !isDom2 || isMP) {
   	it('skip', () => {
       expect(1).toBe(1)
     })

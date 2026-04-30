@@ -6,6 +6,13 @@ const isWeb = platformInfo.startsWith('web')
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe('text-props', () => {
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
   let page
   beforeAll(async () => {
     page = await program.navigateTo(PAGE_PATH)

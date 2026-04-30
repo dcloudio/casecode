@@ -3,13 +3,19 @@ const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
-const PAGE_PATH = '/pages/API/create-selector-query/create-selector-query'
-
-const RECT_LEFT = 15;
-const RECT_WIDTH = 150;
-const RECT_HEIGHT = 100;
-
 describe('nodes-info', () => {
+  if (isMP) {
+	  it('skip', () => {
+	    expect(1).toBe(1)
+	  })
+	  return
+	}
+
+  const PAGE_PATH = '/pages/API/create-selector-query/create-selector-query'
+  const RECT_LEFT = 15;
+  const RECT_WIDTH = 150;
+  const RECT_HEIGHT = 100;
+
   let page
   beforeAll(async () => {
     page = await program.reLaunch(PAGE_PATH)

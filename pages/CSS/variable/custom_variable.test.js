@@ -9,10 +9,10 @@ let page
 
 describe("css-custom-variable", () => {
   if (isMP) {
-  	it('skip mp or dom2', () => {
-  		expect(1).toBe(1)
-  	})
-  	return
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
   }
   it("screenshot", async () => {
     page = await program.reLaunch("/pages/CSS/variable/custom_variable")

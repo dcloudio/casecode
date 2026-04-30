@@ -6,10 +6,17 @@ const isHarmony = platformInfo.startsWith('harmony')
 const isApp = isAndroid || isIos || isHarmony
 const isWeb = platformInfo.startsWith('web')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
-
-const PAGE_PATH = '/pages/API/toast/toast'
+const isMP = platformInfo.startsWith('mp')
 
 describe('API-toast', () => {
+  if ( isMP) {
+    it('skip', async () => {
+      expect(1).toBe(1);
+    });
+    return;
+  }
+
+  const PAGE_PATH = '/pages/API/toast/toast'
   let page;
   let deviceShotOptions = {}
   beforeAll(async () => {

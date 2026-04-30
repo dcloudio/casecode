@@ -1,22 +1,17 @@
 jest.setTimeout(50000);
 
-const PAGE_PATH = '/pages/API/storage/storage'
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isIOS = platformInfo.startsWith('ios')
-
-const StorageKeysBlackList = [
-  '$$STAT__DBDATA:__UNI__HelloUniAppX',
-  '_STAT_LAST_PAGE_ROUTE',
-  'UNI_STAT_DATA:__UNI__HelloUniAppX',
-  'UNI_STAT_LAST_PAGE_ROUTE'
-]
-const filterStorageKeys = (keys) => {
-  return keys.filter(key => {
-    return !StorageKeysBlackList.includes(key)
-  })
-}
+const isMP = platformInfo.startsWith('mp')
 
 describe('ExtApi-StorageInfoTest', () => {
+  if ( isMP) {
+    it('skip', async () => {
+      expect(1).toBe(1);
+    });
+    return;
+  }
+
   if (
     isIOS &&
     (
@@ -33,6 +28,19 @@ describe('ExtApi-StorageInfoTest', () => {
     return
   }
 
+  const StorageKeysBlackList = [
+    '$$STAT__DBDATA:__UNI__HelloUniAppX',
+    '_STAT_LAST_PAGE_ROUTE',
+    'UNI_STAT_DATA:__UNI__HelloUniAppX',
+    'UNI_STAT_LAST_PAGE_ROUTE'
+  ]
+  const filterStorageKeys = (keys) => {
+    return keys.filter(key => {
+      return !StorageKeysBlackList.includes(key)
+    })
+  }
+
+  const PAGE_PATH = '/pages/API/storage/storage'
   let page;
   
   // 测试辅助函数

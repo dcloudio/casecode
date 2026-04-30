@@ -1,9 +1,8 @@
+const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isHarmony = platformInfo.startsWith('harmony')
 const PAGE_PATH = '/pages/CSS/text/letter-spacing'
 
 describe('text-dynamic-letterSpacing', () => {
-  const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
-  const isHarmony = platformInfo.startsWith('harmony')
-
   if (!isHarmony) {
     it('other platform', () => {
       expect(1).toBe(1)

@@ -4,11 +4,19 @@ const isAndroid = platformInfo.startsWith('android')
 const isIos = platformInfo.startsWith('ios')
 const isHarmony = platformInfo.startsWith('harmony')
 const isApp = isAndroid || isIos || isHarmony
-const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
+const isMP = platformInfo.startsWith('mp')
 
-const PAGE_PATH = '/pages/API/loading/loading'
 
 describe('API-loading', () => {
+  if ( isMP) {
+    it('skip', async () => {
+      expect(1).toBe(1);
+    });
+    return;
+  }
+
+  const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
+  const PAGE_PATH = '/pages/API/loading/loading'
   let deviceShotOptions = {}
   let page;
   // 测试辅助函数

@@ -4,7 +4,6 @@ const isMP = platformInfo.startsWith('mp')
 const PAGE_PATH = '/pages/CSS/transform/transform-origin'
 
 describe('transform-origin-test', () => {
-
   if (isWeb || isMP || process.env.UNI_TEST_DEVICES_DIRECTION == 'landscape') {
     it('other platform', () => {
       expect(1).toBe(1)

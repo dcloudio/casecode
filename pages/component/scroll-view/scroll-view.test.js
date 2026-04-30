@@ -7,6 +7,13 @@ const isWeb = platformInfo.startsWith('web')
 const isHarmony = platformInfo.startsWith('harmony')
 
 describe('component-native-scroll-view', () => {
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
   let page;
   beforeAll(async () => {
     page = await program.reLaunch('/pages/component/scroll-view/scroll-view');

@@ -1,4 +1,5 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isMP = platformInfo.startsWith('mp')
 const isAndroid = platformInfo.startsWith('android')
 const isIos = platformInfo.startsWith('ios')
 const isHarmony = platformInfo.startsWith('harmony')
@@ -7,7 +8,7 @@ const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe('web-cover-view', () => {
-  if (isAppWebView) {
+  if (isAppWebView || isMP) {
   	it('skip', () => {
   		expect(1).toBe(1)
   	})

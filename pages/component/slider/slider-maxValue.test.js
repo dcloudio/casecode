@@ -6,7 +6,6 @@ const isMP = platformInfo.startsWith('mp')
 const PAGE_PATH = '/pages/component/slider/slider-maxValue'
 
 describe('touch-events-test', () => {
-
   if (isAndroid || isWeb || isMP || process.env.UNI_TEST_DEVICES_DIRECTION == 'landscape') {
     it('not support', () => {
       expect(1).toBe(1)

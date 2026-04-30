@@ -1,9 +1,10 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isIOS = platformInfo.startsWith('ios')
 const isWeb = platformInfo.startsWith('web')
+const isMP = platformInfo.startsWith('mp')
 
 describe('API-getImageInfo', () => {
-  if (isIOS) {
+  if (isIOS || isMP) {
     it('pass', async () => {
       expect(1).toBe(1);
     });

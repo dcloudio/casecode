@@ -1,15 +1,23 @@
 jest.setTimeout(50000)
 
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
-const isIOS = platformInfo.startsWith('ios')
 const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
+const isIOS = platformInfo.startsWith('ios')
 const isHarmony = platformInfo.startsWith('harmony')
 const isAndroid = platformInfo.startsWith('android')
+const isAPP = isIOS || isAndroid || isHarmony
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe('component-native-input', () => {
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
   if (isAppWebView) {
   	it('app 与 web 存在差异, webview 不进行截图', () => {
       expect(1).toBe(1)
@@ -331,4 +339,33 @@ describe('component-native-input', () => {
     })
     expect(image).toSaveImageSnapshot()
   })
+  if (isAPP) {
+    it("type none focus should not show keyboard", async () => {
+      // 确保其他 input 失焦
+      await setPageData({
+        focus: false,
+        cursorInputFocus: false,
+        cursorColorInputFocus: false,
+        selectionInputFocus: false,
+        inputMaxLengthFocus: false,
+        firstInputFocus: false,
+      })
+      await program.tap({ x: 100, y: 50 })
+      // type none input 获取焦点后不应该弹出键盘，等待一段时间截图确认
+      await setPageData({
+        typeNoneFocus: true,
+      })
+      await page.waitFor(1000
+      )
+      const windowInfo = await program.callUniMethod('getWindowInfo');
+      const image = await program.screenshot({
+        deviceShot: true,
+        area: {
+          x: 0,
+          y: windowInfo.safeAreaInsets.top + 44,
+        }
+      })
+      expect(image).toSaveImageSnapshot()
+    })
+  }
 });

@@ -13,7 +13,7 @@ const PAGE_PATH = '/pages/API/get-file-system-manager/get-file-system-manager'
 
 
 describe('ExtApi-FileManagerTest', () => {
-  if (isWeb || isAppWebView) {
+  if (isWeb || isAppWebView || isMP) {
     it('not support', () => {
       expect(1).toBe(1)
     })

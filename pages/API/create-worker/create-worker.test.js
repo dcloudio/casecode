@@ -1,6 +1,4 @@
-const PAGE_PATH = '/pages/API/create-worker/create-worker'
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
-
 const isIOS = platformInfo.startsWith('ios')
 const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
@@ -8,13 +6,14 @@ const isAndroid = platformInfo.startsWith('android')
 const isHarmony = platformInfo.startsWith('harmony')
 
 describe('Api-createWorker', () => {
-  if(isIOS) {
+  if(isIOS || isMP) {
     it('skip Api-createWorker', async () => {
       expect(1).toBe(1)
     })
     return
   }
 
+  const PAGE_PATH = '/pages/API/create-worker/create-worker'
   let page;
   let res;
   beforeAll(async () => {

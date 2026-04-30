@@ -1,4 +1,3 @@
-// uni-app自动化测试教程: https://uniapp.dcloud.net.cn/worktile/auto/hbuilderx-extension/
 describe('text-layout', () => {
   const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase();
   const isIos = platformInfo.startsWith('ios');
