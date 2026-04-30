@@ -7,7 +7,7 @@ const isMP = platformInfo.startsWith('mp')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 
 describe('ExtApi-Request', () => {
-  if ( isMP) {
+  if (isMP) {
     it('skip', async () => {
       expect(1).toBe(1);
     });
