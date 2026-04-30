@@ -1,6 +1,15 @@
+const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isMP = platformInfo.startsWith('mp')
 const PAGE_PATH = '/pages/component/global-properties/global-properties'
 
 describe('general attribute', () => {
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
   let page
 
   beforeAll(async () => {

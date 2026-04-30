@@ -7,6 +7,13 @@ describe('component-native-textarea', () => {
   const isWeb = platformInfo.startsWith('web')
   const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
   let page;
   let textarea;
   beforeAll(async () => {

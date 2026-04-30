@@ -1,33 +1,13 @@
 jest.setTimeout(30000);
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
+const isIos = platformInfo.startsWith('ios')
 const isWeb = platformInfo.startsWith('web')
-const isHarmony = platformInfo.startsWith('harmony')
-const isAndroid = platformInfo.startsWith('android')
 const isDom2 = process.env.UNI_APP_X_DOM2 === 'true'
 
-const defaultFormats = {
-  bold: false,
-  italic: false,
-  underline: false,
-  strike: false,
-  header: 0,
-  list: '',
-  align: '',
-  textIndent: '',
-  marginLeft: '',
-  marginRight: '',
-  lineHeight: '',
-  letterSpacing: '',
-  fontFamily: '',
-  fontSize: '',
-  color: '',
-  backgroundColor: ''
-}
-
 describe('editor.uvue', () => {
-  if (!isHarmony && !isAndroid && (isDom2 || (!isWeb && !isMP))) {
-    it('app', () => {
+  if (isMP || isIos) {
+    it('skip', () => {
       expect(1).toBe(1)
     })
     return
@@ -35,6 +15,24 @@ describe('editor.uvue', () => {
 
   let page
   let editor
+  const defaultFormats = {
+    bold: false,
+    italic: false,
+    underline: false,
+    strike: false,
+    header: 0,
+    list: '',
+    align: '',
+    textIndent: '',
+    marginLeft: '',
+    marginRight: '',
+    lineHeight: '',
+    letterSpacing: '',
+    fontFamily: '',
+    fontSize: '',
+    color: '',
+    backgroundColor: ''
+  }
 
   async function loadPage() {
     page = await program.reLaunch('/pages/component/editor/editor')

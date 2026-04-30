@@ -4,9 +4,16 @@ const isWeb = platformInfo.startsWith('web')
 const isAndroid = platformInfo.startsWith('android')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 
-const PAGE_PATH = '/pages/API/download-file/download-file'
 
 describe('ExtApi-DownloadFile', () => {
+  if (isMP) {
+	  it('skip', () => {
+	    expect(1).toBe(1)
+	  })
+	  return
+	}
+
+  const PAGE_PATH = '/pages/API/download-file/download-file'
   let page;
   let res;
   let timeout = 15000

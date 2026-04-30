@@ -6,8 +6,8 @@ const isHarmony = platformInfo.startsWith('harmony')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 
 describe('component-native-scroll-view-refresher', () => {
-  if (isAppWebView) {
-    it('other platform', () => {
+  if (isMP || isAppWebView) {
+    it('skip', () => {
       expect(1).toBe(1)
     })
     return

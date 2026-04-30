@@ -6,7 +6,7 @@ const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 describe('API-theme-change', () => {
   let page;
   let originalTheme;
-  if (!isAndroid || !isIos || isAppWebView) {
+  if (!(isAndroid || isIos) || isAppWebView) {
     it('dummyTest', () => {
       expect(1).toBe(1)
     })
@@ -16,13 +16,13 @@ describe('API-theme-change', () => {
   beforeAll(async () => {
     page = await program.reLaunch('/pages/API/theme-change/theme-change')
     await page.waitFor('view');
-    originalTheme = await page.data('originalTheme')
+    originalTheme = await page.data('data.originalTheme')
   });
 
   it("check-set-app-theme", async () => {
     await page.callMethod('setAppTheme', "dark")
     await page.waitFor(300)
-    expect(await page.data('appTheme')).toBe("dark")
+    expect(await page.data('data.appTheme')).toBe("dark")
     const image = await program.screenshot({ deviceShot: true });
     expect(image).toSaveImageSnapshot();
   })

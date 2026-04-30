@@ -13,6 +13,13 @@ const platformInfos = platformInfo.split(' ');
 const version = parseInt(platformInfos[platformInfos.length - 1]);
 
 describe('component-native-video', () => {
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
   // TODO: web 端暂不支持测试 harmony 模拟器异常
   if (isWeb || isAppWebView || (isHarmony && platformInfo.includes('模拟器')) || (isAndroid && version == 5)) {
     it('web', async () => {

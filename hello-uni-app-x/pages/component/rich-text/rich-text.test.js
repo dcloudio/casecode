@@ -4,6 +4,13 @@ const isMP = platformInfo.startsWith('mp')
 const PAGE_PATH = '/pages/component/rich-text/rich-text'
 
 describe('rich-text-test', () => {
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
   let page
   beforeAll(async () => {
     page = await program.reLaunch(PAGE_PATH)

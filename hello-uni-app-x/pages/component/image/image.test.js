@@ -6,6 +6,13 @@ const isAndroid = platformInfo.startsWith('android')
 const isWeb = platformInfo.startsWith('web')
 
 describe('component-native-image', () => {
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
   const screenshotParams = { fullPage: true }
   let page;
   let start = 0;

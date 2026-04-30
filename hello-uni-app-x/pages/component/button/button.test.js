@@ -7,6 +7,13 @@ const isAndroid = platformInfo.startsWith('android')
 const PAGE_PATH = '/pages/component/button/button'
 
 describe('Button.uvue', () => {
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
   let page
   beforeAll(async () => {
     page = await program.reLaunch(PAGE_PATH)

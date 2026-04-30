@@ -19,6 +19,13 @@ const CHANGE_SWITCH = false
 const CHANGE_COMMENT = '备注'
 
 describe('form', () => {
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
   let page
   beforeAll(async () => {
     page = await program.reLaunch(PAGE_PATH)

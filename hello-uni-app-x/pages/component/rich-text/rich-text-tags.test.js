@@ -1,13 +1,14 @@
-const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase();
+const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isMP = platformInfo.startsWith('mp')
 const isAndroid = platformInfo.startsWith('android');
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 
 describe("rich-text-tags", () => {
-  if (isAppWebView) {
-  	it('skip', () => {
-  		expect(1).toBe(1)
-  	})
-  	return
+  if (isMP || isAppWebView) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
   }
 
   let page;

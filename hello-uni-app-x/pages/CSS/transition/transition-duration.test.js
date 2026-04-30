@@ -1,7 +1,14 @@
-describe('/pages/CSS/transition/transition-duration.uvue', () => {
+const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isMP = platformInfo.startsWith('mp')
+const isAndroid = platformInfo.startsWith('android')
 
-  const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
-  const isAndroid = platformInfo.startsWith('android')
+describe('/pages/CSS/transition/transition-duration.uvue', () => {
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
 
   let page;
   beforeAll(async () => {

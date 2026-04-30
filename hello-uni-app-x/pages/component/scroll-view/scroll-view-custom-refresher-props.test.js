@@ -8,7 +8,6 @@ const isAndroid = platformInfo.startsWith('android')
 const isHarmony = platformInfo.startsWith('harmony')
 
 describe('scroll-view-custom-refresher-props-test', () => {
-
   //TODO：临时方案
   if (isWeb || isMP) {
     // 不支持program.swipe

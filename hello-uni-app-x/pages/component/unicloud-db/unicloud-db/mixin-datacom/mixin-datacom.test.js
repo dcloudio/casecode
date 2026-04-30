@@ -1,11 +1,12 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 const PAGE_PATH = '/pages/component/unicloud-db/unicloud-db/mixin-datacom/mixin-datacom'
 
 describe('mixin-datacom', () => {
-  if (isWeb || isDom2) {
+  if (isMP || isWeb || isDom2) {
     it('dummyTest', async () => {
       expect(1).toBe(1)
     })

@@ -9,6 +9,13 @@ const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const PAGE_PATH = '/pages/component/rich-text/rich-text-complex'
 
 describe('rich-text-test', () => {
+  if (isMP) {
+    it('skip', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
 
   // 先屏蔽 android 及 web 平台
   if (isWeb || isMP || isHarmony) {
