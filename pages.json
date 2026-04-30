@@ -2025,10 +2025,10 @@
 		// #endif
 		// #ifdef MP-WEIXIN || APP-HARMONY
 		{
-			"path": "pages/API/bio-auth/bio-auth",
+			"path": "pages/API/authentication/authentication",
 			"group": "1,12,3",
 			"style": {
-				"navigationBarTitleText": "bioAuth | 生物认证"
+				"navigationBarTitleText": "authentication | 生物认证"
 			}
 		},
 		// #endif
