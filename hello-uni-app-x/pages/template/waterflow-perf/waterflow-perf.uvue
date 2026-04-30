@@ -193,18 +193,12 @@ function onImageClick(urls: string[], current: number) {
 	font-weight: bold;
 	color: #333;
 	margin-bottom: 4px;
-	/* #ifdef APP-ANDROID || APP-IOS */
-	lines: 2;
-	/* #endif */
 	text-overflow: ellipsis;
 }
 .content-desc {
 	font-size: 10px;
 	color: #666;
 	margin-bottom: 4px;
-	/* #ifdef APP-ANDROID || APP-IOS */
-	lines: 2;
-	/* #endif */
 	text-overflow: ellipsis;
 }
 

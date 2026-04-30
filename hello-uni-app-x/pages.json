@@ -731,7 +731,7 @@
 			}
 		},
 		// #endif
-		// #ifdef (!VUE3-VAPOR && (WEB || MP-WEIXIN || APP-ANDROID)) || APP-HARMONY
+		// #ifdef APP-HARMONY || (!VUE3-VAPOR && APP-IOS) || (!VUE3-VAPOR && APP-ANDROID) || WEB || MP-WEIXIN
 		{
 			"path": "pages/component/editor/editor",
 			"group": "0,3,4",

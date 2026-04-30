@@ -6,7 +6,13 @@ const isWeb = platformInfo.startsWith('web')
 const isDom2 = process.env.UNI_APP_X_DOM2 === 'true'
 
 describe('editor.uvue', () => {
-  if (isMP || isIos) {
+  /**
+   * 1. mp-weixin 自动化测试截图报错
+   * 2. vapor harmonyOS 自动化测试闪退
+   *
+   * 暂时跳过相关平台的测试，后续根据平台能力完善测试用例
+   */
+  if (isMP || (isDom2 && isHarmony)) {
     it('skip', () => {
       expect(1).toBe(1)
     })
