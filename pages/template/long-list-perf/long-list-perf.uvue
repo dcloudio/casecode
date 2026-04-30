@@ -567,18 +567,12 @@
     font-size: 13px;
     font-weight: bold;
     color: #333;
-    /* #ifdef APP-ANDROID || APP-IOS  */
-    lines: 1;
-    /* #endif */
     text-overflow: ellipsis;
   }
 
   .content-desc {
     font-size: 11px;
     color: #666;
-    /* #ifdef APP-ANDROID || APP-IOS */
-    lines: 1;
-    /* #endif */
     text-overflow: ellipsis;
   }
 
@@ -729,9 +723,6 @@
     font-size: 12px;
     color: #333;
     font-weight: bold;
-    /* #ifdef APP-ANDROID */
-    lines: 1;
-    /* #endif */
   }
 
   .card-sub {
