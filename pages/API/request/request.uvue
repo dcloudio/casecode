@@ -13,7 +13,7 @@
         <button type="primary" @click="sendRequest">发起请求</button>
       </view>
     </view>
-    <scroll-view style="flex: 1;" show-scrollbar="true">
+    <scroll-view style="flex: 1;" :show-scrollbar="true">
       <view style="padding: 20px;">
         <text>设置请求方式</text>
         <view class="uni-common-pb"></view>
@@ -49,6 +49,13 @@
             @click="changeUrl(item)">{{item}}</button>
         </view>
       </view>
+      <!-- #ifdef APP-ANDROID || APP-IOS || APP-HARMONY || WEB -->
+      <view style="padding: 20px;">
+        <text>检测请求 header 键是否为小写</text>
+        <view class="uni-common-pb"></view>
+        <button type="primary" size="mini" @click="checkHeaderLowerCase">检测 header 键小写</button>
+      </view>
+      <!-- #endif -->
       <view style="padding: 20px;">
         <text>请求不同content-type的接口（默认为GET）</text>
         <view class="uni-common-pb"></view>
@@ -317,6 +324,54 @@
         data.data = "hello=world";
         break;
     }
+  }
+
+  function getResponseHeaderObject(header : any): UTSJSONObject {
+    return JSON.parse(JSON.stringify(header)) as UTSJSONObject
+  }
+
+  const checkHeaderLowerCase = () => {
+    uni.showLoading({
+      title: "请求中..."
+    })
+    uni.request<UTSJSONObject>({
+      url: data.host + "/api/http/contentType/json",
+      method: "POST",
+      header: {
+        "Content-Type": "application/json"
+      },
+      data: {
+        "hello": "world"
+      },
+      timeout: 6000,
+      sslVerify: false,
+      withCredentials: false,
+      firstIpv4: false,
+      success: (res : RequestSuccess<UTSJSONObject>) => {
+        const responseHeader = getResponseHeaderObject(res.header)
+        const lowerCaseValue = responseHeader.getString("content-type") ?? ""
+        const upperCaseValue = responseHeader.getString("Content-Type")
+        data.jest_result = lowerCaseValue == "application/json" && upperCaseValue == null
+        data.res = '请求结果 : ' + JSON.stringify(res.data)
+        uni.showToast({
+          title: data.jest_result ? '检测成功' : '检测失败',
+          icon: data.jest_result ? 'success' : 'error',
+          duration: duration
+        })
+      },
+      fail: (err : RequestFail) => {
+        data.jest_result = false
+        data.res = err.errMsg
+        uni.showToast({
+          title: '请求失败',
+          icon: 'error',
+          duration: duration
+        })
+      },
+      complete: () => {
+        uni.hideLoading()
+      }
+    })
   }
 
   // #ifdef APP | MP-WEIXIN | WEB
@@ -660,14 +715,15 @@
   const jest_uts_module_invoked = () => {
     // #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
     data.jest_result = false
-    testInovkeRequest({
+    const options : CommonOptions = {
       success: (res : any) => {
         data.jest_result = true
       },
       fail: (err : any) => {
         data.jest_result = false
       }
-    } as CommonOptions)
+    }
+    testInovkeRequest(options)
     // #endif
   }
 
@@ -741,6 +797,32 @@
     });
   }
 
+  const jest_check_header_lowercase = () => {
+    uni.request<UTSJSONObject>({
+      url: data.host + "/api/http/contentType/json",
+      method: "POST",
+      header: {
+        "Content-Type": "application/json"
+      },
+      data: {
+        "hello": "world"
+      },
+      timeout: 6000,
+      sslVerify: false,
+      withCredentials: false,
+      firstIpv4: false,
+      success: (res : RequestSuccess<UTSJSONObject>) => {
+        const responseHeader = getResponseHeaderObject(res.header)
+        const lowerCaseValue = responseHeader.getString("content-type") ?? ""
+        const upperCaseValue = responseHeader.getString("Content-Type")
+        data.jest_result = lowerCaseValue == "application/json" && upperCaseValue == null
+      },
+      fail: () => {
+        data.jest_result = false
+      },
+    })
+  }
+
   defineExpose({
     data,
     sendArrayBuffer,
@@ -759,8 +841,10 @@
     jest_respone_with_404_and_string_generics,
     jest_issue_19687,
     jest_test_issue21823_crash,
+    jest_check_header_lowercase,
     sendGzipRequest,
-    checkQuery
+    checkQuery,
+    checkHeaderLowerCase
   })
 </script>
 

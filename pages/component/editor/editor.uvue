@@ -400,7 +400,7 @@ type Formats = {
   italic: boolean;
   underline: boolean;
   strike: boolean;
-  // blockquote: boolean;
+  blockquote: boolean;
   header: number;
   list: string;
   align: string;
@@ -468,6 +468,48 @@ type DataType = {
   formats: Formats;
 }
 
+function createDefaultFormats() : Formats {
+  return {
+    bold: false,
+    italic: false,
+    underline: false,
+    strike: false,
+    blockquote: false,
+    header: 0,
+    list: '',
+    align: '',
+    textIndent: '',
+    marginLeft: '',
+    marginRight: '',
+    lineHeight: '',
+    letterSpacing: '',
+    fontFamily: '',
+    fontSize: '',
+    color: '',
+    backgroundColor: ''
+  }
+}
+
+function assignFormats(target: Formats, source: Formats) {
+  target.bold = source.bold
+  target.italic = source.italic
+  target.underline = source.underline
+  target.strike = source.strike
+  target.blockquote = source.blockquote
+  target.header = source.header
+  target.list = source.list
+  target.align = source.align
+  target.textIndent = source.textIndent
+  target.marginLeft = source.marginLeft
+  target.marginRight = source.marginRight
+  target.lineHeight = source.lineHeight
+  target.letterSpacing = source.letterSpacing
+  target.fontFamily = source.fontFamily
+  target.fontSize = source.fontSize
+  target.color = source.color
+  target.backgroundColor = source.backgroundColor
+}
+
 const data = reactive<DataType>({
   toolbarVisible: false,
   toolbarBottom: 0,
@@ -497,43 +539,8 @@ const data = reactive<DataType>({
   clearTest: false,
   getContentDeltaTest: null,
   formatPainterActive: false,
-  formatPainterFormats: {
-    bold: false,
-    italic: false,
-    underline: false,
-    strike: false,
-    header: 0,
-    list: '',
-    align: '',
-    textIndent: '',
-    marginLeft: '',
-    marginRight: '',
-    lineHeight: '',
-    letterSpacing: '',
-    fontFamily: '',
-    fontSize: '',
-    color: '',
-    backgroundColor: ''
-  },
-  formats: {
-    bold: false,
-    italic: false,
-    underline: false,
-    strike: false,
-    // blockquote: false,
-    header: 0,
-    list: '',
-    align: '',
-    textIndent: '',
-    marginLeft: '',
-    marginRight: '',
-    lineHeight: '',
-    letterSpacing: '',
-    fontFamily: '',
-    fontSize: '',
-    color: '',
-    backgroundColor: ''
-  }
+  formatPainterFormats: createDefaultFormats(),
+  formats: createDefaultFormats()
 })
 
 const editorContext = ref<EditorContext | null>(null)
@@ -1186,6 +1193,7 @@ function cloneFormats(source: Formats) : Formats {
     italic: source.italic,
     underline: source.underline,
     strike: source.strike,
+    blockquote: source.blockquote,
     header: source.header,
     list: source.list,
     align: source.align,
@@ -1206,22 +1214,11 @@ function clearFormatPainterState() {
 }
 
 function resetLocalFormats() {
-  data.formats.bold = false
-  data.formats.italic = false
-  data.formats.underline = false
-  data.formats.strike = false
-  data.formats.header = 0
-  data.formats.list = ''
-  data.formats.align = ''
-  data.formats.textIndent = ''
-  data.formats.marginLeft = ''
-  data.formats.marginRight = ''
-  data.formats.lineHeight = ''
-  data.formats.letterSpacing = ''
-  data.formats.fontFamily = ''
-  data.formats.fontSize = ''
-  data.formats.color = ''
-  data.formats.backgroundColor = ''
+  assignFormats(data.formats, createDefaultFormats())
+}
+
+function resetFormatsForTest() {
+  assignFormats(data.formats, createDefaultFormats())
 }
 
 function applyCopiedFormats() {
@@ -1725,7 +1722,7 @@ function isParagraphActive() : boolean {
 }
 
 function clearTitleFormats() {
-  // applyFormat('blockquote', false)
+  applyFormat('blockquote', false)
   applyFormatWithState('list', null)
 }
 
@@ -1748,7 +1745,7 @@ function setHeadingLevel(level: number) {
 }
 
 function setOrderedList() {
-  // applyFormat('blockquote', false)
+  applyFormat('blockquote', false)
   applyFormatWithState('header', 0)
   applyFormatWithState('list', data.formats.list == 'ordered' ? null : 'ordered')
   closeSheets()
@@ -1756,7 +1753,7 @@ function setOrderedList() {
 }
 
 function setBulletList() {
-  // applyFormat('blockquote', false)
+  applyFormat('blockquote', false)
   applyFormatWithState('header', 0)
   applyFormatWithState('list', data.formats.list == 'bullet' ? null : 'bullet')
   closeSheets()
@@ -1769,12 +1766,12 @@ function clearListFormat() {
   refocusEditorAfterToolbarAction()
 }
 
-// function toggleBlockquote() {
-//   applyFormat('header', 0)
-//   applyFormat('list', null)
-//   applyFormat('blockquote', data.formats.blockquote ? false : true)
-//   closeSheets()
-// }
+function toggleBlockquote() {
+  applyFormat('header', 0)
+  applyFormat('list', null)
+  applyFormat('blockquote', data.formats.blockquote ? false : true)
+  closeSheets()
+}
 
 function toggleBold() {
   toggleInlineFormat('bold')
@@ -2236,7 +2233,7 @@ function onStatusChange(event: UniEditorStatusChangeEvent) {
   if (formats.strike != null) {
     data.formats.strike = formats.strike == true
   }
-  // data.formats.blockquote = formats.blockquote == true
+  data.formats.blockquote = formats.blockquote == true
   if (formats.header != null) {
     data.formats.header = formats.header
   }
@@ -2337,6 +2334,7 @@ defineExpose({
   closeSheets,
   setToolbarFormatsForTest,
   applyToolbarPresetForTest,
+  resetFormatsForTest,
   setParagraph,
   setHeadingLevel,
   toggleBold,
