@@ -1,0 +1,37 @@
+import { MainActivity } from 'com.dcloud.cmark'
+export * from '../interface.uts'
+import { MarkdownToken, ParseMdRes } from '../interface.uts'
+
+// 创建 MainActivity 实例
+let cmarkInstance: MainActivity | null = null
+function getCmarkInstance(): MainActivity {
+	if (cmarkInstance == null) {
+		cmarkInstance = new MainActivity()
+	}
+	return cmarkInstance!
+}
+
+export function md2json(markdown: string): ParseMdRes {
+	try {
+		const activity = getCmarkInstance()
+		let jsonString = activity.md2json(markdown)
+		// console.log('jsonString', jsonString)
+		// 解析JSON字符串为MarkdownToken数组
+		const jsonArray = JSON.parseArray<MarkdownToken>(jsonString) as MarkdownToken[]
+		const parseMdRes: ParseMdRes = {
+			data: jsonArray,
+			errorMsg: ''
+		}
+		return parseMdRes
+	} catch (error) {
+		console.error('md2json failed:', error)
+		return {
+			data: [],
+			errorMsg: error.message as string
+		}
+	}
+}
+
+export async function initCmark() {
+	// Android 端不需要初始化，空实现
+}

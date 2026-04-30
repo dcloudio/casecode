@@ -1,0 +1,42 @@
+{
+	"version": "1.0",
+	"protocol": ["http", "https"],
+	"rooturl": "",
+	"index": {
+		"href": "index.html",
+		"resources": ["manifest.json", "js/app.js", "js/mui.min.js", "css/app.css", "img/36kr_2x.png", "img/icon.png", "img/bg.png", "css/mui.min.css", "fonts/mui.ttf", "list.html", "img/blank.jpg", "js/html5sql.js", "js/feed.js", "js/news.js", "tmpl/news_item.js"],
+		"refer": ["detail_main.html"],
+		"priority": 0
+	},
+	"pages": {
+		"detail_main.html": {
+			"href": "detail_main.html",
+			"resources": [],
+			"refer": ["detail.html"],
+			"priority": 0
+		},
+		"detail.html": {
+			"href": "detail.html",
+			"resources": ["js/html5sql.js", "js/news.js", "img/blank_big.jpg"],
+			"priority": 0
+		},
+		"browser.html": {
+			"href": "browser.html",
+			"resources": [],
+			"priority": 0
+		},
+		"setting.html": {
+			"href": "setting.html",
+			"resources": [],
+			"priority": 0
+		},
+		"about.html": {
+			"href": "about.html",
+			"resources": ["js/share.js", "css/about.css", "img/qrcode.png"],
+			"priority": 0
+		}
+	},
+	"idle": {
+		"resources": ["img/36kr.png"]
+	}
+}

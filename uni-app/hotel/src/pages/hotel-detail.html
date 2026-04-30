@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>酒店详情</title>
+		<link href="../mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../styles/default.css" rel="stylesheet" />
+		<link href="../mui/css/mui.picker.min.css" rel="stylesheet" />
+		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+		<style>
+			/*common*/
+			
+			.mui-table-view {
+				margin-bottom: 20px;
+			}
+			.mui-table-view-cell {
+				background-color: transparent;
+			}
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 0px;
+			}
+			i.mui-media-object {
+				color: #ccc;
+				font-size: 18px;
+			}
+			.mui-media-body p {
+				font-size: 12px;
+				padding: 1px 0px;
+				position: relative;
+				overflow: visible;
+			}
+			.mui-media-body p span,
+			.mui-media-body p i {
+				padding-right: 8px;
+			}
+			.mui-media-body .hotel-right {
+				position: absolute;
+				right: 0px;
+			}
+			.mui-media-body .hotel-right-text {
+				position: absolute;
+				font-size: 14px;
+				height: 16px;
+				line-height: 16px;
+				right: 40px;
+				top: 50%;
+				margin-top: -8px;
+			}
+			/*hotel info*/
+			
+			.hotel-hotel-info .mui-media-body {
+				padding-right: 100px;
+			}
+			.hotel-hotel-info .mui-media-body p {
+				padding: 2px 0px;
+			}
+			.hotel-hotel-info .hotel-ln-2 {
+				font-size: 15px;
+			}
+			.hotel-hotel-info .hotel-ln-3 {
+				padding-top: 5px !important;
+				border-top: dotted 1px #ddd;
+			}
+			.hotel-hotel-info .hotel-ln-3 em {
+				font-style: normal;
+				display: inline-block;
+				width: 25%;
+			}
+			.hotel-hotel-info .hotel-hetol-iamges {
+				position: absolute;
+				right: 15px;
+				width: 80px;
+				height: 80px;
+				top: 50%;
+				margin-top: -40px;
+				/*border: dotted 1px #eee;*/
+			}
+			.hotel-hotel-info .hotel-hetol-iamges img {
+				width: 100%;
+				height: 100%;
+			}
+			.hotel-hotel-info .hotel-hetol-iamges label {
+				position: absolute;
+				left: 0px;
+				bottom: 0px;
+				width: 100%;
+				background-color: rgba(0, 0, 0, 0.5);
+				text-align: center;
+				font-size: 12px;
+				color: #eee;
+			}
+			/**room bar**/
+			
+			.hotel-bar-room {
+				height: 46px;
+				position: relative;
+				background-color: #fff;
+				line-height: 49px;
+				padding: 0px 0px 0px 8px;
+			}
+			.hotel-bar-room .hotel-price-type,
+			.hotel-bar-room .hotel-room-filter,
+			.hotel-bar-room .hotel-date-modify {
+				display: inline-block;
+				height: 100%;
+				float: right;
+				position: relative;
+				width: 60px;
+				text-align: center;
+				font-size: 12px;
+				margin-left: 1px;
+			}
+			.hotel-bar-room .hotel-price-type:active,
+			.hotel-bar-room .hotel-room-filter:active,
+			.hotel-bar-room .hotel-date-modify:active {
+				background-color: #eee;
+			}
+			.hotel-bar-room .hotel-price-type:before,
+			.hotel-bar-room .hotel-room-filter:before {
+				position: absolute;
+				top: 0px;
+				bottom: 0px;
+				left: -1px;
+				width: 1px;
+				content: '';
+				background-color: #c8c7cc;
+				-webkit-transform: scaleX(.5);
+				transform: scaleX(.5);
+			}
+			.hotel-bar-room:before {
+				position: absolute;
+				top: -1px;
+				right: 0px;
+				left: 0px;
+				height: 1px;
+				content: '';
+				background-color: #c8c7cc;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+			}
+			/*room list*/
+			
+			.hotel-list-room.mui-table-view .mui-media-object {
+				width: 60px;
+				min-width: 60px;
+				height: 60px;
+				line-height: 75px;
+			}
+			.hotel-list-room .hotel-price {
+				position: absolute;
+				right: 18px;
+			}
+			.hotel-list-room .hotel-btn-booking {
+				position: absolute;
+				right: 0px;
+				bottom: 2px;
+				background: #ff9a14;
+				color: #eee;
+				font-size: 13px;
+				padding: 3px 18px;
+				border-radius: 3px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hotel-header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">酒店详情</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media hotel-hotel-info">
+					<div class="mui-media-body">
+						北京钓鱼台国宾馆
+						<p class='mui-ellipsis hotel-ln-1'>高档型酒店</p>
+						<p data-url='./comment.html' class='mui-ellipsis hotel-color-blue  hotel-ln-2'>
+							<span class="hotel-rate">4.3分</span><span class="hotel-comment hotel-right">33人点评</span>
+						</p>
+						<p data-url='./comment.html' class='mui-ellipsis  hotel-ln-3'><em>位置4.9</em><em>设施4.7</em><em>服务4.9</em><em>卫生4.9</em></p>
+						<div class="hotel-hetol-iamges" data-url='./hotel-pic.html'>
+							<img src="../styles/images/hotel-loading.png" />
+							<label>5张</label>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li data-event='tap>openMap' class="mui-table-view-cell mui-media">
+					<i class="fa fa-map-marker mui-media-object mui-pull-left"></i>
+					<div class="mui-media-body mui-navigate-right">
+						西客站南广场东侧
+						<p class='mui-ellipsis'>北京西站、丽泽商务区</p>
+						<span class="hotel-color-blue hotel-right-text">地图</span>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url='./hotel-info.html'>
+					<i class="fa fa-home mui-media-object mui-pull-left"></i>
+					<div class="mui-media-body mui-navigate-right">
+						2012 年开业
+						<p class='mui-ellipsis'><i class="fa fa-wifi"></i><i class="fa">P</i></p>
+						<span class="hotel-color-blue hotel-right-text">详情</span>
+					</div>
+				</li>
+			</ul>
+			<div class="hotel-bar-room">
+				今天 入住 1 晚
+				<span data-event='tap>setPriceType' class="hotel-room-filter hotel-color-blue"><i class="fa fa-cny"></i> 返前价</span>
+				<span data-event='tap>setRoomType'  class="hotel-price-type hotel-color-blue"><i class="fa fa-filter"></i> 房型</span>
+				<span data-event="tap>setBookingDate" class="hotel-date-modify hotel-color-blue">修改</span>
+			</div>
+			<ul class="mui-table-view hotel-list-room">
+				<li class="mui-table-view-cell mui-media" data-url = "./room-info.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						商务间
+						<span class="hotel-price hotel-color-orange">￥1320</span>
+						<p class='mui-ellipsis'><span>双早</span><span>大床</span></p>
+						<p class='mui-ellipsis'>
+							<i class="fa fa-gift hotel-gift hotel-color-orange"></i>
+							<a class="hotel-btn-booking" data-url='./booking.html'>预定</a>
+						</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url = "./room-info.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						商务间
+						<span class="hotel-price hotel-color-orange">￥1320</span>
+						<p class='mui-ellipsis'><span>双早</span><span>大床</span></p>
+						<p class='mui-ellipsis'>
+							<i class="fa fa-gift hotel-gift hotel-color-orange"></i>
+							<a class="hotel-btn-booking" data-url='./booking.html'>预定</a>
+						</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url = "./room-info.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						商务间
+						<span class="hotel-price hotel-color-orange">￥1320</span>
+						<p class='mui-ellipsis'><span>双早</span><span>大床</span></p>
+						<p class='mui-ellipsis'>
+							<i class="fa fa-gift hotel-gift hotel-color-orange"></i>
+							<a class="hotel-btn-booking" data-url='./booking.html'>预定</a>
+						</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url = "./room-info.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						商务间
+						<span class="hotel-price hotel-color-orange">￥1320</span>
+						<p class='mui-ellipsis'><span>双早</span><span>大床</span></p>
+						<p class='mui-ellipsis'>
+							<i class="fa fa-gift hotel-gift hotel-color-orange"></i>
+							<a class="hotel-btn-booking" data-url='./booking.html'>预定</a>
+						</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url = "./room-info.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						商务间
+						<span class="hotel-price hotel-color-orange">￥1320</span>
+						<p class='mui-ellipsis'><span>双早</span><span>大床</span></p>
+						<p class='mui-ellipsis'>
+							<i class="fa fa-gift hotel-gift hotel-color-orange"></i>
+							<a class="hotel-btn-booking" data-url='./booking.html'>预定</a>
+						</p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" data-url = "./room-info.html">
+					<img class="mui-media-object mui-pull-left hetol-placeholder" src="../styles/images/hotel-loading.png">
+					<div class="mui-media-body">
+						商务间
+						<span class="hotel-price hotel-color-orange">￥1320</span>
+						<p class='mui-ellipsis'><span>双早</span><span>大床</span></p>
+						<p class='mui-ellipsis'>
+							<i class="fa fa-gift hotel-gift hotel-color-orange"></i>
+							<a class="hotel-btn-booking" data-url='./booking.html'>预定</a>
+						</p>
+					</div>
+				</li>
+			</ul>
+			<h5>酒店政策</h5>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<div class="mui-media-body hotel-color-gray">
+						预订时须实名制；2、预订时须提供客人联系方式；3、预订时须提供客人有效证件信息以及证件号。
+					</div>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media" data-url='./hotel-list.html'>
+					<div class="mui-media-body mui-navigate-right">
+						该酒店周边的酒店
+					</div>
+				</li>
+			</ul>
+		</div>
+		<script src="../mui/js/mui.min.js"></script>
+		<script src="../mui/js/mui.picker.min.js"></script>
+		<script src="../libs/ems.js" data-main='./hotel-detail.js'></script>
+	</body>
+
+</html>

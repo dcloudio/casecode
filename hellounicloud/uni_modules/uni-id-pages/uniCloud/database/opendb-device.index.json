@@ -1,0 +1,14 @@
+[
+	{
+		"IndexName": "index_device_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{
+					"Name": "device_id",
+					"Direction": "1"
+				}
+			],
+			"MgoIsUnique": true
+		}
+	}
+]

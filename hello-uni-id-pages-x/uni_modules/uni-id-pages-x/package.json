@@ -1,0 +1,128 @@
+{
+  "id": "uni-id-pages-x",
+  "displayName": "uni-id-pages-x",
+  "version": "1.2.3",
+  "description": "适用于 uni-app-x 的云端一体简单、统一、可扩展的用户中心页面模版",
+  "keywords": [
+    "用户中心",
+    "短信验证码",
+    "login",
+    "登录",
+    "uni-id"
+],
+  "repository": "https://gitcode.net/dcloud/hello_uni-id-pages-x",
+  "engines": {
+    "HBuilderX": "^3.99",
+    "uni-app": "",
+    "uni-app-x": "^4.81"
+  },
+  "dcloudext": {
+    "type": "unicloud-template-page",
+    "sale": {
+      "regular": {
+        "price": "0.00"
+      },
+      "sourcecode": {
+        "price": "0.00"
+      }
+    },
+    "contact": {
+      "qq": ""
+    },
+    "declaration": {
+      "ads": "无",
+      "data": "无",
+      "permissions": "无"
+    },
+    "npmurl": "",
+    "darkmode": "x",
+    "i18n": "x",
+    "widescreen": "x"
+  },
+  "uni_modules": {
+    "dependencies": [
+      "uni-captcha",
+      "uni-cloud-s2s",
+      "uni-config-center",
+      "uni-id-common",
+      "uni-open-bridge-common",
+      "uni-popup",
+      "uni-scss",
+      "uni-transition"
+    ],
+    "encrypt": [],
+    "platforms": {
+      "cloud": {
+        "tcb": "√",
+        "aliyun": "√",
+        "alipay": "√"
+      },
+      "client": {
+        "uni-app": {
+          "vue": {
+            "vue2": "-",
+            "vue3": "-"
+          },
+          "web": {
+            "safari": "-",
+            "chrome": "-"
+          },
+          "app": {
+            "vue": "-",
+            "nvue": "-",
+            "android": "-",
+            "ios": "-",
+            "harmony": "-"
+          },
+          "mp": {
+            "weixin": "-",
+            "alipay": "-",
+            "toutiao": "-",
+            "baidu": "-",
+            "kuaishou": "-",
+            "jd": "-",
+            "harmony": "-",
+            "qq": "-",
+            "lark": "-"
+          },
+          "quickapp": {
+            "huawei": "-",
+            "union": "-"
+          }
+        },
+        "uni-app-x": {
+          "web": {
+            "safari": {
+              "extVersion": "1.0.7",
+              "minVersion": ""
+            },
+            "chrome": {
+              "extVersion": "1.0.7",
+              "minVersion": ""
+            }
+          },
+          "app": {
+            "android": {
+                "extVersion": "1.0.0",
+                "minVersion": "21"
+            },
+            "ios": {
+              "extVersion": "1.1.0",
+              "minVersion": "12"
+            },
+            "harmony": {
+              "extVersion": "1.1.6",
+              "minVersion": ""
+            }
+          },
+          "mp": {
+            "weixin": {
+                "extVersion": "1.1.5",
+                "minVersion": ""
+            }
+          }
+        }
+      }
+    }
+  }
+}

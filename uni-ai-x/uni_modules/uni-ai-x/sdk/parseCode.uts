@@ -1,0 +1,166 @@
+const grammarList = ['javascript', 'python', 'typescript', 'javascriptReact', 'html', 'css', 'cpp', 'dart', 'go', 'java', 'lua', 'php', 'r', 'sql', 'json', 'jsonc', 'jsonl', 'c', 'cuda-cpp', 'xml', 'xsl']
+// Import all grammar files - start
+// #ifndef APP-ANDROID || APP-HARMONY
+import javascriptGrammar from '@/uni_modules/uni-ai-x/static/grammar/javascript.tmLanguage.json'
+import pythonGrammar from '@/uni_modules/uni-ai-x/static/grammar/python.tmLanguage.json'
+import javascriptReactGrammar from '@/uni_modules/uni-ai-x/static/grammar/javascriptReact.tmLanguage.json'
+import typescriptGrammar from '@/uni_modules/uni-ai-x/static/grammar/typescript.tmLanguage.json'
+import htmlGrammar from '@/uni_modules/uni-ai-x/static/grammar/html.tmLanguage.json'
+import cssGrammar from '@/uni_modules/uni-ai-x/static/grammar/css.tmLanguage.json'
+import cppGrammar from '@/uni_modules/uni-ai-x/static/grammar/cpp.tmLanguage.json'
+import dartGrammar from '@/uni_modules/uni-ai-x/static/grammar/dart.tmLanguage.json'
+import goGrammar from '@/uni_modules/uni-ai-x/static/grammar/go.tmLanguage.json'
+import javaGrammar from '@/uni_modules/uni-ai-x/static/grammar/java.tmLanguage.json'
+import luaGrammar from '@/uni_modules/uni-ai-x/static/grammar/lua.tmLanguage.json'
+import phpGrammar from '@/uni_modules/uni-ai-x/static/grammar/php.tmLanguage.json'
+import rGrammar from '@/uni_modules/uni-ai-x/static/grammar/r.tmLanguage.json'
+import sqlGrammar from '@/uni_modules/uni-ai-x/static/grammar/sql.tmLanguage.json'
+import jsonGrammar from '@/uni_modules/uni-ai-x/static/grammar/json.tmLanguage.json'
+import jsoncGrammar from '@/uni_modules/uni-ai-x/static/grammar/jsonc.tmLanguage.json'
+import jsonlGrammar from '@/uni_modules/uni-ai-x/static/grammar/jsonl.tmLanguage.json'
+import cGrammar from '@/uni_modules/uni-ai-x/static/grammar/c.tmLanguage.json'
+import cudaCppGrammar from '@/uni_modules/uni-ai-x/static/grammar/cuda-cpp.tmLanguage.json'
+import xmlGrammar from '@/uni_modules/uni-ai-x/static/grammar/xml.tmLanguage.json'
+import xslGrammar from '@/uni_modules/uni-ai-x/static/grammar/xsl.tmLanguage.json'
+// #endif
+// Import all grammar files - end
+import utils from '@/uni_modules/uni-ai-x/sdk/utils.uts'
+
+import { CreateHighLighter, HighLighterOptions, ILineTokens } from "@/uni_modules/uni-highlight"
+import { MarkdownToken } from '@/uni_modules/uni-cmark/utssdk/interface.uts'
+export { MarkdownToken }
+export type ParseLineCodeRes = {
+	tokens: MarkdownToken[],
+	language: string,
+	error: string | null
+}
+export type ParseLineCodeCallBack = (parseLineCodeRes: ParseLineCodeRes) => void
+type TmlFile = {
+	scopeName : string,
+	path : string
+}
+let uniCodeHighlighter = null as CreateHighLighter | null
+function getTmlFile(filePaths: TmlFile[]) {
+	let fileManager = uni.getFileSystemManager()
+	let res = {}
+	try {
+		filePaths.forEach(item => {
+			let content = fileManager.readFileSync(item.path, 'utf-8') as string
+			res[item.scopeName] = JSON.parse(content)
+		})
+	} catch (err) {
+		console.error('读取tml文件失败，请检查文件是否存在', err, filePaths)
+		uni.showToast({
+			title: '读取tml文件失败，请检查文件是否存在',
+			icon: 'none'
+		})
+	}
+	return res
+}
+
+function initUniCodeHighlighter(callBack: () => void){
+	if (uniCodeHighlighter == null) {
+		// #ifndef APP-ANDROID || APP-HARMONY
+		// 根据 grammarList 生成tmls
+		const tmls = {
+			javascript: javascriptGrammar,
+			python: pythonGrammar,
+			typescript: typescriptGrammar,
+			javascriptReact: javascriptReactGrammar,
+			html: htmlGrammar,
+			css: cssGrammar,
+			cpp: cppGrammar,
+			dart: dartGrammar,
+			go: goGrammar,
+			java: javaGrammar,
+			lua: luaGrammar,
+			php: phpGrammar,
+			r: rGrammar,
+			sql: sqlGrammar,
+			json: jsonGrammar,
+			jsonc: jsoncGrammar,
+			jsonl: jsonlGrammar,
+			c: cGrammar,
+			"cuda-cpp": cudaCppGrammar,
+			xml: xmlGrammar,
+			xsl: xslGrammar
+		}
+		// #endif
+		// #ifdef APP-ANDROID || APP-HARMONY
+		const tmlsList = [] as TmlFile[]
+		grammarList.forEach(item => {
+			tmlsList.push({
+				scopeName: item,
+				path: `/uni_modules/uni-ai-x/static/grammar/${item}.tmLanguage.json`
+			})
+		})
+		// console.log('tmlsList',tmlsList)
+		const tmls = getTmlFile(tmlsList)
+		// #endif
+		// createHighLighter({ languages: tmls } as HighLighterOptions).then((res: CreateHighLighterRes) => {
+		// 	uniCodeHighlighter = res
+		// 	callBack()
+		// })
+		uniCodeHighlighter = new CreateHighLighter({ languages: tmls } as HighLighterOptions)
+		callBack()
+		// console.log(tmls)
+	} else {
+		callBack()
+	}
+}
+
+export function parseLineCode(parseLineCodeCallBack: ParseLineCodeCallBack, codeSource: string,language: string){
+	if (language == 'js') language = "javascript"
+	try {
+		// 判断这个language是否在支持的列表中
+		if (!grammarList.includes(language)) {
+			// console.error('不支持解析的语言类型',language,'仅支持',grammarList.join(','))
+			const res: ParseLineCodeRes = {
+				tokens: [],
+				language: language,
+				error: '不支持解析的语言类型'
+			}
+			parseLineCodeCallBack(res)
+			return
+		}
+		initUniCodeHighlighter(() => {
+			// TODO: 第三个参数暂时传 0 即可，但下一个版本的 uni-highlight，需要将上一次解析返回的 state 传入 用于提升性能
+			uniCodeHighlighter!.tokenizeLine(language, codeSource, 0).then((iLineToken: ILineTokens | null) => {
+				utils.uniGetDispatcher("io", () => {
+					// console.log('代码解析耗时 ============', Date.now() - start)
+					const tokens = [] as MarkdownToken[]
+					iLineToken?.tokens.forEach((tk) => {
+						const token: MarkdownToken = {
+							text: codeSource.substring(tk.startIndex, tk.endIndex),
+							className: tk.scopes![tk.scopes!.length - 1].split(".")[0]
+						}
+						tokens.push(token)
+					})
+					// tokens.push({
+					// 	text: "\n",
+					// 	className: "eol"
+					// });
+					// console.log('tokens',tokens)
+					const res: ParseLineCodeRes = {
+						tokens: tokens,
+						language: language,
+						error: null
+					}
+					parseLineCodeCallBack(res)
+				});
+			})
+		})
+	} catch (error) {
+		const res: ParseLineCodeRes = {
+			tokens: [],
+			language: language,
+			// #ifdef WEB
+			error: (error as any).message
+			// #endif
+			// #ifndef WEB
+			error: error.message
+			// #endif
+		}
+		parseLineCodeCallBack(res)
+	}
+}

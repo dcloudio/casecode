@@ -1,0 +1,35 @@
+{
+	"bsonType": "object",
+	"required": ["user_id", "article_id"],
+	"permission": {
+		"read": "doc.user_id == auth.uid",
+		"create": "auth.uid != null",
+		"update": "doc.user_id == auth.uid"
+		//"delete": "doc.user_id == auth.uid"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"article_id": {
+			"bsonType": "string",
+			"description": "文章id，参考opendb-news-articles表",
+			"foreignKey": "opendb-news-articles._id"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "收藏者id，参考uni-id-users表",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
+		"last_time": { //设计策略是多次看同一个文章只做一次记录，重复看的文章时间更新为当前时间
+			"bsonType": "timestamp",
+			"description": "最后一次看的时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

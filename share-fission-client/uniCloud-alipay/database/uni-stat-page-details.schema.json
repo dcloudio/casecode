@@ -1,0 +1,42 @@
+// 应用页面详情表
+{
+	"bsonType": "object",
+	"description": "记录上报的页面详情字典",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_PAGE_LOGS' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "应用ID"
+		},
+		"page_id": {
+			"bsonType": "string",
+			"description": "当前页面ID，对应uni-stat-pages._id",
+			"foreignKey": "uni-stat-pages._id"
+		},
+		"page_link": {
+			"bsonType": "string",
+			"description": "页面链接,匹配并去除链接中无用参数后的url"
+		},
+		"page_title": {
+			"bsonType": "string",
+			"description": "页面标题"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "修改时间"
+		}
+	}
+}

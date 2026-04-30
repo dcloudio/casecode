@@ -1,0 +1,187 @@
+import { ChatItem, MsgItem } from '@/uni_modules/uni-ai-x/types.uts'
+
+// 存储键常量
+type T_STORAGE_KEYS = {
+	CHAT_LIST: string
+	CHAT_MSG_IDS_PREFIX: string
+	MSG_CONTENT_PREFIX: string
+}
+
+const STORAGE_KEYS: T_STORAGE_KEYS = {
+	CHAT_LIST: 'uni-ai-chatList',
+	CHAT_MSG_IDS_PREFIX: 'uni-ai-chat-',
+	MSG_CONTENT_PREFIX: 'uni-ai-msg-'
+}
+
+// aiChat表结构 - 会话基本信息
+export type AiChat = {
+	id: string
+	title: string
+	update_time: number
+}
+
+// aiChatMsgId表结构 - 会话消息ID映射
+export type AiChatMsgIds = {
+	chatId: string
+	msgIds: string[]
+}
+
+// 存储管理类
+export class StorageManager {
+	
+	/**
+	 * 获取会话列表
+	 */
+	getChatList(): AiChat[] {
+		try {
+			const result = uni.getStorageSync(STORAGE_KEYS.CHAT_LIST) as string
+			return result.length > 0 ? JSON.parse<AiChat[]>(result as string) as AiChat[] : []
+		} catch (error) {
+			console.error('获取会话列表失败:', error)
+			return []
+		}
+	}
+	
+	/**
+	 * 保存会话列表
+	 */
+	saveChatList(chatList: AiChat[]): boolean {
+		try {
+			uni.setStorageSync(STORAGE_KEYS.CHAT_LIST, JSON.stringify(chatList))
+			return true
+		} catch (error) {
+			console.error('保存会话列表失败:', error)
+			return false
+		}
+	}
+	
+	/**
+	 * 获取会话的消息ID列表
+	 */
+	private _getChatMsgIds(chatId: string): string[] {
+		try {
+			const key = `${STORAGE_KEYS.CHAT_MSG_IDS_PREFIX}${chatId}-msgIds`
+			const result = uni.getStorageSync(key) as string
+			return result.length > 0 ? JSON.parse<string[]>(result as string) as string[] : []
+		} catch (error) {
+			console.error(`获取会话 ${chatId} 消息ID列表失败:`, error)
+			return []
+		}
+	}
+	
+	// 添加ChatMsgIds到会话列表
+	private _addChatMsgIds(chatId: string, msgId: string): boolean {
+		const chatMsgIds = this._getChatMsgIds(chatId)
+		chatMsgIds.push(msgId)
+		try {
+			const key = `${STORAGE_KEYS.CHAT_MSG_IDS_PREFIX}${chatId}-msgIds`
+			uni.setStorageSync(key, JSON.stringify(chatMsgIds))
+			return true
+		} catch (error) {
+			console.error(`保存会话 ${chatId} 消息ID列表失败:`, error)
+			return false
+		}
+	}
+	
+	/**
+	 * 获取单条消息内容
+	 */
+	getMessage(msgId: string): MsgItem | null {
+		try {
+			const key = `${STORAGE_KEYS.MSG_CONTENT_PREFIX}${msgId}`
+			const result = uni.getStorageSync(key) as string
+			return result.length > 0 ? JSON.parse<MsgItem>(result as string) as MsgItem : null
+		} catch (error) {
+			console.error(`获取消息 ${msgId} 失败:`, error)
+			return null
+		}
+	}
+	
+	/**
+	 * 保存单条消息内容
+	 */
+	saveMessage(msgId: string, message: MsgItem): boolean {
+		try {
+			const key = `${STORAGE_KEYS.MSG_CONTENT_PREFIX}${msgId}`
+			uni.setStorageSync(key, JSON.stringify(message))
+			return true
+		} catch (error) {
+			console.error(`保存消息 ${msgId} 失败:`, error)
+			return false
+		}
+	}
+
+	addMessage(message: MsgItem): boolean {
+		// 新增的数据 需要把消息ID添加到会话的消息ID列表中
+		this._addChatMsgIds(message.chat_id, message._id)
+		return this.saveMessage(message._id, message)
+	}
+	updateMessage(message: MsgItem): boolean {
+		return this.saveMessage(message._id, message)
+	}
+
+	
+	/**
+	 * 删除单条消息
+	 */
+	deleteMessage(msgId: string): boolean {
+		try {
+			const key = `${STORAGE_KEYS.MSG_CONTENT_PREFIX}${msgId}`
+			uni.removeStorageSync(key)
+			return true
+		} catch (error) {
+			console.error(`删除消息 ${msgId} 失败:`, error)
+			return false
+		}
+	}
+	
+	/**
+	 * 获取会话的所有消息
+	 */
+	getChatMessages(chatId: string): MsgItem[] {
+		const msgIds = this._getChatMsgIds(chatId)
+		const messages: MsgItem[] = []
+		
+		for (let i = 0; i < msgIds.length; i++) {
+			const msgId = msgIds[i]
+			const msg = this.getMessage(msgId)
+			if (msg != null) {
+				messages.push(msg)
+			}
+		}
+		
+		// 按创建时间排序
+		return messages.sort((a, b) => a.create_time - b.create_time)
+	}
+		
+	/**
+	 * 删除整个会话及其所有消息
+	 */
+	deleteChat(chatId: string): boolean {
+		try {
+			// 获取会话的所有消息ID
+			const msgIds = this._getChatMsgIds(chatId)
+			
+			// 删除所有消息内容
+			for (let i = 0; i < msgIds.length; i++) {
+				const msgId = msgIds[i]
+				this.deleteMessage(msgId)
+			}
+			
+			// 删除消息ID列表
+			const key = `${STORAGE_KEYS.CHAT_MSG_IDS_PREFIX}${chatId}-msgIds`
+			uni.removeStorageSync(key)
+
+			// 删除会话
+			const chatList = this.getChatList()
+			const index = chatList.findIndex((item) => item.id == chatId)
+			chatList.splice(index, 1)
+			this.saveChatList(chatList)
+			
+			return true
+		} catch (error) {
+			console.error(`删除会话 ${chatId} 失败:`, error)
+			return false
+		}
+	}
+}

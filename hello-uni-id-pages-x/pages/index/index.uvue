@@ -1,0 +1,131 @@
+<template>
+  <view class="content">
+    <view class="userinfo" @click="toUserInfoPage">
+      <uni-id-pages-x-avatar class="avatar" ref="avatar" width="45px" height="45px" :readOnly="true"
+        :border="false"></uni-id-pages-x-avatar>
+      <view class="openName">
+        <text class="openName-text">{{openName}}</text>
+      </view>
+      <uni-id-pages-x-icons type="right-arrow" color="#999" />
+    </view>
+    <view class="list">
+      <view class="list-item" hover-class="list-active" @click="toLogin('smsCode')">
+        <text class="list-item-text">手机验证码登录</text>
+        <uni-id-pages-x-icons type="right-arrow" color="#999" />
+      </view>
+      <view class="list-item" @click="toLogin('username')">
+        <text class="list-item-text">账号密码登录</text>
+        <uni-id-pages-x-icons type="right-arrow" color="#999" />
+      </view>
+      <!-- #ifdef APP && uniVersion >= 3.98 -->
+      <view class="list-item" @click="toLogin('univerify')" v-if="hasUniverify">
+        <text class="list-item-text">一键登录</text>
+        <uni-id-pages-x-icons type="right-arrow" color="#999" />
+      </view>
+      <!-- #endif -->
+    </view>
+  </view>
+</template>
+
+<script>
+  import { state } from '@/uni_modules/uni-id-pages-x/store.uts';
+  // 导入配置
+  import config from '@/uni_modules/uni-id-pages-x/config.uts'
+  export default {
+    computed: {
+      userInfo() : UTSJSONObject {
+        return state.userInfo
+      },
+      isLogin() : boolean {
+        return state.isLogin
+      },
+      openName() : string {
+        if (this.isLogin) {
+          let nickname = this.userInfo["nickname"] as string | null
+          let username = this.userInfo["username"] as string | null
+          let mobile = this.userInfo["mobile"] as string | null
+          if (nickname == null) {
+            nickname = "";
+          }
+          if (username == null) {
+            username = "";
+          }
+          if (mobile == null) {
+            mobile = "";
+          }
+          if (nickname.length != 0) {
+            return nickname
+          } else if (username.length != 0) {
+            return username
+          } else {
+            return mobile
+          }
+        } else {
+          return '未登录'
+        }
+      },
+      hasUniverify() : boolean {
+        const loginTypes = config.getArray<string>('loginTypes')
+        if (loginTypes != null) {
+          return loginTypes.includes('univerify');
+        }
+        return false
+      }
+    },
+    data() {
+      return {}
+    },
+    onLoad() { },
+    methods: {
+      toLogin(loginType : string) {
+        uni.navigateTo({
+          url: "/uni_modules/uni-id-pages-x/pages/login/login?type=" + loginType
+        })
+      },
+      toUserInfoPage() {
+        uni.navigateTo({
+          url: "/uni_modules/uni-id-pages-x/pages/userinfo/userinfo?showLoginManage=true"
+        })
+      },
+    }
+  }
+</script>
+
+<style lang="scss">
+  .content {
+    height: 100%;
+    background-color: #f5f5f5;
+  }
+  .userinfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #fff;
+    .openName {
+      flex: 1;
+      padding: 0 10px;
+      .openName-text {
+        font-size: 14px;
+        color: #333;
+      }
+    }
+  }
+  .list {
+    background-color: #fff;
+    margin-top: 15px;
+    .list-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 15px;
+      height: 50px;
+      border-bottom: 1px #f5f5f5 solid;
+      .list-item-text {
+        font-size: 14px;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,61 @@
+{
+	"bsonType": "object",
+	"description": "存储sourceMap文件资源地址",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_ERROR_RESULT' in auth.permission",
+		"create": "'READ_UNI_STAT_ERROR_RESULT' in auth.permission",
+		"update": "'READ_UNI_STAT_ERROR_RESULT' in auth.permission",
+		"delete": "'READ_UNI_STAT_ERROR_RESULT' in auth.permission"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+		  "bsonType": "string",
+		  "description": "应用ID"
+		},
+		"uni_platform": {
+			"title": "应用平台",
+			"bsonType": "string",
+			"description": "uni客户端平台,如：web、mp-weixin、mp-alipay、app等",
+			"trim": "both"
+		},
+		"version": {
+			"bsonType": "string",
+			"description": "客户端上报的应用版本号"
+		},
+		"file_id": {
+			"bsonType": "string",
+			"description": "fileID"
+		},
+		"url": {
+			"bsonType": "string",
+			"description": "文件外网url路径"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "文件名"
+		},
+		"size": {
+			"bsonType": "int",
+			"description": "文件大小"
+		},
+		"cloud_path": {
+			"bsonType": "string",
+			"description": "云端路径，通过该值识别是否是同一个文件"
+		},
+		"base": {
+			"bsonType": "string",
+			"description": "基础路径"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "上传时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

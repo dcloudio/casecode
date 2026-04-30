@@ -1,0 +1,7 @@
+/**
+ * ctrip - ctrip hotel
+ * @version v0.0.1
+ * @link http://www.dcloud.io
+ * @license MIT
+ */
+.price-detail{position:fixed;width:100%;height:100%;left:0;top:0;z-index:99;background-color:rgba(0,0,0,.85);-webkit-transition:.5s;display:none}.price-detail.active{display:block}.price-detail-info{height:140px;position:absolute;left:0;width:100%;top:50%;margin-top:-70px;padding:10px}.price-detail-info .right{position:absolute;right:0}.price-detail-info p{color:#fff}.price-detail-info p span{margin-right:10px}.price-detail h5{padding:0;margin:0 0 10px;color:#fff;font-size:18px}.price-detail-info p.ln1{border-bottom:solid 1px #eee;padding-bottom:8px}

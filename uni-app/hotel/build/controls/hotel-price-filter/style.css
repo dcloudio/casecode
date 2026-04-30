@@ -1,0 +1,7 @@
+/**
+ * ctrip - ctrip hotel
+ * @version v0.0.1
+ * @link http://www.dcloud.io
+ * @license MIT
+ */
+.hotel-price-filter{position:fixed;height:300px;bottom:0;left:0;width:100%;padding:10px;box-sizing:border-box;background-color:#efefef;-webkit-transition:.3s;-webkit-transform:translateY(300px);z-index:999999;box-shadow:0 -5px 7px 0 rgba(0,0,0,.1)}.hotel-price-filter.active{-webkit-transform:translateY(0)}.hotel-price-filter legend{font-size:15px;color:#555;padding-bottom:5px}.hotel-price-filter ul{margin:0;padding:0}.hotel-price-filter ul li{border:1px solid #ccc;padding:8px;display:inline-block;margin:0 3px 5px 0;font-size:9pt;background-color:#fff;color:#666;text-align:center;min-width:60px}.hotel-price-filter ul li.active{border:1px solid #099fde;color:#099fde}.hotel-price-filter .btn-wraper{padding-top:8px;margin-top:5px;border-top:dotted 1px #ddd}

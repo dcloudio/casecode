@@ -1,0 +1,34 @@
+{
+	"bsonType": "object",
+	"required": ["total_cash", "total_score", "exchange_rate"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "固定值：main"
+		},
+		"total_cash": {
+			"bsonType": "number",
+			"description": "资金池总现金（元）",
+			"defaultValue": 0
+		},
+		"total_score": {
+			"bsonType": "int",
+			"description": "资金池总积分",
+			"defaultValue": 0
+		},
+		"exchange_rate": {
+			"bsonType": "number",
+			"description": "当前汇率（元/积分）",
+			"defaultValue": 0.01
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间"
+		}
+	}
+}

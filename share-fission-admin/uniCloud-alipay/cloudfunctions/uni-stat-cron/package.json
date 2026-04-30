@@ -1,0 +1,31 @@
+{
+    "name": "uni-stat-cron",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "uni-stat": "file:..\/common\/uni-stat"
+    },
+    "cloudfunction-config": {
+        "concurrency": 1,
+        "memorySize": 512,
+        "timeout": 600,
+        "triggers": [
+            {
+                "name": "uni-stat-cron",
+                "type": "timer",
+                "config": "19 19 * * * * *"
+            }
+        ]
+    },
+    "extensions": {},
+    "origin-plugin-dev-name": "uni-template-admin",
+    "origin-plugin-version": "2.5.13",
+    "plugin-dev-name": "uni-template-admin",
+    "plugin-version": "2.5.13"
+}

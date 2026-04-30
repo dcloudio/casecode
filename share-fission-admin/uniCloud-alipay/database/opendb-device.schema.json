@@ -1,0 +1,142 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": true,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "DCloud appid"
+		},
+		"device_id": {
+			"bsonType": "string",
+			"description": "设备唯一标识"
+		},
+		"vendor": {
+			"bsonType": "string",
+			"description": "设备厂商"
+		},
+		"push_clientid": {
+			"bsonType": "string",
+			"description": "推送设备客户端标识"
+		},
+		"imei": {
+			"bsonType": "string",
+			"description": "国际移动设备识别码IMEI(International Mobile Equipment Identity)"
+		},
+		"oaid": {
+			"bsonType": "string",
+			"description": "移动智能设备标识公共服务平台提供的匿名设备标识符(OAID)"
+		},
+		"idfa": {
+			"bsonType": "string",
+			"description": "iOS平台配置应用使用广告标识(IDFA)"
+		},
+		"imsi": {
+			"bsonType": "string",
+			"description": "国际移动用户识别码(International Mobile Subscriber Identification Number)"
+		},
+		"model": {
+			"bsonType": "string",
+			"description": "设备型号"
+		},
+		"platform": {
+			"bsonType": "string",
+			"description": "平台类型"
+		},
+		"uni_platform": {
+			"bsonType": "string",
+			"description": "uni-app 运行平台，与条件编译平台相同。"
+		},
+		"os_name": {
+			"bsonType": "string",
+			"description": "ios|android|windows|mac|linux "
+		},
+		"os_version": {
+			"bsonType": "string",
+			"description": "操作系统版本号 "
+		},
+		"os_language": {
+			"bsonType": "string",
+			"description": "操作系统语言 "
+		},
+		"os_theme": {
+			"bsonType": "string",
+			"description": "操作系统主题 light|dark"
+		},
+		"pixel_ratio": {
+			"bsonType": "string",
+			"description": "设备像素比 "
+		},
+		"network_model": {
+			"bsonType": "string",
+			"description": "设备网络型号wifi\/3G\/4G\/"
+		},
+		"window_width": {
+			"bsonType": "string",
+			"description": "设备窗口宽度 "
+		},
+		"window_height": {
+			"bsonType": "string",
+			"description": "设备窗口高度"
+		},
+		"screen_width": {
+			"bsonType": "string",
+			"description": "设备屏幕宽度"
+		},
+		"screen_height": {
+			"bsonType": "string",
+			"description": "设备屏幕高度"
+		},
+		"rom_name": {
+			"bsonType": "string",
+			"description": "rom 名称"
+		},
+		"rom_version": {
+			"bsonType": "string",
+			"description": "rom 版本"
+		},
+		"location_latitude": {
+			"bsonType": "double",
+			"description": "纬度"
+		},
+		"location_longitude": {
+			"bsonType": "double",
+			"description": "经度"
+		},
+		"location_country": {
+			"bsonType": "string",
+			"description": "国家"
+		},
+		"location_province": {
+			"bsonType": "string",
+			"description": "省份"
+		},
+		"location_city": {
+			"bsonType": "string",
+			"description": "城市"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"last_update_date": {
+			"bsonType": "timestamp",
+			"description": "最后一次修改时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	},
+	"version": "0.0.1"
+}

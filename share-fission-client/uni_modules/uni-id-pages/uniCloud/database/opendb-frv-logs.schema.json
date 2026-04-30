@@ -1,0 +1,44 @@
+{
+	"bsonType": "object",
+	"permission": {
+		"read": "doc._id == auth.uid || 'CREATE_UNI_ID_USERS' in auth.permission",
+		"create": "'CREATE_UNI_ID_USERS' in auth.permission",
+		"update": "doc._id == auth.uid || 'UPDATE_UNI_ID_USERS' in auth.permission",
+		"delete": "'DELETE_UNI_ID_USERS' in auth.permission"
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（用户 ID），系统自动生成"
+		},
+		"certify_id": {
+			"bsonType": "string",
+			"description": "认证id"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "用户id"
+		},
+		"real_name": {
+			"bsonType": "string",
+			"description": "姓名"
+		},
+		"identity": {
+			"bsonType": "string",
+			"description": "身份证号码"
+		},
+		"status": {
+			"bsonType": "int",
+			"description": "认证状态：0 未认证 1 等待认证 2 认证通过 3 认证失败",
+			"maximum": 3,
+			"minimum": 0
+		},
+		"created_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	},
+	"required": []
+}

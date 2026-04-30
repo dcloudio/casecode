@@ -1,0 +1,64 @@
+{
+	"bsonType": "object",
+	"required": ["user_id", "score", "balance", "source"],
+	"permission": {
+		"read": "doc.user_id == auth.uid",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "用户id，参考uni-id-users表"
+		},
+		"score": {
+			"bsonType": "int",
+			"description": "本次变化的积分"
+		},
+		"type": {
+			"bsonType": "int",
+			"enum": [1, 2],
+			"description": "积分类型 1:收入 2:支出"
+		},
+		"balance": {
+			"bsonType": "int",
+			"description": "变化后的积分余额"
+		},
+		"source": {
+			"bsonType": "string",
+			"description": "来源：ad_watch/sign_in/team_reward/exchange/withdraw/withdraw_fee_return/admin_adjust"
+		},
+		"source_user_id": {
+			"bsonType": "string",
+			"description": "来源用户ID（团队奖励时，记录是谁的下线贡献的）"
+		},
+		"relation_level": {
+			"bsonType": "int",
+			"description": "关系层级（团队奖励时）：1=一级下线，2=二级下线"
+		},
+		"order_id": {
+			"bsonType": "string",
+			"description": "关联订单ID（兑换商品时）"
+		},
+		"withdrawal_id": {
+			"bsonType": "string",
+			"description": "关联提现记录ID（提现时）"
+		},
+		"comment": {
+			"bsonType": "string",
+			"description": "备注，说明积分新增、消费的缘由",
+			"trim": "both"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

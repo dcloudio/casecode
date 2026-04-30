@@ -1,0 +1,26 @@
+[
+    {
+        "IndexName": "tagid",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "tagid",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "name",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "name",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    }
+]

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>预订成功</title>
+		<link href="../mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../styles/default.css" rel="stylesheet" />
+		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+		<style>
+			.ct-done-alert {
+				text-align: center;
+				padding: 20px;
+				font-size: 18px;
+			}
+			.ct-done-alert i {
+				font-size: 75px;
+				color: #12b319;
+				vertical-align: middle;
+				margin-bottom: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav ct-header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">预订成功</h1>
+		</header>
+		<div class="mui-content">
+			<div class="ct-done-alert">
+				<i class="fa fa-check-circle-o"></i>
+				<div>酒店预订成功</div>
+			</div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media" data-url="./order-detail.html">
+					<div class="mui-media-body mui-navigate-right">
+						北京阳光之城度假酒店
+						<p class='mui-ellipsis'>订单号 : 1479483143 </p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<script src="../mui/js/mui.min.js"></script>
+		<script src="../libs/ems.js" data-main='./booking.js'></script>
+	</body>
+
+</html>

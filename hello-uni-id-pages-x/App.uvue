@@ -1,0 +1,48 @@
+<script lang="uts">
+  let firstBackTime = 0
+  import uniIdPageInit from '@/uni_modules/uni-id-pages-x/init.uts';
+	export default {
+		onLaunch: function(){
+			console.log('App Launch')
+      uniIdPageInit()
+		},
+		onShow: function () {
+			console.log('App Show')
+		},
+		onHide: function () {
+			console.log('App Hide')
+		},
+		onLastPageBackPress: function () {
+			console.log('App LastPageBackPress')
+			if (firstBackTime == 0) {
+				uni.showToast({
+					title: '再按一次退出应用',
+					position: 'bottom',
+				})
+				firstBackTime = Date.now()
+				setTimeout(() => {
+					firstBackTime = 0
+				}, 2000)
+			} else if (Date.now() - firstBackTime < 2000) {
+				firstBackTime = Date.now()
+				uni.exit()
+			}
+		},
+		onExit: function () {
+			console.log('App Exit')
+		},
+	}
+</script>
+
+<style>
+
+@import url("/uni_modules/uni-id-pages-x/common/common.scss");
+/*每个页面公共css */
+.uni-row {
+	flex-direction: row;
+}
+
+.uni-column {
+	flex-direction: column;
+}
+</style>

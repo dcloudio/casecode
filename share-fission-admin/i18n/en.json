@@ -1,0 +1,107 @@
+{
+	"login": {
+		"text": {
+			"title": "System Login",
+			"prompt": "If there is no administrator account, please create an administrator first..."
+		},
+		"field": {
+			"username": "Account",
+			"password": "Password",
+			"captcha": "Captcha"
+		},
+		"button": {
+			"login": "Log In"
+		}
+	},
+	"topwindow": {
+		"text": {
+			"doc": "Admin doc",
+			"plugin": "More admin plugin",
+			"changeLanguage": "Language",
+			"changePwd": "ChangePwd",
+			"signOut": "Sign out"
+		}
+	},
+	"index": {
+		"text": {
+			"prompt": "Main content, customizable content and style",
+			"vesion": "The current version can be viewed in the console and package.json"
+		}
+	},
+	"updatePwd": {
+		"text": {
+			"title": "Change Password"
+		},
+		"field": {
+			"oldPassword": "Old password",
+			"newPassword": "New password",
+			"passwordConfirmation": "Confirm password"
+		},
+		"button": {
+			"save": "Save",
+			"back": "Back"
+		}
+	},
+	"common": {
+		"placeholder": {
+			"query": "Enter search content"
+		},
+		"button": {
+			"search": "Search",
+			"add": "Add",
+			"edit": "Edit",
+			"delete": "Delete",
+			"batchDelete": "Batch Delete",
+			"exportExcel": "Export Excel",
+			"submit": "Submit",
+			"back": "Back",
+			"tagManager": "Tag Manager",
+			"publish": "Publish page management",
+			"version": "version manager",
+			"sendSMS": "Send SMS"
+		},
+		"empty": "No more data",
+		"piecePerPage": "piece/page"
+	},
+	"user": {
+		"text": {
+			"userManager": "Users Manager"
+		}
+	},
+	"role": {
+		"text": {
+			"roleManager": "Roles Manager"
+		}
+	},
+	"permission": {
+		"text": {
+			"permissionManager": "Permissions Manager"
+		}
+	},
+	"app": {
+		"text": {
+			"appManager": "App Manager",
+			"describle": "Manage the apps that users can login"
+		}
+	},
+	"menu": {
+		"text": {
+			"menuManager": "Menus Manager",
+			"additiveMenu": "Additive Menu"
+		},
+		"button": {
+			"addFirstLevelMenu": "Add First-level Menu",
+			"addChildMenu": "Submenu",
+			"updateBuiltInMenu": "Update built-in Menu"
+		}
+	},
+	"demo": {
+		"icons": {
+			"title": "Icons",
+			"describle": "Click icons to copy the icon code"
+		},
+		"table": {
+			"title": "Table"
+		}
+	}
+}

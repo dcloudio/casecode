@@ -1,0 +1,60 @@
+// 应用分享日志表
+{
+	"bsonType": "object",
+	"description": "记录触发分享事件的日志",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "客户端上报的应用ID"
+		},
+		"version": {
+			"bsonType": "string",
+			"description": "客户端上报的应用版本号"
+		},
+		"platform": {
+			"bsonType": "string",
+			"description": "客户端上报的平台code"
+		},
+		"channel": {
+			"bsonType": "string",
+			"description": "客户端上报的渠道code\/场景值"
+		},
+		"device_id": {
+			"bsonType": "string",
+			"description": "客户端携带的设备标识"
+		},
+		"uid": {
+			"bsonType": "string",
+			"description": "用户编号, 对应uni-id-users._id"
+		},
+		"session_id": {
+			"bsonType": "string",
+			"description": "访问会话日志ID，对应uni-stat-session-logs._id",
+			"foreignKey": "uni-stat-session-logs._id"
+		},
+		"page_id": {
+			"bsonType": "string",
+			"description": "当前页面ID，对应uni-stat-pagesd",
+			"foreignKey": "uni-stat-pagesd"
+		},
+		"page_detail_id": {
+			"bsonType": "string",
+			"description": "页面详情表ID，对应uni-stat-page-details._id",
+			"foreignKey": "uni-stat-page-details._id"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		}
+	}
+}

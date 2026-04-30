@@ -1,0 +1,265 @@
+<template>
+	<view class="avatar-box-root">
+		<!-- #ifdef MP-WEIXIN -->
+		<button open-type="chooseAvatar" @chooseavatar="bindchooseavatar" @click="uploadAvatarImg" class="box chooseAvatar"
+			:class="{'showBorder':border}" :style="{width,height,lineHeight:height}">
+		<!-- #endif -->
+		<!-- #ifndef MP-WEIXIN -->
+		<view @click="uploadAvatarImg" class="box" :class="{'showBorder':border}"
+			:style="{width,height}">
+		<!-- #endif -->
+
+      <cloud-image v-if="avatar_file != null" :src="avatar_file!['url']" :width="width" :height="height"></cloud-image>
+			<image v-else-if="readOnly" class="default-avatarUrl" src="@/uni_modules/uni-id-pages-x/static/default-avatar.png" mode="widthFix"></image>
+      <view v-else class="upload-img-icon">
+				<uni-id-pages-x-icons :size="35" color="#eee" type="jiahao"></uni-id-pages-x-icons>
+			</view>
+
+			<!-- #ifndef MP-WEIXIN -->
+			</view>
+			<!-- #endif -->
+		<!-- #ifdef MP-WEIXIN -->
+		</button>
+		<!-- #endif -->
+	</view>
+</template>
+
+<script>
+	import { state, mutations } from '@/uni_modules/uni-id-pages-x/store.uts';
+	/**
+	* uni-id-pages-x-avatar
+	* @description 用户头像组件
+	* @property {String} width	图片的宽，默认为：50px
+	* @property {String} height	图片的高，默认为：50px
+	*/
+	export default {
+		name: "uni-id-pages-x-avatar",
+		data() {
+			return {
+				isPC: false
+			}
+		},
+		props: {
+			//头像图片宽
+			width: {
+				type: String,
+				default: "50px"
+			},
+			//头像图片高
+			height: {
+				type: String,
+				default: "50px"
+			},
+			border: {
+				type: Boolean,
+				default: false
+			},
+      readOnly: {
+				type: Boolean,
+				default: false
+			}
+		},
+		mounted() {
+			// #ifdef WEB
+			this.isPC = !['ios', 'android'].includes(uni.getSystemInfoSync().platform);
+			// #endif
+		},
+		computed: {
+			hasLogin() : boolean {
+				return state.isLogin as boolean
+			},
+			userInfo() : UTSJSONObject {
+				return state.userInfo
+			},
+			avatar_file() : UTSJSONObject | null {
+				return this.userInfo["avatar_file"] as UTSJSONObject | null
+			}
+		},
+		methods: {
+			setAvatarFile() {//avatar_file : AvatarFile
+				// 使用 clientDB 提交数据
+				// mutations.updateUserInfo({avatar_file})
+			},
+			async bindchooseavatar(res:any) {
+        // #ifdef MP-WEIXIN
+        let avatarUrl = res.detail.avatarUrl
+        let avatar_file = {
+        	extname: avatarUrl.split('.')[avatarUrl.split('.').length - 1],
+        	name:'',
+        	url:''
+        }
+        //上传到服务器
+        let cloudPath = this.userInfo._id + '' + Date.now()
+        avatar_file.name = cloudPath
+        try{
+        	uni.showLoading({
+        		title: "更新中",
+        		mask: true
+        	});
+        	let {
+        		fileID
+        	} = await uniCloud.uploadFile({
+        		filePath:avatarUrl,
+        		cloudPath,
+        		fileType: "image"
+        	});
+        	avatar_file.url = fileID
+        	uni.hideLoading()
+        }catch(e){
+        	console.error(e);
+        }
+        console.log('avatar_file',avatar_file);
+        mutations.updateUserInfo({ avatar_file } as UTSJSONObject)
+        // #endif
+			},
+			uploadAvatarImg() {
+        if(this.readOnly){
+          return
+        }
+				// #ifdef MP-WEIXIN
+				return // 微信小程序走 bindchooseavatar方法
+				// #endif
+				// #ifndef MP-WEIXIN
+				// if(!this.hasLogin){
+				// 	uni.navigateTo({
+				// 		url:'/uni_modules/uni-id-pages-x/pages/login/login-withoutpwd'
+				// 	})
+				//       return
+				// }
+				const crop : ChooseImageCropOptions = {
+					quality: 100,
+					width: 600,
+					height: 600,
+					resize: true
+				};
+				uni.chooseImage({
+					count: 1,
+					crop,
+					success: (res) => {
+						console.log('res', res);
+						const tempFiles = res.tempFiles as ChooseImageTempFile[]
+						let tempFile = tempFiles[0];
+            let tempFileName = tempFile['name'] as string | null
+						let tempFilePath = tempFile['path'] as string | null
+						if (tempFileName == null) {
+							tempFileName = ""
+						}
+						if (tempFilePath == null) {
+							tempFilePath = ""
+						}
+						let avatar_file = {
+							// #ifdef WEB
+							extname: tempFileName.split(".")[tempFileName.split(".").length - 1],
+							// #endif
+							// #ifndef WEB
+							extname: tempFilePath.split(".")[tempFilePath.split(".").length - 1],
+							// #endif
+							name: tempFileName,
+							url: tempFilePath
+						} as UTSJSONObject
+						// console.log('avatar_file', avatar_file);
+
+						let filePath = res.tempFilePaths[0]
+						//非app端剪裁头像，app端用内置的原生裁剪
+						// #ifndef UNI-APP-X
+						filePath = await new Promise((callback) => {
+							// #ifdef WEB
+							if (!this.isPC) {
+								callback(filePath)
+							}
+							// #endif
+
+							uni.navigateTo({
+								url: '/uni_modules/uni-id-pages-x/pages/userinfo/cropImage/cropImage?path=' +
+									filePath + `&options=${JSON.stringify(crop)}`,
+								animationType: "fade-in",
+								events: {
+									success: url => {
+										callback(url)
+									}
+								},
+								complete(e) {
+									// console.log(e);
+								}
+							});
+						})
+						// #endif
+						let _id = this.userInfo["_id"] as string
+            // console.log("id",_id)
+						// if(_id != null){
+						//   _id = "" as string
+						// }
+						let cloudPath = _id + '' + Date.now()
+            avatar_file['name'] = cloudPath
+						uni.showLoading({
+							title: "更新中",
+							mask: true
+						});
+						uniCloud.uploadFile({
+							filePath,
+							cloudPath,
+						})
+							.then(function (res) {
+                avatar_file['url'] = res.fileID
+								mutations.updateUserInfo({ avatar_file } as UTSJSONObject)
+							})
+							.catch(function (err : any | null) {
+								const error = err as UniCloudError
+								uni.showModal({
+									content: '上传失败，' + error.errMsg,
+									showCancel: false
+								});
+								console.error(error);
+							}).finally(() => {
+								uni.hideLoading()
+							})
+					},
+					fail:(err)=>{
+						console.error('chooseImage fail: ', err)
+						// uni.showModal({
+						// 	content: '失败，' + err.errMsg,
+						// 	showCancel: false
+						// });
+					}
+				})
+				// #endif
+			}
+		}
+	}
+</script>
+
+<style>
+  .default-avatarUrl{
+    width:44px;
+    height:44px;
+  }
+	.avatar-box-root {
+		background-color: #fff;
+	}
+
+	.box {
+		overflow: hidden;
+		padding: 0;
+	}
+
+  /* #ifdef MP */
+  .chooseAvatar {
+  	border-radius: 0;
+  }
+  .chooseAvatar:after{
+    display: none;
+  }
+  /* #endif */
+
+	.upload-img-icon {
+		border: 1px dotted #c8c8c8;
+		width: 100%;
+		height: 100%;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.showBorder {
+		border: solid 1px #ddd;
+	}
+</style>

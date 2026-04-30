@@ -1,0 +1,40 @@
+[
+	{
+		"IndexName": "parent_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "parent_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "parent_id_sort",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "parent_id", "Direction": "1" },
+				{ "Name": "sort", "Direction": "1", "Type": "int" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "level",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "level", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "status",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "status", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "sort",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "sort", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	}
+]

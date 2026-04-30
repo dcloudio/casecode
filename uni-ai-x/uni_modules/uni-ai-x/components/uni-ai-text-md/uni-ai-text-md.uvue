@@ -1,0 +1,159 @@
+<template>
+	<text class="text" :class="itemType + '-box' + (itemType == 'list' ? ' list-content' : '') + ' uni-ai-text-md-' + itemType + '-box'">
+		<text v-for="(data, index) in datas" :key="index"
+			:class="headingBoxClass(data.className)" 
+			@click="toLink(data.href)"
+		>{{data.text}}</text>
+	</text>
+</template>
+
+<script setup>
+	import { MarkdownToken} from '@/uni_modules/uni-cmark';
+	type UniAiTextMdProps = {
+		datas: MarkdownToken[]
+		itemType: string
+	}
+
+	const props = defineProps({
+		datas: {
+			type: Array as PropType<MarkdownToken[]>,
+			required: true
+		},
+		itemType: {
+			type: String,
+			required: true
+		}
+	})
+	
+	const toLink = (url: string | null) => {
+		if (url != null && url!.length > 0) {
+			// console.error('url', url)
+			uni.navigateTo({
+				"url":"/uni_modules/uni-ai-x/pages/common/webview/webview?url="+url,
+				fail:e=>{
+					console.error(e);
+				}
+			})
+		}
+	}
+
+	// data.className 可能为 "text depth-1" 等多 class，需拆分为 BEM 单层 class 才能命中 .uni-ai-text-md-heading-box-depth-1 等样式
+	const headingBoxClass = (className : string | null | undefined) : string => {
+		if (className == null || className == '') return ''
+		const raw = (className as string).trim()
+		if (raw == '') return ''
+		const type = props.itemType
+		const parts = raw.split(/\s+/)
+		const bem = parts.map((p : string) => 'uni-ai-text-md-' + type + '-box-' + p).join(' ')
+		return raw + ' ' + bem
+	}
+</script>
+
+<style lang="scss">
+	// 引用scss
+	@import './uni-ai-text-md.scss';
+	// 元素的样式
+	@font-face {
+		// #ifdef WEB
+		font-display: swap;
+		// #endif
+		font-family: uniAiIconFontFamily;
+		src: url('/uni_modules/uni-ai-x/static/font/iconfont.ttf');
+	}
+	.uni-ai-icon {
+		font-family: uniAiIconFontFamily;
+	}
+	// .image {
+	// 	max-width: 60%;
+	// }
+
+	/* 蒸汽模式：仅单层 class */
+	.uni-ai-text-md-paragraph-box-text {
+		font-size: 18px;
+		white-space: normal;
+		/* #ifndef APP */
+		max-width: 100%;
+		word-break: break-all;
+		/* #endif */
+	}
+
+	.uni-ai-text-md-heading-box {
+		width: 100%;
+		margin: 5px 0;
+	}
+
+	.uni-ai-text-md-heading-box-text {
+		font-weight: 700;
+	}
+
+	.uni-ai-text-md-heading-box-depth-1 {
+		font-size: 30px;
+		line-height: 36px;
+	}
+
+	.uni-ai-text-md-heading-box-depth-2 {
+		font-size: 26px;
+		line-height: 34px;
+	}
+
+	.uni-ai-text-md-heading-box-depth-3 {
+		font-size: 22px;
+		line-height: 32px;
+	}
+
+	.uni-ai-text-md-heading-box-depth-4 {
+		font-size: 20px;
+		line-height: 30px;
+	}
+
+	.uni-ai-text-md-heading-box-depth-5 {
+		font-size: 18px;
+		line-height: 28px;
+	}
+
+	.uni-ai-text-md-heading-box-depth-6 {
+		font-size: 16px;
+		color: var(--text-tertiary);
+		line-height: 24px;
+	}
+
+	.uni-ai-text-md-hr {
+		height: 1px;
+		background: var(--border-primary);
+		margin: 10px 0;
+	}
+
+	.uni-ai-text-md-list-box {
+		padding-left: 5px;
+	}
+
+	.uni-ai-text-md-list-content {
+		width: 100%;
+	}
+
+	.uni-ai-text-md-list-box-text {
+		line-height: 28px;
+	}
+
+	.uni-ai-text-md-list-item-content-box {
+		flex: 1;
+	}
+
+	.uni-ai-text-md-list-item-content-box-list {
+		margin-top: 0;
+	}
+
+	.uni-ai-text-md-list-item-br {
+		width: 100%;
+	}
+
+	.uni-ai-text-md-list-item-index {
+		width: 20px;
+		font-size: 14px;
+		color: var(--text-secondary);
+	}
+
+	.uni-ai-text-md-list-item-index-unordered {
+		color: var(--text-primary);
+	}
+</style>

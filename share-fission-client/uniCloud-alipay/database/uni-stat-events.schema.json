@@ -1,0 +1,38 @@
+// 应用事件表
+{
+	"bsonType": "object",
+	"description": "提供应用的事件字典",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_EVENTS' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "统计应用ID，对应opendb-app-list.appid",
+			"foreignKey": "opendb-app-list.appid"
+		},
+		"event_key": {
+			"bsonType": "string",
+			"description": "事件键值"
+		},
+		"event_name": {
+			"bsonType": "string",
+			"description": "事件名称"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "last_modify_time"
+		}
+	}
+}

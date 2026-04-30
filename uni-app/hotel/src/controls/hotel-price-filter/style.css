@@ -1,0 +1,46 @@
+.hotel-price-filter {
+	position: fixed;
+	height: 300px;
+	bottom: 0;
+	left: 0px;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	background-color: #efefef;
+	-webkit-transition: .3s;
+	-webkit-transform: translateY(300px);
+	z-index: 999999;
+	box-shadow: 0px -5px 7px 0px rgba(0, 0, 0, 0.1);
+}
+.hotel-price-filter.active {
+	-webkit-transform: translateY(0px);
+}
+.hotel-price-filter legend {
+	font-size: 15px;
+	color: #555;
+	padding-bottom: 5px;
+}
+.hotel-price-filter ul {
+	margin: 0px;
+	padding: 0px;
+}
+.hotel-price-filter ul li {
+	border: solid 1px #ccc;
+	padding: 8px;
+	display: inline-block;
+	margin: 0px 3px 5px 0px;
+	font-size: 12px;
+	background-color: #fff;
+	color: #666;
+	text-align: center;
+	min-width: 60px;
+}
+.hotel-price-filter ul li.active{
+	border: solid 1px #099fde;
+	color: #099fde;
+}
+.hotel-price-filter .btn-wraper {
+	padding-top: 8px;
+	margin-top: 5px;
+	border-top: dotted 1px #ddd;
+}

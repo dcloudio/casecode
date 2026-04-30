@@ -1,0 +1,26 @@
+[
+  {
+    "username": "admin",
+    "nickname": "admin",
+    "password": "03caebb36670995fc261a275d212cad65e4bbebd",
+    "role": [
+      "admin"
+    ]
+  },
+  {
+    "username": "user",
+    "nickname": "user",
+    "password": "03caebb36670995fc261a275d212cad65e4bbebd",
+    "role": [
+      "USER"
+    ]
+  },
+  {
+    "username": "auditor",
+    "nickname": "auditor",
+    "password": "03caebb36670995fc261a275d212cad65e4bbebd",
+    "role": [
+      "AUDITOR"
+    ]
+  }
+]

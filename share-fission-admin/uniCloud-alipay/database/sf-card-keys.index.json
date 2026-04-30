@@ -1,0 +1,33 @@
+[
+	{
+		"IndexName": "goods_id_status",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "goods_id", "Direction": "1" },
+				{ "Name": "status", "Direction": "1", "Type": "int" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "goods_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "goods_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "status",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "status", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "order_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "order_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	}
+]

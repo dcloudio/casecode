@@ -1,0 +1,17 @@
+{
+	"last_page": 1,
+	"current_page": 1,
+	"total": 1,
+	"item": [{
+		"id_app": 3,
+		"today_num_new_visitor": "245",
+		"today_num_visitor": "502",
+		"today_num_page_views": "10,777",
+		"num_total_visitor": "724,620",
+		"appid": "__UNI__HelloUniApp",
+		"name": "Hello uni-app",
+		"yesterday_num_new_visitor": "666",
+		"yesterday_num_visitor": "1,170",
+		"yesterday_num_page_views": "28,699"
+	}]
+}

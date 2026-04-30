@@ -1,0 +1,38 @@
+{
+	"bsonType": "object",
+	"required": ["user_id", "date"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "用户ID"
+		},
+		"date": {
+			"bsonType": "timestamp",
+			"description": "签到日期（时间戳）"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "签到的时间戳",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"ip": {
+			"bsonType": "string",
+			"description": "签到时的IP"
+		},
+		"score": {
+			"bsonType": "int",
+			"description": "获得积分"
+		}
+	}
+}

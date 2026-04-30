@@ -1,0 +1,212 @@
+<template>
+	<view class="uni-ai-page" ref="uni-ai-page" :class="[showMenu ? 'uni-ai-page-showMenu' : '', `ui-theme-${uiTheme}`]" :style="{transform: `translateX(${translateX}px)`}" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @touchcancel="touchEnd">
+		<uni-ai-menu @close-menu="closeMenu"></uni-ai-menu>
+		<uni-ai-chat :show-menu="showMenu" :translate-x="translateX" @change-menu="changeMenu" @close-menu="closeMenu"></uni-ai-chat>
+		<!-- 用于非 Android 端测量文字宽度的容器 -->
+		<!-- #ifndef APP-ANDROID -->
+		<view class="hidden"  style="flex-direction: row;width: 1000%;height: 0;">
+			<text v-for="item in measureTextWidthInfos" :key="item.id" :id="item.id" :style="{fontSize: item.fontSize + 'px'}">{{item.text}}</text>
+		</view>
+		<!-- #endif -->
+		<!-- #ifndef MP-WEIXIN -->
+		<web-view class="hidden" id="proxy-web" src="/uni_modules/uni-ai-x/static/proxy-web/proxy-web.html" @message="proxyWebMsg"></web-view>
+		<!-- #endif -->
+	</view>
+</template>
+
+<script lang="uts" setup>
+	import uniAiMenu from '@/uni_modules/uni-ai-x/components/uni-ai-menu.uvue'
+	import uniAiChat from '@/uni_modules/uni-ai-x/components/uni-ai-chat.uvue'
+	import proxyWeb from '@/uni_modules/uni-ai-x/sdk/proxy-web.uts'
+	import {uiTheme} from '@/uni_modules/uni-ai-x/sdk'
+	import utils from '@/uni_modules/uni-ai-x/sdk/utils.uts'
+	import testMarkdownText from '@/uni_modules/uni-ai-x/sdk/testMarkdownText.uts';
+
+	import { md2json, initCmark, MarkdownToken} from '@/uni_modules/uni-cmark'
+	let markdownText = `| 姓名 | 年龄 | 职业 |
+|------|------|------|
+| 王五 | 20 | 程序员 |
+`
+	const init = async ()=> {
+		try {
+			// // 先初始化 WebAssembly 模块
+			await initCmark()
+			// console.log('WebAssembly 模块初始化完成')
+			// const start = Date.now()
+			// // 然后调用同步的 md2json
+			const json = md2json(markdownText)
+			// console.log('md2json 调用完成，结果:', json.data)
+			// console.log('md2json 调用time:', Date.now() - start)
+			// markdown += ` 王五 |`
+			// console.log('markdown', markdown)
+			// const json2 = md2json(markdown)
+			// console.log('md2json 调用完成，结果:', json2)
+		} catch (error) {
+			console.error('解析失败:', error)
+		}
+	}
+	setTimeout(()=>{
+		init()
+	},0)
+	
+	
+	const startX = ref<number>(0)
+	const translateX = ref<number>(-260)
+	const isDragging = ref<boolean>(false)
+	const isMoveing = ref<boolean>(false)
+	const showMenu = ref<boolean>(false)
+	
+	const setMenu = (show: boolean) => {
+		showMenu.value = show
+		translateX.value = show ? 0 : -260
+	}
+	
+	const changeMenu = () => {
+		setMenu(!showMenu.value)
+	}
+	
+	const touchStart = (event: TouchEvent) => {
+		startX.value = event.touches[0].pageX
+	}
+	
+	const touchMove = (event: TouchEvent) => {
+		if (!isDragging.value) return
+		isMoveing.value = true
+		
+		const currentX = event.touches[0].pageX
+		const diffX = currentX - startX.value
+		
+		let newTranslateX = showMenu.value ? diffX : -260 + diffX
+		
+		if (newTranslateX > 0) newTranslateX = 0
+		if (newTranslateX < -260) newTranslateX = -260
+		
+		translateX.value = newTranslateX
+	}
+	
+	const touchEnd = () => {
+		nextTick(()=>{
+			isMoveing.value = false
+		})
+		if (!isDragging.value) return
+		isDragging.value = false
+		if (translateX.value > -130) {
+			setMenu(true)
+		} else {
+			setMenu(false)
+		}
+	}
+	
+	const closeMenu = () => {
+		if (isMoveing.value) return
+		setMenu(false)
+	}
+
+	const proxyWebMsg = (e: UniWebViewMessageEvent) => {
+		// console.log('proxyWebMsg', e)
+		proxyWeb.onWebMsg(e)
+	}
+
+
+	// 测量文字宽度的方法
+	type MeasureTextWidthInfo = {
+		id: string,
+		text: string,
+		fontSize?: number
+	}
+
+	// #ifndef APP-ANDROID
+	const proxy = getCurrentInstance()?.proxy
+	const measureTextWidthInfos = ref<MeasureTextWidthInfo[]>([])
+	utils.measureTextWidth = async (text: string, fontSize?: number) => {
+		fontSize = fontSize ?? 16
+		// 创建一个文本节点
+		const id = `measure-text-width-${measureTextWidthInfos.value.length}`
+		measureTextWidthInfos.value.push({id, text, fontSize})
+		return new Promise((resolve) => {
+			setTimeout(() => {
+				uni.createSelectorQuery().in(proxy).select(`#${id}`)
+					.boundingClientRect().exec((ret) => {
+						resolve(ret.length == 0 ? 0 : ret[0]?.width ?? 0)
+						// 删除节点
+						measureTextWidthInfos.value = measureTextWidthInfos.value.filter((item) => item.id != id)
+					})
+			},1000)
+		})
+	}
+	// #endif
+	
+	onMounted(() => {
+		// #ifdef WEB
+		window.addEventListener('resize', () => {
+			setMenu(window.innerWidth > 960)
+		})
+		const proxyWebContext = document.getElementById('proxy-web')
+		// #endif
+		// #ifndef WEB || MP-WEIXIN
+		const proxyWebContext = uni.createWebviewContext('proxy-web')
+		// #endif
+		// #ifndef MP-WEIXIN
+		proxyWeb.init(proxyWebContext!)
+		// #endif
+	})
+</script>
+
+<style lang="scss">
+@import '@/uni_modules/uni-ai-x/static/css/variables.scss';
+.web-view {
+	width: 100%;
+	flex: 1;
+}
+.uni-ai-page {
+	position: fixed;
+	// #ifdef H5
+	width: calc(100% + 260px);
+	// #endif
+	transform: translateX(-260px);
+	height: 100%;
+	flex-direction: row;
+	background-color: var(--bg-primary);
+	transition: transform 0.3s;
+}
+
+.uni-ai-page-showMenu {
+	transform: translateX(0) !important;
+}
+
+/* 蒸汽模式：单层 class，子组件需加对应 class 才能生效 */
+.uni-ai-msg-table-uni-table {
+	background-color: var(--uni-table-bg-color) !important;
+}
+
+.uni-ai-msg-table-uni-table-th,
+.uni-ai-msg-table-uni-table-td,
+.uni-ai-msg-table-table--border {
+	border: 1px solid var(--uni-table-border-color) !important;
+}
+
+.uni-ai-msg-table-uni-table-text {
+	color: var(--uni-table-color) !important;
+}
+
+/* #ifdef H5 */
+@media screen and (min-device-width:960px){
+	.uni-ai-page {
+		transition: transform 0.3s, width 0.3s;
+	}
+	.uni-ai-page-showMenu {
+		width: 100%;
+	}
+}
+/* #endif */
+.hidden {
+	position: fixed;
+	// bottom: 100px;
+	top: -1100px;
+	right: 0;
+	width: 100%;
+	height: 400px;
+	border: 1px solid red;
+	z-index: 100;
+}
+</style>

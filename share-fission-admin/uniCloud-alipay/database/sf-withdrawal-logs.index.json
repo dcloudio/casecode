@@ -1,0 +1,43 @@
+[
+	{
+		"IndexName": "user_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "user_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "user_id_create_time",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "user_id", "Direction": "1" },
+				{ "Name": "create_time", "Direction": "-1", "Type": "long" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "status",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "status", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "status_create_time",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "status", "Direction": "1", "Type": "int" },
+				{ "Name": "create_time", "Direction": "-1", "Type": "long" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "create_time",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "create_time", "Direction": "-1", "Type": "long" }],
+			"MgoIsUnique": false
+		}
+	}
+]

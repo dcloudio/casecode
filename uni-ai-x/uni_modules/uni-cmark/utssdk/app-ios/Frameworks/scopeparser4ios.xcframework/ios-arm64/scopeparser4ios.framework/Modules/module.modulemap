@@ -1,0 +1,7 @@
+framework module scopeparser4ios {
+    umbrella header "scopeparser4ios.h"
+    export *
+    module * { export * }
+    link "scopeparser4ios"
+    link framework "Foundation"
+}

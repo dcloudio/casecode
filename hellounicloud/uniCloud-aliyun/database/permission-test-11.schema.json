@@ -1,0 +1,39 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create":true,
+		"update":true,
+		"delete":true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"state":{
+			"bsonType":"int",
+			"forceDefaultValue":0
+		},
+		"create_time":{
+			"forceDefaultValue":{
+				"$env":"now"
+			}
+		},
+		"text":{
+			"bsonType":"string",
+			"defaultValue":"该用户比较懒啥也没写！"
+		},
+		"ip":{
+			"bsonType":"string",
+			"defaultValue":{
+				"$env":"clientIP"
+			},
+			"permission":{
+				"read":"auth.uid != null",
+				"write":"auth.uid != null"
+			}
+		}
+	}
+}

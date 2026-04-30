@@ -1,0 +1,27 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": "doc.create_time > (now - 60000) && 'AUDITOR' in auth.role",
+		"create":true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"state":{
+			"bsonType":"int",
+			"forceDefaultValue":0
+		},
+		"create_time":{
+			"forceDefaultValue":{
+				"$env":"now"
+			}
+		},
+		"text":{
+			"bsonType":"string",
+			"defaultValue":"该用户比较懒啥也没写！"
+		}
+	}
+}
