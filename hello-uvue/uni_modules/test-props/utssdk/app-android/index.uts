@@ -1,4 +1,0 @@
-import { IPropsChangeEvent,IPropsChangeEventDetail } from '../interface.uts'
-
-export type PropsChangeEvent = IPropsChangeEvent
-export type PropsChangeEventDetail = IPropsChangeEventDetail

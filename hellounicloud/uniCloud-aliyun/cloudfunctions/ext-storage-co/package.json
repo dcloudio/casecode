@@ -1,7 +1,0 @@
-{
-  "name": "ext-storage-co",
-  "dependencies": {},
-  "extensions": {
-    "uni-cloud-ext-storage": {}
-  }
-}

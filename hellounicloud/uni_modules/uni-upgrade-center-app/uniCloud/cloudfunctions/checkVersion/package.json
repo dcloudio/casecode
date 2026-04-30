@@ -1,7 +1,0 @@
-{
-  "name": "checkVersion",
-  "dependencies": {},
-  "extensions": {
-    "uni-cloud-jql": {}
-  }
-}
