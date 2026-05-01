@@ -225,7 +225,8 @@
 	}
 
 	onUnload(() => {
-		uni.offGyroscopeChange()
+		uni.offGyroscopeChange(primaryId.value)
+		uni.offGyroscopeChange(extraId.value)
 		uni.stopGyroscope()
 	})
 </script>

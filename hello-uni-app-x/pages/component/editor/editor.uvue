@@ -1971,6 +1971,17 @@ function clearListFormat() {
 }
 
 function toggleBlockquote() {
+  const nextValue = !data.formats.blockquote
+  const isListFormat = data.formats.list != ''
+  const isHeadFormat = data.formats.header != 0
+
+  if (nextValue && isListFormat) {
+    applyFormat('list', null)
+  }
+  if (nextValue && isHeadFormat) {
+    applyFormat('header', 0)
+  }
+
   applyFormat('blockquote', data.formats.blockquote ? false : true)
   closeSheets()
   refocusEditorAfterToolbarAction()
@@ -2277,50 +2288,6 @@ function escapeRegExp(value: string) : string {
   return value.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
 }
 
-function removeLinkByHtml(text: string, href: string) {
-  const editor = getEditor()
-  if (editor == null) {
-    return
-  }
-  const escapedHref = escapeRegExp(href)
-  const escapedText = escapeRegExp(text)
-  const anchorPattern = new RegExp(`<a\\b[^>]*href=(['"])${escapedHref}\\1[^>]*>${escapedText}<\\/a>`)
-  const options: UniEditorElementGetContentsOptions = {
-    success: (res: UniEditorElementGetContentsOptionsRes) => {
-      const nextHtml = res.html.replace(anchorPattern, text)
-      if (nextHtml == res.html) {
-        applyFormatWithState('link', null)
-        closeSheets()
-        closeLinkModal()
-        refocusEditorAfterToolbarAction()
-        return
-      }
-      editor.setContents({
-        html: nextHtml,
-        success: () => {
-          data.formats.link = ''
-          closeSheets()
-          closeLinkModal()
-          refocusEditorAfterToolbarAction()
-        },
-        fail: () => {
-          applyFormatWithState('link', null)
-          closeSheets()
-          closeLinkModal()
-          refocusEditorAfterToolbarAction()
-        }
-      })
-    },
-    fail: () => {
-      applyFormatWithState('link', null)
-      closeSheets()
-      closeLinkModal()
-      refocusEditorAfterToolbarAction()
-    }
-  }
-  editor.getContents(options)
-}
-
 function insertLink(text: string, href: string) {
   const editor = getEditor()
   if (editor == null) {
@@ -2372,12 +2339,7 @@ function removeLink() {
   if (editor == null) {
     return
   }
-  const text = data.linkDraftText.trim()
-  const href = data.formats.link
-  if (text != '' && href != '') {
-    removeLinkByHtml(text, href)
-    return
-  }
+
   applyFormatWithState('link', null)
   closeSheets()
   closeLinkModal()
@@ -3439,11 +3401,11 @@ defineExpose({
 }
 
 .toolbar-web-font-action-underline {
-  text-decoration: underline;
+  text-decoration-line: underline;
 }
 
 .toolbar-web-font-action-strike {
-  text-decoration: line-through;
+  text-decoration-line: line-through;
 }
 
 .toolbar-web-icon-text-active {

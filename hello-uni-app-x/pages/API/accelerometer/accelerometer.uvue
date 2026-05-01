@@ -16,7 +16,7 @@
 		</radio-group>
 		<button class="margin-v" type="primary" @tap="startListen">开始监听</button>
 		<button class="margin-v" @tap="stopListen">停止监听</button>
-		<button class="margin-v" type="primary" @tap="navigateToShake">跳转摇一摇</button>
+		<button class="margin-v" @tap="navigateToShake">跳转摇一摇</button>
 
 		<text class="uni-h3">实时数据</text>
 		<view class="log-list">
@@ -58,6 +58,8 @@
 			{ key: 'Z', value: axisZ.value }
 		]
 	})
+	
+	let callbackId = 0
 
 	function formatAxisValue(value : number) : string {
 		return value.toFixed(3)
@@ -101,11 +103,11 @@
 	}
 
 	onReady(() => {
-		uni.onAccelerometerChange(accelerometerListener)
+		callbackId = uni.onAccelerometerChange(accelerometerListener)
 	})
 
 	onUnload(() => {
-		uni.offAccelerometerChange(accelerometerListener)
+		uni.offAccelerometerChange(callbackId)
 		uni.stopAccelerometer()
 	})
 </script>
