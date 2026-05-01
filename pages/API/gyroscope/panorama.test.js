@@ -30,7 +30,7 @@ async function expectPageTextContains(page, expectedText) {
     expect(pageText).toContain(expectedText)
 }
 
-describe('Panorama', () => {
+describe('panorama', () => {
     let page
 
     beforeEach(async () => {

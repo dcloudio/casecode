@@ -148,14 +148,14 @@
 		return `${formatDirection(direction.value)}°`
 	})
 
-	const primaryListener : OnCompassChange = (result : OnCompassChangeSuccess) => {
+	const primaryListener : OnCompassChangeCallback = (result : OnCompassChangeCallbackResult) => {
 		direction.value = result.direction
 		directionText.value = resolveDirectionText(result.direction)
 		accuracyText.value = formatAccuracy(result.accuracy != null ? result.accuracy : null)
 		statusText.value = '监听中'
 	}
 
-	const secondaryListener : OnCompassChange = (result : OnCompassChangeSuccess) => {
+	const secondaryListener : OnCompassChangeCallback = (result : OnCompassChangeCallbackResult) => {
 		pushLog(`额外监听 -> ${formatDirection(result.direction)}° / accuracy ${formatAccuracy(result.accuracy != null ? result.accuracy : null)}`)
 	}
 

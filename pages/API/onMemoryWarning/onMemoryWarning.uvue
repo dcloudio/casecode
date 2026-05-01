@@ -35,7 +35,8 @@
     reservedMB: 0
   } as PageState)
 
-  let memoryWarningNativeCallback: MemoryWarningCallback | null = null
+  let callbackId = 0
+  let memoryWarningNativeCallback: OnMemoryWarningCallback | null = null
   let memoryPressureBuffers: ArrayBuffer[] = []
 
   const memoryBlockSizeMB = 32
@@ -80,7 +81,7 @@
       appendRecord('监听已开启，无需重复注册')
       return
     }
-    const callback: MemoryWarningCallback = function (res: MemoryWarningCallbackResult): void {
+    const callback: OnMemoryWarningCallback = function (res: MemoryWarningCallbackResult): void {
       let levelText = '当前平台未返回等级'
       const level = res.level ?? null
       if (level != null) {
@@ -92,7 +93,7 @@
       console.log('onMemoryWarning', res)
     }
     memoryWarningNativeCallback = callback
-    uni.onMemoryWarning(callback)
+    callbackId = uni.onMemoryWarning(callback)
     state.listening = true
     state.status = '监听中，等待系统触发内存告警'
     appendRecord('已注册 uni.onMemoryWarning')
@@ -100,14 +101,14 @@
 
   function stopListen(): void {
     if (memoryWarningNativeCallback == null) {
-      uni.offMemoryWarning(null)
+      uni.offMemoryWarning(callbackId)
       state.listening = false
       state.status = '监听已停止'
       appendRecord('已清空所有监听器')
       return
     }
     const nativeCallback = memoryWarningNativeCallback!
-    uni.offMemoryWarning(nativeCallback)
+    uni.offMemoryWarning(callbackId)
     memoryWarningNativeCallback = null
     state.listening = false
     state.status = '监听已停止'
@@ -146,7 +147,7 @@
   onUnload(() => {
     if (memoryWarningNativeCallback != null) {
       const nativeCallback = memoryWarningNativeCallback!
-      uni.offMemoryWarning(nativeCallback)
+      uni.offMemoryWarning(callbackId)
       memoryWarningNativeCallback = null
     }
     memoryPressureBuffers = []
