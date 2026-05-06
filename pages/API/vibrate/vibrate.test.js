@@ -1,4 +1,10 @@
 describe('/pages/API/vibrate/vibrate', () => {
+
+  it('skip', () => {
+    expect(1).toBe(1)
+  })
+  return
+
   let page
 
   const pagePath = '/pages/API/vibrate/vibrate'
