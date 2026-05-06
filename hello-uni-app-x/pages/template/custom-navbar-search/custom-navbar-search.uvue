@@ -15,7 +15,7 @@
       <view class="content-item" v-for="item in 10">
         <view class="cell-item">
           <text class="text">内容：{{item}}</text>
-          <input class="text" style="margin-top: 8px;" placeholder="备注输入框:" :id="`input-in-scroll-view-${item}`" :focus="item === 5 ? data.scrollViewInputFocus : false" />
+          <input class="text" style="margin-top: 8px;" placeholder="备注输入框:" :id="`input-in-scroll-view-${item}`" :focus="item == 5 ? data.scrollViewInputFocus : false" />
         </view>
       </view>
     </scroll-view>
@@ -23,7 +23,7 @@
       <list-item class="content-item" v-for="item in 10" :key="item">
         <view class="cell-item">
           <text class="text">列表项内容：{{item}}</text>
-          <input class="text" style="margin-top: 8px;" placeholder="备注输入框:" :id="`input-in-list-view-${item}`" :focus="item === 5 ? data.listViewInputFocus : false" />
+          <input class="text" style="margin-top: 8px;" placeholder="备注输入框:" :id="`input-in-list-view-${item}`" :focus="item == 5 ? data.listViewInputFocus : false" />
         </view>
       </list-item>
     </list-view>

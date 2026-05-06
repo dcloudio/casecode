@@ -1674,6 +1674,7 @@
 			}
 		},
 		// #endif
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB || MP-WEIXIN
 		{
 			"path": "pages/API/compass/compass",
 			"group": "1,6,12",
@@ -1681,6 +1682,7 @@
 				"navigationBarTitleText": "compass | 罗盘"
 			}
 		},
+		// #endif
 		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
 		{
 			"path": "pages/API/scan-code/scan-code",
@@ -2258,6 +2260,7 @@
 				"navigationBarTitleText": "requestTask | 发起流式请求"
 			}
 		},
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB || MP-WEIXIN
 		{
 			"path": "pages/API/accelerometer/accelerometer",
 			"group": "1,6,13",
@@ -2265,13 +2268,14 @@
 				"navigationBarTitleText": "accelerometer | 加速度计"
 			}
 		},
+		// #endif
 		{
 			"path": "pages/API/accelerometer/shake",
 			"style": {
 				"navigationBarTitleText": "shake | 摇一摇"
 			}
 		},
-		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || APP-ANDROID
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
 		{
 			"path": "pages/API/calendar/calendar",
 			"group": "1,6,24",
@@ -2280,7 +2284,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || APP-ANDROID
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/gyroscope/gyroscope",
 			"group": "1,6,25",
@@ -2289,7 +2293,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || APP-ANDROID
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
 		{
 			"path": "pages/API/gyroscope/panorama",
 			"style": {
@@ -2297,7 +2301,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || APP-ANDROID
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
 		{
 			"path": "pages/API/phoneContact/addPhoneContact",
 			"group": "1,6,10",
@@ -2306,7 +2310,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || APP-ANDROID
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
 		{
 			"path": "pages/API/phoneContact/chooseContact",
 			"group": "1,6,10",
@@ -2315,7 +2319,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || APP-ANDROID
+		// #ifdef APP-HARMONY || APP-IOS || MP-WEIXIN || (!VUE3-VAPOR && APP-ANDROID)
 		{
 			"path": "pages/API/screen-brightness/screen-brightness",
 			"group": "1,6,22",
@@ -2686,7 +2690,7 @@
 					}
 				},
 				// #endif
-				// #ifdef APP-ANDROID || APP-IOS
+				// #ifdef !VUE3-VAPOR && (APP-ANDROID || APP-IOS)
 				{
 					"path": "native-button-bridge/native-button-bridge",
 					"style": {
@@ -4163,10 +4167,6 @@
 							]
 						},
 						{
-							"id": "api.device.calendar",
-							"name": "calendar"
-						},
-						{
 							"id": "api.device.clipboard",
 							"name": "clipboard"
 						},
@@ -4178,10 +4178,6 @@
 							"id": "api.device.accelerometer",
 							"name": "accelerometer"
 						},
-            {
-            	"id": "api.device.gyroscope",
-            	"name": "gyroscope"
-            },
 						null,
 						{
 							"id": "api.device.memory",
@@ -4224,6 +4220,14 @@
 						{
 							"id": "api.device.vibrate",
 							"name": "vibrate"
+						},
+						{
+							"id": "api.device.calendar",
+							"name": "calendar"
+						},
+						{
+							"id": "api.device.gyroscope",
+							"name": "gyroscope"
 						}
 					]
 				},
