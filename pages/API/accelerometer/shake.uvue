@@ -43,7 +43,6 @@
 	let lastShakeTime = 0
 	let shakeCount = 0
 	let shakeThreshold = 1.35
-	let callbackId = 0
 
 	function formatNumber(value : number) : string {
 		return value.toFixed(2)
@@ -137,7 +136,7 @@
 
 	onReady(() => {
 		syncSensitivity(sensitivityValue.value)
-		callbackId = uni.onAccelerometerChange(accelerometerListener)
+		uni.onAccelerometerChange(accelerometerListener)
 		startListen()
 	})
 
@@ -150,7 +149,7 @@
 	})
 
 	onUnload(() => {
-		uni.offAccelerometerChange(callbackId)
+		uni.offAccelerometerChange(accelerometerListener)
 		uni.stopAccelerometer()
 	})
 </script>

@@ -58,8 +58,6 @@
 			{ key: 'Z', value: axisZ.value }
 		]
 	})
-	
-	let callbackId = 0
 
 	function formatAxisValue(value : number) : string {
 		return value.toFixed(3)
@@ -103,11 +101,11 @@
 	}
 
 	onReady(() => {
-		callbackId = uni.onAccelerometerChange(accelerometerListener)
+		uni.onAccelerometerChange(accelerometerListener)
 	})
 
 	onUnload(() => {
-		uni.offAccelerometerChange(callbackId)
+		uni.offAccelerometerChange(accelerometerListener)
 		uni.stopAccelerometer()
 	})
 </script>
