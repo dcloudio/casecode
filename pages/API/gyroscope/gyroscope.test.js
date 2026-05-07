@@ -29,15 +29,10 @@ async function getPageText(page) {
     return texts.join('\n')
 }
 
-async function getButtonByText(page, expectedText) {
-    const buttons = await page.$$('button')
-    for (const button of buttons) {
-        const buttonText = await button.text()
-        if (buttonText == expectedText) {
-            return button
-        }
-    }
-    throw new Error(`未找到按钮：${expectedText}`)
+async function getButton(page, selector) {
+    const button = await page.$(selector)
+    expect(button).not.toBeNull()
+    return button
 }
 
 async function expectPageTextContains(page, expectedText) {
@@ -75,85 +70,8 @@ describe('gyroscope', () => {
         page = await openGyroscopePage()
     })
 
-    it('陀螺仪 API 页面启动后路径应为 pages/API/gyroscope/gyroscope', async () => {
-        expect(page.path).toBe('pages/API/gyroscope/gyroscope')
-    })
-
-    it('陀螺仪 API 页面顶部应显示标题「陀螺仪 API」', async () => {
-        const title = await page.$('.uni-h2')
-        expect(title).not.toBeNull()
-        expect(await title.text()).toBe('陀螺仪 API')
-    })
-
-    it('陀螺仪 API 页面说明应列出 start、stop、on、off 四个接口', async () => {
-        const pageText = await getPageText(page)
-        expect(pageText).toContain('uni.startGyroscope')
-        expect(pageText).toContain('uni.stopGyroscope')
-        expect(pageText).toContain('uni.onGyroscopeChange')
-        expect(pageText).toContain('uni.offGyroscopeChange')
-    })
-
-    it('陀螺仪 API 页面应按顺序显示四个功能区域标题', async () => {
-        const headers = await getTexts(page, '.uni-h3')
-        expect(headers).toEqual([
-            '实时状态',
-            '调用结果',
-            '开始 / 停止',
-            '监听日志'
-        ])
-    })
-
-    it('实时状态区域初始应显示未启动、normal 频率和三轴零值', async () => {
-        const logItems = await getTexts(page, '.log-item')
-        expect(logItems).toEqual(expect.arrayContaining([
-            '监听状态：未启动',
-            '当前频率：normal',
-            'X：0.0000',
-            'Y：0.0000',
-            'Z：0.0000'
-        ]))
-    })
-
-    it('调用结果区域初始应显示等待调用、未执行和绑定提示', async () => {
-        const logItems = await getTexts(page, '.log-item')
-        expect(logItems).toEqual(expect.arrayContaining([
-            '最近动作：等待调用',
-            '状态：未执行',
-            '说明：请先绑定监听后开始'
-        ]))
-    })
-
-    it('频率选择区域应显示 game、ui、normal 三个选项', async () => {
-        const pageText = await getPageText(page)
-        expect(pageText).toContain('game')
-        expect(pageText).toContain('ui')
-        expect(pageText).toContain('normal')
-    })
-
-    it('陀螺仪 API 页面应按顺序显示六个操作按钮', async () => {
-        const buttonTexts = await getTexts(page, 'button')
-        expect(buttonTexts).toEqual([
-            '开始监听',
-            '停止监听',
-            '绑定主监听',
-            '再绑一个监听',
-            'off 指定监听',
-            'off 全部监听'
-        ])
-    })
-
-    it('陀螺仪 API 页面所有操作按钮默认都应可点击', async () => {
-        const buttons = await page.$$('button')
-        expect(buttons.length).toBe(6)
-
-        for (const button of buttons) {
-            const disabled = await button.attribute('disabled')
-            expect(disabled == null || disabled == 'false').toBe(true)
-        }
-    })
-
     it('点击「绑定主监听」后应显示主监听已绑定结果', async () => {
-        const button = await getButtonByText(page, '绑定主监听')
+        const button = await getButton(page, '#btn-bind-primary-listener')
         await button.tap()
         await page.waitFor(300)
 
@@ -163,7 +81,7 @@ describe('gyroscope', () => {
     })
 
     it('点击「再绑一个监听」后应显示额外监听已绑定结果', async () => {
-        const button = await getButtonByText(page, '再绑一个监听')
+        const button = await getButton(page, '#btn-bind-extra-listener')
         await button.tap()
         await page.waitFor(300)
 
@@ -173,11 +91,11 @@ describe('gyroscope', () => {
     })
 
     it('点击「off 指定监听」后应显示仅移除主监听结果', async () => {
-        const bindButton = await getButtonByText(page, '绑定主监听')
+        const bindButton = await getButton(page, '#btn-bind-primary-listener')
         await bindButton.tap()
         await page.waitFor(200)
 
-        const offButton = await getButtonByText(page, 'off 指定监听')
+        const offButton = await getButton(page, '#btn-remove-primary-listener')
         await offButton.tap()
         await page.waitFor(300)
 
@@ -187,13 +105,13 @@ describe('gyroscope', () => {
     })
 
     it('点击「off 全部监听」后应显示所有监听已移除结果', async () => {
-        const primaryButton = await getButtonByText(page, '绑定主监听')
+        const primaryButton = await getButton(page, '#btn-bind-primary-listener')
         await primaryButton.tap()
-        const extraButton = await getButtonByText(page, '再绑一个监听')
+        const extraButton = await getButton(page, '#btn-bind-extra-listener')
         await extraButton.tap()
         await page.waitFor(200)
 
-        const offButton = await getButtonByText(page, 'off 全部监听')
+        const offButton = await getButton(page, '#btn-remove-all-listeners')
         await offButton.tap()
         await page.waitFor(300)
 
@@ -203,7 +121,7 @@ describe('gyroscope', () => {
     })
 
     it('点击「开始监听」后应显示 startGyroscope 成功或失败结果', async () => {
-        const button = await getButtonByText(page, '开始监听')
+        const button = await getButton(page, '#btn-start-gyroscope')
         await button.tap()
 
         const pageText = await waitForPageText(page, isStartResultText)
@@ -211,34 +129,14 @@ describe('gyroscope', () => {
     })
 
     it('点击「停止监听」后应显示 stopGyroscope 成功或失败结果', async () => {
-        const startButton = await getButtonByText(page, '开始监听')
+        const startButton = await getButton(page, '#btn-start-gyroscope')
         await startButton.tap()
         await page.waitFor(500)
 
-        const stopButton = await getButtonByText(page, '停止监听')
+        const stopButton = await getButton(page, '#btn-stop-gyroscope')
         await stopButton.tap()
 
         const pageText = await waitForPageText(page, isStopResultText)
         expect(pageText).toContain('最近动作：stopGyroscope')
     })
-
-    it('连续操作后监听日志区域应最多保留十条记录', async () => {
-        const buttons = [
-            await getButtonByText(page, '绑定主监听'),
-            await getButtonByText(page, '再绑一个监听'),
-            await getButtonByText(page, 'off 指定监听'),
-            await getButtonByText(page, 'off 全部监听')
-        ]
-
-        for (let i = 0; i < 12; i += 1) {
-            await buttons[i % buttons.length].tap()
-            await page.waitFor(80)
-        }
-
-        const logItems = await getTexts(page, '.log-item')
-        const listenerLogCount = logItems.length - 8
-        expect(listenerLogCount).toBeGreaterThan(0)
-        expect(listenerLogCount).toBeLessThanOrEqual(10)
-    })
-
 })

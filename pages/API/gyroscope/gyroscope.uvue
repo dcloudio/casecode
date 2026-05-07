@@ -26,13 +26,13 @@
 				</radio>
 			</view>
 		</radio-group>
-		<button class="margin-v" type="primary" @tap="startListening">开始监听</button>
-		<button class="margin-v" @tap="stopListening">停止监听</button>
-		<button class="margin-v" @tap="registerSingleListener">绑定主监听</button>
-		<button class="margin-v" @tap="registerExtraListener">再绑一个监听</button>
-		<button class="margin-v" @tap="removeSingleListener">off 指定监听</button>
-		<button class="margin-v" @tap="removeAllListeners">off 全部监听</button>
-		<button class="margin-v" @tap="navigateToPanorama">跳转全景示例</button>
+		<button id="btn-start-gyroscope" class="margin-v" type="primary" @tap="startListening">开始监听</button>
+		<button id="btn-stop-gyroscope" class="margin-v" @tap="stopListening">停止监听</button>
+		<button id="btn-bind-primary-listener" class="margin-v" @tap="registerSingleListener">绑定主监听</button>
+		<button id="btn-bind-extra-listener" class="margin-v" @tap="registerExtraListener">再绑一个监听</button>
+		<button id="btn-remove-primary-listener" class="margin-v" @tap="removeSingleListener">off 指定监听</button>
+		<button id="btn-remove-all-listeners" class="margin-v" @tap="removeAllListeners">off 全部监听</button>
+		<button id="btn-open-panorama" class="margin-v" @tap="navigateToPanorama">跳转全景示例</button>
 
 		<text class="uni-h3">监听日志</text>
 		<view class="log-list">
@@ -124,6 +124,7 @@
 		if (logItems.value.length > 10) {
 			logItems.value.splice(10)
 		}
+    console.log('logItems.value.length', logItems.value.length)
 	}
 
 	function updateResult(action : string, status : string, payload : string) : void {

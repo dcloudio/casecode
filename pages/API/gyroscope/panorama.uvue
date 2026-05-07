@@ -6,7 +6,7 @@
 		<text>左右转动手机，超宽画卷会跟随陀螺仪横向移动，展示屏幕之外的内容。</text>
 
 		<text class="uni-h3">当前状态</text>
-		<text class="margin-v">{{ statusText }}</text>
+		<text id="panoramaStatus" class="margin-v">{{ statusText }}</text>
 		<view class="metric-row">
 			<view class="metric-box">
 				<text class="metric-label">水平偏移</text>
@@ -152,6 +152,11 @@
 	onUnload(() => {
 		uni.offGyroscopeChange(callBackId.value)
 		uni.stopGyroscope()
+	})
+
+	defineExpose({
+		startListen,
+		stopListen
 	})
 </script>
 
