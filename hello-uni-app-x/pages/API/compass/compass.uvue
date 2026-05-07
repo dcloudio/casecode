@@ -22,17 +22,17 @@
 		</view>
 
 		<view class="uni-row">
-			<button class="margin-v" @tap="bindPrimaryListener">注册罗盘Change</button>
-			<button class="margin-v" style="margin-left: 3px;" @tap="removePrimaryListener">注销罗盘Change</button>
+			<button id="btn-bind-primary-listener" class="margin-v" @tap="bindPrimaryListener">注册罗盘Change</button>
+			<button id="btn-remove-primary-listener" class="margin-v" style="margin-left: 3px;" @tap="removePrimaryListener">注销罗盘Change</button>
 		</view>
 		<view class="uni-row">
-			<button class="margin-v" type="primary" @tap="startCompassListen">uni.startCompass</button>
-			<button class="margin-v" style="margin-left: 3px;" @tap="stopCompassListen">uni.stopCompass</button>
+			<button id="btn-start-compass" class="margin-v" type="primary" @tap="startCompassListen">uni.startCompass</button>
+			<button id="btn-stop-compass" class="margin-v" style="margin-left: 3px;" @tap="stopCompassListen">uni.stopCompass</button>
 		</view>
 		<text>重复绑定测试</text>
 		<view class="uni-row">
-			<button class="margin-v" @tap="bindSecondaryListener">注册罗盘Change2</button>
-			<button class="margin-v" style="margin-left: 3px;" @tap="removeSecondaryListener">注销罗盘Change2</button>
+			<button id="btn-bind-secondary-listener" class="margin-v" @tap="bindSecondaryListener">注册罗盘Change2</button>
+			<button id="btn-remove-secondary-listener" class="margin-v" style="margin-left: 3px;" @tap="removeSecondaryListener">注销罗盘Change2</button>
 		</view>
 		<text class="uni-h3">监听日志</text>
 		<view class="panel-list">
