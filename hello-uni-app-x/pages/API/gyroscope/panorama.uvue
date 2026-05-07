@@ -132,7 +132,7 @@
 
 	onReady(() => {
 		measureViewport()
-		callBackId.value = uni.onGyroscopeChange(gyroscopeListener)
+		uni.onGyroscopeChange(gyroscopeListener)
 		startListen()
 	})
 
@@ -150,7 +150,7 @@
 	})
 
 	onUnload(() => {
-		uni.offGyroscopeChange(callBackId.value)
+		uni.offGyroscopeChange(gyroscopeListener)
 		uni.stopGyroscope()
 	})
 

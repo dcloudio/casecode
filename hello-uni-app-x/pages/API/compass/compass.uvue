@@ -67,8 +67,6 @@
 	const lastPayload = ref('请先绑定监听并开始采集')
 	const logItems = ref<Array<LogItem>>([])
 	const logId = ref(0)
-	let primaryId = ref(0);
-	let secondId = ref(0);
 	
 	const infoItems = computed(() : Array<DisplayItem> => {
 		return [
@@ -161,7 +159,7 @@
 
 	function ensurePrimaryBound() : void {
 		if (!primaryBound.value) {
-			primaryId.value = uni.onCompassChange(primaryListener)
+			uni.onCompassChange(primaryListener)
 			primaryBound.value = true
 		}
 	}
@@ -173,20 +171,20 @@
 
 	function bindSecondaryListener() : void {
 		if (!secondaryBound.value) {
-			secondId.value = uni.onCompassChange(secondaryListener)
+			uni.onCompassChange(secondaryListener)
 			secondaryBound.value = true
 		}
 		updateResult('onCompassChange(extra)', '已绑定', '额外监听已注册')
 	}
 
 	function removePrimaryListener() : void {
-		uni.offCompassChange(primaryId.value)
+		uni.offCompassChange(primaryListener)
 		primaryBound.value = false
 		updateResult('offCompassChange(primary)', '已解绑', '主监听已移除')
 	}
 
 	function removeSecondaryListener() : void {
-		uni.offCompassChange(secondId.value)
+		uni.offCompassChange(secondaryListener)
 		secondaryBound.value = false
 		updateResult('offCompassChange(extra)', '已解绑', '额外监听已移除')
 	}
@@ -222,8 +220,8 @@
 	}
 
 	onUnload(() => {
-		uni.offCompassChange(primaryId.value)
-		uni.offCompassChange(secondId.value)
+		uni.offCompassChange(primaryListener)
+		uni.offCompassChange(secondaryListener)
 		uni.stopCompass()
 	});
 	

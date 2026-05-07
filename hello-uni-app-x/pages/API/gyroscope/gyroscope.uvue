@@ -71,8 +71,6 @@
 	const logItems = ref<Array<string>>([])
 	const primaryBound = ref(false)
 	const extraBound = ref(false)
-	const primaryId  = ref(0)
-	const extraId = ref(0)
 	const intervalOptions : Array<IntervalOption> = [
 		{ value: 'game', label: 'game' },
 		{ value: 'ui', label: 'ui' },
@@ -160,7 +158,7 @@
 
 	function registerSingleListener() : void {
 		if (!primaryBound.value) {
-			primaryId.value = uni.onGyroscopeChange(primaryListener)
+			uni.onGyroscopeChange(primaryListener)
 			primaryBound.value = true
 		}
 		updateResult('onGyroscopeChange(primary)', '已绑定', '主监听已注册')
@@ -168,21 +166,20 @@
 
 	function registerExtraListener() : void {
 		if (!extraBound.value) {
-			extraId.value = uni.onGyroscopeChange(extraListener)
+			uni.onGyroscopeChange(extraListener)
 			extraBound.value = true
 		}
 		updateResult('onGyroscopeChange(extra)', '已绑定', '额外监听已注册')
 	}
 
 	function removeSingleListener() : void {
-		uni.offGyroscopeChange(primaryId.value)
+		uni.offGyroscopeChange(primaryListener)
 		primaryBound.value = false
 		updateResult('offGyroscopeChange(listener)', '已解绑', '仅移除主监听')
 	}
 
 	function removeAllListeners() : void {
-		uni.offGyroscopeChange(primaryId.value)
-		uni.offGyroscopeChange(extraId.value)
+		uni.offGyroscopeChange()
 		primaryBound.value = false
 		extraBound.value = false
 		updateResult('offGyroscopeChange()', '已解绑', '所有监听函数已移除')
@@ -226,8 +223,7 @@
 	}
 
 	onUnload(() => {
-		uni.offGyroscopeChange(primaryId.value)
-		uni.offGyroscopeChange(extraId.value)
+		uni.offGyroscopeChange()
 		uni.stopGyroscope()
 	})
 </script>
