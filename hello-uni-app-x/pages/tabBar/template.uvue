@@ -17,7 +17,7 @@
       </view>
       <uni-collapse>
         <template v-for="(item, index) in list" :key="item.id">
-          <uni-collapse-item v-if="item.pages.length > 0" class="uni-panel" :open="item.open" :title="item.name"
+          <uni-collapse-item v-if="item.pages.length > 0" class="uni-panel pl-4 pr-4" :open="item.open" :title="item.name"
             @change="syncCollapseState(index, $event as boolean)">
             <view style="padding-left: 18px;" class="uni-navigate-item"
               :hover-class="page.enable == false ? '' : 'is--active'" v-for="(page, key) in item.pages" :key="key"

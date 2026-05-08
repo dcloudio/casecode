@@ -14,7 +14,7 @@ describe('component-native-sticky-header', () => {
   }
 
   let page
-  const screenshotParams = { }
+  const screenshotParams = { fullPage: true }
 
   beforeAll(async () => {
     if (!isAppWebView) {

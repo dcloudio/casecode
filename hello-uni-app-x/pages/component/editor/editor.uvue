@@ -12,13 +12,13 @@
       <view class="toolbar-frame">
         <view :class="desktopToolbarShellClass" @mousemove="hideToolbarTooltip">
           <view :class="desktopToolbarLeadingGroupClass">
-            <view id="toolbar-button-undo" @click="undo" @mousemove.stop="showToolbarTooltip('toolbar-button-undo', '撤回')" class="toolbar-icon-button">
+            <view id="toolbar-button-undo" @tap="undo" @mousemove.stop="showToolbarTooltip('toolbar-button-undo', '撤回')" class="toolbar-icon-button">
               <text class="toolbar-icon-text iconfont">{{"&#xe6a3;"}}</text>
             </view>
-            <view id="toolbar-button-redo" @click="redo" @mousemove.stop="showToolbarTooltip('toolbar-button-redo', '重做')" class="toolbar-icon-button">
+            <view id="toolbar-button-redo" @tap="redo" @mousemove.stop="showToolbarTooltip('toolbar-button-redo', '重做')" class="toolbar-icon-button">
               <text class="toolbar-icon-text iconfont">{{"&#xe6a5;"}}</text>
             </view>
-            <view id="toolbar-button-clear-format" @click="clearFormatting" @mousemove.stop="showToolbarTooltip('toolbar-button-clear-format', '清除格式')" class="toolbar-icon-button">
+            <view id="toolbar-button-clear-format" @tap="clearFormatting" @mousemove.stop="showToolbarTooltip('toolbar-button-clear-format', '清除格式')" class="toolbar-icon-button">
               <text class="toolbar-icon-text iconfont">{{"&#xe6b9;"}}</text>
             </view>
           </view>
@@ -26,25 +26,25 @@
           <view :class="desktopToolbarDividerClass"></view>
 
           <view :class="desktopToolbarGroupClass">
-            <view id="toolbar-button-font-size" @click="openFontSizeSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-font-size', '设置字号')" :class="fontSizeSheetHighlighted ? 'toolbar-select toolbar-select-active' : 'toolbar-select'">
+            <view id="toolbar-button-font-size" @tap="openFontSizeSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-font-size', '设置字号')" :class="fontSizeSheetHighlighted ? 'toolbar-select toolbar-select-active' : 'toolbar-select'">
               <text :class="fontSizeSheetHighlighted ? 'toolbar-select-label toolbar-select-label-active toolbar-size-label' : 'toolbar-select-label toolbar-size-label'">{{ getDesktopFontSizeLabel() }}</text>
               <text :class="fontSizeSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-font-family" @click="openFontFamilySheet" @mousemove.stop="showToolbarTooltip('toolbar-button-font-family', '设置字体')" :class="fontFamilySheetHighlighted ? 'toolbar-select toolbar-select-font toolbar-select-active' : 'toolbar-select toolbar-select-font'">
+            <view id="toolbar-button-font-family" @tap="openFontFamilySheet" @mousemove.stop="showToolbarTooltip('toolbar-button-font-family', '设置字体')" :class="fontFamilySheetHighlighted ? 'toolbar-select toolbar-select-font toolbar-select-active' : 'toolbar-select toolbar-select-font'">
               <!-- <text :class="fontFamilySheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{"&#xe68e;"}}</text> -->
               <text :class="fontFamilySheetHighlighted ? 'toolbar-select-label toolbar-select-label-active toolbar-select-font-label' : 'toolbar-select-label toolbar-select-font-label'">{{ getDesktopFontFamilyLabel() }}</text>
               <text :class="fontFamilySheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-bold" @click="toggleBold" @mousemove.stop="showToolbarTooltip('toolbar-button-bold', '加粗')" :class="data.formats.bold ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+            <view id="toolbar-button-bold" @tap="toggleBold" @mousemove.stop="showToolbarTooltip('toolbar-button-bold', '加粗')" :class="data.formats.bold ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
               <text :class="data.formats.bold ? 'toolbar-icon-text toolbar-icon-text-active toolbar-font-action iconfont relative-top-1' : 'toolbar-icon-text toolbar-font-action iconfont relative-top-1'">{{"&#xe6ae;"}}</text>
             </view>
-            <view id="toolbar-button-italic" @click="toggleItalic" @mousemove.stop="showToolbarTooltip('toolbar-button-italic', '斜体')" :class="data.formats.italic ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+            <view id="toolbar-button-italic" @tap="toggleItalic" @mousemove.stop="showToolbarTooltip('toolbar-button-italic', '斜体')" :class="data.formats.italic ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
               <text :class="data.formats.italic ? 'toolbar-icon-text toolbar-icon-text-active toolbar-font-action iconfont relative-top-1' : 'toolbar-icon-text toolbar-font-action iconfont relative-top-1'">{{"&#xe6af;"}}</text>
             </view>
-            <view id="toolbar-button-underline" @click="toggleUnderline" @mousemove.stop="showToolbarTooltip('toolbar-button-underline', '下划线')" :class="data.formats.underline ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+            <view id="toolbar-button-underline" @tap="toggleUnderline" @mousemove.stop="showToolbarTooltip('toolbar-button-underline', '下划线')" :class="data.formats.underline ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
               <text :class="data.formats.underline ? 'toolbar-icon-text toolbar-icon-text-active toolbar-font-action iconfont' : 'toolbar-icon-text toolbar-font-action iconfont'">{{"&#xe6a7;"}}</text>
             </view>
-            <view id="toolbar-button-strike" @click="toggleStrike" @mousemove.stop="showToolbarTooltip('toolbar-button-strike', '删除线')" :class="data.formats.strike ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+            <view id="toolbar-button-strike" @tap="toggleStrike" @mousemove.stop="showToolbarTooltip('toolbar-button-strike', '删除线')" :class="data.formats.strike ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
               <text :class="data.formats.strike ? 'toolbar-icon-text toolbar-icon-text-active toolbar-font-action iconfont relative-top-1' : 'toolbar-icon-text toolbar-font-action iconfont relative-top-1'">{{"&#xe6aa;"}}</text>
             </view>
           </view>
@@ -52,14 +52,14 @@
           <view :class="desktopToolbarDividerClass"></view>
 
           <view :class="desktopToolbarGroupClass">
-            <view id="toolbar-button-text-color" @click="openTextColorSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-text-color', '字体颜色')" :class="textColorSheetHighlighted ? 'toolbar-color-button toolbar-color-button-active' : 'toolbar-color-button'">
+            <view id="toolbar-button-text-color" @tap="openTextColorSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-text-color', '字体颜色')" :class="textColorSheetHighlighted ? 'toolbar-color-button toolbar-color-button-active' : 'toolbar-color-button'">
               <view class="toolbar-color-stack">
                 <text :class="textColorSheetHighlighted ? 'toolbar-color-symbol toolbar-color-symbol-active iconfont' : 'toolbar-color-symbol iconfont'">{{"&#xe6b8;"}}</text>
                 <view class="toolbar-color-underline" :style="toolbarTextColorChipStyle"></view>
               </view>
               <text :class="textColorSheetHighlighted ? 'toolbar-color-arrow toolbar-color-arrow-active iconfont' : 'toolbar-color-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-background-color" @click="openBackgroundColorSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-background-color', '背景颜色')" :class="backgroundColorSheetHighlighted ? 'toolbar-color-button toolbar-color-button-active' : 'toolbar-color-button'">
+            <view id="toolbar-button-background-color" @tap="openBackgroundColorSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-background-color', '背景颜色')" :class="backgroundColorSheetHighlighted ? 'toolbar-color-button toolbar-color-button-active' : 'toolbar-color-button'">
               <view class="toolbar-color-stack">
                 <text :class="backgroundColorSheetHighlighted ? 'toolbar-color-symbol toolbar-color-symbol-active iconfont' : 'toolbar-color-symbol iconfont'">{{"&#xe6bb;"}}</text>
                 <view class="toolbar-color-underline" :style="toolbarBackgroundColorChipStyle"></view>
@@ -70,38 +70,38 @@
           <view :class="desktopToolbarDividerClass"></view>
 
           <view :class="desktopToolbarGroupClass">
-            <view id="toolbar-button-align" @click="openAlignSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-align', '对齐方式')" :class="alignSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-active' : 'toolbar-select toolbar-select-compact'">
+            <view id="toolbar-button-align" @tap="openAlignSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-align', '对齐方式')" :class="alignSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-active' : 'toolbar-select toolbar-select-compact'">
               <text :class="alignSheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{ desktopAlignIconGlyph }}</text>
               <text :class="alignSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-text-indent" @click="toggleTextIndent" @mousemove.stop="showToolbarTooltip('toolbar-button-text-indent', '首行缩进')" :class="textIndentHighlighted ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+            <view id="toolbar-button-text-indent" @tap="toggleTextIndent" @mousemove.stop="showToolbarTooltip('toolbar-button-text-indent', '首行缩进')" :class="textIndentHighlighted ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
               <text :class="textIndentHighlighted ? 'toolbar-icon-text toolbar-icon-text-active iconfont' : 'toolbar-icon-text iconfont'">{{"&#xe6ad;"}}</text>
             </view>
-            <view id="toolbar-button-block-indent" @click="openBlockIndentSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-block-indent', '两端缩进')" :class="blockIndentSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-active' : 'toolbar-select toolbar-select-compact'">
+            <view id="toolbar-button-block-indent" @tap="openBlockIndentSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-block-indent', '两端缩进')" :class="blockIndentSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-active' : 'toolbar-select toolbar-select-compact'">
               <text :class="blockIndentSheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{"&#xe6ba;"}}</text>
               <text :class="blockIndentSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-line-height" @click="openLineHeightSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-line-height', '行间距')" :class="lineHeightSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-value toolbar-select-active' : 'toolbar-select toolbar-select-compact toolbar-select-value'">
+            <view id="toolbar-button-line-height" @tap="openLineHeightSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-line-height', '行间距')" :class="lineHeightSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-value toolbar-select-active' : 'toolbar-select toolbar-select-compact toolbar-select-value'">
               <text :class="lineHeightSheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{"&#xe6b0;"}}</text>
               <text :class="lineHeightSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-letter-spacing" @click="openLetterSpacingSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-letter-spacing', '字间距')" :class="letterSpacingSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-value toolbar-select-active' : 'toolbar-select toolbar-select-compact toolbar-select-value'">
+            <view id="toolbar-button-letter-spacing" @tap="openLetterSpacingSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-letter-spacing', '字间距')" :class="letterSpacingSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-value toolbar-select-active' : 'toolbar-select toolbar-select-compact toolbar-select-value'">
               <text :class="letterSpacingSheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{"&#xe6ac;"}}</text>
               <text :class="letterSpacingSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-list" @click="openListSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-list', '列表')" :class="listSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-active' : 'toolbar-select toolbar-select-compact'">
+            <view id="toolbar-button-list" @tap="openListSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-list', '列表')" :class="listSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-active' : 'toolbar-select toolbar-select-compact'">
               <text :class="listSheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{"&#xe6a4;"}}</text>
               <text :class="listSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
             <!-- #ifndef MP -->
-            <view id="toolbar-button-blockquote" @click="toggleBlockquote" @mousemove.stop="showToolbarTooltip('toolbar-button-blockquote', '引用')" :class="data.formats.blockquote ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+            <view id="toolbar-button-blockquote" @tap="toggleBlockquote" @mousemove.stop="showToolbarTooltip('toolbar-button-blockquote', '引用')" :class="data.formats.blockquote ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
               <text :class="data.formats.blockquote ? 'toolbar-icon-text toolbar-icon-text-active iconfont' : 'toolbar-icon-text iconfont'">{{"&#xe6b5;"}}</text>
             </view>
-            <view id="toolbar-button-code-block" @click="toggleCodeBlock" @mousemove.stop="showToolbarTooltip('toolbar-button-code-block', '代码块')" :class="data.formats.codeBlock ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+            <view id="toolbar-button-code-block" @tap="toggleCodeBlock" @mousemove.stop="showToolbarTooltip('toolbar-button-code-block', '代码块')" :class="data.formats.codeBlock ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
               <text :class="data.formats.codeBlock ? 'toolbar-icon-text toolbar-icon-text-active iconfont' : 'toolbar-icon-text iconfont'">{{"&#xe6a9;"}}</text>
             </view>
             <!-- #endif -->
-            <view id="toolbar-button-divider" @click="insertDivider" @mousemove.stop="showToolbarTooltip('toolbar-button-divider', '分割线')" class="toolbar-icon-button">
+            <view id="toolbar-button-divider" @tap="insertDivider" @mousemove.stop="showToolbarTooltip('toolbar-button-divider', '分割线')" class="toolbar-icon-button">
               <text class="toolbar-icon-text iconfont">{{"&#xe6b4;"}}</text>
             </view>
           </view>
@@ -109,11 +109,11 @@
           <view :class="desktopToolbarDividerClass"></view>
 
           <view :class="desktopToolbarGroupClass">
-            <view id="toolbar-button-image" @click="chooseInsertImage" @mousemove.stop="showToolbarTooltip('toolbar-button-image', '图片')" class="toolbar-icon-button">
+            <view id="toolbar-button-image" @tap="chooseInsertImage" @mousemove.stop="showToolbarTooltip('toolbar-button-image', '图片')" class="toolbar-icon-button">
               <text class="toolbar-icon-text iconfont">{{"&#xe6bc;"}}</text>
             </view>
             <!-- #ifndef MP -->
-            <view id="toolbar-button-link" @click="openLinkModal" @mousemove.stop="showToolbarTooltip('toolbar-button-link', data.formats.link != '' ? '编辑超链接' : '插入超链接')" :class="data.formats.link != '' ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+            <view id="toolbar-button-link" @tap="openLinkModal" @mousemove.stop="showToolbarTooltip('toolbar-button-link', data.formats.link != '' ? '编辑超链接' : '插入超链接')" :class="data.formats.link != '' ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
               <text :class="data.formats.link != '' ? 'toolbar-icon-text toolbar-icon-text-active iconfont' : 'toolbar-icon-text iconfont'">{{"&#xe6bd;"}}</text>
             </view>
             <!-- #endif -->
@@ -131,7 +131,7 @@
       </view>
     </view>
 
-    <view v-if="data.activeSheet != ''" class="sheet-backdrop" @click="closeSheets"></view>
+    <view v-if="data.activeSheet != ''" class="sheet-backdrop" @tap="closeSheets"></view>
 
     <view
      id="editor-sheet-host"
@@ -144,7 +144,7 @@
     >
       <view :class="toolbarPanelClass" :style="sheetPanelStyle">
         <!-- #ifdef WEB -->
-        <view class="toolbar-panel-arrow" :style="toolbarPanelArrowStyle"></view>
+        <view v-if="!webPhoneLayout" class="toolbar-panel-arrow" :style="toolbarPanelArrowStyle"></view>
         <!-- #endif -->
         <view :class="toolbarPanelHeaderClass">
           <view class="toolbar-panel-title-wrap">
@@ -156,41 +156,41 @@
         <scroll-view :class="toolbarPanelScrollClass" direction="vertical" :show-scrollbar="false">
           <view class="toolbar-panel-section" v-if="data.activeSheet == 'title'">
             <view :class="data.toolbarChipRowClass">
-              <view :class="data.toolbarChipCellClass"><view @click="setParagraph" :class="(paragraphActive) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(paragraphActive) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">P</text><text :class="(paragraphActive) ? desktopMenuTextActiveClass : desktopMenuTextClass">正文</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setParagraph" :class="(paragraphActive) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(paragraphActive) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">P</text><text :class="(paragraphActive) ? desktopMenuTextActiveClass : desktopMenuTextClass">正文</text></view></view>
               <!-- #ifndef MP -->
-              <view :class="data.toolbarChipCellClass"><view @click="toggleBlockquote" :class="(data.formats.blockquote) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.blockquote) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">BQ</text><text :class="(data.formats.blockquote) ? desktopMenuTextActiveClass : desktopMenuTextClass">引用</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="toggleCodeBlock" :class="(data.formats.codeBlock) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.codeBlock) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">&lt;/&gt;</text><text :class="(data.formats.codeBlock) ? desktopMenuTextActiveClass : desktopMenuTextClass">代码</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="toggleBlockquote" :class="(data.formats.blockquote) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.blockquote) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">BQ</text><text :class="(data.formats.blockquote) ? desktopMenuTextActiveClass : desktopMenuTextClass">引用</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="toggleCodeBlock" :class="(data.formats.codeBlock) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.codeBlock) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">&lt;/&gt;</text><text :class="(data.formats.codeBlock) ? desktopMenuTextActiveClass : desktopMenuTextClass">代码</text></view></view>
               <!-- #endif -->
-              <view :class="data.toolbarChipCellClass"><view @click="setHeadingLevel(1)" :class="(data.formats.header == 1) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 1) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H1</text><text :class="(data.formats.header == 1) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题1</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="setHeadingLevel(2)" :class="(data.formats.header == 2) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 2) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H2</text><text :class="(data.formats.header == 2) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题2</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="setHeadingLevel(3)" :class="(data.formats.header == 3) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 3) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H3</text><text :class="(data.formats.header == 3) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题3</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="setHeadingLevel(4)" :class="(data.formats.header == 4) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 4) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H4</text><text :class="(data.formats.header == 4) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题4</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="setHeadingLevel(5)" :class="(data.formats.header == 5) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 5) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H5</text><text :class="(data.formats.header == 5) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题5</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="setHeadingLevel(6)" :class="(data.formats.header == 6) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 6) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H6</text><text :class="(data.formats.header == 6) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题6</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setHeadingLevel(1)" :class="(data.formats.header == 1) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 1) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H1</text><text :class="(data.formats.header == 1) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题1</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setHeadingLevel(2)" :class="(data.formats.header == 2) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 2) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H2</text><text :class="(data.formats.header == 2) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题2</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setHeadingLevel(3)" :class="(data.formats.header == 3) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 3) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H3</text><text :class="(data.formats.header == 3) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题3</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setHeadingLevel(4)" :class="(data.formats.header == 4) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 4) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H4</text><text :class="(data.formats.header == 4) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题4</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setHeadingLevel(5)" :class="(data.formats.header == 5) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 5) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H5</text><text :class="(data.formats.header == 5) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题5</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setHeadingLevel(6)" :class="(data.formats.header == 6) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 6) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H6</text><text :class="(data.formats.header == 6) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题6</text></view></view>
             </view>
           </view>
 
           <view class="toolbar-panel-section" v-if="data.activeSheet == 'style'">
             <view :class="data.toolbarChipRowClass">
-              <view :class="data.toolbarChipCellClass"><view @click="toggleBoldAndClose" :class="(data.formats.bold) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.bold) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">B</text><text :class="(data.formats.bold) ? desktopMenuTextActiveClass : desktopMenuTextClass">加粗</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="toggleItalicAndClose" :class="(data.formats.italic) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.italic) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">I</text><text :class="(data.formats.italic) ? desktopMenuTextActiveClass : desktopMenuTextClass">斜体</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="toggleUnderlineAndClose" :class="(data.formats.underline) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.underline) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">U</text><text :class="(data.formats.underline) ? desktopMenuTextActiveClass : desktopMenuTextClass">下划线</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="toggleStrikeAndClose" :class="(data.formats.strike) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.strike) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">S</text><text :class="(data.formats.strike) ? desktopMenuTextActiveClass : desktopMenuTextClass">删除线</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="toggleBoldAndClose" :class="(data.formats.bold) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.bold) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">B</text><text :class="(data.formats.bold) ? desktopMenuTextActiveClass : desktopMenuTextClass">加粗</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="toggleItalicAndClose" :class="(data.formats.italic) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.italic) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">I</text><text :class="(data.formats.italic) ? desktopMenuTextActiveClass : desktopMenuTextClass">斜体</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="toggleUnderlineAndClose" :class="(data.formats.underline) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.underline) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">U</text><text :class="(data.formats.underline) ? desktopMenuTextActiveClass : desktopMenuTextClass">下划线</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="toggleStrikeAndClose" :class="(data.formats.strike) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.strike) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">S</text><text :class="(data.formats.strike) ? desktopMenuTextActiveClass : desktopMenuTextClass">删除线</text></view></view>
             </view>
 
             <view class="toolbar-color-section">
               <text class="toolbar-color-title">文字颜色</text>
-              <view :class="data.colorRowClass">
-                <view @click="setTextColorAndClose('')" :class="(data.formats.color == '') ? clearColorSwatchActiveClass : clearColorSwatchClass"></view>
-                <view v-for="color in TEXT_COLOR_PRESETS" :key="color" @click="setTextColorAndClose(color)" :class="(data.formats.color == color) ? filledColorSwatchActiveClass : filledColorSwatchClass" :style="'background-color: ' + color + ';'"></view>
+              <view class="color-row color-row-panel">
+                <view @tap="setTextColorAndClose('')" :class="(data.formats.color == '') ? clearColorSwatchActiveClass : clearColorSwatchClass"></view>
+                <view v-for="color in TEXT_COLOR_PRESETS" :key="color" @tap="setTextColorAndClose(color)" :class="(data.formats.color == color) ? filledColorSwatchActiveClass : filledColorSwatchClass" :style="'background-color: ' + color + ';'"></view>
               </view>
             </view>
 
             <view class="toolbar-color-section">
               <text class="toolbar-color-title">背景颜色</text>
-              <view :class="data.colorRowClass">
-                <view @click="setBackgroundColorAndClose('')" :class="(data.formats.backgroundColor == '') ? clearColorSwatchActiveClass : clearColorSwatchClass"></view>
-                <view v-for="color in BACKGROUND_COLOR_PRESETS" :key="color" @click="setBackgroundColorAndClose(color)" :class="(data.formats.backgroundColor == color) ? filledColorSwatchActiveClass : filledColorSwatchClass" :style="'background-color: ' + color + ';'"></view>
+              <view class="color-row color-row-panel">
+                <view @tap="setBackgroundColorAndClose('')" :class="(data.formats.backgroundColor == '') ? clearColorSwatchActiveClass : clearColorSwatchClass"></view>
+                <view v-for="color in BACKGROUND_COLOR_PRESETS" :key="color" @tap="setBackgroundColorAndClose(color)" :class="(data.formats.backgroundColor == color) ? filledColorSwatchActiveClass : filledColorSwatchClass" :style="'background-color: ' + color + ';'"></view>
               </view>
             </view>
 
@@ -200,10 +200,10 @@
             <view class="toolbar-panel-group">
               <text class="toolbar-color-title">行间距</text>
               <view :class="data.toolbarChipRowClass">
-                <view :class="data.toolbarChipCellClass"><view @click="setLineHeightAndClose('')" :class="(data.formats.lineHeight == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.lineHeight == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">A</text><text :class="(data.formats.lineHeight == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setLineHeightAndClose('1.5')" :class="(data.formats.lineHeight == '1.5') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.lineHeight == '1.5') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">1.5</text><text :class="(data.formats.lineHeight == '1.5') ? desktopMenuTextActiveClass : desktopMenuTextClass">紧凑</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setLineHeightAndClose('1.8')" :class="(data.formats.lineHeight == '1.8') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.lineHeight == '1.8') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">1.8</text><text :class="(data.formats.lineHeight == '1.8') ? desktopMenuTextActiveClass : desktopMenuTextClass">舒适</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setLineHeightAndClose('2')" :class="(data.formats.lineHeight == '2') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.lineHeight == '2') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">2.0</text><text :class="(data.formats.lineHeight == '2') ? desktopMenuTextActiveClass : desktopMenuTextClass">宽松</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setLineHeightAndClose('')" :class="(data.formats.lineHeight == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.lineHeight == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">A</text><text :class="(data.formats.lineHeight == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setLineHeightAndClose('1.5')" :class="(data.formats.lineHeight == '1.5') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.lineHeight == '1.5') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">1.5</text><text :class="(data.formats.lineHeight == '1.5') ? desktopMenuTextActiveClass : desktopMenuTextClass">紧凑</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setLineHeightAndClose('1.8')" :class="(data.formats.lineHeight == '1.8') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.lineHeight == '1.8') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">1.8</text><text :class="(data.formats.lineHeight == '1.8') ? desktopMenuTextActiveClass : desktopMenuTextClass">舒适</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setLineHeightAndClose('2')" :class="(data.formats.lineHeight == '2') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.lineHeight == '2') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">2.0</text><text :class="(data.formats.lineHeight == '2') ? desktopMenuTextActiveClass : desktopMenuTextClass">宽松</text></view></view>
               </view>
             </view>
           </view>
@@ -212,10 +212,10 @@
             <view class="toolbar-panel-group">
               <text class="toolbar-color-title">字间距</text>
               <view :class="data.toolbarChipRowClass">
-                <view :class="data.toolbarChipCellClass"><view @click="setLetterSpacingAndClose('')" :class="(data.formats.letterSpacing == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.letterSpacing == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">Aa</text><text :class="(data.formats.letterSpacing == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setLetterSpacingAndClose('0px')" :class="(data.formats.letterSpacing == '0px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.letterSpacing == '0px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">0</text><text :class="(data.formats.letterSpacing == '0px') ? desktopMenuTextActiveClass : desktopMenuTextClass">标准</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setLetterSpacingAndClose('1px')" :class="(data.formats.letterSpacing == '1px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.letterSpacing == '1px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">+1</text><text :class="(data.formats.letterSpacing == '1px') ? desktopMenuTextActiveClass : desktopMenuTextClass">微松</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setLetterSpacingAndClose('2px')" :class="(data.formats.letterSpacing == '2px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.letterSpacing == '2px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">+2</text><text :class="(data.formats.letterSpacing == '2px') ? desktopMenuTextActiveClass : desktopMenuTextClass">通透</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setLetterSpacingAndClose('')" :class="(data.formats.letterSpacing == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.letterSpacing == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">Aa</text><text :class="(data.formats.letterSpacing == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setLetterSpacingAndClose('0px')" :class="(data.formats.letterSpacing == '0px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.letterSpacing == '0px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">0</text><text :class="(data.formats.letterSpacing == '0px') ? desktopMenuTextActiveClass : desktopMenuTextClass">标准</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setLetterSpacingAndClose('1px')" :class="(data.formats.letterSpacing == '1px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.letterSpacing == '1px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">+1</text><text :class="(data.formats.letterSpacing == '1px') ? desktopMenuTextActiveClass : desktopMenuTextClass">微松</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setLetterSpacingAndClose('2px')" :class="(data.formats.letterSpacing == '2px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.letterSpacing == '2px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">+2</text><text :class="(data.formats.letterSpacing == '2px') ? desktopMenuTextActiveClass : desktopMenuTextClass">通透</text></view></view>
               </view>
             </view>
           </view>
@@ -224,16 +224,16 @@
             <view class="toolbar-panel-group">
               <text class="toolbar-color-title">字号</text>
               <view :class="data.toolbarChipRowClass">
-                <view :class="data.toolbarChipCellClass"><view @click="setFontSizeAndClose('12px')" :class="(data.formats.fontSize == '12px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '12px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">12</text><text :class="(data.formats.fontSize == '12px') ? desktopMenuTextActiveClass : desktopMenuTextClass">12px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontSizeAndClose('14px')" :class="(data.formats.fontSize == '14px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '14px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">14</text><text :class="(data.formats.fontSize == '14px') ? desktopMenuTextActiveClass : desktopMenuTextClass">14px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontSizeAndClose('15px')" :class="(data.formats.fontSize == '15px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '15px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">15</text><text :class="(data.formats.fontSize == '15px') ? desktopMenuTextActiveClass : desktopMenuTextClass">15px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontSizeAndClose('16px')" :class="(data.formats.fontSize == '16px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '16px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">16</text><text :class="(data.formats.fontSize == '16px') ? desktopMenuTextActiveClass : desktopMenuTextClass">16px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontSizeAndClose('17px')" :class="(data.formats.fontSize == '17px' || data.formats.fontSize == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '17px' || data.formats.fontSize == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">17</text><text :class="(data.formats.fontSize == '17px' || data.formats.fontSize == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontSizeAndClose('19px')" :class="(data.formats.fontSize == '19px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '19px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">19</text><text :class="(data.formats.fontSize == '19px') ? desktopMenuTextActiveClass : desktopMenuTextClass">19px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontSizeAndClose('20px')" :class="(data.formats.fontSize == '20px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '20px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">20</text><text :class="(data.formats.fontSize == '20px') ? desktopMenuTextActiveClass : desktopMenuTextClass">20px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontSizeAndClose('24px')" :class="(data.formats.fontSize == '24px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '24px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">24</text><text :class="(data.formats.fontSize == '24px') ? desktopMenuTextActiveClass : desktopMenuTextClass">24px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontSizeAndClose('32px')" :class="(data.formats.fontSize == '32px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '32px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">32</text><text :class="(data.formats.fontSize == '32px') ? desktopMenuTextActiveClass : desktopMenuTextClass">32px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontSizeAndClose('48px')" :class="(data.formats.fontSize == '48px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '48px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">48</text><text :class="(data.formats.fontSize == '48px') ? desktopMenuTextActiveClass : desktopMenuTextClass">48px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontSizeAndClose('12px')" :class="(data.formats.fontSize == '12px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '12px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">12</text><text :class="(data.formats.fontSize == '12px') ? desktopMenuTextActiveClass : desktopMenuTextClass">12px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontSizeAndClose('14px')" :class="(data.formats.fontSize == '14px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '14px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">14</text><text :class="(data.formats.fontSize == '14px') ? desktopMenuTextActiveClass : desktopMenuTextClass">14px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontSizeAndClose('15px')" :class="(data.formats.fontSize == '15px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '15px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">15</text><text :class="(data.formats.fontSize == '15px') ? desktopMenuTextActiveClass : desktopMenuTextClass">15px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontSizeAndClose('16px')" :class="(data.formats.fontSize == '16px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '16px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">16</text><text :class="(data.formats.fontSize == '16px') ? desktopMenuTextActiveClass : desktopMenuTextClass">16px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontSizeAndClose('17px')" :class="(data.formats.fontSize == '17px' || data.formats.fontSize == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '17px' || data.formats.fontSize == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">17</text><text :class="(data.formats.fontSize == '17px' || data.formats.fontSize == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontSizeAndClose('19px')" :class="(data.formats.fontSize == '19px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '19px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">19</text><text :class="(data.formats.fontSize == '19px') ? desktopMenuTextActiveClass : desktopMenuTextClass">19px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontSizeAndClose('20px')" :class="(data.formats.fontSize == '20px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '20px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">20</text><text :class="(data.formats.fontSize == '20px') ? desktopMenuTextActiveClass : desktopMenuTextClass">20px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontSizeAndClose('24px')" :class="(data.formats.fontSize == '24px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '24px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">24</text><text :class="(data.formats.fontSize == '24px') ? desktopMenuTextActiveClass : desktopMenuTextClass">24px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontSizeAndClose('32px')" :class="(data.formats.fontSize == '32px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '32px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">32</text><text :class="(data.formats.fontSize == '32px') ? desktopMenuTextActiveClass : desktopMenuTextClass">32px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontSizeAndClose('48px')" :class="(data.formats.fontSize == '48px') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontSize == '48px') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">48</text><text :class="(data.formats.fontSize == '48px') ? desktopMenuTextActiveClass : desktopMenuTextClass">48px</text></view></view>
               </view>
             </view>
           </view>
@@ -242,26 +242,26 @@
             <view class="toolbar-panel-group">
               <text class="toolbar-color-title">字体</text>
               <view :class="data.toolbarChipRowClass">
-                <view :class="data.toolbarChipCellClass"><view @click="setFontFamilyAndClose('')" :class="(data.formats.fontFamily == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">D</text><text :class="(data.formats.fontFamily == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontFamilyAndClose('Microsoft YaHei')" :class="(data.formats.fontFamily == 'Microsoft YaHei') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'Microsoft YaHei') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">雅黑</text><text :class="(data.formats.fontFamily == 'Microsoft YaHei') ? desktopMenuTextActiveClass : desktopMenuTextClass">微软雅黑</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontFamilyAndClose('SimHei')" :class="(data.formats.fontFamily == 'SimHei') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'SimHei') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">黑</text><text :class="(data.formats.fontFamily == 'SimHei') ? desktopMenuTextActiveClass : desktopMenuTextClass">黑体</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontFamilyAndClose('SimSun')" :class="(data.formats.fontFamily == 'SimSun') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'SimSun') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">宋</text><text :class="(data.formats.fontFamily == 'SimSun') ? desktopMenuTextActiveClass : desktopMenuTextClass">宋体</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontFamilyAndClose('KaiTi')" :class="(data.formats.fontFamily == 'KaiTi') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'KaiTi') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">楷</text><text :class="(data.formats.fontFamily == 'KaiTi') ? desktopMenuTextActiveClass : desktopMenuTextClass">楷体</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontFamilyAndClose('FangSong')" :class="(data.formats.fontFamily == 'FangSong') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'FangSong') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">仿宋</text><text :class="(data.formats.fontFamily == 'FangSong') ? desktopMenuTextActiveClass : desktopMenuTextClass">仿宋</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontFamilyAndClose('Georgia')" :class="(data.formats.fontFamily == 'Georgia') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'Georgia') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">Geo</text><text :class="(data.formats.fontFamily == 'Georgia') ? desktopMenuTextActiveClass : desktopMenuTextClass">Georgia</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontFamilyAndClose('Times New Roman')" :class="(data.formats.fontFamily == 'Times New Roman') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'Times New Roman') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">TNR</text><text :class="(data.formats.fontFamily == 'Times New Roman') ? desktopMenuTextActiveClass : desktopMenuTextClass">Times</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setFontFamilyAndClose('Courier New')" :class="(data.formats.fontFamily == 'Courier New') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'Courier New') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">Mono</text><text :class="(data.formats.fontFamily == 'Courier New') ? desktopMenuTextActiveClass : desktopMenuTextClass">Courier</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontFamilyAndClose('')" :class="(data.formats.fontFamily == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">D</text><text :class="(data.formats.fontFamily == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontFamilyAndClose('Microsoft YaHei')" :class="(data.formats.fontFamily == 'Microsoft YaHei') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'Microsoft YaHei') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">雅黑</text><text :class="(data.formats.fontFamily == 'Microsoft YaHei') ? desktopMenuTextActiveClass : desktopMenuTextClass">微软雅黑</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontFamilyAndClose('SimHei')" :class="(data.formats.fontFamily == 'SimHei') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'SimHei') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">黑</text><text :class="(data.formats.fontFamily == 'SimHei') ? desktopMenuTextActiveClass : desktopMenuTextClass">黑体</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontFamilyAndClose('SimSun')" :class="(data.formats.fontFamily == 'SimSun') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'SimSun') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">宋</text><text :class="(data.formats.fontFamily == 'SimSun') ? desktopMenuTextActiveClass : desktopMenuTextClass">宋体</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontFamilyAndClose('KaiTi')" :class="(data.formats.fontFamily == 'KaiTi') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'KaiTi') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">楷</text><text :class="(data.formats.fontFamily == 'KaiTi') ? desktopMenuTextActiveClass : desktopMenuTextClass">楷体</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontFamilyAndClose('FangSong')" :class="(data.formats.fontFamily == 'FangSong') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'FangSong') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">仿宋</text><text :class="(data.formats.fontFamily == 'FangSong') ? desktopMenuTextActiveClass : desktopMenuTextClass">仿宋</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontFamilyAndClose('Georgia')" :class="(data.formats.fontFamily == 'Georgia') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'Georgia') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">Geo</text><text :class="(data.formats.fontFamily == 'Georgia') ? desktopMenuTextActiveClass : desktopMenuTextClass">Georgia</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontFamilyAndClose('Times New Roman')" :class="(data.formats.fontFamily == 'Times New Roman') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'Times New Roman') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">TNR</text><text :class="(data.formats.fontFamily == 'Times New Roman') ? desktopMenuTextActiveClass : desktopMenuTextClass">Times</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setFontFamilyAndClose('Courier New')" :class="(data.formats.fontFamily == 'Courier New') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.fontFamily == 'Courier New') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">Mono</text><text :class="(data.formats.fontFamily == 'Courier New') ? desktopMenuTextActiveClass : desktopMenuTextClass">Courier</text></view></view>
               </view>
             </view>
           </view>
 
           <view class="toolbar-panel-section" v-if="data.activeSheet == 'align'">
             <view :class="data.toolbarChipRowClass">
-              <view :class="data.toolbarChipCellClass"><view @click="clearAlign" :class="(data.formats.align == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.align == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">D</text><text :class="(data.formats.align == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="setAlignLeft" :class="(data.formats.align == 'left') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.align == 'left') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">L</text><text :class="(data.formats.align == 'left') ? desktopMenuTextActiveClass : desktopMenuTextClass">居左</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="setAlignCenter" :class="(data.formats.align == 'center') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.align == 'center') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">C</text><text :class="(data.formats.align == 'center') ? desktopMenuTextActiveClass : desktopMenuTextClass">居中</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="setAlignRight" :class="(data.formats.align == 'right') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.align == 'right') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">R</text><text :class="(data.formats.align == 'right') ? desktopMenuTextActiveClass : desktopMenuTextClass">居右</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="setAlignJustify" :class="(data.formats.align == 'justify') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.align == 'justify') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">J</text><text :class="(data.formats.align == 'justify') ? desktopMenuTextActiveClass : desktopMenuTextClass">两端</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="clearAlign" :class="(data.formats.align == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.align == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">D</text><text :class="(data.formats.align == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setAlignLeft" :class="(data.formats.align == 'left') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.align == 'left') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">L</text><text :class="(data.formats.align == 'left') ? desktopMenuTextActiveClass : desktopMenuTextClass">居左</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setAlignCenter" :class="(data.formats.align == 'center') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.align == 'center') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">C</text><text :class="(data.formats.align == 'center') ? desktopMenuTextActiveClass : desktopMenuTextClass">居中</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setAlignRight" :class="(data.formats.align == 'right') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.align == 'right') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">R</text><text :class="(data.formats.align == 'right') ? desktopMenuTextActiveClass : desktopMenuTextClass">居右</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setAlignJustify" :class="(data.formats.align == 'justify') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.align == 'justify') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">J</text><text :class="(data.formats.align == 'justify') ? desktopMenuTextActiveClass : desktopMenuTextClass">两端</text></view></view>
             </view>
           </view>
 
@@ -269,22 +269,22 @@
             <view class="toolbar-panel-group">
               <text class="toolbar-color-title">两端缩进</text>
               <view :class="data.toolbarChipRowClass">
-                <view :class="data.toolbarChipCellClass"><view @click="setBlockIndentAndClose('0px')" :class="((data.formats.marginLeft == '' && data.formats.marginRight == '')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '' && data.formats.marginRight == '')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">0</text><text :class="((data.formats.marginLeft == '' && data.formats.marginRight == '')) ? desktopMenuTextActiveClass : desktopMenuTextClass">0px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setBlockIndentAndClose('8px')" :class="((data.formats.marginLeft == '8px' && data.formats.marginRight == '8px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '8px' && data.formats.marginRight == '8px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">8</text><text :class="((data.formats.marginLeft == '8px' && data.formats.marginRight == '8px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">8px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setBlockIndentAndClose('16px')" :class="((data.formats.marginLeft == '16px' && data.formats.marginRight == '16px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '16px' && data.formats.marginRight == '16px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">16</text><text :class="((data.formats.marginLeft == '16px' && data.formats.marginRight == '16px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">16px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setBlockIndentAndClose('24px')" :class="((data.formats.marginLeft == '24px' && data.formats.marginRight == '24px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '24px' && data.formats.marginRight == '24px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">24</text><text :class="((data.formats.marginLeft == '24px' && data.formats.marginRight == '24px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">24px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setBlockIndentAndClose('32px')" :class="((data.formats.marginLeft == '32px' && data.formats.marginRight == '32px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '32px' && data.formats.marginRight == '32px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">32</text><text :class="((data.formats.marginLeft == '32px' && data.formats.marginRight == '32px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">32px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setBlockIndentAndClose('40px')" :class="((data.formats.marginLeft == '40px' && data.formats.marginRight == '40px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '40px' && data.formats.marginRight == '40px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">40</text><text :class="((data.formats.marginLeft == '40px' && data.formats.marginRight == '40px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">40px</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="setBlockIndentAndClose('48px')" :class="((data.formats.marginLeft == '48px' && data.formats.marginRight == '48px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '48px' && data.formats.marginRight == '48px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">48</text><text :class="((data.formats.marginLeft == '48px' && data.formats.marginRight == '48px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">48px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setBlockIndentAndClose('0px')" :class="((data.formats.marginLeft == '' && data.formats.marginRight == '')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '' && data.formats.marginRight == '')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">0</text><text :class="((data.formats.marginLeft == '' && data.formats.marginRight == '')) ? desktopMenuTextActiveClass : desktopMenuTextClass">0px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setBlockIndentAndClose('8px')" :class="((data.formats.marginLeft == '8px' && data.formats.marginRight == '8px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '8px' && data.formats.marginRight == '8px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">8</text><text :class="((data.formats.marginLeft == '8px' && data.formats.marginRight == '8px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">8px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setBlockIndentAndClose('16px')" :class="((data.formats.marginLeft == '16px' && data.formats.marginRight == '16px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '16px' && data.formats.marginRight == '16px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">16</text><text :class="((data.formats.marginLeft == '16px' && data.formats.marginRight == '16px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">16px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setBlockIndentAndClose('24px')" :class="((data.formats.marginLeft == '24px' && data.formats.marginRight == '24px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '24px' && data.formats.marginRight == '24px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">24</text><text :class="((data.formats.marginLeft == '24px' && data.formats.marginRight == '24px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">24px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setBlockIndentAndClose('32px')" :class="((data.formats.marginLeft == '32px' && data.formats.marginRight == '32px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '32px' && data.formats.marginRight == '32px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">32</text><text :class="((data.formats.marginLeft == '32px' && data.formats.marginRight == '32px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">32px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setBlockIndentAndClose('40px')" :class="((data.formats.marginLeft == '40px' && data.formats.marginRight == '40px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '40px' && data.formats.marginRight == '40px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">40</text><text :class="((data.formats.marginLeft == '40px' && data.formats.marginRight == '40px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">40px</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="setBlockIndentAndClose('48px')" :class="((data.formats.marginLeft == '48px' && data.formats.marginRight == '48px')) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="((data.formats.marginLeft == '48px' && data.formats.marginRight == '48px')) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">48</text><text :class="((data.formats.marginLeft == '48px' && data.formats.marginRight == '48px')) ? desktopMenuTextActiveClass : desktopMenuTextClass">48px</text></view></view>
               </view>
             </view>
           </view>
 
           <view class="toolbar-panel-section" v-if="data.activeSheet == 'list'">
             <view :class="data.toolbarChipRowClass">
-              <view :class="data.toolbarChipCellClass"><view @click="clearListFormat" :class="(data.formats.list == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.list == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">D</text><text :class="(data.formats.list == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="setBulletList" :class="(data.formats.list == 'bullet') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.list == 'bullet') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">•</text><text :class="(data.formats.list == 'bullet') ? desktopMenuTextActiveClass : desktopMenuTextClass">无序列表</text></view></view>
-              <view :class="data.toolbarChipCellClass"><view @click="setOrderedList" :class="(data.formats.list == 'ordered') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.list == 'ordered') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">1.</text><text :class="(data.formats.list == 'ordered') ? desktopMenuTextActiveClass : desktopMenuTextClass">有序列表</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="clearListFormat" :class="(data.formats.list == '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.list == '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">D</text><text :class="(data.formats.list == '') ? desktopMenuTextActiveClass : desktopMenuTextClass">默认</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setBulletList" :class="(data.formats.list == 'bullet') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.list == 'bullet') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">•</text><text :class="(data.formats.list == 'bullet') ? desktopMenuTextActiveClass : desktopMenuTextClass">无序列表</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @tap="setOrderedList" :class="(data.formats.list == 'ordered') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.list == 'ordered') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">1.</text><text :class="(data.formats.list == 'ordered') ? desktopMenuTextActiveClass : desktopMenuTextClass">有序列表</text></view></view>
             </view>
           </view>
 
@@ -294,9 +294,9 @@
                 <view class="desktop-color-sheet-icon"></view>
                 <text class="desktop-color-sheet-label-text">默认颜色</text>
               </view>
-              <view :class="data.colorRowClass">
-                <view @click="setTextColorAndClose('')" :class="(data.formats.color == '') ? clearColorSwatchActiveClass : clearColorSwatchClass"></view>
-                <view v-for="color in TEXT_COLOR_PRESETS" :key="color" @click="setTextColorAndClose(color)" :class="(data.formats.color == color) ? filledColorSwatchActiveClass : filledColorSwatchClass" :style="'background-color: ' + color + ';'"></view>
+              <view class="color-row color-row-panel">
+                <view @tap="setTextColorAndClose('')" :class="(data.formats.color == '') ? clearColorSwatchActiveClass : clearColorSwatchClass"></view>
+                <view v-for="color in TEXT_COLOR_PRESETS" :key="color" @tap="setTextColorAndClose(color)" :class="(data.formats.color == color) ? filledColorSwatchActiveClass : filledColorSwatchClass" :style="'background-color: ' + color + ';'"></view>
               </view>
             </view>
           </view>
@@ -307,9 +307,9 @@
                 <view class="desktop-color-sheet-icon"></view>
                 <text class="desktop-color-sheet-label-text">默认背景</text>
               </view>
-              <view :class="data.colorRowClass">
-                <view @click="setBackgroundColorAndClose('')" :class="(data.formats.backgroundColor == '') ? clearColorSwatchActiveClass : clearColorSwatchClass"></view>
-                <view v-for="color in BACKGROUND_COLOR_PRESETS" :key="color" @click="setBackgroundColorAndClose(color)" :class="(data.formats.backgroundColor == color) ? filledColorSwatchActiveClass : filledColorSwatchClass" :style="'background-color: ' + color + ';'"></view>
+              <view class="color-row color-row-panel">
+                <view @tap="setBackgroundColorAndClose('')" :class="(data.formats.backgroundColor == '') ? clearColorSwatchActiveClass : clearColorSwatchClass"></view>
+                <view v-for="color in BACKGROUND_COLOR_PRESETS" :key="color" @tap="setBackgroundColorAndClose(color)" :class="(data.formats.backgroundColor == color) ? filledColorSwatchActiveClass : filledColorSwatchClass" :style="'background-color: ' + color + ';'"></view>
               </view>
             </view>
           </view>
@@ -318,10 +318,10 @@
             <view class="toolbar-panel-group">
               <text class="toolbar-color-title">插入内容</text>
               <view :class="data.toolbarChipRowClass">
-                <view :class="data.toolbarChipCellClass"><view @click="toggleChecklistTool" :class="(data.formats.list == 'check') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.list == 'check') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">TODO</text><text :class="(data.formats.list == 'check') ? desktopMenuTextActiveClass : desktopMenuTextClass">TODO</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="insertDivider" :class="(false) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(false) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">---</text><text :class="(false) ? desktopMenuTextActiveClass : desktopMenuTextClass">分割线</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="toggleChecklistTool" :class="(data.formats.list == 'check') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.list == 'check') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">TODO</text><text :class="(data.formats.list == 'check') ? desktopMenuTextActiveClass : desktopMenuTextClass">TODO</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="insertDivider" :class="(false) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(false) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">---</text><text :class="(false) ? desktopMenuTextActiveClass : desktopMenuTextClass">分割线</text></view></view>
                 <!-- #ifndef MP -->
-                <!-- <view :class="data.toolbarChipCellClass"><view @click="openLinkModal" :class="(data.formats.link != '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.link != '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">URL</text><text :class="(data.formats.link != '') ? desktopMenuTextActiveClass : desktopMenuTextClass">超链接</text></view></view> -->
+                <!-- <view :class="data.toolbarChipCellClass"><view @tap="openLinkModal" :class="(data.formats.link != '') ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.link != '') ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">URL</text><text :class="(data.formats.link != '') ? desktopMenuTextActiveClass : desktopMenuTextClass">超链接</text></view></view> -->
                 <!-- #endif -->
               </view>
             </view>
@@ -329,9 +329,9 @@
             <view class="toolbar-panel-group">
               <text class="toolbar-color-title">编辑操作</text>
               <view :class="data.toolbarChipRowClass">
-                <view :class="data.toolbarChipCellClass"><view @click="clearFormatting" :class="(false) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(false) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">CLR</text><text :class="(false) ? desktopMenuTextActiveClass : desktopMenuTextClass">清除样式</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="undo" :class="(false) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(false) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">↶</text><text :class="(false) ? desktopMenuTextActiveClass : desktopMenuTextClass">撤销</text></view></view>
-                <view :class="data.toolbarChipCellClass"><view @click="redo" :class="(false) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(false) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">↷</text><text :class="(false) ? desktopMenuTextActiveClass : desktopMenuTextClass">重做</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="clearFormatting" :class="(false) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(false) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">CLR</text><text :class="(false) ? desktopMenuTextActiveClass : desktopMenuTextClass">清除样式</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="undo" :class="(false) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(false) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">↶</text><text :class="(false) ? desktopMenuTextActiveClass : desktopMenuTextClass">撤销</text></view></view>
+                <view :class="data.toolbarChipCellClass"><view @tap="redo" :class="(false) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(false) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">↷</text><text :class="(false) ? desktopMenuTextActiveClass : desktopMenuTextClass">重做</text></view></view>
               </view>
             </view>
           </view>
@@ -341,8 +341,8 @@
 
     <!-- #ifndef MP -->
     <!-- #ifdef WEB -->
-    <view v-if="data.linkModalVisible" class="link-modal-mask link-modal-mask-floating" @click="closeLinkModal">
-      <view class="link-modal-card link-modal-card-floating" @click.stop>
+    <view v-if="data.linkModalVisible" class="link-modal-mask link-modal-mask-floating" @tap="closeLinkModal">
+      <view class="link-modal-card link-modal-card-floating" @tap.stop>
         <view class="link-modal-header">
           <text class="link-modal-title">{{ data.formats.link != '' ? '编辑超链接' : '插入超链接' }}</text>
           <text class="link-modal-subtitle">{{ data.formats.link != '' ? '仅修改链接地址' : (data.linkUseSelectionText ? '将为选中文本添加链接' : '填写显示文本与链接地址') }}</text>
@@ -364,14 +364,14 @@
           </view>
         </view>
         <view class="link-modal-actions">
-          <view v-if="data.formats.link != ''" class="link-modal-danger" @click="removeLink">
+          <view v-if="data.formats.link != ''" class="link-modal-danger" @tap="removeLink">
             <text class="link-modal-danger-text">删除链接</text>
           </view>
           <view class="link-modal-action-group">
-            <view class="link-modal-button link-modal-button-secondary" @click="closeLinkModal">
+            <view class="link-modal-button link-modal-button-secondary" @tap="closeLinkModal">
               <text class="link-modal-button-text link-modal-button-text-secondary">取消</text>
             </view>
-            <view class="link-modal-button link-modal-button-primary" @click="confirmLinkModal">
+            <view class="link-modal-button link-modal-button-primary" @tap="confirmLinkModal">
               <text class="link-modal-button-text">确定</text>
             </view>
           </view>
@@ -380,8 +380,8 @@
     </view>
     <!-- #endif -->
     <!-- #ifndef WEB -->
-    <view v-if="data.linkModalVisible" class="link-modal-mask link-modal-mask-app" @click="closeLinkModal">
-      <view class="link-modal-card link-modal-card-app" @click.stop>
+    <view v-if="data.linkModalVisible" class="link-modal-mask link-modal-mask-app" @tap="closeLinkModal">
+      <view class="link-modal-card link-modal-card-app" @tap.stop>
         <view class="link-modal-header">
           <text class="link-modal-title link-modal-title-app">{{ data.formats.link != '' ? '编辑超链接' : '插入超链接' }}</text>
           <text class="link-modal-subtitle link-modal-subtitle-app">{{ data.formats.link != '' ? '仅修改链接地址' : (data.linkUseSelectionText ? '将为选中文本添加链接' : '填写显示文本与链接地址') }}</text>
@@ -405,15 +405,15 @@
         <view class="link-modal-actions link-modal-actions-app">
           <!-- 蒸汽模式下闪退 暂时屏蔽 -->
           <!-- #ifndef VUE3-VAPOR -->
-          <view v-if="data.formats.link != ''" class="link-modal-danger link-modal-danger-app" @click="removeLink">
+          <view v-if="data.formats.link != ''" class="link-modal-danger link-modal-danger-app" @tap="removeLink">
             <text class="link-modal-danger-text link-modal-danger-text-app">删除链接</text>
           </view>
           <!-- #endif -->
           <view class="link-modal-action-group link-modal-action-group-app">
-            <view class="link-modal-button link-modal-button-secondary link-modal-button-secondary-app" @click="closeLinkModal">
+            <view class="link-modal-button link-modal-button-secondary link-modal-button-secondary-app" @tap="closeLinkModal">
               <text class="link-modal-button-text link-modal-button-text-secondary link-modal-button-text-secondary-app">取消</text>
             </view>
-            <view class="link-modal-button link-modal-button-primary link-modal-button-primary-app" @click="confirmLinkModal">
+            <view class="link-modal-button link-modal-button-primary link-modal-button-primary-app" @tap="confirmLinkModal">
               <text class="link-modal-button-text link-modal-button-text-app">确定</text>
             </view>
           </view>
@@ -432,6 +432,7 @@
         show-img-size
         show-img-toolbar
         show-img-resize
+        :type="data.editorInputType"
         @ready="onEditorReady"
         @focus="onEditorFocus"
         @blur="onEditorBlur"
@@ -491,7 +492,6 @@ type DataType = {
   pageWindowWidth: number;
   toolbarChipRowClass: string;
   toolbarChipCellClass: string;
-  colorRowClass: string;
   tooltipVisible: boolean;
   tooltipText: string;
   tooltipLeft: number;
@@ -501,6 +501,7 @@ type DataType = {
   sheetLeft: number;
   sheetArrowLeft: number;
   sheetAnimated: boolean;
+  editorInputType: string;
   isFocused: boolean;
   ignoreNextBlur: boolean;
   activeSheet: string;
@@ -575,7 +576,6 @@ const data = reactive<DataType>({
   pageWindowWidth: 0,
   toolbarChipRowClass: 'toolbar-chip-row',
   toolbarChipCellClass: 'toolbar-chip-cell',
-  colorRowClass: 'color-row',
   tooltipVisible: false,
   tooltipText: '',
   tooltipLeft: 0,
@@ -585,6 +585,7 @@ const data = reactive<DataType>({
   sheetLeft: 12,
   sheetArrowLeft: 32,
   sheetAnimated: false,
+  editorInputType: '',
   isFocused: false,
   ignoreNextBlur: false,
   activeSheet: '',
@@ -646,6 +647,14 @@ function isWideLayout() : boolean {
   return data.pageWindowWidth >= 1120
 }
 
+function isWebPhoneLayout() : boolean {
+  // #ifdef WEB
+  const windowWidth = data.pageWindowWidth > 0 ? data.pageWindowWidth : uni.getWindowInfo().windowWidth
+  return windowWidth < 760
+  // #endif
+  return false
+}
+
 
 function syncToolbarBottom() {
 }
@@ -699,8 +708,6 @@ function getSheetWidth() : number {
 }
 
 function syncToolbarChipClasses() {
-  data.colorRowClass = 'color-row color-row-panel'
-
   const panelWidth = getSheetWidth()
   if (panelWidth <= 300) {
     data.toolbarChipRowClass = 'toolbar-chip-row toolbar-chip-row-panel toolbar-chip-row-panel-compact'
@@ -723,12 +730,19 @@ function getSheetHostStyle() : string {
   // #ifndef WEB
   return ''
   // #endif
+  if (isWebPhoneLayout()) {
+    syncToolbarChipClasses()
+    return ''
+  }
   syncToolbarChipClasses()
   return `left:${data.sheetLeft}px;top:${data.sheetTop}px;width:${getSheetWidth()}px;`
 }
 
 function getSheetHostClass() : string {
   // #ifdef WEB
+  if (isWebPhoneLayout()) {
+    return 'sheet-host sheet-host-mobile-web'
+  }
   return 'sheet-host sheet-host-floating'
   // #endif
   return 'sheet-host'
@@ -819,6 +833,9 @@ function getToolbarPanelClass() : string {
   // #ifndef WEB
   return 'toolbar-panel toolbar-panel-attached'
   // #endif
+  if (isWebPhoneLayout()) {
+    return 'toolbar-panel toolbar-panel-mobile-web'
+  }
   if (data.sheetAnimated) {
     return 'toolbar-panel toolbar-panel-attached toolbar-panel-floating toolbar-panel-floating-attached toolbar-panel-floating-entered'
   }
@@ -829,6 +846,9 @@ function getToolbarPanelHeaderClass() : string {
   // #ifndef WEB
   return 'toolbar-panel-header'
   // #endif
+  if (isWebPhoneLayout()) {
+    return 'toolbar-panel-header toolbar-panel-header-mobile-web'
+  }
   return 'toolbar-panel-header toolbar-panel-header-floating'
 }
 
@@ -836,6 +856,9 @@ function getToolbarPanelTitleClass() : string {
   // #ifndef WEB
   return 'toolbar-panel-title'
   // #endif
+  if (isWebPhoneLayout()) {
+    return 'toolbar-panel-title toolbar-panel-title-mobile-web'
+  }
   return 'toolbar-panel-title toolbar-panel-title-floating'
 }
 
@@ -843,6 +866,9 @@ function getToolbarPanelSubtitleClass() : string {
   // #ifndef WEB
   return 'toolbar-panel-subtitle'
   // #endif
+  if (isWebPhoneLayout()) {
+    return 'toolbar-panel-subtitle toolbar-panel-subtitle-mobile-web'
+  }
   return 'toolbar-panel-subtitle toolbar-panel-subtitle-floating'
 }
 
@@ -850,6 +876,9 @@ function getToolbarPanelScrollClass() : string {
   // #ifndef WEB
   return 'toolbar-panel-scroll'
   // #endif
+  if (isWebPhoneLayout()) {
+    return 'toolbar-panel-scroll toolbar-panel-scroll-mobile-web'
+  }
   return 'toolbar-panel-scroll toolbar-panel-scroll-floating'
 }
 
@@ -867,6 +896,7 @@ function getDesktopMenuTextClass(active: boolean) : string {
 
 function closeSheets() {
   data.sheetAnimated = false
+  data.editorInputType = ''
   // #ifdef WEB
   hideToolbarTooltip()
   // #endif
@@ -950,6 +980,12 @@ function getSheetButtonId(sheet: string) : string {
 
 function updateSheetAnchor(sheet: string) {
   updatePageWindowHeight()
+  // #ifndef WEB
+  data.sheetTop = 74
+  data.sheetLeft = 12
+  data.sheetArrowLeft = 32
+  return
+  // #endif
   const layoutElement = uni.getElementById('editor-layout')
   const buttonElement = uni.getElementById(getSheetButtonId(sheet))
   if (buttonElement == null || layoutElement == null) {
@@ -958,8 +994,8 @@ function updateSheetAnchor(sheet: string) {
     data.sheetArrowLeft = 32
     return
   }
-  const pageRect = layoutElement.getBoundingClientRect()
-  const rect = buttonElement.getBoundingClientRect()
+  const pageRect = layoutElement!.getBoundingClientRect()
+  const rect = buttonElement!.getBoundingClientRect()
   const panelWidth = getSheetWidth()
   let panelLeft = rect.left - pageRect.left + rect.width / 2 - panelWidth / 2
   let maxLeft = pageRect.width - panelWidth - 12
@@ -998,7 +1034,7 @@ function onEditorReady() {
   uni.createEditorContextAsync(options)
 }
 
-function applyFormat(name: string, value: string | number | boolean | null | undefined) {
+function applyFormat(name: string, value: string | number | null | undefined) {
   const editor = getEditor()
   if (editor == null) {
     return
@@ -1088,7 +1124,7 @@ function setLocalFormat(name: string, value: string | number | boolean | null) {
   }
 }
 
-function applyFormatWithState(name: string, value: string | number | boolean | null | undefined) {
+function applyFormatWithState(name: string, value: string | number | null | undefined) {
   setLocalFormat(name, value)
   applyFormat(name, value)
 }
@@ -1165,7 +1201,8 @@ function cloneFormats(source: Formats) : Formats {
     fontFamily: source.fontFamily,
     fontSize: source.fontSize,
     color: source.color,
-    backgroundColor: source.backgroundColor
+    backgroundColor: source.backgroundColor,
+    codeBlock: source.codeBlock
   }
 }
 
@@ -1229,10 +1266,8 @@ function getEditorStageStyle() : string {
 }
 
 function hideKeyboardForSheet() {
+  data.editorInputType = 'none'
   data.isFocused = false
-  // #ifndef WEB
-  uni.hideKeyboard()
-  // #endif
 }
 
 function toggleSheet(sheet: string) {
@@ -1249,6 +1284,7 @@ function toggleSheet(sheet: string) {
       data.sheetAnimated = true
     }
   }, 16)
+
   hideKeyboardForSheet()
   syncToolbarBottom()
   syncToolbarVisibility()
@@ -1752,9 +1788,10 @@ const clearColorSwatchClass = computed((): string => getClearColorSwatchClass(fa
 const clearColorSwatchActiveClass = computed((): string => getClearColorSwatchClass(true))
 const filledColorSwatchClass = computed((): string => getFilledColorSwatchClass(false))
 const filledColorSwatchActiveClass = computed((): string => getFilledColorSwatchClass(true))
+const webPhoneLayout = computed((): boolean => isWebPhoneLayout())
 
 function clearTitleFormats() {
-  applyFormat('blockquote', false)
+  applyFormat('blockquote', null)
   if (data.formats.codeBlock) {
     setLocalFormat('code-block', false)
     applyFormat('code-block', null)
@@ -1781,7 +1818,7 @@ function setHeadingLevel(level: number) {
 }
 
 function setOrderedList() {
-  applyFormat('blockquote', false)
+  applyFormat('blockquote', null)
   if (data.formats.codeBlock) {
     setLocalFormat('code-block', false)
     applyFormat('code-block', null)
@@ -1793,7 +1830,7 @@ function setOrderedList() {
 }
 
 function setBulletList() {
-  applyFormat('blockquote', false)
+  applyFormat('blockquote', null)
   if (data.formats.codeBlock) {
     setLocalFormat('code-block', false)
     applyFormat('code-block', null)
@@ -1827,7 +1864,8 @@ function toggleBlockquote() {
     applyFormat('code-block', null)
   }
 
-  applyFormatWithState('blockquote', data.formats.blockquote ? false : true)
+  setLocalFormat('blockquote', nextValue)
+  applyFormat('blockquote', null)
   closeSheets()
   refocusEditorAfterToolbarAction()
 }
@@ -1842,7 +1880,7 @@ function toggleCodeBlock() {
       applyFormatWithState('header', 0)
     }
     if (data.formats.blockquote) {
-      applyFormatWithState('blockquote', false)
+      applyFormatWithState('blockquote', null)
     }
   }
   setLocalFormat('code-block', nextValue)
@@ -2152,31 +2190,36 @@ function escapeRegExp(value: string) : string {
   return value.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
 }
 
+function getBooleanAttribute(attributes: UTSJSONObject, key: string) : boolean {
+  const value = attributes[key]
+  return value != null && (value as boolean)
+}
+
 function buildOpAttributes(attributes: UTSJSONObject | null, nextLinkValue: string | null, preserveLink: boolean) : UTSJSONObject | null {
   let hasValue = false
   const nextAttributes: UTSJSONObject = {}
   if (attributes != null) {
-    if (attributes['bold'] === true) {
+    if (getBooleanAttribute(attributes, 'bold')) {
       nextAttributes['bold'] = true
       hasValue = true
     }
-    if (attributes['italic'] === true) {
+    if (getBooleanAttribute(attributes, 'italic')) {
       nextAttributes['italic'] = true
       hasValue = true
     }
-    if (attributes['underline'] === true) {
+    if (getBooleanAttribute(attributes, 'underline')) {
       nextAttributes['underline'] = true
       hasValue = true
     }
-    if (attributes['strike'] === true) {
+    if (getBooleanAttribute(attributes, 'strike')) {
       nextAttributes['strike'] = true
       hasValue = true
     }
-    if (attributes['blockquote'] === true) {
+    if (getBooleanAttribute(attributes, 'blockquote')) {
       nextAttributes['blockquote'] = true
       hasValue = true
     }
-    if (attributes['code-block'] === true) {
+    if (getBooleanAttribute(attributes, 'code-block')) {
       nextAttributes['code-block'] = true
       hasValue = true
     }
@@ -2487,7 +2530,7 @@ function showToolbarTooltip(buttonId: string, text: string) {
   if (buttonElement == null) {
     return
   }
-  const rect = buttonElement.getBoundingClientRect()
+  const rect = buttonElement!.getBoundingClientRect()
   data.tooltipText = text
   data.tooltipVisible = true
   data.tooltipLeft = rect.left + rect.width / 2
@@ -2521,6 +2564,7 @@ function onToolbarMouseDown(event: UniMouseEvent) {
 function onEditorFocus(event: UniEditorFocusEvent) {
   console.log('onEditorFocus')
   clearToolbarHideTimer()
+  data.editorInputType = ''
   // #ifdef WEB
   hideToolbarTooltip()
   // #endif
@@ -2547,6 +2591,7 @@ function onEditorBlur(event: UniEditorBlurEvent) {
     data.isFocused = true
     return
   }
+  data.editorInputType = ''
   data.isFocused = false
   if (data.activeSheet == '') {
     syncToolbarBottom()
@@ -2764,7 +2809,6 @@ defineExpose({
 .editor-field {
   flex: 1;
   background-color: #ffffff;
-  color: #111827;
 }
 
 .toolbar-wrap {
@@ -2826,6 +2870,12 @@ defineExpose({
   z-index: 160;
   box-shadow: 0px 10px 24px rgba(25, 25, 25, 0.05);
   border-radius: 14px;
+}
+
+.sheet-host-mobile-web {
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
 }
 
 .toolbar-panel {
@@ -3000,13 +3050,10 @@ defineExpose({
 
 .toolbar-select-arrow {
   min-width: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   color: #6b7280;
   font-size: 4px;
   line-height: 12px;
+  text-align: center;
   margin-left: 2px;
   margin-top: 1px;
 }
@@ -3105,13 +3152,10 @@ defineExpose({
 
 .toolbar-color-arrow {
   min-width: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   color: #6b7280;
   font-size: 4px;
   line-height: 12px;
+  text-align: center;
   margin-left: 0px;
   margin-top: 1px;
 }
@@ -3515,6 +3559,19 @@ defineExpose({
   transform: translateY(0px);
 }
 
+.toolbar-panel-mobile-web {
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-top-width: 1px;
+  padding-top: 16px;
+  padding-right: 12px;
+  padding-bottom: 16px;
+  padding-left: 12px;
+  box-shadow: 0px -10px 30px rgba(15, 23, 42, 0.12);
+}
+
 .toolbar-panel-arrow {
   position: absolute;
   top: -7px;
@@ -3530,8 +3587,16 @@ defineExpose({
   margin-bottom: 6px;
 }
 
+.toolbar-panel-header-mobile-web {
+  margin-bottom: 10px;
+}
+
 .toolbar-panel-title-floating {
   font-size: 12px;
+}
+
+.toolbar-panel-title-mobile-web {
+  font-size: 15px;
 }
 
 .toolbar-panel-subtitle-floating {
@@ -3539,8 +3604,18 @@ defineExpose({
   margin-top: 2px;
 }
 
+.toolbar-panel-subtitle-mobile-web {
+  font-size: 11px;
+  margin-top: 4px;
+}
+
 .toolbar-panel-scroll-floating {
   flex: 0;
+}
+
+.toolbar-panel-scroll-mobile-web {
+  flex: 0;
+  /* max-height: 62vh; */
 }
 
 .toolbar-chip-row-panel {

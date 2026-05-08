@@ -14,7 +14,7 @@ describe('PagesJson-backgroundColorContent', () => {
   it('background color content size', async () => {
     await program.pageScrollTo(1000)
     await page.waitFor(2000);
-    const image = await program.screenshot();
+    const image = await program.screenshot({fullPage: true});
     expect(image).toSaveImageSnapshot()
   })
 });

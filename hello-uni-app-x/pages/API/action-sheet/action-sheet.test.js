@@ -18,7 +18,7 @@ describe('showActionSheet', () => {
     return
   }
 
-  let screenShotOptions = {};
+  let screenShotOptions = { fullPage: true };
   let page;
   let topSafeArea = 0
   

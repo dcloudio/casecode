@@ -48,6 +48,10 @@ project:
     * 这次提交的变更范围是否合理（即，只包含了与提交目的相关的修改，没有混入其他不相关的改动）？
     * 如果变更跨越多个文件，它们之间的逻辑联系是否清晰？
 
+    ### 5. 测试文件变更
+    * 如果修改的是 .test.js 文件，需要验证测试用例是否合理、覆盖了相关功能，并且符合 jest 的最佳实践。
+    * 如果测试中涉及到截图测试(program.screenshot) 且没有在 app webview 模式（通过 process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true' 判断）时跳过，则需要设置为截长图模式，即 program.screenshot 配置参数 fullPage: true。
+
     ---
 
     **请以清晰的格式（如列表或分节）输出评审结果，并：**

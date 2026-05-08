@@ -38,7 +38,9 @@ describe('text-dynamic-letterSpacing', () => {
   })
 
   it('text-dynamic-letterSpacing-snapshot', async () => {
-    const image = await program.screenshot();
+    const image = await program.screenshot({
+      fullPage: true
+    });
     expect(image).toSaveImageSnapshot();
   })
 })

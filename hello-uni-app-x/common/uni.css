@@ -286,7 +286,7 @@
   border-top-style: solid;
   border-top-color: var(--border-color);
   border-top-width: 1px;
-  padding: 12px;
+  padding: 12px 16px;
   justify-content: space-between;
   /* #ifdef WEB */
   /* cursor: pointer; */
@@ -301,6 +301,10 @@
   color: var(--text-color, #333333);
   font-size: 14px;
   font-weight: normal;
+  width: 94%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
 
 /* left-windows */
@@ -361,3 +365,9 @@ page {
   color: rgba(0, 0, 0, 0.9);
 }
 /* #endif */
+.pl-4{
+  padding-left: 4px;
+}
+.pr-4{
+  padding-right: 4px;
+}

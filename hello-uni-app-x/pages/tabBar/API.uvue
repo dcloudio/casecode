@@ -23,7 +23,7 @@
         <uni-collapse-item ref="categoryRef" v-for="menuItem in menu" :key="menuItem.id" :title="menuItem.name"
           class="uni-panel">
           <template v-for="childMenuItem in menuItem.items" :key="childMenuItem.id">
-            <view v-if="childMenuItem.items.length==0" class="pl" hover-class="is--active"
+            <view v-if="childMenuItem.items.length==0" hover-class="is--active"
               :class="{'uni-navigate-item':childMenuItem.path !== 'set-tab-bar' || windowWidth <= 768}"
                @click="goPage(`/${childMenuItem.path}`)">
               <template v-if="childMenuItem.path !== 'set-tab-bar' || windowWidth <= 768">
@@ -32,10 +32,10 @@
                 <view class="right_arrow"></view>
               </template>
             </view>
-            <uni-collapse v-else style="width: 100%;border-top: 1px solid var(--border-color);">
+            <uni-collapse v-else style="width: 100%;border-top: 1px solid var(--border-color);" class="pl-4 pr-4">
               <uni-collapse-item :title="childMenuItem.name" class="uni-panel"
                 style="margin-bottom: 0;">
-                <view class="uni-navigate-item pl" hover-class="is--active"
+                <view class="uni-navigate-item" hover-class="is--active"
                   v-for="grandChildMenuItem in childMenuItem.items" :key="grandChildMenuItem.path"
                   @click="goPage(`/${grandChildMenuItem.path}`)">
                   <text class="uni-navigate-text" :class="{
@@ -184,11 +184,6 @@
 </script>
 
 <style>
-
-  .pl{
-    padding-left: 18px
-  }
-
   .popup {
     position: fixed;
     top: 0;
