@@ -179,12 +179,7 @@
 
   // #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
   const getContentHeight = (): number => {
-    // #ifdef VUE3-VAPOR
-    const height = webviewContext?.getContentHeight() ?? 0;
-    // #endif
-    // #ifndef VUE3-VAPOR
     const height = webviewElement?.getContentHeight() ?? 0;
-    // #endif
     console.log('contentHeight', height);
     if (!data.autoTest) {
       uni.showModal({
