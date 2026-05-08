@@ -3,195 +3,141 @@
     <view id="editor-layout" :class="editorLayoutClass">
     <view
       class="toolbar-wrap"
-      :class="isWebToolbarMode ? 'toolbar-wrap toolbar-wrap-web' : 'toolbar-wrap toolbar-wrap-mobile'"
+
       :style="toolbarWrapStyle"
-      <!--#ifndef WEB -->
-      v-if="data.toolbarVisible"
-      <!--#endif-->
-      @touchstart="onToolbarTouchStart"
       <!--#ifdef WEB -->
       @mousedown="onToolbarMouseDown"
       <!--#endif-->
     >
-      <!-- #ifdef WEB -->
-      <view v-if="isWebToolbarMode" class="desktop-toolbar-wrap">
+      <view class="toolbar-frame">
         <view :class="desktopToolbarShellClass" @mousemove="hideToolbarTooltip">
           <view :class="desktopToolbarLeadingGroupClass">
-            <view id="toolbar-button-undo" @click="undo" @mousemove.stop="showToolbarTooltip('toolbar-button-undo', '撤回')" class="toolbar-web-icon-button">
-              <text class="toolbar-web-icon-text iconfont">{{"&#xe6a3;"}}</text>
+            <view id="toolbar-button-undo" @click="undo" @mousemove.stop="showToolbarTooltip('toolbar-button-undo', '撤回')" class="toolbar-icon-button">
+              <text class="toolbar-icon-text iconfont">{{"&#xe6a3;"}}</text>
             </view>
-            <view id="toolbar-button-redo" @click="redo" @mousemove.stop="showToolbarTooltip('toolbar-button-redo', '重做')" class="toolbar-web-icon-button">
-              <text class="toolbar-web-icon-text iconfont">{{"&#xe6a5;"}}</text>
+            <view id="toolbar-button-redo" @click="redo" @mousemove.stop="showToolbarTooltip('toolbar-button-redo', '重做')" class="toolbar-icon-button">
+              <text class="toolbar-icon-text iconfont">{{"&#xe6a5;"}}</text>
             </view>
-            <view id="toolbar-button-clear-format" @click="clearFormatting" @mousemove.stop="showToolbarTooltip('toolbar-button-clear-format', '清除格式')" class="toolbar-web-icon-button">
-              <text class="toolbar-web-icon-text iconfont">{{"&#xe6b9;"}}</text>
-            </view>
-          </view>
-
-          <view :class="desktopToolbarDividerClass"></view>
-
-          <view :class="desktopToolbarGroupClass">
-            <view id="toolbar-button-font-size" @click="openFontSizeSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-font-size', '设置字号')" :class="fontSizeSheetHighlighted ? 'toolbar-web-select toolbar-web-select-active' : 'toolbar-web-select'">
-              <text :class="fontSizeSheetHighlighted ? 'toolbar-web-select-label toolbar-web-select-label-active toolbar-web-size-label' : 'toolbar-web-select-label toolbar-web-size-label'">{{ getDesktopFontSizeLabel() }}</text>
-              <text :class="fontSizeSheetHighlighted ? 'toolbar-web-select-arrow toolbar-web-select-arrow-active iconfont' : 'toolbar-web-select-arrow iconfont'">{{"&#xe6be;"}}</text>
-            </view>
-            <view id="toolbar-button-font-family" @click="openFontFamilySheet" @mousemove.stop="showToolbarTooltip('toolbar-button-font-family', '设置字体')" :class="fontFamilySheetHighlighted ? 'toolbar-web-select toolbar-web-select-font toolbar-web-select-active' : 'toolbar-web-select toolbar-web-select-font'">
-              <!-- <text :class="fontFamilySheetHighlighted ? 'toolbar-web-icon-text toolbar-web-icon-text-active toolbar-web-select-glyph iconfont' : 'toolbar-web-icon-text toolbar-web-select-glyph iconfont'">{{"&#xe68e;"}}</text> -->
-              <text :class="fontFamilySheetHighlighted ? 'toolbar-web-select-label toolbar-web-select-label-active toolbar-web-select-font-label' : 'toolbar-web-select-label toolbar-web-select-font-label'">{{ getDesktopFontFamilyLabel() }}</text>
-              <text :class="fontFamilySheetHighlighted ? 'toolbar-web-select-arrow toolbar-web-select-arrow-active iconfont' : 'toolbar-web-select-arrow iconfont'">{{"&#xe6be;"}}</text>
-            </view>
-            <view id="toolbar-button-bold" @click="toggleBold" @mousemove.stop="showToolbarTooltip('toolbar-button-bold', '加粗')" :class="data.formats.bold ? 'toolbar-web-icon-button toolbar-web-icon-button-active' : 'toolbar-web-icon-button'">
-              <text :class="data.formats.bold ? 'toolbar-web-icon-text toolbar-web-icon-text-active toolbar-web-font-action iconfont relative-top-1' : 'toolbar-web-icon-text toolbar-web-font-action iconfont relative-top-1'">{{"&#xe6ae;"}}</text>
-            </view>
-            <view id="toolbar-button-italic" @click="toggleItalic" @mousemove.stop="showToolbarTooltip('toolbar-button-italic', '斜体')" :class="data.formats.italic ? 'toolbar-web-icon-button toolbar-web-icon-button-active' : 'toolbar-web-icon-button'">
-              <text :class="data.formats.italic ? 'toolbar-web-icon-text toolbar-web-icon-text-active toolbar-web-font-action iconfont relative-top-1' : 'toolbar-web-icon-text toolbar-web-font-action iconfont relative-top-1'">{{"&#xe6af;"}}</text>
-            </view>
-            <view id="toolbar-button-underline" @click="toggleUnderline" @mousemove.stop="showToolbarTooltip('toolbar-button-underline', '下划线')" :class="data.formats.underline ? 'toolbar-web-icon-button toolbar-web-icon-button-active' : 'toolbar-web-icon-button'">
-              <text :class="data.formats.underline ? 'toolbar-web-icon-text toolbar-web-icon-text-active toolbar-web-font-action iconfont' : 'toolbar-web-icon-text toolbar-web-font-action iconfont'">{{"&#xe6a7;"}}</text>
-            </view>
-            <view id="toolbar-button-strike" @click="toggleStrike" @mousemove.stop="showToolbarTooltip('toolbar-button-strike', '删除线')" :class="data.formats.strike ? 'toolbar-web-icon-button toolbar-web-icon-button-active' : 'toolbar-web-icon-button'">
-              <text :class="data.formats.strike ? 'toolbar-web-icon-text toolbar-web-icon-text-active toolbar-web-font-action iconfont relative-top-1' : 'toolbar-web-icon-text toolbar-web-font-action iconfont relative-top-1'">{{"&#xe6aa;"}}</text>
+            <view id="toolbar-button-clear-format" @click="clearFormatting" @mousemove.stop="showToolbarTooltip('toolbar-button-clear-format', '清除格式')" class="toolbar-icon-button">
+              <text class="toolbar-icon-text iconfont">{{"&#xe6b9;"}}</text>
             </view>
           </view>
 
           <view :class="desktopToolbarDividerClass"></view>
 
           <view :class="desktopToolbarGroupClass">
-            <view id="toolbar-button-text-color" @click="openTextColorSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-text-color', '字体颜色')" :class="textColorSheetHighlighted ? 'toolbar-web-color-button toolbar-web-color-button-active' : 'toolbar-web-color-button'">
-              <view class="toolbar-web-color-stack">
-                <text :class="textColorSheetHighlighted ? 'toolbar-web-color-symbol toolbar-web-color-symbol-active iconfont' : 'toolbar-web-color-symbol iconfont'">{{"&#xe6b8;"}}</text>
-                <view class="toolbar-web-color-underline" :style="toolbarTextColorChipStyle"></view>
+            <view id="toolbar-button-font-size" @click="openFontSizeSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-font-size', '设置字号')" :class="fontSizeSheetHighlighted ? 'toolbar-select toolbar-select-active' : 'toolbar-select'">
+              <text :class="fontSizeSheetHighlighted ? 'toolbar-select-label toolbar-select-label-active toolbar-size-label' : 'toolbar-select-label toolbar-size-label'">{{ getDesktopFontSizeLabel() }}</text>
+              <text :class="fontSizeSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
+            </view>
+            <view id="toolbar-button-font-family" @click="openFontFamilySheet" @mousemove.stop="showToolbarTooltip('toolbar-button-font-family', '设置字体')" :class="fontFamilySheetHighlighted ? 'toolbar-select toolbar-select-font toolbar-select-active' : 'toolbar-select toolbar-select-font'">
+              <!-- <text :class="fontFamilySheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{"&#xe68e;"}}</text> -->
+              <text :class="fontFamilySheetHighlighted ? 'toolbar-select-label toolbar-select-label-active toolbar-select-font-label' : 'toolbar-select-label toolbar-select-font-label'">{{ getDesktopFontFamilyLabel() }}</text>
+              <text :class="fontFamilySheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
+            </view>
+            <view id="toolbar-button-bold" @click="toggleBold" @mousemove.stop="showToolbarTooltip('toolbar-button-bold', '加粗')" :class="data.formats.bold ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+              <text :class="data.formats.bold ? 'toolbar-icon-text toolbar-icon-text-active toolbar-font-action iconfont relative-top-1' : 'toolbar-icon-text toolbar-font-action iconfont relative-top-1'">{{"&#xe6ae;"}}</text>
+            </view>
+            <view id="toolbar-button-italic" @click="toggleItalic" @mousemove.stop="showToolbarTooltip('toolbar-button-italic', '斜体')" :class="data.formats.italic ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+              <text :class="data.formats.italic ? 'toolbar-icon-text toolbar-icon-text-active toolbar-font-action iconfont relative-top-1' : 'toolbar-icon-text toolbar-font-action iconfont relative-top-1'">{{"&#xe6af;"}}</text>
+            </view>
+            <view id="toolbar-button-underline" @click="toggleUnderline" @mousemove.stop="showToolbarTooltip('toolbar-button-underline', '下划线')" :class="data.formats.underline ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+              <text :class="data.formats.underline ? 'toolbar-icon-text toolbar-icon-text-active toolbar-font-action iconfont' : 'toolbar-icon-text toolbar-font-action iconfont'">{{"&#xe6a7;"}}</text>
+            </view>
+            <view id="toolbar-button-strike" @click="toggleStrike" @mousemove.stop="showToolbarTooltip('toolbar-button-strike', '删除线')" :class="data.formats.strike ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+              <text :class="data.formats.strike ? 'toolbar-icon-text toolbar-icon-text-active toolbar-font-action iconfont relative-top-1' : 'toolbar-icon-text toolbar-font-action iconfont relative-top-1'">{{"&#xe6aa;"}}</text>
+            </view>
+          </view>
+
+          <view :class="desktopToolbarDividerClass"></view>
+
+          <view :class="desktopToolbarGroupClass">
+            <view id="toolbar-button-text-color" @click="openTextColorSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-text-color', '字体颜色')" :class="textColorSheetHighlighted ? 'toolbar-color-button toolbar-color-button-active' : 'toolbar-color-button'">
+              <view class="toolbar-color-stack">
+                <text :class="textColorSheetHighlighted ? 'toolbar-color-symbol toolbar-color-symbol-active iconfont' : 'toolbar-color-symbol iconfont'">{{"&#xe6b8;"}}</text>
+                <view class="toolbar-color-underline" :style="toolbarTextColorChipStyle"></view>
               </view>
-              <text :class="textColorSheetHighlighted ? 'toolbar-web-color-arrow toolbar-web-color-arrow-active iconfont' : 'toolbar-web-color-arrow iconfont'">{{"&#xe6be;"}}</text>
+              <text :class="textColorSheetHighlighted ? 'toolbar-color-arrow toolbar-color-arrow-active iconfont' : 'toolbar-color-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-background-color" @click="openBackgroundColorSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-background-color', '背景颜色')" :class="backgroundColorSheetHighlighted ? 'toolbar-web-color-button toolbar-web-color-button-active' : 'toolbar-web-color-button'">
-              <view class="toolbar-web-color-stack">
-                <text :class="backgroundColorSheetHighlighted ? 'toolbar-web-color-symbol toolbar-web-color-symbol-active iconfont' : 'toolbar-web-color-symbol iconfont'">{{"&#xe6bb;"}}</text>
-                <view class="toolbar-web-color-underline" :style="toolbarBackgroundColorChipStyle"></view>
+            <view id="toolbar-button-background-color" @click="openBackgroundColorSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-background-color', '背景颜色')" :class="backgroundColorSheetHighlighted ? 'toolbar-color-button toolbar-color-button-active' : 'toolbar-color-button'">
+              <view class="toolbar-color-stack">
+                <text :class="backgroundColorSheetHighlighted ? 'toolbar-color-symbol toolbar-color-symbol-active iconfont' : 'toolbar-color-symbol iconfont'">{{"&#xe6bb;"}}</text>
+                <view class="toolbar-color-underline" :style="toolbarBackgroundColorChipStyle"></view>
               </view>
-              <text :class="backgroundColorSheetHighlighted ? 'toolbar-web-color-arrow toolbar-web-color-arrow-active iconfont' : 'toolbar-web-color-arrow iconfont'" style="margin-left: 2px">{{"&#xe6be;"}}</text>
+              <text :class="backgroundColorSheetHighlighted ? 'toolbar-color-arrow toolbar-color-arrow-active iconfont' : 'toolbar-color-arrow iconfont'" style="margin-left: 2px">{{"&#xe6be;"}}</text>
             </view>
           </view>
           <view :class="desktopToolbarDividerClass"></view>
 
           <view :class="desktopToolbarGroupClass">
-            <view id="toolbar-button-align" @click="openAlignSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-align', '对齐方式')" :class="alignSheetHighlighted ? 'toolbar-web-select toolbar-web-select-compact toolbar-web-select-active' : 'toolbar-web-select toolbar-web-select-compact'">
-              <text :class="alignSheetHighlighted ? 'toolbar-web-icon-text toolbar-web-icon-text-active toolbar-web-select-glyph iconfont' : 'toolbar-web-icon-text toolbar-web-select-glyph iconfont'" v-html="getDesktopAlignIconGlyph()"></text>
-              <text :class="alignSheetHighlighted ? 'toolbar-web-select-arrow toolbar-web-select-arrow-active iconfont' : 'toolbar-web-select-arrow iconfont'">{{"&#xe6be;"}}</text>
+            <view id="toolbar-button-align" @click="openAlignSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-align', '对齐方式')" :class="alignSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-active' : 'toolbar-select toolbar-select-compact'">
+              <text :class="alignSheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{ desktopAlignIconGlyph }}</text>
+              <text :class="alignSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-text-indent" @click="toggleTextIndent" @mousemove.stop="showToolbarTooltip('toolbar-button-text-indent', '首行缩进')" :class="textIndentHighlighted ? 'toolbar-web-icon-button toolbar-web-icon-button-active' : 'toolbar-web-icon-button'">
-              <text :class="textIndentHighlighted ? 'toolbar-web-icon-text toolbar-web-icon-text-active iconfont' : 'toolbar-web-icon-text iconfont'">{{"&#xe6ad;"}}</text>
+            <view id="toolbar-button-text-indent" @click="toggleTextIndent" @mousemove.stop="showToolbarTooltip('toolbar-button-text-indent', '首行缩进')" :class="textIndentHighlighted ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+              <text :class="textIndentHighlighted ? 'toolbar-icon-text toolbar-icon-text-active iconfont' : 'toolbar-icon-text iconfont'">{{"&#xe6ad;"}}</text>
             </view>
-            <view id="toolbar-button-block-indent" @click="openBlockIndentSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-block-indent', '两端缩进')" :class="blockIndentSheetHighlighted ? 'toolbar-web-select toolbar-web-select-compact toolbar-web-select-active' : 'toolbar-web-select toolbar-web-select-compact'">
-              <text :class="blockIndentSheetHighlighted ? 'toolbar-web-icon-text toolbar-web-icon-text-active toolbar-web-select-glyph iconfont' : 'toolbar-web-icon-text toolbar-web-select-glyph iconfont'">{{"&#xe6ba;"}}</text>
-              <text :class="blockIndentSheetHighlighted ? 'toolbar-web-select-arrow toolbar-web-select-arrow-active iconfont' : 'toolbar-web-select-arrow iconfont'">{{"&#xe6be;"}}</text>
+            <view id="toolbar-button-block-indent" @click="openBlockIndentSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-block-indent', '两端缩进')" :class="blockIndentSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-active' : 'toolbar-select toolbar-select-compact'">
+              <text :class="blockIndentSheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{"&#xe6ba;"}}</text>
+              <text :class="blockIndentSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-line-height" @click="openLineHeightSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-line-height', '行间距')" :class="lineHeightSheetHighlighted ? 'toolbar-web-select toolbar-web-select-compact toolbar-web-select-value toolbar-web-select-active' : 'toolbar-web-select toolbar-web-select-compact toolbar-web-select-value'">
-              <text :class="lineHeightSheetHighlighted ? 'toolbar-web-icon-text toolbar-web-icon-text-active toolbar-web-select-glyph iconfont' : 'toolbar-web-icon-text toolbar-web-select-glyph iconfont'">{{"&#xe6b0;"}}</text>
-              <text :class="lineHeightSheetHighlighted ? 'toolbar-web-select-arrow toolbar-web-select-arrow-active iconfont' : 'toolbar-web-select-arrow iconfont'">{{"&#xe6be;"}}</text>
+            <view id="toolbar-button-line-height" @click="openLineHeightSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-line-height', '行间距')" :class="lineHeightSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-value toolbar-select-active' : 'toolbar-select toolbar-select-compact toolbar-select-value'">
+              <text :class="lineHeightSheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{"&#xe6b0;"}}</text>
+              <text :class="lineHeightSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-letter-spacing" @click="openLetterSpacingSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-letter-spacing', '字间距')" :class="letterSpacingSheetHighlighted ? 'toolbar-web-select toolbar-web-select-compact toolbar-web-select-value toolbar-web-select-active' : 'toolbar-web-select toolbar-web-select-compact toolbar-web-select-value'">
-              <text :class="letterSpacingSheetHighlighted ? 'toolbar-web-icon-text toolbar-web-icon-text-active toolbar-web-select-glyph iconfont' : 'toolbar-web-icon-text toolbar-web-select-glyph iconfont'">{{"&#xe6ac;"}}</text>
-              <text :class="letterSpacingSheetHighlighted ? 'toolbar-web-select-arrow toolbar-web-select-arrow-active iconfont' : 'toolbar-web-select-arrow iconfont'">{{"&#xe6be;"}}</text>
+            <view id="toolbar-button-letter-spacing" @click="openLetterSpacingSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-letter-spacing', '字间距')" :class="letterSpacingSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-value toolbar-select-active' : 'toolbar-select toolbar-select-compact toolbar-select-value'">
+              <text :class="letterSpacingSheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{"&#xe6ac;"}}</text>
+              <text :class="letterSpacingSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
-            <view id="toolbar-button-list" @click="openListSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-list', '列表')" :class="listSheetHighlighted ? 'toolbar-web-select toolbar-web-select-compact toolbar-web-select-active' : 'toolbar-web-select toolbar-web-select-compact'">
-              <text :class="listSheetHighlighted ? 'toolbar-web-icon-text toolbar-web-icon-text-active toolbar-web-select-glyph iconfont' : 'toolbar-web-icon-text toolbar-web-select-glyph iconfont'">{{"&#xe6a4;"}}</text>
-              <text :class="listSheetHighlighted ? 'toolbar-web-select-arrow toolbar-web-select-arrow-active iconfont' : 'toolbar-web-select-arrow iconfont'">{{"&#xe6be;"}}</text>
+            <view id="toolbar-button-list" @click="openListSheet" @mousemove.stop="showToolbarTooltip('toolbar-button-list', '列表')" :class="listSheetHighlighted ? 'toolbar-select toolbar-select-compact toolbar-select-active' : 'toolbar-select toolbar-select-compact'">
+              <text :class="listSheetHighlighted ? 'toolbar-icon-text toolbar-icon-text-active toolbar-select-glyph iconfont' : 'toolbar-icon-text toolbar-select-glyph iconfont'">{{"&#xe6a4;"}}</text>
+              <text :class="listSheetHighlighted ? 'toolbar-select-arrow toolbar-select-arrow-active iconfont' : 'toolbar-select-arrow iconfont'">{{"&#xe6be;"}}</text>
             </view>
             <!-- #ifndef MP -->
-            <view id="toolbar-button-blockquote" @click="toggleBlockquote" @mousemove.stop="showToolbarTooltip('toolbar-button-blockquote', '引用')" :class="data.formats.blockquote ? 'toolbar-web-icon-button toolbar-web-icon-button-active' : 'toolbar-web-icon-button'">
-              <text :class="data.formats.blockquote ? 'toolbar-web-icon-text toolbar-web-icon-text-active iconfont' : 'toolbar-web-icon-text iconfont'">{{"&#xe6b5;"}}</text>
+            <view id="toolbar-button-blockquote" @click="toggleBlockquote" @mousemove.stop="showToolbarTooltip('toolbar-button-blockquote', '引用')" :class="data.formats.blockquote ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+              <text :class="data.formats.blockquote ? 'toolbar-icon-text toolbar-icon-text-active iconfont' : 'toolbar-icon-text iconfont'">{{"&#xe6b5;"}}</text>
+            </view>
+            <view id="toolbar-button-code-block" @click="toggleCodeBlock" @mousemove.stop="showToolbarTooltip('toolbar-button-code-block', '代码块')" :class="data.formats.codeBlock ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+              <text :class="data.formats.codeBlock ? 'toolbar-icon-text toolbar-icon-text-active iconfont' : 'toolbar-icon-text iconfont'">{{"&#xe6a9;"}}</text>
             </view>
             <!-- #endif -->
-            <view id="toolbar-button-divider" @click="insertDivider" @mousemove.stop="showToolbarTooltip('toolbar-button-divider', '分割线')" class="toolbar-web-icon-button">
-              <text class="toolbar-web-icon-text iconfont">{{"&#xe6b4;"}}</text>
+            <view id="toolbar-button-divider" @click="insertDivider" @mousemove.stop="showToolbarTooltip('toolbar-button-divider', '分割线')" class="toolbar-icon-button">
+              <text class="toolbar-icon-text iconfont">{{"&#xe6b4;"}}</text>
             </view>
           </view>
 
           <view :class="desktopToolbarDividerClass"></view>
 
           <view :class="desktopToolbarGroupClass">
-            <view id="toolbar-button-image" @click="chooseInsertImage" @mousemove.stop="showToolbarTooltip('toolbar-button-image', '图片')" class="toolbar-web-icon-button">
-              <text class="toolbar-web-icon-text iconfont">{{"&#xe6bc;"}}</text>
+            <view id="toolbar-button-image" @click="chooseInsertImage" @mousemove.stop="showToolbarTooltip('toolbar-button-image', '图片')" class="toolbar-icon-button">
+              <text class="toolbar-icon-text iconfont">{{"&#xe6bc;"}}</text>
             </view>
             <!-- #ifndef MP -->
-            <view id="toolbar-button-link" @click="openLinkModal" @mousemove.stop="showToolbarTooltip('toolbar-button-link', data.formats.link != '' ? '编辑超链接' : '插入超链接')" :class="data.formats.link != '' ? 'toolbar-web-icon-button toolbar-web-icon-button-active' : 'toolbar-web-icon-button'">
-              <text :class="data.formats.link != '' ? 'toolbar-web-icon-text toolbar-web-icon-text-active iconfont' : 'toolbar-web-icon-text iconfont'">{{"&#xe6bd;"}}</text>
+            <view id="toolbar-button-link" @click="openLinkModal" @mousemove.stop="showToolbarTooltip('toolbar-button-link', data.formats.link != '' ? '编辑超链接' : '插入超链接')" :class="data.formats.link != '' ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+              <text :class="data.formats.link != '' ? 'toolbar-icon-text toolbar-icon-text-active iconfont' : 'toolbar-icon-text iconfont'">{{"&#xe6bd;"}}</text>
             </view>
             <!-- #endif -->
           </view>
         </view>
-        <view v-if="data.tooltipVisible" class="toolbar-web-tooltip" :style="toolbarTooltipStyle">
-          <view class="toolbar-web-tooltip-arrow"></view>
-          <view class="toolbar-web-tooltip-bubble">
-            <text class="toolbar-web-tooltip-text">{{ data.tooltipText }}</text>
+        <!-- #ifdef WEB -->
+        <view v-if="data.tooltipVisible" class="toolbar-tooltip" :style="toolbarTooltipStyle">
+          <view class="toolbar-tooltip-arrow"></view>
+          <view class="toolbar-tooltip-bubble">
+            <text class="toolbar-tooltip-text">{{ data.tooltipText }}</text>
           </view>
         </view>
         <view v-if="!data.isFocused && data.activeSheet == ''" class="desktop-toolbar-mask"></view>
-      </view>
-      <!-- #endif -->
-
-      <!-- #ifndef WEB -->
-      <view class="mobile-toolbar-wrap">
-      <view :class="toolbarShellClass">
-        <scroll-view :class="toolbarScrollTrackClass" direction="horizontal" :show-scrollbar="false">
-          <view :class="toolbarRowClass">
-            <view class="toolbar-group toolbar-group-main">
-              <view id="toolbar-button-more" @click="openMoreSheet" :class="data.activeSheet == 'more' ? 'toolbar-button toolbar-button-active toolbar-button-right' : 'toolbar-button toolbar-button-right'">
-                <text :class="data.activeSheet == 'more' ? 'toolbar-iconfont toolbar-iconfont-active iconfont' : 'toolbar-iconfont iconfont'">{{"&#xe6bf;"}}</text>
-              </view>
-            </view>
-
-            <view class="toolbar-divider toolbar-divider-side"></view>
-
-            <view class="toolbar-group toolbar-group-main">
-              <view id="toolbar-button-title" @click="openTitleSheet" :class="titleSheetHighlighted ? 'toolbar-button toolbar-button-active' : 'toolbar-button'">
-                <text :class="titleSheetHighlighted ? 'toolbar-iconfont toolbar-iconfont-active iconfont' : 'toolbar-iconfont iconfont'">{{"&#xe67b;"}}</text>
-              </view>
-              <view id="toolbar-button-style" @click="openStyleSheet" :class="mobileStyleButtonClass">
-                <text :class="styleSheetHighlighted ? 'toolbar-iconfont toolbar-iconfont-active iconfont' : 'toolbar-iconfont iconfont'">{{"&#xe6b8;"}}</text>
-              </view>
-              <view id="toolbar-button-align" @click="openAlignSheet" :class="alignSheetHighlighted ? 'toolbar-button toolbar-button-active toolbar-button-right' : 'toolbar-button toolbar-button-right'">
-                <text :class="alignSheetHighlighted ? 'toolbar-iconfont toolbar-iconfont-active iconfont' : 'toolbar-iconfont iconfont'">{{"&#xe6a8;"}}</text>
-              </view>
-            </view>
-
-            <view class="toolbar-divider toolbar-divider-side"></view>
-
-            <view class="toolbar-group toolbar-group-main">
-              <view @click="chooseInsertImage" class="toolbar-button">
-                <text class="toolbar-iconfont iconfont">{{"&#xe6bc;"}}</text>
-              </view>
-            </view>
-          </view>
-        </scroll-view>
-
-        <!-- #ifndef WEB -->
-        <view class="toolbar-fixed-action">
-          <view class="toolbar-fixed-inner">
-            <view class="toolbar-divider toolbar-divider-fixed"></view>
-            <view @click="hideEditorKeyboard" class="toolbar-button toolbar-button-dismiss">
-              <text class="toolbar-iconfont iconfont hide-keyboard">{{"&#xe69a;"}}</text>
-            </view>
-          </view>
-        </view>
         <!-- #endif -->
       </view>
-      </view>
-      <!-- #endif -->
     </view>
 
-    <!-- #ifdef WEB -->
-    <view v-if="data.activeSheet != ''" class="sheet-backdrop-web" @click="closeSheets"></view>
-    <!-- #endif -->
+    <view v-if="data.activeSheet != ''" class="sheet-backdrop" @click="closeSheets"></view>
 
     <view
      id="editor-sheet-host"
-     class="sheet-host"
-     :class="isWebToolbarMode ? 'sheet-host sheet-host-web' : 'sheet-host'"
+     :class="sheetHostClass"
      :style="sheetHostStyle"
      v-if="data.activeSheet != ''"
-      @touchstart="onToolbarTouchStart"
       <!--#ifdef WEB -->
       @mousedown="onToolbarMouseDown"
       <!--#endif-->
@@ -213,6 +159,7 @@
               <view :class="data.toolbarChipCellClass"><view @click="setParagraph" :class="(paragraphActive) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(paragraphActive) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">P</text><text :class="(paragraphActive) ? desktopMenuTextActiveClass : desktopMenuTextClass">正文</text></view></view>
               <!-- #ifndef MP -->
               <view :class="data.toolbarChipCellClass"><view @click="toggleBlockquote" :class="(data.formats.blockquote) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.blockquote) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">BQ</text><text :class="(data.formats.blockquote) ? desktopMenuTextActiveClass : desktopMenuTextClass">引用</text></view></view>
+              <view :class="data.toolbarChipCellClass"><view @click="toggleCodeBlock" :class="(data.formats.codeBlock) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.codeBlock) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">&lt;/&gt;</text><text :class="(data.formats.codeBlock) ? desktopMenuTextActiveClass : desktopMenuTextClass">代码</text></view></view>
               <!-- #endif -->
               <view :class="data.toolbarChipCellClass"><view @click="setHeadingLevel(1)" :class="(data.formats.header == 1) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 1) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H1</text><text :class="(data.formats.header == 1) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题1</text></view></view>
               <view :class="data.toolbarChipCellClass"><view @click="setHeadingLevel(2)" :class="(data.formats.header == 2) ? desktopMenuItemActiveClass : desktopMenuItemClass"><text :class="(data.formats.header == 2) ? desktopMenuBadgeActiveClass : desktopMenuBadgeClass">H2</text><text :class="(data.formats.header == 2) ? desktopMenuTextActiveClass : desktopMenuTextClass">大标题2</text></view></view>
@@ -394,8 +341,8 @@
 
     <!-- #ifndef MP -->
     <!-- #ifdef WEB -->
-    <view v-if="data.linkModalVisible" class="link-modal-mask link-modal-mask-web" @click="closeLinkModal">
-      <view class="link-modal-card link-modal-card-web" @click.stop>
+    <view v-if="data.linkModalVisible" class="link-modal-mask link-modal-mask-floating" @click="closeLinkModal">
+      <view class="link-modal-card link-modal-card-floating" @click.stop>
         <view class="link-modal-header">
           <text class="link-modal-title">{{ data.formats.link != '' ? '编辑超链接' : '插入超链接' }}</text>
           <text class="link-modal-subtitle">{{ data.formats.link != '' ? '仅修改链接地址' : (data.linkUseSelectionText ? '将为选中文本添加链接' : '填写显示文本与链接地址') }}</text>
@@ -456,9 +403,12 @@
           </view>
         </view>
         <view class="link-modal-actions link-modal-actions-app">
+          <!-- 蒸汽模式下闪退 暂时屏蔽 -->
+          <!-- #ifndef VUE3-VAPOR -->
           <view v-if="data.formats.link != ''" class="link-modal-danger link-modal-danger-app" @click="removeLink">
             <text class="link-modal-danger-text link-modal-danger-text-app">删除链接</text>
           </view>
+          <!-- #endif -->
           <view class="link-modal-action-group link-modal-action-group-app">
             <view class="link-modal-button link-modal-button-secondary link-modal-button-secondary-app" @click="closeLinkModal">
               <text class="link-modal-button-text link-modal-button-text-secondary link-modal-button-text-secondary-app">取消</text>
@@ -500,6 +450,7 @@ type Formats = {
   underline: boolean;
   strike: boolean;
   blockquote: boolean;
+  codeBlock: boolean;
   link: string;
   header: number;
   list: string;
@@ -536,9 +487,6 @@ const BACKGROUND_COLOR_PRESETS: string[] = [
 ]
 
 type DataType = {
-  toolbarVisible: boolean;
-  toolbarBottom: number;
-  keyboardHeight: number;
   pageWindowHeight: number;
   pageWindowWidth: number;
   toolbarChipRowClass: string;
@@ -555,7 +503,6 @@ type DataType = {
   sheetAnimated: boolean;
   isFocused: boolean;
   ignoreNextBlur: boolean;
-  toolbarKeepVisible: boolean;
   activeSheet: string;
   autoTest: boolean;
   editorReadyTest: boolean;
@@ -573,6 +520,8 @@ type DataType = {
   linkUseSelectionText: boolean;
   linkDraftText: string;
   linkDraftHref: string;
+  linkSelectionText: string;
+  linkOriginalHref: string;
 }
 
 function createDefaultFormats() : Formats {
@@ -582,6 +531,7 @@ function createDefaultFormats() : Formats {
     underline: false,
     strike: false,
     blockquote: false,
+    codeBlock: false,
     link: '',
     header: 0,
     list: '',
@@ -604,6 +554,7 @@ function assignFormats(target: Formats, source: Formats) {
   target.underline = source.underline
   target.strike = source.strike
   target.blockquote = source.blockquote
+  target.codeBlock = source.codeBlock
   target.link = source.link
   target.header = source.header
   target.list = source.list
@@ -620,9 +571,6 @@ function assignFormats(target: Formats, source: Formats) {
 }
 
 const data = reactive<DataType>({
-  toolbarVisible: false,
-  toolbarBottom: 0,
-  keyboardHeight: 0,
   pageWindowHeight: 0,
   pageWindowWidth: 0,
   toolbarChipRowClass: 'toolbar-chip-row',
@@ -639,7 +587,6 @@ const data = reactive<DataType>({
   sheetAnimated: false,
   isFocused: false,
   ignoreNextBlur: false,
-  toolbarKeepVisible: false,
   activeSheet: '',
   autoTest: false,
   editorReadyTest: false,
@@ -656,12 +603,13 @@ const data = reactive<DataType>({
   linkModalVisible: false,
   linkUseSelectionText: false,
   linkDraftText: '',
-  linkDraftHref: ''
+  linkDraftHref: '',
+  linkSelectionText: '',
+  linkOriginalHref: ''
 })
 
 const editorContext = ref<EditorContext | null>(null)
 
-let keyboardChangeListenerId: number | null = null
 let toolbarHideTimer = 0
 let statusSyncLockedUntil = 0
 
@@ -674,31 +622,16 @@ function clearToolbarHideTimer() {
 
 function scheduleToolbarHide() {
   clearToolbarHideTimer()
-  toolbarHideTimer = setTimeout(() => {
-    if (!data.isFocused && data.keyboardHeight <= 0 && data.activeSheet == '') {
-      data.toolbarVisible = false
-      data.toolbarBottom = 0
-    }
-    toolbarHideTimer = 0
-  }, 120)
+  // 工具栏改为公共常驻模式，这里仅重置计时器状态。
+  toolbarHideTimer = 0
 }
 
 function getEditor() : EditorContext | null {
   return editorContext.value
 }
 
-const isWebToolbarMode = computed((): boolean => {
-  // #ifdef WEB
-  return true
-  // #endif
-  return false
-})
-
 function getToolbarWrapStyle() : string {
-  if (isWebToolbarMode.value) {
-    return ''
-  }
-  return `bottom:${data.toolbarBottom}px;`
+  return ''
 }
 
 function hasInlineStyleActive() : boolean {
@@ -715,31 +648,9 @@ function isWideLayout() : boolean {
 
 
 function syncToolbarBottom() {
-  if (data.activeSheet != '') {
-    data.toolbarBottom = data.sheetHeight
-    return
-  }
-  data.toolbarBottom = data.keyboardHeight
 }
 
 function syncToolbarVisibility() {
-  if (data.activeSheet != '') {
-    data.toolbarVisible = true
-    return
-  }
-  if (data.isFocused) {
-    data.toolbarVisible = true
-    return
-  }
-  if (data.keyboardHeight > 0) {
-    data.toolbarVisible = true
-    return
-  }
-  if (data.toolbarKeepVisible) {
-    data.toolbarVisible = true
-    return
-  }
-  data.toolbarVisible = false
 }
 
 function getPageShellClass() : string {
@@ -757,13 +668,10 @@ function getEditorLayoutClass() : string {
 }
 
 function getSheetPanelStyle() : string {
-  if (isWebToolbarMode.value) {
-    return ''
-  }
-  return `height:${data.sheetHeight}px;`
+  return ''
 }
 
-function getWebSheetWidth() : number {
+function getSheetWidth() : number {
   const windowWidth = data.pageWindowWidth > 0 ? data.pageWindowWidth : uni.getWindowInfo().windowWidth
   let maxWidth = windowWidth - 24
   if (maxWidth < 240) {
@@ -791,81 +699,56 @@ function getWebSheetWidth() : number {
 }
 
 function syncToolbarChipClasses() {
-  if (!isWebToolbarMode.value) {
-    data.toolbarChipRowClass = 'toolbar-chip-row'
-    data.toolbarChipCellClass = 'toolbar-chip-cell'
-    data.colorRowClass = 'color-row'
-    return
-  }
+  data.colorRowClass = 'color-row color-row-panel'
 
-  data.colorRowClass = 'color-row color-row-web'
-
-  const panelWidth = getWebSheetWidth()
+  const panelWidth = getSheetWidth()
   if (panelWidth <= 300) {
-    data.toolbarChipRowClass = 'toolbar-chip-row toolbar-chip-row-web toolbar-chip-row-web-compact'
+    data.toolbarChipRowClass = 'toolbar-chip-row toolbar-chip-row-panel toolbar-chip-row-panel-compact'
   } else {
-    data.toolbarChipRowClass = 'toolbar-chip-row toolbar-chip-row-web'
+    data.toolbarChipRowClass = 'toolbar-chip-row toolbar-chip-row-panel'
   }
 
   if (data.activeSheet == 'title' || data.activeSheet == 'align' || data.activeSheet == 'more' || data.activeSheet == 'line-height' || data.activeSheet == 'letter-spacing' || data.activeSheet == 'font-size' || data.activeSheet == 'font-family' || data.activeSheet == 'block-indent' || data.activeSheet == 'list') {
-    data.toolbarChipCellClass = 'toolbar-chip-cell toolbar-chip-cell-web toolbar-chip-cell-web-full'
+    data.toolbarChipCellClass = 'toolbar-chip-cell toolbar-chip-cell-full'
     return
   }
   if (data.activeSheet == 'style') {
-    data.toolbarChipCellClass = 'toolbar-chip-cell toolbar-chip-cell-web toolbar-chip-cell-web-third'
+    data.toolbarChipCellClass = 'toolbar-chip-cell toolbar-chip-cell-third'
     return
   }
-  data.toolbarChipCellClass = 'toolbar-chip-cell toolbar-chip-cell-web toolbar-chip-cell-web-quarter'
+  data.toolbarChipCellClass = 'toolbar-chip-cell toolbar-chip-cell-quarter'
 }
 
 function getSheetHostStyle() : string {
-  if (!isWebToolbarMode.value) {
-    return ''
-  }
+  // #ifndef WEB
+  return ''
+  // #endif
   syncToolbarChipClasses()
-  return `left:${data.sheetLeft}px;top:${data.sheetTop}px;width:${getWebSheetWidth()}px;`
+  return `left:${data.sheetLeft}px;top:${data.sheetTop}px;width:${getSheetWidth()}px;`
+}
+
+function getSheetHostClass() : string {
+  // #ifdef WEB
+  return 'sheet-host sheet-host-floating'
+  // #endif
+  return 'sheet-host'
 }
 
 function getToolbarPanelArrowStyle() : string {
-  if (!isWebToolbarMode.value) {
-    return ''
-  }
   return `left:${data.sheetArrowLeft}px;`
 }
 
-function getToolbarShellClass() : string {
-  if (isWebToolbarMode.value) {
-    if (data.activeSheet != '') {
-      return 'toolbar-shell toolbar-shell-attached toolbar-shell-web'
-    }
-    return 'toolbar-shell toolbar-shell-web'
-  }
-  if (data.activeSheet != '') {
-    return 'toolbar-shell toolbar-shell-attached'
-  }
-  return 'toolbar-shell'
-}
-
-function isCompactWebToolbar() : boolean {
-  if (!isWebToolbarMode.value) {
-    return false
-  }
+function isCompactToolbar() : boolean {
   const windowWidth = data.pageWindowWidth > 0 ? data.pageWindowWidth : uni.getWindowInfo().windowWidth
   return windowWidth < 1240
 }
 
-function isDenseWebToolbar() : boolean {
-  if (!isWebToolbarMode.value) {
-    return false
-  }
+function isDenseToolbar() : boolean {
   const windowWidth = data.pageWindowWidth > 0 ? data.pageWindowWidth : uni.getWindowInfo().windowWidth
   return windowWidth < 980
 }
 
 function isStyleSheetHighlighted() : boolean {
-  if (isWebToolbarMode.value) {
-    return data.activeSheet == 'style' || hasInlineStyleActive()
-  }
   return data.activeSheet == 'style' || hasInlineStyleActive()
 }
 function getDesktopFontFamilyLabel() : string {
@@ -897,128 +780,96 @@ function getDesktopFontFamilyLabel() : string {
 }
 
 function getDesktopToolbarShellClass() : string {
-  let className = 'toolbar-web-shell'
-  if (isCompactWebToolbar()) {
-    className += ' toolbar-web-shell-compact'
+  let className = 'toolbar-shell'
+  if (isCompactToolbar()) {
+    className += ' toolbar-shell-compact'
   }
-  if (isDenseWebToolbar()) {
-    className += ' toolbar-web-shell-dense'
+  if (isDenseToolbar()) {
+    className += ' toolbar-shell-dense'
   }
 
   return className
 }
 
 function getDesktopToolbarGroupClass(isLeading: boolean) : string {
-  let className = 'toolbar-web-group'
+  let className = 'toolbar-group'
   if (isLeading) {
-    className += ' toolbar-web-group-leading'
+    className += ' toolbar-group-leading'
   }
-  if (isCompactWebToolbar()) {
-    className += ' toolbar-web-group-compact'
+  if (isCompactToolbar()) {
+    className += ' toolbar-group-compact'
     if (isLeading) {
-      className += ' toolbar-web-group-leading-compact'
+      className += ' toolbar-group-leading-compact'
     }
   }
-  if (isDenseWebToolbar()) {
-    className += ' toolbar-web-group-dense'
+  if (isDenseToolbar()) {
+    className += ' toolbar-group-dense'
   }
   return className
 }
 
 function getDesktopToolbarDividerClass() : string {
-  if (isCompactWebToolbar()) {
-    return 'toolbar-web-divider toolbar-web-divider-hidden'
+  if (isCompactToolbar()) {
+    return 'toolbar-divider toolbar-divider-hidden'
   }
-  return 'toolbar-web-divider'
-}
-
-function getMobileStyleButtonClass() : string {
-  if (isStyleSheetHighlighted()) {
-    return 'toolbar-button toolbar-button-active toolbar-button-format-active'
-  }
-  return 'toolbar-button'
-}
-
-function getToolbarScrollTrackClass() : string {
-  if (isWebToolbarMode.value) {
-    return 'toolbar-scroll-track toolbar-scroll-track-web'
-  }
-  return 'toolbar-scroll-track'
-}
-
-function getToolbarRowClass() : string {
-  if (isWebToolbarMode.value) {
-    return 'toolbar-row toolbar-row-scroll toolbar-row-web'
-  }
-  return 'toolbar-row toolbar-row-scroll'
+  return 'toolbar-divider'
 }
 
 function getToolbarPanelClass() : string {
-  if (isWebToolbarMode.value) {
-    if (data.sheetAnimated) {
-      return 'toolbar-panel toolbar-panel-attached toolbar-panel-web toolbar-panel-web-attached toolbar-panel-web-entered'
-    }
-    return 'toolbar-panel toolbar-panel-attached toolbar-panel-web toolbar-panel-web-attached'
-  }
+  // #ifndef WEB
   return 'toolbar-panel toolbar-panel-attached'
+  // #endif
+  if (data.sheetAnimated) {
+    return 'toolbar-panel toolbar-panel-attached toolbar-panel-floating toolbar-panel-floating-attached toolbar-panel-floating-entered'
+  }
+  return 'toolbar-panel toolbar-panel-attached toolbar-panel-floating toolbar-panel-floating-attached'
 }
 
 function getToolbarPanelHeaderClass() : string {
-  if (isWebToolbarMode.value) {
-    return 'toolbar-panel-header toolbar-panel-header-web'
-  }
+  // #ifndef WEB
   return 'toolbar-panel-header'
+  // #endif
+  return 'toolbar-panel-header toolbar-panel-header-floating'
 }
 
 function getToolbarPanelTitleClass() : string {
-  if (isWebToolbarMode.value) {
-    return 'toolbar-panel-title toolbar-panel-title-web'
-  }
+  // #ifndef WEB
   return 'toolbar-panel-title'
+  // #endif
+  return 'toolbar-panel-title toolbar-panel-title-floating'
 }
 
 function getToolbarPanelSubtitleClass() : string {
-  if (isWebToolbarMode.value) {
-    return 'toolbar-panel-subtitle toolbar-panel-subtitle-web'
-  }
+  // #ifndef WEB
   return 'toolbar-panel-subtitle'
+  // #endif
+  return 'toolbar-panel-subtitle toolbar-panel-subtitle-floating'
 }
 
 function getToolbarPanelScrollClass() : string {
-  if (isWebToolbarMode.value) {
-    return 'toolbar-panel-scroll toolbar-panel-scroll-web'
-  }
+  // #ifndef WEB
   return 'toolbar-panel-scroll'
+  // #endif
+  return 'toolbar-panel-scroll toolbar-panel-scroll-floating'
 }
 
 function getDesktopMenuItemClass(active: boolean) : string {
-  if (!isWebToolbarMode.value) {
-    return active ? 'toolbar-chip toolbar-chip-grid toolbar-chip-active' : 'toolbar-chip toolbar-chip-grid'
-  }
   return active ? 'desktop-menu-item desktop-menu-item-active' : 'desktop-menu-item'
 }
 
 function getDesktopMenuBadgeClass(active: boolean) : string {
-  if (!isWebToolbarMode.value) {
-    return active ? 'toolbar-chip-badge toolbar-chip-badge-active' : 'toolbar-chip-badge'
-  }
   return active ? 'desktop-menu-badge desktop-menu-badge-active' : 'desktop-menu-badge'
 }
 
 function getDesktopMenuTextClass(active: boolean) : string {
-  if (!isWebToolbarMode.value) {
-    return active ? 'toolbar-chip-text toolbar-chip-text-active' : 'toolbar-chip-text'
-  }
   return active ? 'desktop-menu-text desktop-menu-text-active' : 'desktop-menu-text'
 }
 
 function closeSheets() {
-  if (isWebToolbarMode.value) {
-    data.sheetAnimated = false
-    // #ifdef WEB
-    hideToolbarTooltip()
-    // #endif
-  }
+  data.sheetAnimated = false
+  // #ifdef WEB
+  hideToolbarTooltip()
+  // #endif
   data.activeSheet = ''
   syncToolbarChipClasses()
   syncToolbarBottom()
@@ -1026,10 +877,7 @@ function closeSheets() {
 }
 
 function getClearColorSwatchClass(isActive: boolean) : string {
-  let className = 'color-swatch'
-  if (isWebToolbarMode.value) {
-    className += ' color-swatch-web'
-  }
+  let className = 'color-swatch color-swatch-panel'
   className += ' color-swatch-clear'
   if (isActive) {
     className += ' color-swatch-active'
@@ -1038,10 +886,7 @@ function getClearColorSwatchClass(isActive: boolean) : string {
 }
 
 function getFilledColorSwatchClass(isActive: boolean) : string {
-  let className = 'color-swatch'
-  if (isWebToolbarMode.value) {
-    className += ' color-swatch-web'
-  }
+  let className = 'color-swatch color-swatch-panel'
   if (isActive) {
     className += ' color-swatch-active'
   }
@@ -1055,7 +900,6 @@ function refocusEditorAfterToolbarAction() {
     if (editorElement != null) {
       editorElement.focus()
     }
-    data.toolbarKeepVisible = false
   }, 30)
   // #endif
 }
@@ -1069,10 +913,7 @@ function updatePageWindowHeight() {
 
 function getSheetButtonId(sheet: string) : string {
   if (sheet == 'more') {
-    if (isWebToolbarMode.value) {
-      return 'toolbar-button-align'
-    }
-    return 'toolbar-button-more'
+    return 'toolbar-button-align'
   }
   if (sheet == 'title') {
     return 'toolbar-button-title'
@@ -1107,10 +948,7 @@ function getSheetButtonId(sheet: string) : string {
   return 'toolbar-button-align'
 }
 
-function updateWebSheetAnchor(sheet: string) {
-  if (!isWebToolbarMode.value) {
-    return
-  }
+function updateSheetAnchor(sheet: string) {
   updatePageWindowHeight()
   const layoutElement = uni.getElementById('editor-layout')
   const buttonElement = uni.getElementById(getSheetButtonId(sheet))
@@ -1122,7 +960,7 @@ function updateWebSheetAnchor(sheet: string) {
   }
   const pageRect = layoutElement.getBoundingClientRect()
   const rect = buttonElement.getBoundingClientRect()
-  const panelWidth = getWebSheetWidth()
+  const panelWidth = getSheetWidth()
   let panelLeft = rect.left - pageRect.left + rect.width / 2 - panelWidth / 2
   let maxLeft = pageRect.width - panelWidth - 12
   if (maxLeft < 12) {
@@ -1165,9 +1003,9 @@ function applyFormat(name: string, value: string | number | boolean | null | und
   if (editor == null) {
     return
   }
-  if (!isWebToolbarMode.value) {
-    statusSyncLockedUntil = Date.now() + 400
-  }
+  // #ifndef WEB
+  statusSyncLockedUntil = Date.now() + 400
+  // #endif
   editor.format(name, value)
   editor.scrollIntoView(null)
 }
@@ -1189,8 +1027,16 @@ function setLocalFormat(name: string, value: string | number | boolean | null) {
     data.formats.strike = value == true
     return
   }
+  if (name == 'blockquote') {
+    data.formats.blockquote = value == true
+    return
+  }
   if (name == 'header') {
     data.formats.header = value != null ? value as number : 0
+    return
+  }
+  if (name == 'code-block') {
+    data.formats.codeBlock = value == true
     return
   }
   if (name == 'link') {
@@ -1242,7 +1088,7 @@ function setLocalFormat(name: string, value: string | number | boolean | null) {
   }
 }
 
-function applyFormatWithState(name: string, value: string | number | null | undefined) {
+function applyFormatWithState(name: string, value: string | number | boolean | null | undefined) {
   setLocalFormat(name, value)
   applyFormat(name, value)
 }
@@ -1374,39 +1220,19 @@ function toggleFormatPainter() {
 }
 
 function getEditorBottomSpacing() : number {
-  if (isWebToolbarMode.value) {
-    return 0
-  }
-  if (!data.toolbarVisible) {
-    return 0
-  }
-  if (data.activeSheet != '') {
-    return data.sheetHeight + 74
-  }
-  return 74
+  return 0
 }
 
 function getEditorStageStyle() : string {
   const paddingBottom = getEditorBottomSpacing()
-  if (isWebToolbarMode.value) {
-    return `padding-bottom:${paddingBottom}px;`
-  }
-  if (data.keyboardHeight <= 0 || data.pageWindowHeight <= 0) {
-    return `padding-bottom:${paddingBottom}px;`
-  }
-  let editorHeight = data.pageWindowHeight - data.keyboardHeight
-  if (editorHeight < 120) {
-    editorHeight = 120
-  }
-  return `height:${editorHeight}px;padding-bottom:${paddingBottom}px;`
+  return `padding-bottom:${paddingBottom}px;`
 }
 
 function hideKeyboardForSheet() {
-  if (data.keyboardHeight > 0) {
-    data.sheetHeight = data.keyboardHeight
-  }
   data.isFocused = false
+  // #ifndef WEB
   uni.hideKeyboard()
+  // #endif
 }
 
 function toggleSheet(sheet: string) {
@@ -1414,17 +1240,15 @@ function toggleSheet(sheet: string) {
     closeSheets()
     return
   }
-  updateWebSheetAnchor(sheet)
+  updateSheetAnchor(sheet)
   data.activeSheet = sheet
   syncToolbarChipClasses()
-  if (isWebToolbarMode.value) {
-    data.sheetAnimated = false
-    setTimeout(() => {
-      if (data.activeSheet == sheet) {
-        data.sheetAnimated = true
-      }
-    }, 16)
-  }
+  data.sheetAnimated = false
+  setTimeout(() => {
+    if (data.activeSheet == sheet) {
+      data.sheetAnimated = true
+    }
+  }, 16)
   hideKeyboardForSheet()
   syncToolbarBottom()
   syncToolbarVisibility()
@@ -1516,6 +1340,9 @@ function getPanelTitle() : string {
 }
 
 function getTitleSummary() : string {
+  if (data.formats.codeBlock) {
+    return '当前为代码块'
+  }
   if (data.formats.blockquote) {
     return '当前为引用'
   }
@@ -1531,19 +1358,23 @@ function openLinkModal() {
     return
   }
   closeSheets()
-  data.toolbarKeepVisible = false
+  data.linkSelectionText = ''
+  data.linkOriginalHref = data.formats.link
+  // #ifndef WEB
+  uni.hideKeyboard()
+  // #endif
   data.linkDraftText = ''
   data.linkDraftHref = data.formats.link
   data.linkModalVisible = true
   data.linkUseSelectionText = false
   clearToolbarHideTimer()
-  data.toolbarVisible = isWebToolbarMode.value
   const options: UniEditorElementGetSelectionTextOptions = {
     success: (res: UniEditorElementGetSelectionTextOptionsRes) => {
       const selectionText = res.text.trim()
       if (selectionText == '') {
         return
       }
+      data.linkSelectionText = selectionText
       data.linkDraftText = selectionText
       data.linkUseSelectionText = data.formats.link == ''
     },
@@ -1558,9 +1389,8 @@ function closeLinkModal() {
   data.linkUseSelectionText = false
   data.linkDraftText = ''
   data.linkDraftHref = ''
-  if (!isWebToolbarMode.value) {
-    refocusEditorAfterToolbarAction()
-  }
+  data.linkSelectionText = ''
+  data.linkOriginalHref = ''
 }
 
 function getDesktopTitleLabel() : string {
@@ -1601,15 +1431,15 @@ function getDesktopTitleIconGlyph() : string {
 
 function getDesktopAlignIconGlyph() : string {
   if (data.formats.align == 'center') {
-    return "&#xe6b6;"
+    return "\ue6b6"
   }
   if (data.formats.align == 'right') {
-    return "&#xe6a6;"
+    return "\ue6a6"
   }
   if (data.formats.align == 'justify') {
-    return "&#xe6a8;"
+    return "\ue6a8"
   }
-  return "&#xe6b7;"
+  return "\ue6b7"
 }
 
 function getStyleSummary() : string {
@@ -1819,7 +1649,7 @@ function getPanelSubtitle() : string {
 }
 
 function hasTitleFormatActive() : boolean {
-  return data.formats.header > 0 || data.formats.blockquote
+  return data.formats.header > 0 || data.formats.blockquote || data.formats.codeBlock
 }
 
 function isTitleSheetHighlighted() : boolean {
@@ -1874,7 +1704,7 @@ function isBackgroundColorSheetHighlighted() : boolean {
 }
 
 function isParagraphActive() : boolean {
-  return data.formats.header == 0 && data.formats.list == '' && !data.formats.blockquote
+  return data.formats.header == 0 && data.formats.list == '' && !data.formats.blockquote && !data.formats.codeBlock
 }
 
 
@@ -1890,6 +1720,7 @@ const fontFamilySheetHighlighted = computed((): boolean => isFontFamilySheetHigh
 const textColorSheetHighlighted = computed((): boolean => isTextColorSheetHighlighted())
 const backgroundColorSheetHighlighted = computed((): boolean => isBackgroundColorSheetHighlighted())
 const alignSheetHighlighted = computed((): boolean => isAlignSheetHighlighted())
+const desktopAlignIconGlyph = computed((): string => getDesktopAlignIconGlyph())
 const textIndentHighlighted = computed((): boolean => isTextIndentHighlighted())
 const blockIndentSheetHighlighted = computed((): boolean => isBlockIndentSheetHighlighted())
 const lineHeightSheetHighlighted = computed((): boolean => isLineHeightSheetHighlighted())
@@ -1900,10 +1731,7 @@ const titleSheetHighlighted = computed((): boolean => isTitleSheetHighlighted())
 const toolbarTextColorChipStyle = computed((): string => getToolbarTextColorChipStyle())
 const toolbarBackgroundColorChipStyle = computed((): string => getToolbarBackgroundColorChipStyle())
 const toolbarTooltipStyle = computed((): string => getToolbarTooltipStyle())
-const toolbarShellClass = computed((): string => getToolbarShellClass())
-const toolbarScrollTrackClass = computed((): string => getToolbarScrollTrackClass())
-const toolbarRowClass = computed((): string => getToolbarRowClass())
-const mobileStyleButtonClass = computed((): string => getMobileStyleButtonClass())
+const sheetHostClass = computed((): string => getSheetHostClass())
 const sheetHostStyle = computed((): string => getSheetHostStyle())
 const sheetPanelStyle = computed((): string => getSheetPanelStyle())
 const toolbarPanelArrowStyle = computed((): string => getToolbarPanelArrowStyle())
@@ -1927,6 +1755,10 @@ const filledColorSwatchActiveClass = computed((): string => getFilledColorSwatch
 
 function clearTitleFormats() {
   applyFormat('blockquote', false)
+  if (data.formats.codeBlock) {
+    setLocalFormat('code-block', false)
+    applyFormat('code-block', null)
+  }
   applyFormatWithState('list', null)
 }
 
@@ -1950,6 +1782,10 @@ function setHeadingLevel(level: number) {
 
 function setOrderedList() {
   applyFormat('blockquote', false)
+  if (data.formats.codeBlock) {
+    setLocalFormat('code-block', false)
+    applyFormat('code-block', null)
+  }
   applyFormatWithState('header', 0)
   applyFormatWithState('list', data.formats.list == 'ordered' ? null : 'ordered')
   closeSheets()
@@ -1958,6 +1794,10 @@ function setOrderedList() {
 
 function setBulletList() {
   applyFormat('blockquote', false)
+  if (data.formats.codeBlock) {
+    setLocalFormat('code-block', false)
+    applyFormat('code-block', null)
+  }
   applyFormatWithState('header', 0)
   applyFormatWithState('list', data.formats.list == 'bullet' ? null : 'bullet')
   closeSheets()
@@ -1974,15 +1814,39 @@ function toggleBlockquote() {
   const nextValue = !data.formats.blockquote
   const isListFormat = data.formats.list != ''
   const isHeadFormat = data.formats.header != 0
+  const isCodeBlock = data.formats.codeBlock
 
   if (nextValue && isListFormat) {
-    applyFormat('list', null)
+    applyFormatWithState('list', null)
   }
   if (nextValue && isHeadFormat) {
-    applyFormat('header', 0)
+    applyFormatWithState('header', 0)
+  }
+  if (nextValue && isCodeBlock) {
+    setLocalFormat('code-block', false)
+    applyFormat('code-block', null)
   }
 
-  applyFormat('blockquote', data.formats.blockquote ? false : true)
+  applyFormatWithState('blockquote', data.formats.blockquote ? false : true)
+  closeSheets()
+  refocusEditorAfterToolbarAction()
+}
+
+function toggleCodeBlock() {
+  const nextValue = !data.formats.codeBlock
+  if (nextValue) {
+    if (data.formats.list != '') {
+      applyFormatWithState('list', null)
+    }
+    if (data.formats.header != 0) {
+      applyFormatWithState('header', 0)
+    }
+    if (data.formats.blockquote) {
+      applyFormatWithState('blockquote', false)
+    }
+  }
+  setLocalFormat('code-block', nextValue)
+  applyFormat('code-block', null)
   closeSheets()
   refocusEditorAfterToolbarAction()
 }
@@ -2288,6 +2152,215 @@ function escapeRegExp(value: string) : string {
   return value.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
 }
 
+function buildOpAttributes(attributes: UTSJSONObject | null, nextLinkValue: string | null, preserveLink: boolean) : UTSJSONObject | null {
+  let hasValue = false
+  const nextAttributes: UTSJSONObject = {}
+  if (attributes != null) {
+    if (attributes['bold'] === true) {
+      nextAttributes['bold'] = true
+      hasValue = true
+    }
+    if (attributes['italic'] === true) {
+      nextAttributes['italic'] = true
+      hasValue = true
+    }
+    if (attributes['underline'] === true) {
+      nextAttributes['underline'] = true
+      hasValue = true
+    }
+    if (attributes['strike'] === true) {
+      nextAttributes['strike'] = true
+      hasValue = true
+    }
+    if (attributes['blockquote'] === true) {
+      nextAttributes['blockquote'] = true
+      hasValue = true
+    }
+    if (attributes['code-block'] === true) {
+      nextAttributes['code-block'] = true
+      hasValue = true
+    }
+    if (attributes['header'] != null && (attributes['header'] as number) != 0) {
+      nextAttributes['header'] = attributes['header']
+      hasValue = true
+    }
+    if (attributes['list'] != null && (attributes['list'] as string) != '') {
+      nextAttributes['list'] = attributes['list']
+      hasValue = true
+    }
+    if (attributes['align'] != null && (attributes['align'] as string) != '') {
+      nextAttributes['align'] = attributes['align']
+      hasValue = true
+    }
+    if (attributes['textIndent'] != null && (attributes['textIndent'] as string) != '') {
+      nextAttributes['textIndent'] = attributes['textIndent']
+      hasValue = true
+    }
+    if (attributes['marginLeft'] != null && (attributes['marginLeft'] as string) != '') {
+      nextAttributes['marginLeft'] = attributes['marginLeft']
+      hasValue = true
+    }
+    if (attributes['marginRight'] != null && (attributes['marginRight'] as string) != '') {
+      nextAttributes['marginRight'] = attributes['marginRight']
+      hasValue = true
+    }
+    if (attributes['lineHeight'] != null && (attributes['lineHeight'] as string) != '') {
+      nextAttributes['lineHeight'] = attributes['lineHeight']
+      hasValue = true
+    }
+    if (attributes['letterSpacing'] != null && (attributes['letterSpacing'] as string) != '') {
+      nextAttributes['letterSpacing'] = attributes['letterSpacing']
+      hasValue = true
+    }
+    if (attributes['fontFamily'] != null && (attributes['fontFamily'] as string) != '') {
+      nextAttributes['fontFamily'] = attributes['fontFamily']
+      hasValue = true
+    }
+    if (attributes['fontSize'] != null && (attributes['fontSize'] as string) != '') {
+      nextAttributes['fontSize'] = attributes['fontSize']
+      hasValue = true
+    }
+    if (attributes['color'] != null && (attributes['color'] as string) != '') {
+      nextAttributes['color'] = attributes['color']
+      hasValue = true
+    }
+    if (attributes['backgroundColor'] != null && (attributes['backgroundColor'] as string) != '') {
+      nextAttributes['backgroundColor'] = attributes['backgroundColor']
+      hasValue = true
+    }
+    if (preserveLink && attributes['link'] != null && (attributes['link'] as string) != '') {
+      nextAttributes['link'] = attributes['link']
+      hasValue = true
+    }
+  }
+  if (nextLinkValue != null && nextLinkValue != '') {
+    nextAttributes['link'] = nextLinkValue
+    hasValue = true
+  }
+  return hasValue ? nextAttributes : null
+}
+
+function pushTextOp(ops: any[], text: string, attributes: any | null) {
+  if (text == '') {
+    return
+  }
+  if (attributes != null) {
+    ops.push({
+      insert: text,
+      attributes: attributes
+    })
+    return
+  }
+  ops.push({
+    insert: text
+  })
+}
+
+function replaceLinkInDeltaOps(ops: any[], selectionText: string, originalHref: string, nextHref: string | null) : any[] | null {
+  const nextOps: any[] = []
+  let replaced = false
+  for (const op of ops) {
+    const opItem = op as UTSJSONObject
+    if (replaced) {
+      nextOps.push(op)
+      continue
+    }
+    const insertValue = opItem['insert']
+    if (typeof insertValue != 'string') {
+      nextOps.push(op)
+      continue
+    }
+    const text = insertValue as string
+    const attributes = opItem['attributes'] as UTSJSONObject | null
+    const currentHref = attributes != null && attributes['link'] != null ? attributes['link'] as string : ''
+    const matchesExistingLink = originalHref != '' && currentHref == originalHref
+    const matchesPlainSelection = originalHref == '' && selectionText != '' && currentHref == ''
+    if (!matchesExistingLink && !matchesPlainSelection) {
+      nextOps.push(op)
+      continue
+    }
+
+    let matchStart = 0
+    let matchLength = text.length
+    if (selectionText != '') {
+      const index = text.indexOf(selectionText)
+      if (index < 0) {
+        nextOps.push(op)
+        continue
+      }
+      matchStart = index
+      matchLength = selectionText.length
+    }
+
+    const beforeText = text.slice(0, matchStart)
+    const matchedText = text.slice(matchStart, matchStart + matchLength)
+    const afterText = text.slice(matchStart + matchLength)
+    pushTextOp(nextOps, beforeText, buildOpAttributes(attributes, null, true))
+
+    const targetAttributes = buildOpAttributes(attributes, nextHref, false)
+    pushTextOp(nextOps, matchedText, targetAttributes)
+    pushTextOp(nextOps, afterText, buildOpAttributes(attributes, null, true))
+    replaced = true
+  }
+  if (!replaced) {
+    return null
+  }
+  return nextOps
+}
+
+function applyLinkDeltaMutation(nextHref: string | null) {
+  const editor = getEditor()
+  if (editor == null) {
+    return
+  }
+  const selectionText = data.linkSelectionText
+  const originalHref = data.linkOriginalHref
+  editor.getContents({
+    success: (res: UniEditorElementGetContentsOptionsRes) => {
+      const delta = res.delta as UTSJSONObject | null
+      const ops = delta != null ? delta['ops'] as any[] : null
+      if (ops == null) {
+        uni.showToast({
+          title: nextHref == null ? '删除链接失败' : '编辑链接失败',
+          icon: 'none'
+        })
+        return
+      }
+      const nextOps = replaceLinkInDeltaOps(ops, selectionText, originalHref, nextHref)
+      if (nextOps == null) {
+        uni.showToast({
+          title: nextHref == null ? '未定位到原超链接' : '未定位到原超链接文本',
+          icon: 'none'
+        })
+        return
+      }
+      editor.setContents({
+        delta: {
+          ops: nextOps
+        },
+        success: () => {
+          setLocalFormat('link', nextHref)
+          closeSheets()
+          closeLinkModal()
+          refocusEditorAfterToolbarAction()
+        },
+        fail: () => {
+          uni.showToast({
+            title: nextHref == null ? '删除链接失败' : '编辑链接失败',
+            icon: 'none'
+          })
+        }
+      })
+    },
+    fail: () => {
+      uni.showToast({
+        title: nextHref == null ? '读取内容失败' : '读取内容失败',
+        icon: 'none'
+      })
+    }
+  })
+}
+
 function insertLink(text: string, href: string) {
   const editor = getEditor()
   if (editor == null) {
@@ -2331,6 +2404,13 @@ function confirmLinkModal() {
     })
     return
   }
+  // #ifndef WEB
+  const normalizedHref = normalizeLinkHref(href)
+  if (data.linkOriginalHref != '' || data.linkSelectionText != '') {
+    applyLinkDeltaMutation(normalizedHref)
+    return
+  }
+  // #endif
   insertLink(data.linkDraftText, href)
 }
 
@@ -2339,6 +2419,13 @@ function removeLink() {
   if (editor == null) {
     return
   }
+
+  // #ifndef WEB
+  if (data.linkOriginalHref != '' || data.linkSelectionText != '') {
+    applyLinkDeltaMutation(null)
+    return
+  }
+  // #endif
 
   applyFormatWithState('link', null)
   closeSheets()
@@ -2392,21 +2479,10 @@ function redo() {
   refocusEditorAfterToolbarAction()
 }
 
-function hideEditorKeyboard() {
-  uni.hideKeyboard()
-  data.isFocused = false
-  data.toolbarKeepVisible = false
-  // #ifdef WEB
-  hideToolbarTooltip()
-  // #endif
-  closeSheets()
-  syncToolbarBottom()
-  syncToolbarVisibility()
-  scheduleToolbarHide()
-}
-
-// #ifdef WEB
 function showToolbarTooltip(buttonId: string, text: string) {
+  // #ifndef WEB
+  return
+  // #endif
   const buttonElement = uni.getElementById(buttonId)
   if (buttonElement == null) {
     return
@@ -2419,6 +2495,9 @@ function showToolbarTooltip(buttonId: string, text: string) {
 }
 
 function hideToolbarTooltip() {
+  // #ifndef WEB
+  return
+  // #endif
   if (!data.tooltipVisible && data.tooltipText == '') {
     return
   }
@@ -2426,9 +2505,9 @@ function hideToolbarTooltip() {
   data.tooltipText = ''
 }
 
+// #ifdef WEB
 function onToolbarMouseDown(event: UniMouseEvent) {
   clearToolbarHideTimer()
-  data.toolbarVisible = true
   hideToolbarTooltip()
   data.ignoreNextBlur = true
   data.isFocused = true
@@ -2437,16 +2516,7 @@ function onToolbarMouseDown(event: UniMouseEvent) {
   }, 0)
   event.preventDefault()
 }
-
 // #endif
-
-function onToolbarTouchStart(event: UniTouchEvent) {
-  clearToolbarHideTimer()
-  data.toolbarVisible = true
-  // #ifndef WEB
-  data.toolbarKeepVisible = true
-  // #endif
-}
 
 function onEditorFocus(event: UniEditorFocusEvent) {
   console.log('onEditorFocus')
@@ -2459,7 +2529,6 @@ function onEditorFocus(event: UniEditorFocusEvent) {
     syncToolbarChipClasses()
   }
   data.isFocused = true
-  data.toolbarKeepVisible = false
   syncToolbarVisibility()
   syncToolbarBottom()
   if (data.formatPainterActive) {
@@ -2476,123 +2545,83 @@ function onEditorFocus(event: UniEditorFocusEvent) {
 function onEditorBlur(event: UniEditorBlurEvent) {
   if (data.ignoreNextBlur) {
     data.isFocused = true
-    data.toolbarVisible = true
     return
   }
   data.isFocused = false
   if (data.activeSheet == '') {
     syncToolbarBottom()
-    // #ifndef WEB
-    if (data.toolbarKeepVisible) {
-      data.toolbarVisible = true
-      return
-    }
-    // #endif
-    // #ifdef WEB
-    data.toolbarVisible = true
-    return
-    // #endif
     syncToolbarVisibility()
     scheduleToolbarHide()
   }
 }
 
 function onStatusChange(event: UniEditorStatusChangeEvent) {
-  if (!isWebToolbarMode.value && Date.now() < statusSyncLockedUntil) {
-    // 小程序端通过 context.format 触发的 statuschange 可能回传非完整状态，优先保留本地同步结果。
+  // #ifndef WEB
+  if (Date.now() < statusSyncLockedUntil) {
     return
   }
-  if (!isWebToolbarMode.value && data.activeSheet != '') {
-    // 移动端打开面板会收起键盘，忽略这类抖动的状态回写，保留本地格式快照。
-    return
-  }
+  // #endif
   const formats = event.detail
-  const formatObject = formats as UTSJSONObject
+  const formatObject = JSON.parse<UTSJSONObject>(JSON.stringify(formats))
+  if (formatObject == null) {
+    return
+  }
+  const nextFormats = createDefaultFormats()
 
-  if (formats.bold != null) {
-    data.formats.bold = formats.bold == true
-  }
-  if (formats.italic != null) {
-    data.formats.italic = formats.italic == true
-  }
-  if (formats.underline != null) {
-    data.formats.underline = formats.underline == true
-  }
-  if (formats.strike != null) {
-    data.formats.strike = formats.strike == true
-  }
-  data.formats.blockquote = formats.blockquote == true
+  nextFormats.bold = formats.bold == true
+  nextFormats.italic = formats.italic == true
+  nextFormats.underline = formats.underline == true
+  nextFormats.strike = formats.strike == true
+  nextFormats.blockquote = formats.blockquote == true
+  const codeBlockValue = formatObject['code-block']
+  nextFormats.codeBlock = codeBlockValue == true
   const linkValue = formatObject['link']
   if (linkValue != null) {
-    data.formats.link = linkValue as string
-  } else if (data.formats.link != '' && !data.linkModalVisible) {
-    data.formats.link = ''
+    nextFormats.link = linkValue as string
+  } else if (data.linkModalVisible) {
+    nextFormats.link = data.formats.link
   }
   if (formats.header != null) {
-    data.formats.header = formats.header
+    nextFormats.header = formats.header
   }
   if (formats.list != null) {
-    data.formats.list = formats.list
+    nextFormats.list = formats.list
   }
   if (formats.align != null) {
-    data.formats.align = formats.align
+    nextFormats.align = formats.align
   }
-  // data.formats.textIndent = formats.textIndent != null ? formats.textIndent : ''
-  // data.formats.marginLeft = formats.marginLeft != null ? formats.marginLeft : ''
-  // data.formats.marginRight = formats.marginRight != null ? formats.marginRight : ''
+  const textIndentValue = formatObject['textIndent']
+  if (textIndentValue != null) {
+    nextFormats.textIndent = textIndentValue as string
+  }
+  const marginLeftValue = formatObject['marginLeft']
+  if (marginLeftValue != null) {
+    nextFormats.marginLeft = marginLeftValue as string
+  }
+  const marginRightValue = formatObject['marginRight']
+  if (marginRightValue != null) {
+    nextFormats.marginRight = marginRightValue as string
+  }
   if (formats.lineHeight != null) {
-    data.formats.lineHeight = formats.lineHeight
+    nextFormats.lineHeight = formats.lineHeight
   }
   if (formats.letterSpacing != null) {
-    data.formats.letterSpacing = formats.letterSpacing
+    nextFormats.letterSpacing = formats.letterSpacing
   }
   if (formats.fontFamily != null) {
-    data.formats.fontFamily = formats.fontFamily
+    nextFormats.fontFamily = formats.fontFamily
   }
   if (formats.fontSize != null) {
-    data.formats.fontSize = formats.fontSize
+    nextFormats.fontSize = formats.fontSize
   }
   if (formats.color != null) {
-    data.formats.color = formats.color
+    nextFormats.color = formats.color
   }
   if (formats.backgroundColor != null) {
-    data.formats.backgroundColor = formats.backgroundColor
+    nextFormats.backgroundColor = formats.backgroundColor
   }
+  assignFormats(data.formats, nextFormats)
 }
-
-onLoad(() => {
-  // editor 内部基于 web-view，键盘高度用全局 API 更稳妥
-  // #ifndef WEB
-  keyboardChangeListenerId = uni.onKeyboardHeightChange((res) => {
-    data.keyboardHeight = res.height
-    if (res.height > 0) {
-      data.sheetHeight = res.height
-      if (data.activeSheet != '') {
-        data.activeSheet = ''
-        syncToolbarChipClasses()
-      }
-    }
-    syncToolbarBottom()
-    if (res.height > 0) {
-      syncToolbarVisibility()
-      return
-    }
-    if (data.activeSheet != '') {
-      data.toolbarVisible = true
-      return
-    }
-    if (data.isFocused) {
-      data.toolbarVisible = true
-      return
-    }
-    if (data.toolbarKeepVisible) {
-      data.toolbarVisible = true
-      return
-    }
-    scheduleToolbarHide()
-  })
-  // #endif
-})
 
 onReady(() => {
   updatePageWindowHeight()
@@ -2601,17 +2630,13 @@ onReady(() => {
 onResize((options: OnResizeOptions) => {
   data.pageWindowHeight = options.size.windowHeight
   data.pageWindowWidth = options.size.windowWidth
-  if (isWebToolbarMode.value && data.activeSheet != '') {
-    updateWebSheetAnchor(data.activeSheet)
+  if (data.activeSheet != '') {
+    updateSheetAnchor(data.activeSheet)
   }
 })
 
 onUnload(() => {
   clearToolbarHideTimer()
-  if (keyboardChangeListenerId != null) {
-    uni.offKeyboardHeightChange(keyboardChangeListenerId)
-    keyboardChangeListenerId = null
-  }
 })
 
 defineExpose({
@@ -2629,6 +2654,9 @@ defineExpose({
   openFontFamilySheet,
   openAlignSheet,
   closeSheets,
+  getPanelTitle,
+  getPanelSubtitle,
+  getTitleSummary,
   setToolbarFormatsForTest,
   applyToolbarPresetForTest,
   resetFormatsForTest,
@@ -2651,6 +2679,7 @@ defineExpose({
   setAlignRight,
   setAlignJustify,
   toggleBlockquote,
+  toggleCodeBlock,
   setBulletList,
   setOrderedList,
   toggleChecklistTool,
@@ -2739,17 +2768,6 @@ defineExpose({
 }
 
 .toolbar-wrap {
-  position: fixed;
-  left: 0px;
-  right: 0px;
-  bottom: 350px;
-  display: flex;
-  flex-direction: column;
-  z-index: 130;
-  box-shadow: 0px -5px 8px rgba(0,0,0,.05);
-}
-
-.toolbar-wrap-web {
   position: relative;
   left: auto;
   right: auto;
@@ -2758,15 +2776,12 @@ defineExpose({
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 130;
   margin-bottom: 0px;
   box-shadow: none;
 }
 
-.toolbar-wrap-mobile {
-  box-shadow: 0px -5px 8px rgba(0,0,0,.05);
-}
-
-.desktop-toolbar-wrap {
+.toolbar-frame {
   width: 100%;
   align-self: center;
   display: flex;
@@ -2782,12 +2797,6 @@ defineExpose({
   padding-left: 0px;
 }
 
-.mobile-toolbar-wrap {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
 .sheet-host {
   position: fixed;
   left: 0px;
@@ -2798,17 +2807,17 @@ defineExpose({
   z-index: 131;
 }
 
-.sheet-backdrop-web {
-  position: absolute;
+.sheet-backdrop {
+  position: fixed;
   left: 0px;
   top: 0px;
   right: 0px;
   bottom: 0px;
   z-index: 129;
-  background-color: transparent;
+  background-color: rgba(15, 23, 42, 0.04);
 }
 
-.sheet-host-web {
+.sheet-host-floating {
   position: absolute;
   left: 12px;
   right: auto;
@@ -2840,8 +2849,7 @@ defineExpose({
   /* box-shadow: 0px 10px 20px rgba(25, 25, 25, 0.08); */
 }
 
-/* #ifdef WEB */
-.toolbar-web-shell {
+.toolbar-shell {
   align-self: center;
   display: flex;
   flex-direction: row;
@@ -2858,49 +2866,44 @@ defineExpose({
   box-shadow: none;
 }
 
-.toolbar-web-shell-compact {
+.toolbar-shell-compact {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  row-gap: 6px;
   padding-top: 6px;
   padding-bottom: 6px;
 }
 
-.toolbar-web-group {
+.toolbar-group {
   display: flex;
   flex-direction: row;
   align-items: center;
   flex-wrap: nowrap;
 }
 
-.toolbar-web-group-compact {
+.toolbar-group-compact {
   justify-content: center;
   margin-top: 0px;
 }
 
-.toolbar-web-group-leading {
+.toolbar-group-leading {
   min-width: 70px;
 }
 
-.toolbar-web-group-leading-compact {
+.toolbar-group-leading-compact {
   margin-top: 0px;
 }
 
-.toolbar-web-group-dense {
-  gap: 0px;
-}
-
-.toolbar-web-group-actions {
+.toolbar-group-actions {
   margin-left: auto;
 }
 
-.toolbar-web-group-actions .toolbar-web-icon-button {
+.toolbar-group-actions .toolbar-icon-button {
   margin-left: 2px;
   margin-right: 0px;
 }
 
-.toolbar-web-divider {
+.toolbar-divider {
   width: 1px;
   height: 20px;
   background-color: #d8d8d8;
@@ -2908,11 +2911,11 @@ defineExpose({
   margin-right: 3px;
 }
 
-.toolbar-web-divider-hidden {
+.toolbar-divider-hidden {
   display: none;
 }
 
-.toolbar-web-select {
+.toolbar-select {
   height: 28px;
   display: flex;
   flex-direction: row;
@@ -2929,40 +2932,40 @@ defineExpose({
   transition-duration: 160ms;
 }
 
-.toolbar-web-select-value {
+.toolbar-select-value {
   padding-left: 4px;
   padding-right: 4px;
 }
 
-.toolbar-web-select-active {
+.toolbar-select-active {
   background-color: #e7eaee;
   border-color: #d7dde5;
 }
 
-.toolbar-web-select-label {
+.toolbar-select-label {
   color: #50565f;
   font-size: 12px;
   line-height: 18px;
 }
 
-.toolbar-web-select-glyph {
+.toolbar-select-glyph {
   font-size: 16px;
   line-height: 16px;
 }
 
-.toolbar-web-size-label {
+.toolbar-size-label {
   font-size: 14px;
   line-height: 18px;
   /* padding: 0px 5px; */
 }
 
-.toolbar-web-select-font-label {
+.toolbar-select-font-label {
   font-size: 12px;
   line-height: 16px;
   /* padding: 0px 5px; */
 }
 
-.toolbar-web-select-mini-label {
+.toolbar-select-mini-label {
   min-width: 10px;
   margin-left: 3px;
   font-size: 9px;
@@ -2970,32 +2973,32 @@ defineExpose({
   text-align: center;
 }
 
-.toolbar-web-select-label-active {
+.toolbar-select-label-active {
   color: #2b3137;
 }
 
-.toolbar-web-shell-dense .toolbar-web-select {
+.toolbar-shell-dense .toolbar-select {
   padding-left: 4px;
   padding-right: 4px;
 }
 
-.toolbar-web-shell-dense .toolbar-web-select-value,
-.toolbar-web-shell-dense .toolbar-web-select-compact {
+.toolbar-shell-dense .toolbar-select-value,
+.toolbar-shell-dense .toolbar-select-compact {
   min-width: 40px;
 }
 
-.toolbar-web-shell-dense .toolbar-web-icon-text {
+.toolbar-shell-dense .toolbar-icon-text {
   font-size: 16px;
   line-height: 16px;
 }
 
-.toolbar-web-shell-dense .toolbar-web-select-font-label,
-.toolbar-web-shell-dense .toolbar-web-select-label {
+.toolbar-shell-dense .toolbar-select-font-label,
+.toolbar-shell-dense .toolbar-select-label {
   font-size: 11px;
 }
 
 
-.toolbar-web-select-arrow {
+.toolbar-select-arrow {
   min-width: 8px;
   display: flex;
   flex-direction: column;
@@ -3008,11 +3011,16 @@ defineExpose({
   margin-top: 1px;
 }
 
-.toolbar-web-select-arrow-active {
+.toolbar-select-arrow.iconfont {
+  font-size: 4px;
+  line-height: 12px;
+}
+
+.toolbar-select-arrow-active {
   color: #475569;
 }
 
-.toolbar-web-icon-button {
+.toolbar-icon-button {
   width: 28px;
   height: 28px;
   display: flex;
@@ -3028,11 +3036,11 @@ defineExpose({
   transition-duration: 160ms;
 }
 
-.toolbar-web-icon-button-disabled {
+.toolbar-icon-button-disabled {
   opacity: 0.42;
 }
 
-.toolbar-web-color-button {
+.toolbar-color-button {
   height: 28px;
   display: flex;
   flex-direction: row;
@@ -3049,41 +3057,41 @@ defineExpose({
   transition-duration: 160ms;
 }
 
-.toolbar-web-color-button-active {
+.toolbar-color-button-active {
   border-color: #d7dde5;
   background-color: #e7eaee;
 }
 
-.toolbar-web-color-label {
+.toolbar-color-label {
   color: #334155;
   font-size: 14px;
   line-height: 18px;
   font-weight: 700;
 }
 
-.toolbar-web-color-label-active {
+.toolbar-color-label-active {
   color: #111827;
 }
 
-.toolbar-web-color-symbol {
+.toolbar-color-symbol {
   color: #50565f;
   font-size: 15px;
   line-height: 15px;
   font-weight: 600;
 }
 
-.toolbar-web-color-symbol-active {
+.toolbar-color-symbol-active {
   color: #111827;
 }
 
-.toolbar-web-color-stack {
+.toolbar-color-stack {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.toolbar-web-color-underline {
+.toolbar-color-underline {
   width: 12px;
   height: 2px;
   border-radius: 2px;
@@ -3091,11 +3099,11 @@ defineExpose({
   margin-left: 1px;
 }
 
-.toolbar-web-color-ab {
+.toolbar-color-ab {
   font-size: 13px;
 }
 
-.toolbar-web-color-arrow {
+.toolbar-color-arrow {
   min-width: 8px;
   display: flex;
   flex-direction: column;
@@ -3108,31 +3116,34 @@ defineExpose({
   margin-top: 1px;
 }
 
-.toolbar-web-color-arrow-active {
+.toolbar-color-arrow.iconfont {
+  font-size: 4px;
+  line-height: 12px;
+}
+
+.toolbar-color-arrow-active {
   color: #475569;
 }
 
-.toolbar-web-icon-button-active {
+.toolbar-icon-button-active {
   background-color: #e7eaee;
   border-color: #d7dde5;
 }
 
-.toolbar-web-icon-text {
+.toolbar-icon-text {
   color: #50565f;
   font-size: 17px;
   line-height: 17px;
 }
 
-.toolbar-web-symbol-text {
+.toolbar-symbol-text {
   font-size: 14px;
   line-height: 16px;
 }
 
-.toolbar-web-symbol-text-small {
+.toolbar-symbol-text-small {
   font-size: 11px;
 }
-
-/* #endif */
 
 .link-modal-mask {
   position: fixed;
@@ -3150,7 +3161,7 @@ defineExpose({
   padding-right: 16px;
 }
 
-.link-modal-mask-web {
+.link-modal-mask-floating {
   background-color: rgba(15, 23, 42, 0.26);
 }
 
@@ -3169,7 +3180,7 @@ defineExpose({
   padding-left: 18px;
 }
 
-.link-modal-card-web {
+.link-modal-card-floating {
   width: 100%;
   max-width: 420px;
   box-shadow: 0px 18px 36px rgba(15, 23, 42, 0.16);
@@ -3396,19 +3407,19 @@ defineExpose({
   color: #334155;
 }
 
-.toolbar-web-font-action-italic {
+.toolbar-font-action-italic {
   font-style: italic;
 }
 
-.toolbar-web-font-action-underline {
+.toolbar-font-action-underline {
   text-decoration-line: underline;
 }
 
-.toolbar-web-font-action-strike {
+.toolbar-font-action-strike {
   text-decoration-line: line-through;
 }
 
-.toolbar-web-icon-text-active {
+.toolbar-icon-text-active {
   color: #2b3137;
 }
 
@@ -3425,7 +3436,7 @@ defineExpose({
     background: rgba(255, 255, 255, 0.5);
 }
 /* #ifdef WEB */
-.toolbar-web-tooltip {
+.toolbar-tooltip {
   position: fixed;
   z-index: 131;
   display: flex;
@@ -3436,7 +3447,7 @@ defineExpose({
   overflow: visible;
 }
 
-.toolbar-web-tooltip-bubble {
+.toolbar-tooltip-bubble {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3450,13 +3461,13 @@ defineExpose({
   box-shadow: 0px 8px 20px rgba(15, 23, 42, 0.18);
 }
 
-.toolbar-web-tooltip-text {
+.toolbar-tooltip-text {
   color: #ffffff;
   font-size: 11px;
   line-height: 14px;
 }
 
-.toolbar-web-tooltip-arrow {
+.toolbar-tooltip-arrow {
   width: 8px;
   height: 8px;
   margin-bottom: -4px;
@@ -3465,36 +3476,15 @@ defineExpose({
   border-radius: 1px;
 }
 
-.toolbar-web-select:hover,
-.toolbar-web-icon-button:hover,
-.toolbar-web-color-button:hover {
+.toolbar-select:hover,
+.toolbar-icon-button:hover,
+.toolbar-color-button:hover {
   background-color: #f3f4f6;
   border-color: #e4e7eb;
 }
 /* #endif */
 
-.toolbar-shell-web {
-  border-width: 1px;
-  border-top-width: 0px;
-  border-color: #d6dde4;
-  background-color: rgba(255, 255, 255, 0.96);
-  box-shadow: 0px 12px 24px rgba(15, 23, 42, 0.06);
-  border-radius: 20px;
-}
-
-.toolbar-scroll-track-web {
-  width: 100%;
-}
-
-.toolbar-row-web {
-  width: 100%;
-  padding-top: 8px;
-  padding-right: 10px;
-  padding-bottom: 8px;
-  padding-left: 10px;
-}
-
-.toolbar-panel-web {
+.toolbar-panel-floating {
   position: relative;
   height: auto;
   border-width: 1px;
@@ -3516,11 +3506,11 @@ defineExpose({
   display: none;
 }
 
-.toolbar-panel-web-attached {
+.toolbar-panel-floating-attached {
   border-top-width: 1px;
 }
 
-.toolbar-panel-web-entered {
+.toolbar-panel-floating-entered {
   opacity: 1;
   transform: translateY(0px);
 }
@@ -3536,29 +3526,29 @@ defineExpose({
   transform: rotate(45deg);
 }
 
-.toolbar-panel-header-web {
+.toolbar-panel-header-floating {
   margin-bottom: 6px;
 }
 
-.toolbar-panel-title-web {
+.toolbar-panel-title-floating {
   font-size: 12px;
 }
 
-.toolbar-panel-subtitle-web {
+.toolbar-panel-subtitle-floating {
   font-size: 10px;
   margin-top: 2px;
 }
 
-.toolbar-panel-scroll-web {
+.toolbar-panel-scroll-floating {
   flex: 0;
 }
 
-.toolbar-chip-row-web {
+.toolbar-chip-row-panel {
   margin-left: 0px;
   margin-right: 0px;
 }
 
-.toolbar-chip-row-web-compact {
+.toolbar-chip-row-panel-compact {
   margin-left: 0px;
   margin-right: 0px;
 }
@@ -3752,50 +3742,6 @@ defineExpose({
   padding-left: 8px;
 }
 
-.toolbar-chip-icon {
-  width: 18px;
-  height: 18px;
-  margin-bottom: 8px;
-}
-
-.toolbar-chip-badge {
-  min-width: 22px;
-  height: 22px;
-  padding-left: 4px;
-  padding-right: 4px;
-  border-radius: 11px;
-  background-color: #e2e8f0;
-  color: #475569;
-  font-size: 11px;
-  font-weight: 700;
-  text-align: center;
-  line-height: 22px;
-  margin-bottom: 8px;
-}
-
-.toolbar-chip-badge-active {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-}
-
-.toolbar-chip-active {
-  background-color: #111827;
-  border-color: #111827;
-  /* box-shadow: 0px 6px 14px rgba(31, 31, 31, 0.18); */
-}
-
-.toolbar-chip-text {
-  color: #1f2937;
-  font-size: 12px;
-  text-align: center;
-  line-height: 18px;
-  letter-spacing: 0.2px;
-}
-
-.toolbar-chip-text-active {
-  color: #ffffff;
-}
-
 .toolbar-color-section {
   display: flex;
   flex-direction: column;
@@ -3809,272 +3755,40 @@ defineExpose({
   letter-spacing: 0.3px;
 }
 
-.toolbar-color-title-secondary {
-  margin-top: 6px;
-}
-
-.toolbar-shell {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  position: relative;
-  background-color: rgba(255, 255, 255, 0.98);
-  border-width: 1px;
-  border-color: #d6dde4;
-  border-radius: 0px;
-}
-
-.toolbar-shell-attached {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
-.toolbar-scroll-track {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.toolbar-row-scroll {
-  width: 368px;
-}
-
-.toolbar-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-top: 10px;
-  padding-right: 68px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-}
-
-.toolbar-group {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.toolbar-group-side {
-  flex-shrink: 0;
-}
-
-.toolbar-group-main {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.toolbar-group-main-right {
-  justify-content: flex-end;
-}
-
-.toolbar-group-side-right {
-  margin-left: 0px;
-}
-
-.toolbar-divider {
-  width: 1px;
-  height: 28px;
-  background-color: #d8e0e7;
-  margin-left: 6px;
-  margin-right: 6px;
-}
-
-.toolbar-divider-center {
-  flex-shrink: 0;
-  margin-right: 6px;
-}
-
-.toolbar-divider-side {
-  flex-shrink: 0;
-  margin-right: 6px;
-}
-
-.toolbar-divider-fixed {
-  flex-shrink: 0;
-  margin-left: 6px;
-  margin-right: 6px;
-}
-
-.toolbar-fixed-action {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-shrink: 0;
-  padding-top: 10px;
-  padding-right: 12px;
-  padding-bottom: 10px;
-  padding-left: 0px;
-  background-color: rgba(255, 255, 255, 0.98);
-  z-index: 2;
-}
-
-.toolbar-scroll-fade {
-  width: 16px;
-  height: 40px;
-  background-color: rgba(255, 255, 255, 0.98);
-  box-shadow: -8px 0px 12px rgba(255, 255, 255, 0.92);
-}
-
-.toolbar-fixed-inner {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.toolbar-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background-color: #f3f6f9;
-  border-width: 1px;
-  border-color: #d6dde4;
-  margin-right: 6px;
-}
-
-.toolbar-button-right {
-  margin-right: 0;
-}
-.toolbar-button-active {
-  background-color: #111827;
-  border-color: #111827;
-  /* box-shadow: 0px 6px 14px rgba(31, 31, 31, 0.18); */
-}
-
-.toolbar-button-format-active {
-  background-color: #111827;
-  border-color: #111827;
-}
-
-.toolbar-button-dismiss {
-  background-color: #e2e8f0;
-  margin-right: 0px;
-  margin-left: 2px;
-}
-.iconfont.hide-keyboard {
-  font-size: 22px;
-}
-
-/* #ifdef WEB */
 .toolbar-chip-cell {
   padding-left: 3px;
   padding-right: 3px;
   margin-bottom: 6px;
 }
 
-.toolbar-chip-cell-web-quarter {
+.toolbar-chip-cell-quarter {
   width: 25%;
 }
 
-.toolbar-chip-cell-web-full {
+.toolbar-chip-cell-full {
   width: 100%;
 }
 
-.toolbar-chip-cell-web-third {
+.toolbar-chip-cell-third {
   width: 33.33%;
 }
 
-.toolbar-chip-cell-web-half {
+.toolbar-chip-cell-half {
   width: 50%;
   padding-left: 2px;
   padding-right: 2px;
 }
 
-.toolbar-chip {
-  min-width: 0px;
-  border-radius: 10px;
-  padding-top: 7px;
-  padding-right: 8px;
-  padding-bottom: 7px;
-  padding-left: 8px;
-  margin-left: 3px;
-  margin-right: 3px;
-  margin-bottom: 6px;
-}
-
-.toolbar-chip-grid {
-  min-height: 56px;
-  padding-top: 10px;
-  padding-right: 6px;
-  padding-bottom: 8px;
-  padding-left: 6px;
-}
-
-.color-row-web {
+.color-row-panel {
   width: 340px;
   align-self: center;
   margin-left: 0px;
   margin-right: 0px;
 }
 
-.toolbar-chip-badge {
-  min-width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  font-size: 10px;
-  line-height: 20px;
-  margin-bottom: 6px;
-}
-
-.toolbar-chip-text {
-  font-size: 11px;
-  line-height: 16px;
-}
-
 .toolbar-color-title {
   font-size: 11px;
   margin-bottom: 6px;
-}
-
-.toolbar-color-title-secondary {
-  margin-top: 4px;
-}
-
-.toolbar-button {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  margin-right: 4px;
-}
-
-.toolbar-divider {
-  height: 24px;
-  margin-left: 4px;
-  margin-right: 4px;
-}
-
-/* #endif */
-
-.toolbar-icon {
-  width: 18px;
-  height: 18px;
-}
-
-.toolbar-iconfont {
-  font-size: 18px;
-  color: #334155;
-  text-align: center;
-  line-height: 18px;
-}
-
-/* #ifdef WEB */
-.toolbar-iconfont {
-  font-size: 16px;
-  line-height: 16px;
-}
-/* #endif */
-
-.toolbar-iconfont-active {
-  color: #ffffff;
 }
 
 .color-row {
@@ -4098,7 +3812,7 @@ defineExpose({
   margin-bottom: 10px;
 }
 
-.color-swatch.color-swatch-web {
+.color-swatch.color-swatch-panel {
   width: 28px;
   height: 28px;
   border-radius: 4px;

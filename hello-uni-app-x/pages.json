@@ -13,7 +13,7 @@
 	},
 	"pages": [
 		// #ifdef VUE3-VAPOR
-		{"path": "pages/tabBar/tab-bar"},
+		{"path": "pages/tabBar/tab-bar", "style": { "disableScroll": true }},
 		// #endif
     // #ifndef VUE3-VAPOR
     {
@@ -2025,13 +2025,13 @@
 		},
 		// #endif
 		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
-		// {
-			// "path": "pages/API/gyroscope/gyroscope",
-			// "group": "1,6,15",
-			// "style": {
-			// 	"navigationBarTitleText": "gyroscope | 陀螺仪"
-			// }
-		// },
+		{
+			"path": "pages/API/gyroscope/gyroscope",
+			"group": "1,6,15",
+			"style": {
+				"navigationBarTitleText": "gyroscope | 陀螺仪"
+			}
+		},
 		// #endif
 		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
@@ -2253,14 +2253,16 @@
 					"style": {
 						"navigationBarTitleText": "竖滑切换的视频信息流",
 						"navigationStyle": "custom",
-						"backgroundColorContent": "#000000"
+						"backgroundColorContent": "#000000",
+						"disableScroll": true
 					}
 				},
 				{
 					"path": "chat-stream-reply/chat-stream-reply",
 					"style": {
 						"navigationBarTitleText": "流式回复聊天示例",
-						"enablePullDownRefresh": false
+						"enablePullDownRefresh": false,
+						"disableScroll": true
 					}
 				},
 				// #ifdef APP
@@ -2276,13 +2278,15 @@
 					"style": {
 						"navigationBarTitleText": "随滚动折叠的导航栏",
 						"navigationStyle": "custom",
-						"navigationBarTextStyle": "black"
+						"navigationBarTextStyle": "black",
+						"disableScroll": true
 					}
 				},
 				{
 					"path": "draggable-half-modal/draggable-half-modal",
 					"style": {
-						"navigationBarTitleText": "可拖拽关闭的半屏弹窗"
+						"navigationBarTitleText": "可拖拽关闭的半屏弹窗",
+						"disableScroll": true
 					}
 				},
 				{
@@ -2339,7 +2343,8 @@
 					"path": "pull-zoom-profile-page/pull-zoom-profile-page",
 					"style": {
 						"navigationBarTitleText": "下拉缩放封面图的个人主页",
-						"navigationStyle": "custom"
+						"navigationStyle": "custom",
+						"disableScroll": true
 					}
 				},
 				{
@@ -2355,7 +2360,8 @@
 					"style": {
 						"navigationBarTitleText": "带搜索框的自定义导航栏",
 						"navigationBarTextStyle": "black",
-						"navigationStyle": "custom"
+						"navigationStyle": "custom",
+						"disableScroll": true
 					}
 				},
 				// #ifdef APP && !VUE3-VAPOR
@@ -2511,7 +2517,8 @@
 				{
 					"path": "tab-bar/tab-bar",
 					"style": {
-						"navigationBarTitleText": "uni-tab-bar"
+						"navigationBarTitleText": "uni-tab-bar",
+						"disableScroll": true
 					}
 				},
 				{
@@ -2520,7 +2527,8 @@
 						"navigationBarTitleText": "uni-tab-bar-dark",
 						"navigationBarBackgroundColor": "#0f172a",
 						"navigationBarTextStyle": "white",
-						"backgroundColorContent": "#0f172a"
+						"backgroundColorContent": "#0f172a",
+						"disableScroll": true
 					}
 				},
 				{
@@ -2529,19 +2537,22 @@
 						"navigationBarTitleText": "uni-tab-bar-custom",
 						"navigationBarBackgroundColor": "#dff3e8",
 						"navigationBarTextStyle": "black",
-						"backgroundColorContent": "#dff3e8"
+						"backgroundColorContent": "#dff3e8",
+						"disableScroll": true
 					}
 				},
 				{
 					"path": "tab-bar/tab-bar-midbutton",
 					"style": {
-						"navigationBarTitleText": "uni-tab-bar-midbutton"
+						"navigationBarTitleText": "uni-tab-bar-midbutton",
+						"disableScroll": true
 					}
 				},
 				{
 					"path": "tab-bar/tab-bar-midbutton-notch",
 					"style": {
-						"navigationBarTitleText": "uni-tab-bar-midbutton-notch"
+						"navigationBarTitleText": "uni-tab-bar-midbutton-notch",
+						"disableScroll": true
 					}
 				},
 				{
@@ -3913,8 +3924,8 @@
 							"name": "facialRecognitionMetaInfo"
 						},
 						{
-							"id": "api.loginVerify.bioAuth",
-							"name": "bioAuth"
+							"id": "api.loginVerify.authentication",
+							"name": "authentication"
 						}
 					]
 				},

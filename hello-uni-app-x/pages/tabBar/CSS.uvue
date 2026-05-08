@@ -28,7 +28,7 @@
               <text class="uni-navigate-text" :class="{
                   'left-win-active': leftWinActive === childMenuItem.path && hasLeftWin,
                 }">{{ childMenuItem.style["navigationBarTitleText"] }}</text>
-              <image :src="arrowRightIcon" class="uni-icon-size"></image>
+              <view class="right_arrow"></view>
             </view>
             <uni-collapse v-else style="width: 100%;border-top: 1px solid var(--border-color);">
               <uni-collapse-item :title="childMenuItem.name" class="uni-panel"
@@ -40,7 +40,7 @@
                       'left-win-active':
                         leftWinActive === grandChildMenuItem.path && hasLeftWin,
                     }">{{ grandChildMenuItem.style["navigationBarTitleText"] }}</text>
-                  <image :src="arrowRightIcon" class="uni-icon-size"></image>
+                  <view class="right_arrow"></view>
                 </view>
               </uni-collapse-item>
             </uni-collapse>
@@ -70,7 +70,6 @@
   const categoryRef = ref<ComponentPublicInstance[] | null>(null)
 
   const menu = ref(menuData as MenuItem[])
-  const arrowRightIcon = ref('/static/icons/arrow-right.png')
 
   const hasLeftWin = computed((): boolean => {
     return !state.noMatchLeftWindow
@@ -112,5 +111,18 @@
 <style>
   .pl{
     padding-left: 18px
+  }
+
+  .right_arrow {
+    width: 8px;
+    height: 8px;
+    margin-left: 12px;
+    transform: rotate(-45deg);
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: var(--arrow-color, #999999);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--arrow-color, #999999);
   }
 </style>

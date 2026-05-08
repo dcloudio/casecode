@@ -27,6 +27,7 @@ describe('editor.uvue', () => {
     underline: false,
     strike: false,
     blockquote: false,
+    codeBlock: false,
     link: '',
     header: 0,
     list: '',
@@ -50,7 +51,6 @@ describe('editor.uvue', () => {
     await updateData({
       autoTest: true
     })
-    await ensureToolbarVisible()
   }
 
   async function resetPageState() {
@@ -66,13 +66,11 @@ describe('editor.uvue', () => {
       clearTest: false,
       getContentDeltaTest: null,
       formatPainterActive: false,
-      activeSheet: '',
-      toolbarKeepVisible: false
+      activeSheet: ''
     })
     await setEditorContents([
       { insert: '\n' }
     ])
-    await ensureToolbarVisible()
   }
 
   async function waitForData(path, matcher, timeout = 3000) {
@@ -93,23 +91,21 @@ describe('editor.uvue', () => {
     await page.callMethod('applyToolbarPresetForTest', preset)
   }
 
-  async function ensureToolbarVisible() {
-    if (isWeb) {
-      return
-    }
-    await editor.tap()
-    await waitForData('data.toolbarVisible', value => value === true, 4000)
-  }
-
   async function openSheet(methodName, sheetName, titleText, subtitleText) {
-    await ensureToolbarVisible()
     await page.callMethod(methodName)
     await waitForData('data.activeSheet', value => value === sheetName, 2000)
-    await page.waitFor(300)
-    const title = await page.$('.toolbar-panel-title')
-    const subtitle = await page.$('.toolbar-panel-subtitle')
-    expect(await title.text()).toBe(titleText)
-    expect(await subtitle.text()).toBe(subtitleText)
+    let currentTitle = ''
+    let currentSubtitle = ''
+    for (let i = 0; i < 10; i++) {
+      await page.waitFor(100)
+      currentTitle = await page.callMethod('getPanelTitle')
+      currentSubtitle = await page.callMethod('getPanelSubtitle')
+      if (currentTitle === titleText && currentSubtitle === subtitleText) {
+        break
+      }
+    }
+    expect(currentTitle).toBe(titleText)
+    expect(currentSubtitle).toBe(subtitleText)
   }
 
   async function closeSheet() {
@@ -205,15 +201,47 @@ describe('editor.uvue', () => {
       header: 2,
       list: ''
     })
-    await openSheet('openTitleSheet', 'title', '设置标题', '当前为大标题2')
-    await closeSheet()
+    expect(await page.callMethod('getTitleSummary')).toBe('当前为大标题2')
     await applyToolbarPresetState('title-h1')
     await waitForFormats({
       header: 1,
       list: ''
     })
-    await openSheet('openTitleSheet', 'title', '设置标题', '当前为大标题1')
-    await closeSheet()
+    expect(await page.callMethod('getTitleSummary')).toBe('当前为大标题1')
+    await page.callMethod('toggleCodeBlock')
+    await waitForFormats({
+      codeBlock: true,
+      header: 0,
+      list: ''
+    })
+    expect(await page.callMethod('getTitleSummary')).toBe('当前为代码块')
+  })
+
+  it('code-block-toolbar-actions', async () => {
+    await page.callMethod('toggleCodeBlock')
+    await waitForFormats({
+      codeBlock: true,
+      header: 0,
+      list: ''
+    })
+    expect(await page.callMethod('getTitleSummary')).toBe('当前为代码块')
+    await page.callMethod('setHeadingLevel', 2)
+    await waitForFormats({
+      codeBlock: false,
+      header: 2
+    })
+    expect(await page.callMethod('getTitleSummary')).toBe('当前为大标题2')
+    await page.callMethod('toggleCodeBlock')
+    await waitForFormats({
+      codeBlock: true,
+      header: 0
+    })
+    await page.callMethod('toggleCodeBlock')
+    await waitForFormats({
+      codeBlock: false,
+      header: 0,
+      list: ''
+    })
   })
 
   it('style-toolbar-actions', async () => {
