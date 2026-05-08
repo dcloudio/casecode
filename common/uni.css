@@ -19,6 +19,31 @@
 	--border-color: rgba(255, 255, 255, 0.1);
 }
 
+.uni-h1 {
+  font-size: 28px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  margin: 8px 0;
+}
+.uni-h2 {
+  font-size: 24px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  margin: 8px 0;
+}
+.uni-h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 8px 0;
+}
+.uni-h4 {
+  font-weight: bold;
+  margin: 8px 0;
+}
+.uni-theme-text{
+	color: var(--text-color);
+}
+
 .uni-padding-wrap {
   padding: 0 15px;
 }

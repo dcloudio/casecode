@@ -2,7 +2,7 @@
   <view class="dialog-container">
     <view class="dialog-content">
       <view style="width: 100%;justify-content: center;align-items: center;background-color: #fff;">
-        <image src="../image/logo.png" style="margin-top: 25px;width: 60px;height: 60px;"></image>
+        <image src="/static/test-image/logo.png" style="margin-top: 20px;width: 60px;height: 60px;"></image>
       </view>
       <text
         style="text-align: center;padding-top: 20px;font-size: 20px;color: black;background-color: #fff;">个人信息保护指引</text>

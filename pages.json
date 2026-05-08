@@ -2025,13 +2025,13 @@
 		},
 		// #endif
 		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
-		{
-			"path": "pages/API/gyroscope/gyroscope",
-			"group": "1,6,15",
-			"style": {
-				"navigationBarTitleText": "gyroscope | 陀螺仪"
-			}
-		},
+		// {
+			// "path": "pages/API/gyroscope/gyroscope",
+			// "group": "1,6,15",
+			// "style": {
+			// 	"navigationBarTitleText": "gyroscope | 陀螺仪"
+			// }
+		// },
 		// #endif
 		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
