@@ -268,7 +268,7 @@
   .uni-collapse-item__title {
     flex-direction: row;
     align-items: center;
-    padding: 12px 18px;
+    padding: 12px;
     background-color: var(--list-background-color, #ffffff);
   }
 

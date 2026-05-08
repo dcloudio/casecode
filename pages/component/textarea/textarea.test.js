@@ -44,7 +44,7 @@ describe('component-native-textarea', () => {
       await program.keyboardInput(options)
       await page.waitFor(2000)
       expect(await page.data('data.jest_result')).toBe(true)
-      const image = await program.screenshot();
+      const image = await program.screenshot({ fullPage: true });
       expect(image).toSaveImageSnapshot();
     })
 

@@ -2,9 +2,10 @@ const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isWeb = platformInfo.startsWith('web')
 const isMP = platformInfo.startsWith('mp')
 const isAndroid = platformInfo.startsWith('android')
+const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 
 describe('/pages/template/list-delete-swipe-batch/list-delete-swipe-batch.uvue', () => {
-  if (isWeb || isMP) {
+  if (isWeb || isMP || isAppWebView) {
     it('skip', () => {
       expect(1).toBe(1)
     })

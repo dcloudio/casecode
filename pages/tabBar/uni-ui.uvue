@@ -18,7 +18,7 @@
       </view>
       <uni-collapse>
         <template v-for="(item, index) in list" :key="item.id">
-          <uni-collapse-item v-if="item.pages.length > 0" class="uni-panel" :open="item.open" :title="item.name"
+          <uni-collapse-item v-if="item.pages.length > 0" class="uni-panel pl-4 pr-4" :open="item.open" :title="item.name"
             @change="syncCollapseState(index, $event as boolean)">
             <view style="padding-left: 18px;" class="uni-navigate-item"
               :hover-class="page.enable == false ? '' : 'is--active'" v-for="(page, key) in item.pages" :key="key"
@@ -239,14 +239,24 @@
   }
 
   function syncActiveGroup(path : string) {
-    for (const item of list.value) {
-      item.open = false
+    const matchedIndex = list.value.findIndex((item) : boolean => {
       for (const page of item.pages) {
         if (getPageKey(page.url) == path) {
-          item.open = true
-          break
+          return true
         }
       }
+      if (item.url != null && getPageKey(item.url!) == path) {
+        return true
+      }
+      return false
+    })
+
+    if (matchedIndex == -1) {
+      return
+    }
+
+    for (let i = 0; i < list.value.length; i++) {
+      list.value[i].open = matchedIndex == i && list.value[i].pages.length > 0
     }
   }
 

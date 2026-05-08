@@ -16,7 +16,9 @@
   function testPreviewImage() {
     uni.previewImage({
       urls: data.urls,
+      // #ifdef APP
       indicator: data.indicatorType,
+      // #endif
       complete() {
       }
     })

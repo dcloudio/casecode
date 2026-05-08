@@ -22,7 +22,9 @@ describe('/pages/API/element-request-fullscreen/element-request-fullscreen-bugs'
     await page.callMethod('requestfullscreen')
     await page.waitFor(1000)
 
-    const image2 = await program.screenshot({})
+    const image2 = await program.screenshot({
+      fullPage: true
+    })
     expect(image2).toSaveImageSnapshot()
   })
 });

@@ -74,6 +74,7 @@
 	}
 
 	function startListen() : void {
+		uni.onAccelerometerChange(accelerometerListener)
 		uni.startAccelerometer({
 			interval: activeInterval.value,
 			success: () => {
@@ -99,10 +100,6 @@
 			url: '/pages/API/accelerometer/shake'
 		})
 	}
-
-	onReady(() => {
-		uni.onAccelerometerChange(accelerometerListener)
-	})
 
 	onUnload(() => {
 		uni.offAccelerometerChange(accelerometerListener)
