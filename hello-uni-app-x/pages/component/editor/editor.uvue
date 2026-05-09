@@ -109,11 +109,11 @@
           <view :class="desktopToolbarDividerClass"></view>
 
           <view :class="desktopToolbarGroupClass">
-            <view id="toolbar-button-image" @tap="chooseInsertImage" @mousemove.stop="showToolbarTooltip('toolbar-button-image', '图片')" class="toolbar-icon-button">
+            <view id="toolbar-button-image" @tap="chooseInsertImage" @mousemove.stop="showToolbarTooltip('toolbar-button-image', '图片')" class="toolbar-icon-button toolbar-icon-button-action">
               <text class="toolbar-icon-text iconfont">{{"&#xe6bc;"}}</text>
             </view>
             <!-- #ifndef MP -->
-            <view id="toolbar-button-link" @tap="openLinkModal" @mousemove.stop="showToolbarTooltip('toolbar-button-link', data.formats.link != '' ? '编辑超链接' : '插入超链接')" :class="data.formats.link != '' ? 'toolbar-icon-button toolbar-icon-button-active' : 'toolbar-icon-button'">
+            <view id="toolbar-button-link" @tap="openLinkModal" @mousemove.stop="showToolbarTooltip('toolbar-button-link', data.formats.link != '' ? '编辑超链接' : '插入超链接')" :class="data.formats.link != '' ? 'toolbar-icon-button toolbar-icon-button-action toolbar-icon-button-active' : 'toolbar-icon-button toolbar-icon-button-action'">
               <text :class="data.formats.link != '' ? 'toolbar-icon-text toolbar-icon-text-active iconfont' : 'toolbar-icon-text iconfont'">{{"&#xe6bd;"}}</text>
             </view>
             <!-- #endif -->
@@ -2960,7 +2960,7 @@ defineExpose({
   margin-left: auto;
 }
 
-.toolbar-group-actions .toolbar-icon-button {
+.toolbar-icon-button-action {
   margin-left: 2px;
   margin-right: 0px;
 }
@@ -2987,16 +2987,21 @@ defineExpose({
   border-color: transparent;
   border-radius: 4px;
   background-color: transparent;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 4px;
+  padding-right: 4px;
   margin-right: 1px;
   transition-property: background-color, border-color;
   transition-duration: 160ms;
 }
 
 .toolbar-select-value {
+  min-width: 40px;
   padding-left: 4px;
   padding-right: 4px;
+}
+
+.toolbar-select-compact {
+  min-width: 40px;
 }
 
 .toolbar-select-active {
@@ -3006,7 +3011,7 @@ defineExpose({
 
 .toolbar-select-label {
   color: #50565f;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 18px;
 }
 
@@ -3022,7 +3027,7 @@ defineExpose({
 }
 
 .toolbar-select-font-label {
-  font-size: 12px;
+  font-size: 11px;
   line-height: 16px;
   /* padding: 0px 5px; */
 }
@@ -3038,27 +3043,6 @@ defineExpose({
 .toolbar-select-label-active {
   color: #2b3137;
 }
-
-.toolbar-shell-dense .toolbar-select {
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-.toolbar-shell-dense .toolbar-select-value,
-.toolbar-shell-dense .toolbar-select-compact {
-  min-width: 40px;
-}
-
-.toolbar-shell-dense .toolbar-icon-text {
-  font-size: 16px;
-  line-height: 16px;
-}
-
-.toolbar-shell-dense .toolbar-select-font-label,
-.toolbar-shell-dense .toolbar-select-label {
-  font-size: 11px;
-}
-
 
 .toolbar-select-arrow {
   min-width: 8px;
@@ -3188,8 +3172,8 @@ defineExpose({
 
 .toolbar-icon-text {
   color: #50565f;
-  font-size: 17px;
-  line-height: 17px;
+  font-size: 16px;
+  line-height: 16px;
 }
 
 .toolbar-symbol-text {
@@ -3558,10 +3542,6 @@ defineExpose({
   transform: translateY(-8px);
 }
 
-.toolbar-panel-section .desktop-color-sheet-label {
-  display: none;
-}
-
 .toolbar-panel-floating-attached {
   border-top-width: 1px;
 }
@@ -3640,7 +3620,7 @@ defineExpose({
   margin-right: 0px;
 }
 
-.toolbar-panel-section .desktop-color-sheet-label {
+.desktop-color-sheet-label {
   display: flex;
   flex-direction: row;
   align-items: center;
