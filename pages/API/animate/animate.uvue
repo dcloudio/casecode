@@ -6,7 +6,7 @@
     <view id="main" style="width: 100px;height: 100px; background-color: brown; transform: scale(1);"></view>
 
     <button @click="startAnimate">开始动画</button>
-    <!-- #ifdef VUE3-VAPOR -->
+    <!-- #ifndef !VUE3-VAPOR && APP-HARMONY -->
     <!-- #ifndef MP-WEIXIN -->
     <button @click="pauseAnimate">暂停动画</button>
     <button @click="resumeAnimate">恢复动画</button>
