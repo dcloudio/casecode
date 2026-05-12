@@ -12,36 +12,102 @@
    *   "app": {
    *     "android": {
    *       "uniVer": "x",
-   *       "unixVer": "3.9",
-   *       "unixvVer": "x"
+   *       "unixVer": "5.07",
+   *       "unixVaporVer": "x"
    *     },
    *     "ios": {
    *       "uniVer": "x",
-   *       "unixVer": "4.11",
-   *       "unixvVer": "x"
+   *       "unixVer": "5.07",
+   *       "unixVaporVer": "x"
    *     },
    *     "harmony": {
    *       "uniVer": "x",
-   *       "unixVer": "4.61",
-   *       "unixvVer": "5.08"
+   *       "unixVer": "5.07",
+   *       "unixVaporVer": "5.07"
    *     }
    *   },
    *   "mp": {
    *     "weixin": {
    *       "uniVer": "x",
-   *       "unixVer": "4.41"
+   *       "unixVer": "5.07"
    *     }
    *   },
    *   "web": {
    *     "uniVer": "x",
-   *     "unixVer": "4.0"
+   *     "unixVer": "5.07"
    *   }
    * }
    */
 import { UniTabBarLayout } from '../types.uts'
 
 type Props = {
+	/**
+	 * @description 中间按钮宽度，单位 px
+	 * @default 90
+	 * @uniPlatform {
+	 *   "app": {
+	 *     "android": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "x"
+	 *     },
+	 *     "ios": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "x"
+	 *     },
+	 *     "harmony": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "5.07"
+	 *     }
+	 *   },
+	 *   "mp": {
+	 *     "weixin": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07"
+	 *     }
+	 *   },
+	 *   "web": {
+	 *     "uniVer": "x",
+	 *     "unixVer": "5.07"
+	 *   }
+	 * }
+	 */
 	width?: number,
+	/**
+	 * @description 中间按钮高度，单位 px
+	 * @default 90
+	 * @uniPlatform {
+	 *   "app": {
+	 *     "android": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "x"
+	 *     },
+	 *     "ios": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "x"
+	 *     },
+	 *     "harmony": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "5.07"
+	 *     }
+	 *   },
+	 *   "mp": {
+	 *     "weixin": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07"
+	 *     }
+	 *   },
+	 *   "web": {
+	 *     "uniVer": "x",
+	 *     "unixVer": "5.07"
+	 *   }
+	 * }
+	 */
 	height?: number
 }
 

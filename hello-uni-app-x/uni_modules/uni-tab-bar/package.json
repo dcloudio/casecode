@@ -3,17 +3,42 @@
   "displayName": "uni-tab 选项卡",
   "version": "1.0.0",
   "description": "底部选项卡组件集",
-	"isExt": true,
+  "isExt": true,
+  "extUrl": "https://ext.dcloud.net.cn/plugin?id=27849",
+  "examples": [
+    {
+      "name": "tab-bar-dark",
+      "description": "暗色风格",
+      "url": "https://gitcode.com/dcloud/hello-uni-app-x/blob/prod_alpha/pages/uni-ui/tab-bar/tab-bar-dark.uvue"
+    },
+    {
+      "name": "tab-bar-custom",
+      "description": "自定义样式",
+      "url": "https://gitcode.com/dcloud/hello-uni-app-x/blob/prod_alpha/pages/uni-ui/tab-bar/tab-bar-custom.uvue"
+    },
+    {
+      "id": "uni-tab-midbutton",
+      "name": "tab-bar-midbutton",
+      "description": "中间按钮",
+      "url": "https://gitcode.com/dcloud/hello-uni-app-x/blob/prod_alpha/pages/uni-ui/tab-bar/tab-bar-midbutton.uvue"
+    },
+    {
+      "id": "uni-tab-midbutton",
+      "name": "tab-bar-midbutton-notch",
+      "description": "中间按钮镂空",
+      "url": "https://gitcode.com/dcloud/hello-uni-app-x/blob/prod_alpha/pages/uni-ui/tab-bar/tab-bar-midbutton-notch.uvue"
+    }
+  ],
   "keywords": [
     "uni-ui",
     "uniui",
     "自定义选项卡"
-],
+  ],
   "repository": "https://gitcode.com/dcloud/uni-ui-x",
   "engines": {
-    "HBuilderX": "",
+    "HBuilderX": "^5.07",
     "uni-app": "",
-    "uni-app-x": "^5.0"
+    "uni-app-x": "^5.07"
   },
   "directories": {
     "example": "../../temps/example_temps"
