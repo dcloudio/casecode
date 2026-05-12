@@ -14,29 +14,29 @@
    *   "app": {
    *     "android": {
    *       "uniVer": "x",
-   *       "unixVer": "3.9",
-   *       "unixvVer": "x"
+   *       "unixVer": "5.07",
+   *       "unixVaporVer": "x"
    *     },
    *     "ios": {
    *       "uniVer": "x",
-   *       "unixVer": "4.11",
-   *       "unixvVer": "x"
+   *       "unixVer": "5.07",
+   *       "unixVaporVer": "x"
    *     },
    *     "harmony": {
    *       "uniVer": "x",
-   *       "unixVer": "4.61",
-   *       "unixvVer": "5.08"
+   *       "unixVer": "5.07",
+   *       "unixVaporVer": "5.07"
    *     }
    *   },
    *   "mp": {
    *     "weixin": {
    *       "uniVer": "x",
-   *       "unixVer": "4.41"
+   *       "unixVer": "5.07"
    *     }
    *   },
    *   "web": {
    *     "uniVer": "x",
-   *     "unixVer": "4.0"
+   *     "unixVer": "5.07"
    *   }
    * }
    */
@@ -50,10 +50,68 @@ defineOptions({
 type Props = {
 	/**
 	 * @description badge 的内容
+	 * @uniPlatform {
+	 *   "app": {
+	 *     "android": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "x"
+	 *     },
+	 *     "ios": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "x"
+	 *     },
+	 *     "harmony": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "5.07"
+	 *     }
+	 *   },
+	 *   "mp": {
+	 *     "weixin": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07"
+	 *     }
+	 *   },
+	 *   "web": {
+	 *     "uniVer": "x",
+	 *     "unixVer": "5.07"
+	 *   }
+	 * }
 	 */
 	badgeText?: string,
 	/**
 	 * @description badge 的样式类
+	 * @uniPlatform {
+	 *   "app": {
+	 *     "android": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "x"
+	 *     },
+	 *     "ios": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "x"
+	 *     },
+	 *     "harmony": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07",
+	 *       "unixVaporVer": "5.07"
+	 *     }
+	 *   },
+	 *   "mp": {
+	 *     "weixin": {
+	 *       "uniVer": "x",
+	 *       "unixVer": "5.07"
+	 *     }
+	 *   },
+	 *   "web": {
+	 *     "uniVer": "x",
+	 *     "unixVer": "5.07"
+	 *   }
+	 * }
 	 */
 	badgeClass?: string.ClassString,
 }

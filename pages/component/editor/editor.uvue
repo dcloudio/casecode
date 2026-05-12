@@ -117,6 +117,9 @@
               <text :class="data.formats.link != '' ? 'toolbar-icon-text toolbar-icon-text-active iconfont' : 'toolbar-icon-text iconfont'">{{"&#xe6bd;"}}</text>
             </view>
             <!-- #endif -->
+            <view id="toolbar-button-preview" @tap="openPreview" @mousemove.stop="showToolbarTooltip('toolbar-button-preview', '预览')" class="toolbar-preview-button">
+              <text class="toolbar-preview-label">预览</text>
+            </view>
           </view>
         </view>
         <!-- #ifdef WEB -->
@@ -424,7 +427,6 @@
     <!-- #endif -->
 
     <view class="editor-stage" :style="editorStageStyle">
-      <!-- editor 切换 hidekeyboard: 注释掉 type -->
       <editor
         id="editor"
         class="editor-field"
@@ -433,6 +435,9 @@
         show-img-size
         show-img-toolbar
         show-img-resize
+        <!-- #ifndef APP-ANDROID -->
+        :type="data.editorInputType"
+        <!-- #endif -->
         @ready="onEditorReady"
         @focus="onEditorFocus"
         @blur="onEditorBlur"
@@ -486,6 +491,11 @@ const BACKGROUND_COLOR_PRESETS: string[] = [
   '#ff5f5b', '#ff8a3d', '#ffaa2b', '#ffd400', '#7fd13b', '#42bebc', '#5da9ff', '#738ef5', '#9a68e0', '#ef5aae',
   '#ffdede', '#ffe9dd', '#fff1e0', '#fff7db', '#edf8df', '#e1f5f3', '#e3f0ff', '#e7ebff', '#efe8ff', '#ffe5f3'
 ]
+
+const EDITOR_PREVIEW_STORAGE_KEY = 'editor-preview-html'
+const EDITOR_PREVIEW_PAGE_URL = '/pages/component/editor/editor-preview'
+const EMPTY_PREVIEW_HTML = '<p style="color:#94a3b8;">暂无内容</p>'
+const DEFAULT_INSERT_IMAGE_URL = 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app.png'
 
 type DataType = {
   pageWindowHeight: number;
@@ -923,17 +933,6 @@ function getFilledColorSwatchClass(isActive: boolean) : string {
   return className
 }
 
-function refocusEditorAfterToolbarAction() {
-  // #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
-  setTimeout(() => {
-    const editorElement = uni.getElementById('editor')
-    if (editorElement != null) {
-      editorElement.focus()
-    }
-  }, 30)
-  // #endif
-}
-
 function updatePageWindowHeight() {
   const windowInfo = uni.getWindowInfo()
   data.pageWindowHeight = windowInfo.windowHeight
@@ -1266,12 +1265,12 @@ function getEditorStageStyle() : string {
 }
 
 function hideKeyboardForSheet() {
-  // editor 切换 hidekeyboard: 下边注释放开
-  // uni.hideKeyboard()
-
   data.editorInputType = 'none'
   data.isFocused = false
+
+  // #ifdef APP-ANDROID
   uni.hideKeyboard()
+  // #endif
 }
 
 function toggleSheet(sheet: string) {
@@ -1280,12 +1279,12 @@ function toggleSheet(sheet: string) {
     return
   }
 
-  // #ifdef APP-ANDROID
-  uni.showToast({
-    title: '请手动收起键盘后选择操作',
-    icon: 'none'
-  })
-  // #endif
+  // // #ifdef APP-ANDROID
+  // uni.showToast({
+  //   title: '请手动收起键盘后选择操作',
+  //   icon: 'none'
+  // })
+  // // #endif
 
   updateSheetAnchor(sheet)
   data.activeSheet = sheet
@@ -1297,9 +1296,7 @@ function toggleSheet(sheet: string) {
     }
   }, 16)
 
-  // #ifndef APP-ANDROID
   hideKeyboardForSheet()
-  // #endif
   syncToolbarBottom()
   syncToolbarVisibility()
 }
@@ -1817,7 +1814,6 @@ function setParagraph() {
   clearTitleFormats()
   applyFormatWithState('header', 0)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setHeadingLevel(level: number) {
@@ -1828,7 +1824,6 @@ function setHeadingLevel(level: number) {
     applyFormatWithState('header', level)
   }
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setOrderedList() {
@@ -1840,7 +1835,6 @@ function setOrderedList() {
   applyFormatWithState('header', 0)
   applyFormatWithState('list', data.formats.list == 'ordered' ? null : 'ordered')
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setBulletList() {
@@ -1852,13 +1846,11 @@ function setBulletList() {
   applyFormatWithState('header', 0)
   applyFormatWithState('list', data.formats.list == 'bullet' ? null : 'bullet')
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function clearListFormat() {
   applyFormatWithState('list', null)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function toggleBlockquote() {
@@ -1881,7 +1873,6 @@ function toggleBlockquote() {
   setLocalFormat('blockquote', nextValue)
   applyFormat('blockquote', null)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function toggleCodeBlock() {
@@ -1900,7 +1891,6 @@ function toggleCodeBlock() {
   setLocalFormat('code-block', nextValue)
   applyFormat('code-block', null)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function toggleBold() {
@@ -1922,25 +1912,21 @@ function toggleStrike() {
 function toggleBoldAndClose() {
   toggleBold()
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function toggleItalicAndClose() {
   toggleItalic()
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function toggleUnderlineAndClose() {
   toggleUnderline()
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function toggleStrikeAndClose() {
   toggleStrike()
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setTextColor(color: string) {
@@ -1950,7 +1936,6 @@ function setTextColor(color: string) {
 function setTextColorAndClose(color: string) {
   setTextColor(color)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setBackgroundColor(color: string) {
@@ -1960,7 +1945,6 @@ function setBackgroundColor(color: string) {
 function setBackgroundColorAndClose(color: string) {
   setBackgroundColor(color)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setLineHeight(value: string) {
@@ -1970,7 +1954,6 @@ function setLineHeight(value: string) {
 function setLineHeightAndClose(value: string) {
   setLineHeight(value)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setLetterSpacing(value: string) {
@@ -1980,7 +1963,6 @@ function setLetterSpacing(value: string) {
 function setLetterSpacingAndClose(value: string) {
   setLetterSpacing(value)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setFontSize(value: string) {
@@ -1990,7 +1972,6 @@ function setFontSize(value: string) {
 function setFontSizeAndClose(value: string) {
   setFontSize(value)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setFontFamily(value: string) {
@@ -2000,13 +1981,11 @@ function setFontFamily(value: string) {
 function setFontFamilyAndClose(value: string) {
   setFontFamily(value)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function toggleTextIndent() {
   const nextValue = data.formats.textIndent == '' ? '2em' : ''
   applyFormatWithState('textIndent', nextValue == '' ? null : nextValue)
-  refocusEditorAfterToolbarAction()
 }
 
 function setBlockIndent(value: string) {
@@ -2018,37 +1997,31 @@ function setBlockIndent(value: string) {
 function setBlockIndentAndClose(value: string) {
   setBlockIndent(value)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setAlignLeft() {
   applyFormatWithState('align', 'left')
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setAlignCenter() {
   applyFormatWithState('align', 'center')
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setAlignRight() {
   applyFormatWithState('align', 'right')
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function setAlignJustify() {
   applyFormatWithState('align', 'justify')
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function clearAlign() {
   applyFormatWithState('align', null)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function clearFormatting() {
@@ -2060,13 +2033,11 @@ function clearFormatting() {
   resetLocalFormats()
   clearFormatPainterState()
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function toggleChecklistTool() {
   applyFormatWithState('list', data.formats.list == 'check' ? null : 'check')
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function insertDivider() {
@@ -2076,7 +2047,49 @@ function insertDivider() {
   }
   editor.insertDivider(null)
   closeSheets()
-  refocusEditorAfterToolbarAction()
+}
+
+function normalizePreviewHtml(html: string) : string {
+  const trimmedHtml = html.trim()
+  if (trimmedHtml == '') {
+    return EMPTY_PREVIEW_HTML
+  }
+  return trimmedHtml
+}
+
+function getPreviewHtmlFromContents(result: UniEditorElementGetContentsOptionsRes) : string {
+  const htmlValue = result.html
+  if (htmlValue != null) {
+    return normalizePreviewHtml(htmlValue)
+  }
+  return EMPTY_PREVIEW_HTML
+}
+
+function openPreviewPage(html: string) {
+  uni.setStorageSync(EDITOR_PREVIEW_STORAGE_KEY, html)
+  uni.navigateTo({
+    url: `${EDITOR_PREVIEW_PAGE_URL}?storageKey=${EDITOR_PREVIEW_STORAGE_KEY}`
+  })
+}
+
+function openPreview() {
+  const editor = getEditor()
+  if (editor == null) {
+    return
+  }
+  closeSheets()
+  editor.getContents({
+    success: (res: UniEditorElementGetContentsOptionsRes) => {
+      openPreviewPage(getPreviewHtmlFromContents(res))
+    },
+    fail: (err: any) => {
+      console.log(err)
+      uni.showToast({
+        title: '预览加载失败',
+        icon: 'none'
+      })
+    }
+  })
 }
 
 function getCon () {
@@ -2186,7 +2199,6 @@ function insertImage(path: string) {
   }
   editor.insertImage(options)
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function normalizeLinkHref(value: string) : string {
@@ -2399,7 +2411,6 @@ function applyLinkDeltaMutation(nextHref: string | null) {
           setLocalFormat('link', nextHref)
           closeSheets()
           closeLinkModal()
-          refocusEditorAfterToolbarAction()
         },
         fail: () => {
           uni.showToast({
@@ -2449,7 +2460,6 @@ function insertLink(text: string, href: string) {
   editor.insertLink(options)
   closeSheets()
   closeLinkModal()
-  refocusEditorAfterToolbarAction()
 }
 
 function confirmLinkModal() {
@@ -2487,19 +2497,10 @@ function removeLink() {
   applyFormatWithState('link', null)
   closeSheets()
   closeLinkModal()
-  refocusEditorAfterToolbarAction()
 }
 
 function chooseInsertImage() {
-  uni.chooseImage({
-    count: 1,
-    success: (res: ChooseImageSuccess) => {
-      const paths = res.tempFilePaths
-      if (paths.length > 0) {
-        insertImage(paths[0])
-      }
-    }
-  })
+  insertImage(DEFAULT_INSERT_IMAGE_URL)
 }
 
 function undo() {
@@ -2516,7 +2517,6 @@ function undo() {
     }
   })
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function redo() {
@@ -2533,7 +2533,6 @@ function redo() {
     }
   })
   closeSheets()
-  refocusEditorAfterToolbarAction()
 }
 
 function showToolbarTooltip(buttonId: string, text: string) {
@@ -2576,7 +2575,6 @@ function onToolbarMouseDown(event: UniMouseEvent) {
 // #endif
 
 function onEditorFocus(event: UniEditorFocusEvent) {
-  console.log('onEditorFocus')
   clearToolbarHideTimer()
   data.editorInputType = ''
   // #ifdef WEB
@@ -3047,15 +3045,16 @@ defineExpose({
 .toolbar-select-arrow {
   min-width: 8px;
   color: #6b7280;
-  font-size: 4px;
+  font-size: 8px;
   line-height: 12px;
   text-align: center;
   margin-left: 2px;
   margin-top: 1px;
+  transform: scale(0.5);
 }
 
 .toolbar-select-arrow.iconfont {
-  font-size: 4px;
+  font-size: 8px;
   line-height: 12px;
 }
 
@@ -3081,6 +3080,27 @@ defineExpose({
 
 .toolbar-icon-button-disabled {
   opacity: 0.42;
+}
+
+.toolbar-preview-button {
+  height: 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-width: 1px;
+  border-color: #d7dde5;
+  border-radius: 4px;
+  background-color: #ffffff;
+  margin-left: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.toolbar-preview-label {
+  color: #2f3b47;
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .toolbar-color-button {
@@ -3149,15 +3169,16 @@ defineExpose({
 .toolbar-color-arrow {
   min-width: 8px;
   color: #6b7280;
-  font-size: 4px;
+  font-size: 8px;
   line-height: 12px;
   text-align: center;
   margin-left: 0px;
   margin-top: 1px;
+  transform: scale(0.5);
 }
 
 .toolbar-color-arrow.iconfont {
-  font-size: 4px;
+  font-size: 8px;
   line-height: 12px;
 }
 
