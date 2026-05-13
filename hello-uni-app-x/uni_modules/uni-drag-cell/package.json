@@ -4,13 +4,17 @@
 	"version": "1.0.0",
 	"description": "可拖拽排序组件",
 	"isExt": true,
+  "extUrl": "https://ext.dcloud.net.cn/plugin?id=27845",
 	"keywords": [
-        "uni-drag-cell"
+        "uni-drag-cell",
+        "uni-app-x",
+        "uni-app x",
+        "组件"
     ],
 	"repository": "https://gitcode.com/dcloud/uni-ui-x",
 	"engines": {
-		"HBuilderX": "^3.1.0",
-        "uni-app-x": "^5.0",
+		"HBuilderX": "^5.08",
+        "uni-app-x": "^5.08",
         "uni-app": ""
 	},
 	"directories": {

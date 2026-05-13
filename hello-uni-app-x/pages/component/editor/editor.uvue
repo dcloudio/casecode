@@ -347,15 +347,15 @@
     <view v-if="data.linkModalVisible" class="link-modal-mask link-modal-mask-floating" @tap="closeLinkModal">
       <view class="link-modal-card link-modal-card-floating" @tap.stop>
         <view class="link-modal-header">
-          <text class="link-modal-title">{{ data.formats.link != '' ? '编辑超链接' : '插入超链接' }}</text>
-          <text class="link-modal-subtitle">{{ data.formats.link != '' ? '仅修改链接地址' : (data.linkUseSelectionText ? '将为选中文本添加链接' : '填写显示文本与链接地址') }}</text>
+          <text class="link-modal-title">{{ data.linkOriginalHref != '' ? '编辑超链接' : '插入超链接' }}</text>
+          <text class="link-modal-subtitle">{{ data.linkOriginalHref != '' ? '需选中超链接文本后修改/删除链接地址' : (data.linkUseSelectionText ? '将为选中文本添加链接' : '填写显示文本与链接地址') }}</text>
         </view>
         <view class="link-modal-form">
-          <view v-if="data.formats.link == '' && !data.linkUseSelectionText" class="link-modal-field">
+          <view v-if="data.linkOriginalHref == '' && !data.linkUseSelectionText" class="link-modal-field">
             <text class="link-modal-label">显示文本</text>
             <input class="link-modal-input" v-model="data.linkDraftText" placeholder="请输入显示文本" :maxlength="-1" />
           </view>
-          <view v-if="data.formats.link == '' && data.linkUseSelectionText" class="link-modal-field">
+          <view v-if="data.linkOriginalHref == '' && data.linkUseSelectionText" class="link-modal-field">
             <text class="link-modal-label">已选中文本</text>
             <view class="link-modal-selection-chip">
               <text class="link-modal-selection-text">{{ data.linkDraftText }}</text>
@@ -367,7 +367,7 @@
           </view>
         </view>
         <view class="link-modal-actions">
-          <view v-if="data.formats.link != ''" class="link-modal-danger" @tap="removeLink">
+          <view v-if="data.linkOriginalHref != ''" class="link-modal-danger" @tap="removeLink">
             <text class="link-modal-danger-text">删除链接</text>
           </view>
           <view class="link-modal-action-group">
@@ -386,15 +386,15 @@
     <view v-if="data.linkModalVisible" class="link-modal-mask link-modal-mask-app" @tap="closeLinkModal">
       <view class="link-modal-card link-modal-card-app" @tap.stop>
         <view class="link-modal-header">
-          <text class="link-modal-title link-modal-title-app">{{ data.formats.link != '' ? '编辑超链接' : '插入超链接' }}</text>
-          <text class="link-modal-subtitle link-modal-subtitle-app">{{ data.formats.link != '' ? '仅修改链接地址' : (data.linkUseSelectionText ? '将为选中文本添加链接' : '填写显示文本与链接地址') }}</text>
+          <text class="link-modal-title link-modal-title-app">{{ data.linkOriginalHref != '' ? '编辑超链接' : '插入超链接' }}</text>
+          <text class="link-modal-subtitle link-modal-subtitle-app">{{ data.linkOriginalHref != '' ? '需选中超链接文本后修改/删除链接地址' : (data.linkUseSelectionText ? '将为选中文本添加链接' : '填写显示文本与链接地址') }}</text>
         </view>
         <view class="link-modal-form">
-          <view v-if="data.formats.link == '' && !data.linkUseSelectionText" class="link-modal-field">
+          <view v-if="data.linkOriginalHref == '' && !data.linkUseSelectionText" class="link-modal-field">
             <text class="link-modal-label link-modal-label-app">显示文本</text>
             <input class="link-modal-input link-modal-input-app" v-model="data.linkDraftText" placeholder="请输入显示文本" :maxlength="-1" />
           </view>
-          <view v-if="data.formats.link == '' && data.linkUseSelectionText" class="link-modal-field">
+          <view v-if="data.linkOriginalHref == '' && data.linkUseSelectionText" class="link-modal-field">
             <text class="link-modal-label link-modal-label-app">已选中文本</text>
             <view class="link-modal-selection-chip link-modal-selection-chip-app">
               <text class="link-modal-selection-text link-modal-selection-text-app">{{ data.linkDraftText }}</text>
@@ -408,7 +408,7 @@
         <view class="link-modal-actions link-modal-actions-app">
           <!-- 蒸汽模式下闪退 暂时屏蔽 -->
           <!-- #ifndef VUE3-VAPOR -->
-          <view v-if="data.formats.link != ''" class="link-modal-danger link-modal-danger-app" @tap="removeLink">
+          <view v-if="data.linkOriginalHref != ''" class="link-modal-danger link-modal-danger-app" @tap="removeLink">
             <text class="link-modal-danger-text link-modal-danger-text-app">删除链接</text>
           </view>
           <!-- #endif -->
@@ -435,9 +435,7 @@
         show-img-size
         show-img-toolbar
         show-img-resize
-        <!-- #ifndef APP-ANDROID -->
-        :type="data.editorInputType"
-        <!-- #endif -->
+        :read-only="data.editorReadOnly"
         @ready="onEditorReady"
         @focus="onEditorFocus"
         @blur="onEditorBlur"
@@ -511,7 +509,7 @@ type DataType = {
   sheetLeft: number;
   sheetArrowLeft: number;
   sheetAnimated: boolean;
-  editorInputType: string;
+  editorReadOnly: boolean;
   isFocused: boolean;
   ignoreNextBlur: boolean;
   activeSheet: string;
@@ -595,7 +593,7 @@ const data = reactive<DataType>({
   sheetLeft: 12,
   sheetArrowLeft: 32,
   sheetAnimated: false,
-  editorInputType: '',
+  editorReadOnly: false,
   isFocused: false,
   ignoreNextBlur: false,
   activeSheet: '',
@@ -906,7 +904,8 @@ function getDesktopMenuTextClass(active: boolean) : string {
 
 function closeSheets() {
   data.sheetAnimated = false
-  data.editorInputType = ''
+  data.editorReadOnly = false
+
   // #ifdef WEB
   hideToolbarTooltip()
   // #endif
@@ -1041,8 +1040,10 @@ function applyFormat(name: string, value: string | number | null | undefined) {
   // #ifndef WEB
   statusSyncLockedUntil = Date.now() + 400
   // #endif
-  editor.format(name, value)
-  editor.scrollIntoView(null)
+  setTimeout(() => {
+    editor.format(name, value)
+    editor.scrollIntoView(null)
+  }, 0)
 }
 
 function setLocalFormat(name: string, value: string | number | boolean | null) {
@@ -1265,12 +1266,8 @@ function getEditorStageStyle() : string {
 }
 
 function hideKeyboardForSheet() {
-  data.editorInputType = 'none'
+  data.editorReadOnly = true
   data.isFocused = false
-
-  // #ifdef APP-ANDROID
-  uni.hideKeyboard()
-  // #endif
 }
 
 function toggleSheet(sheet: string) {
@@ -1404,16 +1401,15 @@ function openLinkModal() {
   if (editor == null) {
     return
   }
-  closeSheets()
   data.linkSelectionText = ''
   data.linkOriginalHref = data.formats.link
-  // #ifndef WEB
-  uni.hideKeyboard()
-  // #endif
   data.linkDraftText = ''
   data.linkDraftHref = data.formats.link
   data.linkModalVisible = true
   data.linkUseSelectionText = false
+
+  closeSheets()
+
   clearToolbarHideTimer()
   const options: UniEditorElementGetSelectionTextOptions = {
     success: (res: UniEditorElementGetSelectionTextOptionsRes) => {
@@ -1429,6 +1425,8 @@ function openLinkModal() {
     complete: () => {}
   }
   editor.getSelectionText(options)
+
+  data.editorReadOnly = true
 }
 
 function closeLinkModal() {
@@ -2161,18 +2159,6 @@ const clear = () => {
   })
 }
 
-const clearShowModal = () => {
-  uni.showModal({
-    title: '清空编辑器',
-    content: '确定清空编辑器全部内容？',
-    success: (res) => {
-      if (res.confirm) {
-        clear()
-      }
-    }
-  })
-}
-
 const removeFormat = () => {
   const editor = getEditor()
   if (editor == null) {
@@ -2201,254 +2187,19 @@ function insertImage(path: string) {
   closeSheets()
 }
 
-function normalizeLinkHref(value: string) : string {
-  const trimmedValue = value.trim()
-  if (trimmedValue == '') {
-    return ''
-  }
-  if (trimmedValue.startsWith('http://') || trimmedValue.startsWith('https://') || trimmedValue.startsWith('mailto:') || trimmedValue.startsWith('tel:')) {
-    return trimmedValue
-  }
-  return `https://${trimmedValue}`
-}
-
-function escapeRegExp(value: string) : string {
-  return value.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
-}
-
-function getBooleanAttribute(attributes: UTSJSONObject, key: string) : boolean {
-  const value = attributes[key]
-  return value != null && (value as boolean)
-}
-
-function buildOpAttributes(attributes: UTSJSONObject | null, nextLinkValue: string | null, preserveLink: boolean) : UTSJSONObject | null {
-  let hasValue = false
-  const nextAttributes: UTSJSONObject = {}
-  if (attributes != null) {
-    if (getBooleanAttribute(attributes, 'bold')) {
-      nextAttributes['bold'] = true
-      hasValue = true
-    }
-    if (getBooleanAttribute(attributes, 'italic')) {
-      nextAttributes['italic'] = true
-      hasValue = true
-    }
-    if (getBooleanAttribute(attributes, 'underline')) {
-      nextAttributes['underline'] = true
-      hasValue = true
-    }
-    if (getBooleanAttribute(attributes, 'strike')) {
-      nextAttributes['strike'] = true
-      hasValue = true
-    }
-    if (getBooleanAttribute(attributes, 'blockquote')) {
-      nextAttributes['blockquote'] = true
-      hasValue = true
-    }
-    if (getBooleanAttribute(attributes, 'code-block')) {
-      nextAttributes['code-block'] = true
-      hasValue = true
-    }
-    if (attributes['header'] != null && (attributes['header'] as number) != 0) {
-      nextAttributes['header'] = attributes['header']
-      hasValue = true
-    }
-    if (attributes['list'] != null && (attributes['list'] as string) != '') {
-      nextAttributes['list'] = attributes['list']
-      hasValue = true
-    }
-    if (attributes['align'] != null && (attributes['align'] as string) != '') {
-      nextAttributes['align'] = attributes['align']
-      hasValue = true
-    }
-    if (attributes['textIndent'] != null && (attributes['textIndent'] as string) != '') {
-      nextAttributes['textIndent'] = attributes['textIndent']
-      hasValue = true
-    }
-    if (attributes['marginLeft'] != null && (attributes['marginLeft'] as string) != '') {
-      nextAttributes['marginLeft'] = attributes['marginLeft']
-      hasValue = true
-    }
-    if (attributes['marginRight'] != null && (attributes['marginRight'] as string) != '') {
-      nextAttributes['marginRight'] = attributes['marginRight']
-      hasValue = true
-    }
-    if (attributes['lineHeight'] != null && (attributes['lineHeight'] as string) != '') {
-      nextAttributes['lineHeight'] = attributes['lineHeight']
-      hasValue = true
-    }
-    if (attributes['letterSpacing'] != null && (attributes['letterSpacing'] as string) != '') {
-      nextAttributes['letterSpacing'] = attributes['letterSpacing']
-      hasValue = true
-    }
-    if (attributes['fontFamily'] != null && (attributes['fontFamily'] as string) != '') {
-      nextAttributes['fontFamily'] = attributes['fontFamily']
-      hasValue = true
-    }
-    if (attributes['fontSize'] != null && (attributes['fontSize'] as string) != '') {
-      nextAttributes['fontSize'] = attributes['fontSize']
-      hasValue = true
-    }
-    if (attributes['color'] != null && (attributes['color'] as string) != '') {
-      nextAttributes['color'] = attributes['color']
-      hasValue = true
-    }
-    if (attributes['backgroundColor'] != null && (attributes['backgroundColor'] as string) != '') {
-      nextAttributes['backgroundColor'] = attributes['backgroundColor']
-      hasValue = true
-    }
-    if (preserveLink && attributes['link'] != null && (attributes['link'] as string) != '') {
-      nextAttributes['link'] = attributes['link']
-      hasValue = true
-    }
-  }
-  if (nextLinkValue != null && nextLinkValue != '') {
-    nextAttributes['link'] = nextLinkValue
-    hasValue = true
-  }
-  return hasValue ? nextAttributes : null
-}
-
-function pushTextOp(ops: any[], text: string, attributes: any | null) {
-  if (text == '') {
-    return
-  }
-  if (attributes != null) {
-    ops.push({
-      insert: text,
-      attributes: attributes
-    })
-    return
-  }
-  ops.push({
-    insert: text
-  })
-}
-
-function replaceLinkInDeltaOps(ops: any[], selectionText: string, originalHref: string, nextHref: string | null) : any[] | null {
-  const nextOps: any[] = []
-  let replaced = false
-  for (const op of ops) {
-    const opItem = op as UTSJSONObject
-    if (replaced) {
-      nextOps.push(op)
-      continue
-    }
-    const insertValue = opItem['insert']
-    if (typeof insertValue != 'string') {
-      nextOps.push(op)
-      continue
-    }
-    const text = insertValue as string
-    const attributes = opItem['attributes'] as UTSJSONObject | null
-    const currentHref = attributes != null && attributes['link'] != null ? attributes['link'] as string : ''
-    const matchesExistingLink = originalHref != '' && currentHref == originalHref
-    const matchesPlainSelection = originalHref == '' && selectionText != '' && currentHref == ''
-    if (!matchesExistingLink && !matchesPlainSelection) {
-      nextOps.push(op)
-      continue
-    }
-
-    let matchStart = 0
-    let matchLength = text.length
-    if (selectionText != '') {
-      const index = text.indexOf(selectionText)
-      if (index < 0) {
-        nextOps.push(op)
-        continue
-      }
-      matchStart = index
-      matchLength = selectionText.length
-    }
-
-    const beforeText = text.slice(0, matchStart)
-    const matchedText = text.slice(matchStart, matchStart + matchLength)
-    const afterText = text.slice(matchStart + matchLength)
-    pushTextOp(nextOps, beforeText, buildOpAttributes(attributes, null, true))
-
-    const targetAttributes = buildOpAttributes(attributes, nextHref, false)
-    pushTextOp(nextOps, matchedText, targetAttributes)
-    pushTextOp(nextOps, afterText, buildOpAttributes(attributes, null, true))
-    replaced = true
-  }
-  if (!replaced) {
-    return null
-  }
-  return nextOps
-}
-
-function applyLinkDeltaMutation(nextHref: string | null) {
-  const editor = getEditor()
-  if (editor == null) {
-    return
-  }
-  const selectionText = data.linkSelectionText
-  const originalHref = data.linkOriginalHref
-  editor.getContents({
-    success: (res: UniEditorElementGetContentsOptionsRes) => {
-      const delta = res.delta as UTSJSONObject | null
-      const ops = delta != null ? delta['ops'] as any[] : null
-      if (ops == null) {
-        uni.showToast({
-          title: nextHref == null ? '删除链接失败' : '编辑链接失败',
-          icon: 'none'
-        })
-        return
-      }
-      const nextOps = replaceLinkInDeltaOps(ops, selectionText, originalHref, nextHref)
-      if (nextOps == null) {
-        uni.showToast({
-          title: nextHref == null ? '未定位到原超链接' : '未定位到原超链接文本',
-          icon: 'none'
-        })
-        return
-      }
-      editor.setContents({
-        delta: {
-          ops: nextOps
-        },
-        success: () => {
-          setLocalFormat('link', nextHref)
-          closeSheets()
-          closeLinkModal()
-        },
-        fail: () => {
-          uni.showToast({
-            title: nextHref == null ? '删除链接失败' : '编辑链接失败',
-            icon: 'none'
-          })
-        }
-      })
-    },
-    fail: () => {
-      uni.showToast({
-        title: nextHref == null ? '读取内容失败' : '读取内容失败',
-        icon: 'none'
-      })
-    }
-  })
-}
-
 function insertLink(text: string, href: string) {
   const editor = getEditor()
   if (editor == null) {
     return
   }
-  const normalizedHref = normalizeLinkHref(href)
-  if (normalizedHref == '') {
-    uni.showToast({
-      title: '请输入链接地址',
-      icon: 'none'
-    })
-    return
-  }
+
   const trimmedText = text.trim()
-  const linkText = trimmedText != '' ? trimmedText : normalizedHref
+  const linkText = trimmedText != '' ? trimmedText : href
   const options: UniEditorElementInsertLinkOptions = {
-    href: normalizedHref,
+    href,
     text: linkText,
     success: () => {
-      data.formats.link = normalizedHref
+      data.formats.link = href
     },
     fail: () => {
       uni.showToast({
@@ -2457,9 +2208,10 @@ function insertLink(text: string, href: string) {
       })
     }
   }
-  editor.insertLink(options)
+
   closeSheets()
   closeLinkModal()
+  setTimeout(() => editor.insertLink(options), 0)
 }
 
 function confirmLinkModal() {
@@ -2471,13 +2223,7 @@ function confirmLinkModal() {
     })
     return
   }
-  // #ifndef WEB
-  const normalizedHref = normalizeLinkHref(href)
-  if (data.linkOriginalHref != '' || data.linkSelectionText != '') {
-    applyLinkDeltaMutation(normalizedHref)
-    return
-  }
-  // #endif
+
   insertLink(data.linkDraftText, href)
 }
 
@@ -2486,13 +2232,6 @@ function removeLink() {
   if (editor == null) {
     return
   }
-
-  // #ifndef WEB
-  if (data.linkOriginalHref != '' || data.linkSelectionText != '') {
-    applyLinkDeltaMutation(null)
-    return
-  }
-  // #endif
 
   applyFormatWithState('link', null)
   closeSheets()
@@ -2576,7 +2315,7 @@ function onToolbarMouseDown(event: UniMouseEvent) {
 
 function onEditorFocus(event: UniEditorFocusEvent) {
   clearToolbarHideTimer()
-  data.editorInputType = ''
+  data.editorReadOnly = false
   // #ifdef WEB
   hideToolbarTooltip()
   // #endif
@@ -2603,7 +2342,7 @@ function onEditorBlur(event: UniEditorBlurEvent) {
     data.isFocused = true
     return
   }
-  data.editorInputType = ''
+  data.editorReadOnly = false
   data.isFocused = false
   if (data.activeSheet == '') {
     syncToolbarBottom()
@@ -2620,6 +2359,7 @@ function onStatusChange(event: UniEditorStatusChangeEvent) {
   // #endif
   const formats = event.detail
   const formatObject = JSON.parse<UTSJSONObject>(JSON.stringify(formats))
+
   if (formatObject == null) {
     return
   }
@@ -2654,10 +2394,14 @@ function onStatusChange(event: UniEditorStatusChangeEvent) {
   const marginLeftValue = formatObject['marginLeft']
   if (marginLeftValue != null) {
     nextFormats.marginLeft = marginLeftValue as string
+  } else {
+    nextFormats.marginLeft = data.formats.marginLeft
   }
   const marginRightValue = formatObject['marginRight']
   if (marginRightValue != null) {
     nextFormats.marginRight = marginRightValue as string
+  } else {
+    nextFormats.marginRight = data.formats.marginRight
   }
   if (formats.lineHeight != null) {
     nextFormats.lineHeight = formats.lineHeight
