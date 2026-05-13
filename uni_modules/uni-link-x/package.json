@@ -1,22 +1,23 @@
 {
-  "id": "uni-time-format",
-  "displayName": "uni-time-format 时间格式化",
+  "id": "uni-link-x",
+  "displayName": "uni-link 链接",
   "version": "1.0.0",
-  "description": "TimeFormat 时间格式化组件，可自定义时间格式化。",
-  "isExt": true,
-  "extUrl": "https://ext.dcloud.net.cn/plugin?id=27851",
+  "description": "Link 链接组件，可自定义链接的打开方式。",
+	"isExt": true,
+  "extUrl": "https://ext.dcloud.net.cn/plugin?id=27898",
   "keywords": [
     "uni-ui",
     "uniui",
-    "time-format",
+    "link",
+    "链接",
     "uni-app-x",
     "uni-app x",
     "组件"
-  ],
+],
   "engines": {
-    "HBuilderX": "^5.07",
-    "uni-app-x": "^5.07",
-    "uni-app": ""
+    "HBuilderX": "",
+    "uni-app": "",
+    "uni-app-x": "^5.07"
   },
   "repository": "https://gitcode.com/dcloud/uni-ui-x",
   "directories": {
@@ -46,12 +47,14 @@
     "npmurl": ""
   },
   "uni_modules": {
+    "dependencies": [
+      "uts-openSchema"
+    ],
     "encrypt": [],
-    "dependencies": [],
     "platforms": {
       "cloud": {
-        "tcb": "x",
-        "aliyun": "x",
+        "tcb": "√",
+        "aliyun": "√",
         "alipay": "x"
       },
       "client": {

@@ -3,18 +3,22 @@
   "displayName": "uni-badge-view 数字角标",
   "version": "1.0.1",
   "description": "数字角标（徽章）组件，在元素周围展示消息提醒，一般用于列表、九宫格、按钮等地方。",
-	"isExt": true,
+  "isExt": true,
+  "extUrl": "https://ext.dcloud.net.cn/plugin?id=27844",
   "keywords": [
     "badge",
     "uni-ui",
     "uniui",
     "数字角标",
-    "徽章"
-],
+    "徽章",
+    "uni-app-x",
+    "uni-app x",
+    "组件"
+  ],
   "repository": "https://gitcode.com/dcloud/uni-ui-x",
   "engines": {
-    "HBuilderX": "",
-    "uni-app-x": "^5.0",
+    "HBuilderX": "^5.08",
+    "uni-app-x": "^5.08",
     "uni-app": ""
   },
   "directories": {

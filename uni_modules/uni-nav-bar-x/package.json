@@ -1,22 +1,20 @@
 {
-	"id": "uni-index-bar",
-	"displayName": "uni-index-bar 索引栏",
-	"version": "1.0.1",
-	"description": "uni-index-bar 索引栏组件，用于显示索引栏，支持自定义索引栏的样式和内容。",
+	"id": "uni-nav-bar-x",
+	"displayName": "uni-nav-bar",
+	"version": "1.0.0",
+	"description": "uni-nav-bar",
 	"isExt": true,
-  "extUrl": "https://ext.dcloud.net.cn/plugin?id=27847",
+  "extUrl": "https://ext.dcloud.net.cn/plugin?id=27897",
 	"keywords": [
-        "uni-index-bar",
-        "索引栏",
-        "index-bar",
+        "uni-nav-bar",
         "uni-app-x",
         "uni-app x",
         "组件"
     ],
 	"repository": "https://gitcode.com/dcloud/uni-ui-x",
 	"engines": {
-		"HBuilderX": "^5.08",
-        "uni-app-x": "^5.08",
+		"HBuilderX": "^5.0",
+        "uni-app-x": "^5.07",
         "uni-app": ""
 	},
 	"directories": {
@@ -32,8 +30,8 @@
 				"price": "0.00"
 			}
 		},
-		"contact": {
-			"qq": ""
+        "contact": {
+            "qq": ""
 		},
 		"declaration": {
 			"ads": "无",
