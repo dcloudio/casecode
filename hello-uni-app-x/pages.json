@@ -2091,7 +2091,7 @@
 		},
 		// #endif
 		{
-			"path": "uni_modules/uni-link/pages/link-webview",
+			"path": "uni_modules/uni-link-x/pages/link-webview",
 			"style": {
 				"navigationBarTitleText": ""
 			}
