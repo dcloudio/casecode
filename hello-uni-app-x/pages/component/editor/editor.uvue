@@ -120,6 +120,9 @@
             <view id="toolbar-button-preview" @tap="openPreview" @mousemove.stop="showToolbarTooltip('toolbar-button-preview', '预览')" class="toolbar-preview-button">
               <text class="toolbar-preview-label">预览</text>
             </view>
+            <view @tap="openProps" class="toolbar-preview-button">
+              <text class="toolbar-preview-label">属性</text>
+            </view>
           </view>
         </view>
         <!-- #ifdef WEB -->
@@ -2087,6 +2090,12 @@ function openPreview() {
         icon: 'none'
       })
     }
+  })
+}
+
+function openProps() {
+  uni.navigateTo({
+    url: '/pages/component/editor/editor-props'
   })
 }
 

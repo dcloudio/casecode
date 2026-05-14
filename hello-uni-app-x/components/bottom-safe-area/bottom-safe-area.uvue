@@ -1,0 +1,10 @@
+<template>
+  <view class="scroll-view_bottom-fixed"></view>
+</template>
+
+<style>
+  .scroll-view_bottom-fixed {
+    height: var(--uni-safe-area-inset-bottom, 20px);
+    min-height: 20px;
+  }
+</style>

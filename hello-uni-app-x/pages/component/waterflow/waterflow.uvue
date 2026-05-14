@@ -377,6 +377,8 @@
         </button>
       </navigator>
     </view>
+
+    <bottom-safe-area />
   </scroll-view>
 </template>
 

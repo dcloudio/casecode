@@ -86,6 +86,8 @@
         </text>
       </view>
     </view>
+
+    <bottom-safe-area />
   <!-- #ifdef APP -->
   </scroll-view>
   <!-- #endif -->

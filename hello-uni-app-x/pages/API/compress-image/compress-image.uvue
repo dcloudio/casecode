@@ -30,6 +30,8 @@
       <input-data title="压缩后图片的高度，单位px" type="string" @confirm="onCompressedHeightConfirm"></input-data>
       <input-data defaultValue="0" title="旋转度数，范围0～360" type="number" @confirm="onRotateConfirm"></input-data>
     </view>
+
+    <bottom-safe-area />
   <!-- #ifdef APP -->
   </scroll-view>
   <!-- #endif -->
