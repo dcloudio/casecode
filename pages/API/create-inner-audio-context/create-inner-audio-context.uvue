@@ -30,7 +30,7 @@
 
       <text class="uni-subtitle-text uni-title"
         style="padding-left: 10px;padding-top: 10px;padding-right: 10px;">播放倍率(Web/HarmonyOS 不支持)</text>
-      <radio-group class="uni-flex uni-row radio-group" @change="playbackRateChange"
+      <radio-group class="uni-row radio-group" @change="playbackRateChange"
         style="flex-wrap: wrap;padding: 10px;">
         <radio value="0.5" style="margin-right: 3px">0.5
         </radio>

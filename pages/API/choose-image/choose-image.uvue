@@ -97,13 +97,13 @@
       </view>
 
       <view class="uni-list list-pd" style="padding: 15px;">
-        <view class="uni-flex" style="margin-bottom: 10px;">
+        <view class="uni-row" style="margin-bottom: 10px;">
           <view class="uni-list-cell-left">点击可预览选好的图片</view>
           <view style="margin-left: auto;">
             <text class="click-t">{{imageList.length}}/{{count}}</text>
           </view>
         </view>
-        <view class="uni-flex" style="flex-wrap: wrap;">
+        <view class="uni-row" style="flex-wrap: wrap;">
           <view v-for="(image,index) in imageList" :key="index" class="uni-uploader__input-box" style="border: 0;">
             <image style="width: 104px; height: 104px;" :src="image" @tap="previewImage(index)">
             </image>

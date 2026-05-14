@@ -196,7 +196,7 @@
           <text class="uni-title-text"> 默认样式 </text>
         </view>
         <view>
-          <checkbox-group class="uni-flex uni-row checkbox-group" @change="testChange" style="flex-wrap: wrap">
+          <checkbox-group class="uni-row checkbox-group" @change="testChange" style="flex-wrap: wrap">
             <checkbox value="cb" :checked="data.checked" :color="data.color" :iconColor="data.iconColor"
               :foreColor="data.foreColor" style="margin-right: 15px" class="checkbox cb">选中
             </checkbox>
@@ -211,7 +211,7 @@
           <text class="uni-title-text"> 不同颜色和尺寸的checkbox </text>
         </view>
         <view>
-          <checkbox-group class="uni-flex uni-row checkbox-group">
+          <checkbox-group class="uni-row checkbox-group">
             <!-- #ifndef VUE3-VAPOR -->
             <checkbox value="cb1" :checked="true" color="#FFCC33" style="transform: scale(0.7); margin-right: 15px"
               class="checkbox">选中
@@ -231,7 +231,7 @@
           <text class="uni-title-text"> 两端对齐样式测试 </text>
         </view>
         <view>
-          <checkbox-group class="uni-flex uni-row checkbox-group">
+          <checkbox-group class="uni-row checkbox-group">
             <checkbox class="justify-test">justify-content样式测试</checkbox>
           </checkbox-group>
         </view>
@@ -242,7 +242,7 @@
         <view class="uni-title uni-common-mt">
           <text class="uni-title-text"> 自定义 checkbox </text>
         </view>
-        <checkbox-group class="uni-flex uni-row checkbox-group">
+        <checkbox-group class="uni-row checkbox-group">
           <checkbox checkbox-class="custom-checkbox" id="checkbox-vapor"> 自定义 checkbox </checkbox>
         </checkbox-group>
       </view>

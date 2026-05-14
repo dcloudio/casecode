@@ -4,20 +4,20 @@
   <!-- #endif -->
     <page-head title="setInnerAudioOption"></page-head>
     <text class="labelText">是否允许与其他音频同时播放</text>
-    <radio-group class="uni-flex radioGroup" @change="(event:UniRadioGroupChangeEvent)=>handleRadioChange(event, 'mixWithOther')">
+    <radio-group class="uni-row radioGroup" @change="(event:UniRadioGroupChangeEvent)=>handleRadioChange(event, 'mixWithOther')">
       <radio value="1" :checked="true">是</radio>
       <radio value="0" class="radioItem">否</radio>
     </radio-group>
 
     <text class="labelText">是否允许扬声器播放</text>
-    <radio-group class="uni-flex radioGroup" @change="(event:UniRadioGroupChangeEvent)=>handleRadioChange(event, 'speakerOn')">
+    <radio-group class="uni-row radioGroup" @change="(event:UniRadioGroupChangeEvent)=>handleRadioChange(event, 'speakerOn')">
       <radio value="1" :checked="true">是</radio>
       <radio value="0" class="radioItem">否</radio>
     </radio-group>
 
 <!-- #ifdef APP-IOS -->
     <text class="labelText">（仅在 iOS 生效）是否遵循静音开关，设置为 false 之后，即使是在静音模式下，也能播放声音</text>
-    <radio-group class="uni-flex radioGroup" @change="(event:UniRadioGroupChangeEvent)=>handleRadioChange(event, 'obeyMuteSwitch')">
+    <radio-group class="uni-row radioGroup" @change="(event:UniRadioGroupChangeEvent)=>handleRadioChange(event, 'obeyMuteSwitch')">
       <radio value="1" :checked="true">是</radio>
       <radio value="0" class="radioItem">否</radio>
     </radio-group>

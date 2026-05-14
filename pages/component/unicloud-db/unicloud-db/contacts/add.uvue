@@ -88,7 +88,7 @@
   .form-item-input {
     flex: 1;
     font-size: 14px;
-    color: #666;
+    color: #a1a1a1;
     border: 1px #e5e5e5 solid;
     border-radius: 5px;
     height: 34px;
@@ -99,7 +99,7 @@
   .form-item-input-comment {
     flex: 1;
     font-size: 14px;
-    color: #666;
+    color: #a1a1a1;
     border: 1px #e5e5e5 solid;
     border-radius: 5px;
     padding: 8px;

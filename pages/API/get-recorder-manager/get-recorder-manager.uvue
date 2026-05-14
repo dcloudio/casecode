@@ -16,7 +16,7 @@
       <button class="btnstyle" size="default" @click="registeronInterruptionEnd">注册onInterruptionEnd</button>
       <view class="uni-list">
         <text style="margin-bottom: 10px"> 请选择录音格式：</text>
-        <radio-group class="uni-flex uni-row" @change="radioChange" style="flex-wrap: wrap">
+        <radio-group class="uni-row" @change="radioChange" style="flex-wrap: wrap">
           <radio class="uni-list-cell" style="margin-right: 15px" v-for="(item, index) in items" :key="item.value"
             :value="item.value" :checked="index === current">
             {{ item.name }}
