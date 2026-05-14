@@ -10,7 +10,8 @@
       "2in1"
     ],
     "querySchemes": [
-      "mailto"
+      "mailto",
+      "weixin"
     ],
     "deliveryWithInstall": true,
     "installationFree": false,
