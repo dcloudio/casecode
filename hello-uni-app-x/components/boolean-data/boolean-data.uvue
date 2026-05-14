@@ -1,5 +1,6 @@
 <script setup lang="uts">
-import { state } from '@/store/index.uts'
+import { isDarkMode, darkModeClass } from '@/composables/useDark.uts'
+
 // 样式隔离配置: 受全局样式影响
 defineOptions({
   styleIsolation: 'app'
@@ -20,7 +21,6 @@ const props = defineProps({
   }
 })
 
-const isDarkMode = computed(() => state.isDarkMode)
 const _checked = ref(false)
 
 onMounted(() => {
@@ -35,7 +35,7 @@ function _change(e : UniSwitchChangeEvent) {
 </script>
 
 <template>
-  <view class="button-data-main uni-flex" :class="isDarkMode ? 'theme-dark' : 'theme-light'">
+  <view class="button-data-main uni-row" :class="darkModeClass">
     <text class="uni-title" style="width:80%">{{ title }}</text>
     <switch :checked="_checked" :disabled="disabled" :color="isDarkMode ? '#a8a8b7' : '#007AFF'" @change="_change" />
   </view>

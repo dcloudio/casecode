@@ -24,7 +24,7 @@
       <view class="uni-title uni-common-mt">
         <text class="uni-title-text">分享类型：</text>
       </view>
-      <radio-group class="uni-flex" @change="typeChange">
+      <radio-group class="uni-row" @change="typeChange">
         <radio class="uni-common-mt" value="0" :checked="true">
           图文
         </radio>
@@ -36,7 +36,7 @@
       <view class="uni-title uni-common-mt">
         <text class="uni-title-text">分享到：</text>
       </view>
-      <radio-group class="uni-flex" style="flex-wrap: wrap;" @change="sceneChange">
+      <radio-group class="uni-row" style="flex-wrap: wrap;" @change="sceneChange">
         <radio class="uni-common-mt" value="WXSceneSession" :checked="true">
           聊天界面
         </radio>

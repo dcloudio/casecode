@@ -35,7 +35,7 @@
             </button>
           </view>
           <text class="uni-list-cell-db-text">{{ data.storageInfo }}</text>
-          <view class="uni-flex uni-row">
+          <view class="uni-row">
             <button type="default" style="width:50%" @tap="strMock">
               填充字符串
             </button>
@@ -43,7 +43,7 @@
               填充复杂对象
             </button>
           </view>
-          <view class="uni-flex uni-row">
+          <view class="uni-row">
             <button type="default" style="width:50%" @tap="numberMock">
               填充整型
             </button>
@@ -51,7 +51,7 @@
               填充浮点型
             </button>
           </view>
-          <view class="uni-flex uni-row">
+          <view class="uni-row">
             <button type="default" style="width:50%" @tap="jsonLikeMock">
               填充json字符串
             </button>
@@ -59,7 +59,7 @@
               填充整数字符串
             </button>
           </view>
-          <view class="uni-flex uni-row">
+          <view class="uni-row">
             <button type="default" style="width:50%" @tap="floatLikeMock">
               填充浮点字符串
             </button>
@@ -67,7 +67,7 @@
               填充负数字符串
             </button>
           </view>
-          <view class="uni-flex uni-row">
+          <view class="uni-row">
             <button type="default" class="uni-btn btn-complexStaticTest" style="width:100%" @tap="complexStaticTest">
               字面量读写测试
             </button>

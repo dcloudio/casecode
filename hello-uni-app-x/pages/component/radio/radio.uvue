@@ -180,7 +180,7 @@
         <view class="uni-title uni-common-mt">
           <text class="uni-title-text"> 默认样式 </text>
         </view>
-        <radio-group class="uni-flex uni-row radio-group" @change="testChange" style="flex-wrap: wrap">
+        <radio-group class="uni-row radio-group" @change="testChange" style="flex-wrap: wrap">
           <radio id="trigger-change" value="r" :checked="data.checked" :color="data.color" style="margin-right: 15px"
             class="radio r">选中
           </radio>
@@ -198,7 +198,7 @@
         <view class="uni-title uni-common-mt">
           <text class="uni-title-text"> 不同颜色和尺寸的radio </text>
         </view>
-        <radio-group class="uni-flex uni-row radio-group">
+        <radio-group class="uni-row radio-group">
           <!-- #ifndef VUE3-VAPOR -->
           <radio value="r1" :checked="true" color="#FFCC33" style="transform: scale(0.7); margin-right: 15px"
             class="radio">选中
@@ -219,7 +219,7 @@
         <view class="uni-title uni-common-mt">
           <text class="uni-title-text"> 两端对齐样式测试 </text>
         </view>
-        <radio-group class="uni-flex uni-row radio-group">
+        <radio-group class="uni-row radio-group">
           <radio class="justify-test">justify-content样式测试</radio>
         </radio-group>
       </view>

@@ -1,0 +1,9 @@
+import { state } from '@/store/index.uts'
+
+export const isDarkMode = computed(() : boolean => {
+  return state.isDarkMode
+})
+
+export const darkModeClass = computed(() : string => {
+  return state.isDarkMode ? 'theme-dark' : 'theme-light'
+})

@@ -58,13 +58,13 @@
         <input-data title="最长拍摄时间，单位秒" defaultValue="10" type="number" @confirm="onMaxDurationConfirm"></input-data>
         <!-- #endif -->
         <view class="uni-list list-pd" style="padding: 15px;">
-          <view class="uni-flex" style="margin-bottom: 10px;">
+          <view class="uni-row" style="margin-bottom: 10px;">
             <view class="uni-list-cell-left">点击预览</view>
             <view style="margin-left: auto;">
               <text class="click-t">{{mediaList.length}}/{{count}}</text>
             </view>
           </view>
-          <view class="uni-flex" style="flex-wrap: wrap;">
+          <view class="uni-row" style="flex-wrap: wrap;">
             <view v-for="(file,index) in mediaList" :key="index" class="uni-uploader__input-box" style="border: 0;">
               <image style="width: 104px; height: 104px;" :src="file.imagePath" @tap="previewMedia(index)">
               </image>

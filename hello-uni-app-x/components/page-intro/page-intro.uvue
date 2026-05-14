@@ -1,5 +1,5 @@
 <script setup lang="uts">
-import { state } from '@/store/index.uts'
+import { darkModeClass } from '@/composables/useDark.uts'
 
 const props = defineProps({
   content: {
@@ -8,7 +8,6 @@ const props = defineProps({
   }
 })
 
-const isDarkMode = computed(() => state.isDarkMode)
 const expanded = ref(false)
 
 const toggle = () => {
@@ -17,7 +16,7 @@ const toggle = () => {
 </script>
 
 <template>
-  <view class="page-intro" :class="isDarkMode ? 'theme-dark' : 'theme-light'" @click="toggle">
+  <view class="page-intro" :class="darkModeClass" @click="toggle">
     <view class="page-intro-header">
       <text class="page-intro-label">页面介绍</text>
       <text class="page-intro-arrow">{{ expanded ? '▲' : '▼' }}</text>

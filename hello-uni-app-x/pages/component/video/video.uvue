@@ -60,12 +60,12 @@
       <view class="uni-btn-v">
         <button type="primary" @click="openDialogPageVideo">dialogPage 视频格式示例</button>
       </view>
-      <view class="uni-flex uni-btn-v" style="justify-content: space-between;align-items: center;">
+      <view class="uni-row uni-btn-v" style="justify-content: space-between;align-items: center;">
         <text class="uni-title" style="width: 80%;">全屏后自定义 controls</text>
         <switch :checked="data.subCompControlsEnable" @change="onSubCompControlsEnable" />
       </view>
       <!-- #endif -->
-      <view class="uni-flex uni-btn-v" style="justify-content: space-between;align-items: center;">
+      <view class="uni-row uni-btn-v" style="justify-content: space-between;align-items: center;">
         <text class="uni-title" style="width: 80%;">子组件实现快进、快退、发送弹幕功能（全屏后显示）</text>
         <switch :checked="data.subCompEnable" @change="onSubCompEnableChange" />
       </view>

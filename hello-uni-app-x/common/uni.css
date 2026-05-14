@@ -161,14 +161,12 @@
   box-sizing: content-box;
   background: var(--list-background-color,#ffffff);
 }
-
+/*
 .uni-flex {
-  /* #ifdef WEB || MP */
   display: flex;
-  /* #endif */
   flex-direction: row;
 }
-
+ */
 .uni-flex-item {
   flex: 1;
 }
@@ -304,7 +302,7 @@
   width: 94%;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
 }
 
 /* left-windows */
