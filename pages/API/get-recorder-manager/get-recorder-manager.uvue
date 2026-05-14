@@ -31,6 +31,8 @@
       <button class="btnstyle" size="default" id="btn-startPlay" @click="playVoice">开始播放</button>
       <button class="btnstyle" size="default" id="btn-stopPlay" @click="stopVoice">停止播放</button>
     </view>
+
+    <bottom-safe-area />
   </scroll-view>
 </template>
 <script setup lang="uts">

@@ -21,6 +21,8 @@
       <video class="video" :src="relativeVideoPath" :controls="true" :poster="relativeCoverImagePath"></video>
       <text class="margin-top-10">{{relativeVideoInfo}}</text>
     </view>
+
+    <bottom-safe-area />
     <!-- #endif -->
   <!-- #ifdef APP -->
   </scroll-view>

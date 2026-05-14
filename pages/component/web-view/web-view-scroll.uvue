@@ -29,6 +29,8 @@
     <view v-for="item in 5" class="scroll-item">
       <text class="scroll-item-title">item{{item}}</text>
     </view>
+
+    <bottom-safe-area />
   </scroll-view>
 </template>
 

@@ -625,6 +625,12 @@
 		},
 		// #endif
 		{
+			"path": "pages/component/editor/editor-props",
+			"style": {
+				"navigationBarTitleText": "editor | 属性"
+			}
+		},
+		{
 			"path": "pages/component/editor/editor-preview",
 			"style": {
 				"navigationBarTitleText": "editor | 预览"

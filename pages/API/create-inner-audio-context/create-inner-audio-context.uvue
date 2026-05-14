@@ -70,6 +70,8 @@
         <button @click="pause">多音频同时播放</button>
       </navigator>
     </view>
+
+    <bottom-safe-area />
   <!-- #ifdef APP -->
   </scroll-view>
   <!-- #endif -->
