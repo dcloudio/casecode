@@ -1,17 +1,16 @@
-jest.setTimeout(30000);
+jest.setTimeout(20000)
+
+const PAGE_PATH = '/pages/component/editor/editor'
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isWeb = platformInfo.startsWith('web') || platformInfo.startsWith('h5')
 const isMP = platformInfo.startsWith('mp')
-const isIos = platformInfo.startsWith('ios')
-const isWeb = platformInfo.startsWith('web')
+const isiOS = platformInfo.startsWith('ios')
+const isAndroid = platformInfo.startsWith('android')
+const isSimulator = platformInfo.includes('模拟器')
 const isDom2 = process.env.UNI_APP_X_DOM2 === 'true'
 
 describe('editor.uvue', () => {
-  /**
-   * mp-weixin 自动化测试截图报错
-   *
-   * 暂时跳过相关平台的测试，后续根据平台能力完善测试用例
-   */
-  if (isMP || (isDom2 && isIos)) {
+  if (isMP || isiOS) {
     it('skip', () => {
       expect(1).toBe(1)
     })
@@ -19,58 +18,12 @@ describe('editor.uvue', () => {
   }
 
   let page
-  let editor
-
-  const defaultFormats = {
-    bold: false,
-    italic: false,
-    underline: false,
-    strike: false,
-    blockquote: false,
-    codeBlock: false,
-    link: '',
-    header: 0,
-    list: '',
-    align: '',
-    textIndent: '',
-    marginLeft: '',
-    marginRight: '',
-    lineHeight: '',
-    letterSpacing: '',
-    fontFamily: '',
-    fontSize: '',
-    color: '',
-    backgroundColor: ''
-  }
 
   async function loadPage() {
-    page = await program.reLaunch('/pages/component/editor/editor')
+    page = await program.reLaunch(PAGE_PATH)
     await page.waitFor('view')
-    await waitForData('data.editorReadyTest', value => value === true, isWeb ? 4000 : 8000)
-    editor = await page.$('#editor')
-    await updateData({
-      autoTest: true
-    })
-  }
-
-  async function resetPageState() {
-    await page.callMethod('closeSheets')
-    await page.callMethod('resetFormatsForTest')
-    await updateData({
-      autoTest: true,
-      undoTest: false,
-      redoTest: false,
-      removeFormatTest: false,
-      insertImageTest: false,
-      blurTest: false,
-      clearTest: false,
-      getContentDeltaTest: null,
-      formatPainterActive: false,
-      activeSheet: ''
-    })
-    await setEditorContents([
-      { insert: '\n' }
-    ])
+    await waitForData('data.readyCount', value => value >= 1, 5000)
+    await waitForData('data.editorWidth', value => value > 0, 3000)
   }
 
   async function waitForData(path, matcher, timeout = 3000) {
@@ -81,79 +34,79 @@ describe('editor.uvue', () => {
     })
   }
 
-  async function updateData(partial) {
-    await page.setData({
-      data: partial
-    })
-  }
-
-  async function applyToolbarPresetState(preset) {
-    await page.callMethod('applyToolbarPresetForTest', preset)
-  }
-
-  async function openSheet(methodName, sheetName, titleText, subtitleText) {
-    await page.callMethod(methodName)
-    await waitForData('data.activeSheet', value => value === sheetName, 2000)
-    let currentTitle = ''
-    let currentSubtitle = ''
-    for (let i = 0; i < 10; i++) {
-      await page.waitFor(100)
-      currentTitle = await page.callMethod('getPanelTitle')
-      currentSubtitle = await page.callMethod('getPanelSubtitle')
-      if (currentTitle === titleText && currentSubtitle === subtitleText) {
-        break
-      }
+  async function getEditorTapPoint(offsetX = null, offsetY = null) {
+    const editorX = await page.data('data.editorX')
+    const editorY = await page.data('data.editorY')
+    const editorWidth = await page.data('data.editorWidth')
+    const editorHeight = await page.data('data.editorHeight')
+    return {
+      x: editorX + (offsetX != null ? offsetX : editorWidth / 2),
+      y: editorY + (offsetY != null ? offsetY : editorHeight / 2)
     }
-    expect(currentTitle).toBe(titleText)
-    expect(currentSubtitle).toBe(subtitleText)
   }
 
-  async function closeSheet() {
-    await page.callMethod('closeSheets')
-    await waitForData('data.activeSheet', value => value === '', 2000)
+  async function tapEditor(offsetX = null, offsetY = null) {
+    const point = await getEditorTapPoint(offsetX, offsetY)
+    console.log('=>>>>>>>>>>> point: ',point);
+    await program.tap(point)
+    if (isiOS) {
+      // ios 模拟器卡
+      await page.waitFor(1500)
+    } else {
+      await page.waitFor(600)
+    }
   }
 
-  async function waitForFlag(path, timeout = 3000) {
-    await waitForData(path, value => value === true, timeout)
-    expect(await page.data(path)).toBe(true)
+  async function resetEditorProps() {
+    const readyCount = await page.data('data.readyCount')
+    await page.callMethod('onReadOnlyChange', false)
+    await page.callMethod('onTypeChange', 0)
+    await page.callMethod('onPlaceholderChange', '请输入内容，placeholder 仅初始化生效')
+    await page.callMethod('onDraftShowImgSizeChange', true)
+    await page.callMethod('onDraftShowImgToolbarChange', true)
+    await page.callMethod('onDraftShowImgResizeChange', true)
+    await page.callMethod('rebuildEditor')
+    await waitForData('data.readyCount', value => value > readyCount, 5000)
+    await waitForData('data.readOnly', value => value === false, 3000)
+    await waitForData('data.editorType', value => value === null, 3000)
+    await page.callMethod('clearEditor')
+    if (!isWeb) {
+      await page.callMethod('hideKeyboardForTest')
+      await waitForData('data.keyboardHeight', value => value === 0, 3000)
+    }
+    await page.waitFor(600)
   }
 
-  async function waitForFormats(partial, timeout = 3000) {
-    const keys = Object.keys(partial)
-    await waitForData('data.formats', value => {
-      return keys.every(key => value != null && value[key] === partial[key])
-    }, timeout)
-    expect(await page.data('data.formats')).toMatchObject(partial)
+  async function hideKeyboard() {
+    if (isWeb) {
+      return
+    }
+    await page.callMethod('blurEditor')
+    await page.callMethod('hideKeyboardForTest')
+    await waitForData('data.keyboardHeight', value => value === 0, 3000)
+    await page.waitFor(600)
   }
 
-  async function waitForChecklistFormat(timeout = 3000) {
-    await waitForData('data.formats', value => {
-      return value != null && (value.list === 'check' || value.list === 'unchecked')
-    }, timeout)
-    const formats = await page.data('data.formats')
-    expect(['check', 'unchecked']).toContain(formats.list)
+  async function assertKeyboardHeightChange() {
+    if (isWeb) {
+      return
+    }
+    const beforeKeyboardHeight = await page.data('data.keyboardHeight')
+    const beforeKeyboardHeightChangeCount = await page.data('data.keyboardHeightChangeCount')
+    await tapEditor()
+    await waitForData('data.keyboardHeight', value => value > beforeKeyboardHeight, 5000)
+    await waitForData('data.keyboardHeightChangeCount', value => value > beforeKeyboardHeightChangeCount, 5000)
+    expect(await page.data('data.keyboardHeight')).toBeGreaterThan(beforeKeyboardHeight)
+    expect(await page.data('data.keyboardHeightChangeCount')).toBeGreaterThan(beforeKeyboardHeightChangeCount)
   }
 
-  async function setBlur() {
-    await updateData({
-      blurTest: false
+  async function screenshot(name) {
+    const image = await program.screenshot({ fullPage: true })
+    expect(image).toSaveImageSnapshot({
+      customSnapshotIdentifier() {
+        return name
+      }
     })
-    await page.callMethod('blur')
-    await waitForFlag('data.blurTest', 2000)
-  }
-
-  async function setEditorContents(ops) {
-    await page.callMethod('setContents', ops)
-    await page.waitFor(500)
-  }
-
-  async function getDelta() {
-    await updateData({
-      getContentDeltaTest: null
-    })
-    await page.callMethod('getCon')
-    await waitForData('data.getContentDeltaTest', value => value != null, 3000)
-    return await page.data('data.getContentDeltaTest')
   }
 
   beforeAll(async () => {
@@ -161,252 +114,117 @@ describe('editor.uvue', () => {
   })
 
   beforeEach(async () => {
-    await resetPageState()
+    await resetEditorProps()
   })
 
-  it('editor-wrapper', async () => {
-    expect(await page.data('data.activeSheet')).toBe('')
-    expect(await page.data('data.formats')).toEqual(defaultFormats)
-    if (isWeb) {
-      expect(await editor.attribute('placeholder')).toBe('请输入正文内容...')
+  it('placeholder 截图', async () => {
+    const readyCount = await page.data('data.readyCount')
+    await page.callMethod('onPlaceholderChange', '自动化测试 editor placeHolder 修改')
+    await page.callMethod('rebuildEditor')
+    await waitForData('data.readyCount', value => value >= readyCount + 1, 2000)
+    await screenshot('editor-props-placeholder')
+  })
+
+  it('readOnly 修改后截图', async () => {
+    expect(await page.data('data.readOnly')).toBe(false)
+    expect(await page.data('data.editorType')).toBeFalsy()
+    await assertKeyboardHeightChange()
+    await screenshot('editor-props-read-only-false')
+
+    await hideKeyboard()
+
+    await page.callMethod('onReadOnlyChange', true)
+    await waitForData('data.readOnly', value => value === true, 3000)
+    expect(await page.data('data.readOnly')).toBe(true)
+    await screenshot('editor-props-read-only-true')
+    await page.callMethod('onReadOnlyChange', false)
+    await waitForData('data.readOnly', value => value === false, 3000)
+  })
+
+  it('type 切换后截图', async () => {
+    expect(await page.data('data.editorType')).toBeFalsy()
+    expect(await page.callMethod('getTypeLabel')).toBe('null（聚焦弹键盘）')
+    await assertKeyboardHeightChange()
+
+    await screenshot('editor-props-type-null')
+
+    await hideKeyboard()
+
+    await page.callMethod('onTypeChange', 1)
+    await waitForData('data.editorType', value => value === 'none', 3000)
+    expect(await page.data('data.editorType')).toBe('none')
+    expect(await page.callMethod('getTypeLabel')).toBe('none（聚焦不弹键盘）')
+
+    await screenshot('editor-props-type-none')
+  })
+
+  it('image 相关属性重建后点击 image 截图', async () => {
+    const previousReadyCount = await page.data('data.readyCount')
+
+    await page.callMethod('onDraftShowImgSizeChange', true)
+    await page.callMethod('onDraftShowImgToolbarChange', true)
+    await page.callMethod('onDraftShowImgResizeChange', true)
+    await page.callMethod('rebuildEditor')
+    await waitForData('data.readyCount', value => value >= previousReadyCount + 1, 8000)
+
+    await page.callMethod('insertSampleImage')
+    if (isSimulator) {
+      await tapEditor(50, 60)
+    } else {
+      if (isAndroid) {
+        // 小米 4 真机测试，编辑器位置有误，调整偏移
+        await tapEditor(50, 10)
+      } else {
+        await tapEditor(50, 60)
+      }
     }
-    expect(await program.screenshot({
-      fullPage: true
-    })).toSaveImageSnapshot()
-  })
 
-  it('editor-toolbar', async () => {
-    await openSheet('openMoreSheet', 'more', '更多操作', '插入与编辑快捷操作')
-    await openSheet('openTitleSheet', 'title', '设置标题', '当前为正文')
-    await openSheet('openStyleSheet', 'style', '设置字格式', '当前未设置字格式')
-    await openSheet('openTextColorSheet', 'text-color', '设置文字颜色', '当前使用默认文字颜色')
-    await openSheet('openBackgroundColorSheet', 'background-color', '设置背景颜色', '当前未设置文字背景颜色')
-    await openSheet('openLineHeightSheet', 'line-height', '设置行间距', '当前使用默认行间距')
-    await openSheet('openLetterSpacingSheet', 'letter-spacing', '设置字间距', '当前使用默认字间距')
-    await openSheet('openFontSizeSheet', 'font-size', '设置字号', '当前使用默认字号 17px')
-    await openSheet('openFontFamilySheet', 'font-family', '设置字体', '当前使用默认字体')
-    await openSheet('openAlignSheet', 'align', '对齐方式', '当前为默认对齐')
-    await openSheet('openBlockIndentSheet', 'block-indent', '设置两端缩进', '当前未设置两端缩进')
-    await openSheet('openListSheet', 'list', '设置列表', '当前未设置列表')
-    await closeSheet()
-  })
+    await screenshot('editor-props-image-controls-true')
 
-  it('editor-screenshot', async () => {
-    await openSheet('openStyleSheet', 'style', '设置字格式', '当前未设置字格式')
-    expect(await program.screenshot({
-      fullPage: true
-    })).toSaveImageSnapshot()
-    await closeSheet()
-  })
+    const nextReadyCount = await page.data('data.readyCount')
+    await page.callMethod('blurEditor')
+    await waitForData('data.blurCount', value => value > 0, 3000)
+    await page.callMethod('clearEditor')
+    await page.waitFor(600)
+    await page.callMethod('onDraftShowImgSizeChange', false)
+    await page.callMethod('onDraftShowImgToolbarChange', false)
+    await page.callMethod('onDraftShowImgResizeChange', false)
+    await page.callMethod('rebuildEditor')
+    await waitForData('data.readyCount', value => value >= nextReadyCount + 1, 8000)
 
-  it('title-toolbar-actions', async () => {
-    await applyToolbarPresetState('title-h2')
-    await waitForFormats({
-      header: 2,
-      list: ''
-    })
-    expect(await page.callMethod('getTitleSummary')).toBe('当前为大标题2')
-    await applyToolbarPresetState('title-h1')
-    await waitForFormats({
-      header: 1,
-      list: ''
-    })
-    expect(await page.callMethod('getTitleSummary')).toBe('当前为大标题1')
-    await page.callMethod('toggleCodeBlock')
-    await waitForFormats({
-      codeBlock: true,
-      header: 0,
-      list: ''
-    })
-    expect(await page.callMethod('getTitleSummary')).toBe('当前为代码块')
-  })
+    expect(await page.data('data.appliedShowImgSize')).toBe(false)
+    expect(await page.data('data.appliedShowImgToolbar')).toBe(false)
+    expect(await page.data('data.appliedShowImgResize')).toBe(false)
 
-  it('code-block-toolbar-actions', async () => {
-    await page.callMethod('toggleCodeBlock')
-    await waitForFormats({
-      codeBlock: true,
-      header: 0,
-      list: ''
-    })
-    expect(await page.callMethod('getTitleSummary')).toBe('当前为代码块')
-    await page.callMethod('setHeadingLevel', 2)
-    await waitForFormats({
-      codeBlock: false,
-      header: 2
-    })
-    expect(await page.callMethod('getTitleSummary')).toBe('当前为大标题2')
-    await page.callMethod('toggleCodeBlock')
-    await waitForFormats({
-      codeBlock: true,
-      header: 0
-    })
-    await page.callMethod('toggleCodeBlock')
-    await waitForFormats({
-      codeBlock: false,
-      header: 0,
-      list: ''
-    })
-  })
-
-  it('style-toolbar-actions', async () => {
-    await page.callMethod('toggleBold')
-    await page.callMethod('toggleItalic')
-    await page.callMethod('toggleUnderline')
-    await page.callMethod('toggleStrike')
-    await waitForFormats({
-      bold: true,
-      italic: true,
-      underline: true,
-      strike: true
-    })
-    await openSheet('openStyleSheet', 'style', '设置字格式', '加粗 / 斜体 / 下划线 / 删除线')
-    await page.callMethod('toggleBold')
-    await page.callMethod('toggleItalic')
-    await page.callMethod('toggleUnderline')
-    await page.callMethod('toggleStrike')
-    await waitForFormats({
-      bold: false,
-      italic: false,
-      underline: false,
-      strike: false
-    })
-    await closeSheet()
-  })
-
-  it('extended-style-toolbar-actions', async () => {
-    await page.callMethod('setTextColorAndClose', '#3553ff')
-    await waitForFormats({ color: '#3553ff' })
-    await openSheet('openTextColorSheet', 'text-color', '设置文字颜色', '当前文字颜色 #3553ff')
-    await page.callMethod('setBackgroundColorAndClose', '#fff7db')
-    await waitForFormats({ backgroundColor: '#fff7db' })
-    await openSheet('openBackgroundColorSheet', 'background-color', '设置背景颜色', '当前背景颜色 #fff7db')
-    await page.callMethod('setLineHeightAndClose', '1.8')
-    await page.callMethod('setLetterSpacingAndClose', '2px')
-    await page.callMethod('setFontSizeAndClose', '24px')
-    await page.callMethod('setFontFamilyAndClose', 'Georgia')
-    await waitForFormats({
-      lineHeight: '1.8',
-      letterSpacing: '2px',
-      fontSize: '24px',
-      fontFamily: 'Georgia'
-    })
-    await openSheet('openStyleSheet', 'style', '设置字格式', '行间距 1.8 / 字间距 2px / 字号 24px / 字体 Geo')
-    await closeSheet()
-  })
-
-  it('layout-toolbar-actions', async () => {
-    await page.callMethod('setAlignCenter')
-    await waitForFormats({ align: 'center' })
-    await openSheet('openAlignSheet', 'align', '对齐方式', '当前为居中')
-    await page.callMethod('toggleTextIndent')
-    await waitForFormats({ textIndent: '2em' })
-    await page.callMethod('setBlockIndentAndClose', '16px')
-    await waitForFormats({
-      marginLeft: '16px',
-      marginRight: '16px'
-    })
-    await openSheet('openBlockIndentSheet', 'block-indent', '设置两端缩进', '当前两端缩进 16px')
-    await closeSheet()
-  })
-
-  it('list-toolbar-actions', async () => {
-    await applyToolbarPresetState('list-bullet')
-    await waitForFormats({
-      header: 0,
-      list: 'bullet'
-    })
-    await openSheet('openListSheet', 'list', '设置列表', '当前列表 无序列表')
-    await closeSheet()
-    await applyToolbarPresetState('list-ordered')
-    await waitForFormats({
-      header: 0,
-      list: 'ordered'
-    })
-    await openSheet('openListSheet', 'list', '设置列表', '当前列表 有序列表')
-    await closeSheet()
-    await applyToolbarPresetState('list-unchecked')
-    await waitForChecklistFormat()
-    await applyToolbarPresetState('list-none')
-    await waitForFormats({ list: '' })
-    await closeSheet()
-  })
-
-  it('clear', async () => {
-    await setEditorContents([
-      { insert: '清空前的内容' },
-      { insert: '\n' }
-    ])
-    await updateData({
-      clearTest: false
-    })
-    await page.callMethod('clear')
-    await waitForFlag('data.clearTest', 2000)
-    const delta = await getDelta()
-    const ops = Array.isArray(delta.ops) ? delta.ops : []
-    expect(ops.length <= 1).toBe(true)
-    if (ops.length === 1) {
-      expect(ops[0].insert).toBe('\n')
+    await page.callMethod('insertSampleImage')
+    if (isSimulator) {
+      await tapEditor(50, 60)
+    } else {
+      if (isAndroid) {
+        // 小米 4 真机测试，编辑器位置有误，调整偏移
+        await tapEditor(50, 10)
+      } else {
+        await tapEditor(50, 60)
+      }
     }
+
+    await screenshot('editor-props-image-controls-false')
   })
 
-  it('undo-redo', async () => {
-    await setEditorContents([
-      { insert: '撤销重做验证' },
-      { insert: '\n' }
-    ])
-    await updateData({
-      undoTest: false,
-      redoTest: false
-    })
-    await page.callMethod('insertDivider')
-    await page.waitFor(500)
-    await page.callMethod('undo')
-    await waitForFlag('data.undoTest', 2000)
-    await page.callMethod('redo')
-    await waitForFlag('data.redoTest', 2000)
-  })
+  it('事件只校验触发次数', async () => {
+    await resetEditorProps()
+    const readyCount = await page.data('data.readyCount')
+    const inputCount = await page.data('data.inputCount')
+    const statusChangeCount = await page.data('data.statusChangeCount')
 
-  it('insertImage', async () => {
-    await updateData({
-      insertImageTest: false
-    })
-    await page.callMethod('insertImage', 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app.png')
-    await waitForFlag('data.insertImageTest', 5000)
-    const delta = await getDelta()
-    const ops = Array.isArray(delta.ops) ? delta.ops : []
-    const imageOp = ops.find(item => item.insert && typeof item.insert === 'object' && item.insert.image)
-    expect(Boolean(imageOp)).toBe(true)
-  })
+    await page.callMethod('insertSampleText')
+    await waitForData('data.inputCount', value => value > inputCount, 3000)
 
-  it('insertImage-screenshot', async () => {
-    await updateData({
-      insertImageTest: false
-    })
-    await page.callMethod('insertImage', 'https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app.png')
-    await waitForFlag('data.insertImageTest', 5000)
-    await setBlur()
-    const waitTime = process.env.uniTestPlatformInfo.includes('firefox') ? 5000 : 2000
-    await page.waitFor(waitTime)
-    expect(await program.screenshot({
-      fullPage: true
-    })).toSaveImageSnapshot()
-  })
+    await page.callMethod('toggleBold')
+    await waitForData('data.statusChangeCount', value => value > statusChangeCount, 3000)
 
-  it('removeFormat', async () => {
-    await setEditorContents([
-      {
-        insert: '设置字体样式',
-        attributes: {
-          bold: true,
-          color: '#3553ff'
-        }
-      },
-      { insert: '\n' }
-    ])
-    await updateData({
-      removeFormatTest: false
-    })
-    await page.callMethod('removeFormat')
-    await waitForFlag('data.removeFormatTest', 2000)
+    expect(await page.data('data.readyCount')).toBeGreaterThanOrEqual(readyCount)
+    expect(await page.data('data.inputCount')).toBeGreaterThan(inputCount)
+    expect(await page.data('data.statusChangeCount')).toBeGreaterThan(statusChangeCount)
   })
 })

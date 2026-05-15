@@ -625,9 +625,9 @@
 		},
 		// #endif
 		{
-			"path": "pages/component/editor/editor-props",
+			"path": "pages/component/editor/editor-edit",
 			"style": {
-				"navigationBarTitleText": "editor | 属性"
+				"navigationBarTitleText": "editor | 编辑模板"
 			}
 		},
 		{
