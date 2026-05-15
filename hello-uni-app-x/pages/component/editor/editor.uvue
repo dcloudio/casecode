@@ -2379,7 +2379,7 @@ function onStatusChange(event: UniEditorStatusChangeEvent) {
   nextFormats.underline = formats.underline == true
   nextFormats.strike = formats.strike == true
   nextFormats.blockquote = formats.blockquote == true
-  const codeBlockValue = formatObject['code-block']
+  const codeBlockValue = formatObject['codeBlock']
   nextFormats.codeBlock = codeBlockValue == true
   const linkValue = formatObject['link']
   if (linkValue != null) {
