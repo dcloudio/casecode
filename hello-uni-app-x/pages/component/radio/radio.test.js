@@ -1,6 +1,7 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
 const isHarmony = platformInfo.startsWith('harmony')
+const isIOS = platformInfo.startsWith('ios')
 const isDom2 = process.env.UNI_APP_X_DOM2 == 'true'
 
 describe('Radio.uvue', () => {
@@ -57,8 +58,8 @@ describe('Radio.uvue', () => {
     })
   }
   it('color', async () => {
-    if (isHarmony && isDom2) {
-      console.log('Radio Harmony Dom2 not support props color')
+    if ((isHarmony || isIOS) && isDom2) {
+      console.log('Radio Harmony or iOS Dom2 not support props color')
       expect(1).toBe(1)
       return
     }

@@ -172,6 +172,7 @@
     data.transitionDelayActualImage = imageRefDynamic.value?.style.getPropertyValue('transition-delay') ?? ''
   }
 
+  const ins = getCurrentInstance()
   const changeTransitionDelayDynamic = (value: string) => {
     data.transitionDelayDynamic = value
     viewRefDynamic.value?.style.setProperty('transition-delay', value)
@@ -181,7 +182,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeTransitionDelay = (index: number) => {

@@ -172,7 +172,6 @@
   }
 
   .switch-refresher-style {
-    padding: 2px 10px;
     margin-right: 5px;
   }
 </style>

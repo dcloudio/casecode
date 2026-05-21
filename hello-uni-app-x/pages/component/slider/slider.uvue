@@ -137,7 +137,7 @@
       :block-color="data.block_color_input" :show-value="data.show_value_boolean" :valueColor="data.valueColor" @click="slider_click"
       @touchstart="slider_touchstart" @touchmove="slider_touchmove" @touchcancel="slider_touchcancel"
       @touchend="slider_touchend" @tap="slider_tap" @longpress="slider_longpress" @change="slider_change"
-      @changing="slider_changing" style="width: 90%"></slider>
+      @changing="slider_changing" style="width: 90%;margin-left: 10px;"></slider>
   </view>
 
   <scroll-view style="flex: 1">
@@ -168,7 +168,7 @@
       <page-head title="默认及使用"></page-head>
       <view class="uni-title">显示当前value</view>
       <view>
-        <slider style="padding: 5px 0;" @change="sliderChange" :value="50" :show-value="true" />
+        <slider style="padding: 5px 0;margin-left: 10px;" @change="sliderChange" :value="50" :show-value="true" />
       </view>
 
       <view class="uni-title">设置步进:step=10跳动</view>
@@ -177,23 +177,23 @@
           <text>0</text>
           <text class="m-l-a">100</text>
         </view>
-        <slider style="padding: 5px 0;" @change="sliderChange" :value="60" :step="10" />
+        <slider style="padding: 5px 0;margin-left: 10px;" @change="sliderChange" :value="60" :step="10" />
       </view>
 
       <view class="uni-title">浮点步进:step=0.01跳动</view>
       <view>
-        <slider style="padding: 5px 0;" :value="0.5" :min="0" :max="1" :step="0.01" :show-value="true" />
+        <slider style="padding: 5px 0;margin-left: 10px" :value="0.5" :min="0" :max="1" :step="0.01" :show-value="true" />
       </view>
 
       <view class="uni-title">设置最小/最大值</view>
       <view>
-        <slider style="padding: 5px 0;" @change="sliderChange" :value="100" :min="50" :max="200" :show-value="true" />
+        <slider style="padding: 5px 0;margin-left: 10px" @change="sliderChange" :value="100" :min="50" :max="200" :show-value="true" />
       </view>
 
       <view class="uni-title">不同颜色和大小的滑块</view>
       <view>
         <!-- vapor 模式不支持 activeColor、blockColor 等属性，需要使用 track-class、track-active-class、thumb-class -->
-        <slider style="padding: 5px 0;" id="slider-custom-color-and-size" @change="sliderChange" :value="data.sliderValue"
+        <slider style="padding: 5px 0;margin-left: 10px" id="slider-custom-color-and-size" @change="sliderChange" :value="data.sliderValue"
           :backgroundColor="data.sliderBackgroundColor" :activeColor="data.sliderActiveColor"
           :activeBackgroundColor="data.sliderActiveColor" :blockColor="data.sliderBlockColor" :foreColor="data.sliderBlockColor"
           :block-size="data.sliderBlockSize"
@@ -201,7 +201,7 @@
       </view>
       <view class="uni-title">暗黑模式</view>
       <view>
-        <slider style="padding: 5px 0;" :show-value="true" backgroundColor="rgba(32,32,32,0.5)" valueColor="#555" track-class="dark-track" thumb-class="dark-thumb"/>
+        <slider style="padding: 5px 0;margin-left: 10px" :show-value="true" backgroundColor="rgba(32,32,32,0.5)" valueColor="#555" track-class="dark-track" thumb-class="dark-thumb"/>
       </view>
 
       <navigator class="uni-common-mb" url="/pages/template/slider-100/slider-100">

@@ -9,8 +9,8 @@
     <!-- #ifndef !VUE3-VAPOR && APP-HARMONY -->
     <!-- #ifndef MP-WEIXIN -->
     <button @click="pauseAnimate">暂停动画</button>
-    <button @click="resumeAnimate">恢复动画</button>
     <!-- #endif -->
+    <button @click="resumeAnimate">恢复动画</button>
     <button @click="cancelAnimate">取消动画</button>
     <!-- #endif -->
 

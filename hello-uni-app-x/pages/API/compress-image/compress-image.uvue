@@ -38,9 +38,6 @@
 </template>
 
 <script setup lang="uts">
-  // #ifdef APP-ANDROID
-  import FileInputStream from 'java.io.FileInputStream';
-  // #endif
 
   type DataType = {
     imageInfoForTest: UTSJSONObject | null,
@@ -92,11 +89,7 @@
           src: res.tempFilePath,
           success: (_res) => {
             afterCompressImageInfo.value = `图片宽度: ${_res.width}\n图片高度: ${_res.height}\n`;
-            // #ifdef APP-ANDROID
-            const size = new FileInputStream(res.tempFilePath.substring("file://".length)).available() / 1024;
-            afterCompressImageInfo.value = afterCompressImageInfo.value.concat(`图片大小: ${size}KB`);
-            // #endif
-            // #ifdef APP-HARMONY
+            // #ifdef APP-HARMONY || APP-ANDROID
             const fsm = uni.getFileSystemManager()
             fsm.getFileInfo({
               filePath: res.tempFilePath,
@@ -126,6 +119,9 @@
     uni.chooseImage({
       count: 1,
       sizeType: ["original"],
+      // #ifdef APP-ANDROID
+      albumMode:"system",
+      // #endif
       sourceType: ["album"],
       success: (res) => {
         beforeCompressPath.value = res.tempFilePaths[0];
@@ -133,11 +129,7 @@
           src: res.tempFilePaths[0],
           success: (_res) => {
             beforeCompressImageInfo.value = `图片宽度: ${_res.width}\n图片高度: ${_res.height}\n`;
-            // #ifdef APP-ANDROID
-            const size = new FileInputStream(res.tempFilePaths[0].substring("file://".length)).available() / 1024;
-            beforeCompressImageInfo.value = beforeCompressImageInfo.value.concat(`图片大小: ${size}KB`);
-            // #endif
-            // #ifdef APP-HARMONY
+            // #ifdef APP-HARMONY || APP-ANDROID
             const fsm = uni.getFileSystemManager()
             fsm.getFileInfo({
               filePath: res.tempFilePaths[0],

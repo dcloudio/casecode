@@ -1,4 +1,4 @@
-import { UIDatePicker, UIControl, UIDatePickerStyle } from "UIKit"
+import { UIDatePicker, UIControl, UIDatePickerStyle, UIUserInterfaceStyle } from "UIKit"
 import { DateFormatter } from "Foundation"
 
 export class NativeTimePicker {
@@ -27,6 +27,10 @@ export class NativeTimePicker {
 		if (UTSiOS.available("iOS 13.4, *")) {
 			this.timePicker.preferredDatePickerStyle = UIDatePickerStyle.wheels
 		}
+    if (UTSiOS.available("iOS 13.0, *")) {
+    	this.timePicker.overrideUserInterfaceStyle = UIUserInterfaceStyle.light
+    }
+
 
 		this.updateTime()
 		this.bindView(hour, minute)

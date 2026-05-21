@@ -7,7 +7,7 @@
 			<text class="header-info">{{ listData.length }}项 | 瀑布流动态列数 | 圆角边框阴影</text>
 		</view>
 		<waterflow class="waterflow-container" :max-cross-axis-extent="200" :main-axis-gap="4" :cross-axis-gap="4" @scrolltolower="onScrollToLower">
-			<flow-item v-for="(item, index) in listData" :key="item.id" class="flow-item" :type="item.type">
+			<flow-item v-for="(item, index) in listData" :key="item.id" :type="item.type">
 
 				<!-- ========== Type 1: 单图配文 ========== -->
 				<view v-if="item.type == 1" class="card card-type1">
@@ -141,10 +141,6 @@ function onImageClick(urls: string[], current: number) {
 }
 
 .waterflow-container {
-	flex: 1;
-}
-
-.flow-item {
 	flex: 1;
 }
 

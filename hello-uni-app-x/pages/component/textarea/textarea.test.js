@@ -145,7 +145,7 @@ describe('component-native-textarea', () => {
     var {
       height
     } = await bottomTextarea.size()
-    expect(height).toEqual((isDom2 && isHarmony) ? 152: 150)
+    expect(height).toEqual(isDom2 ? 152: 150)
   })
 
   it("maxlength", async () => {

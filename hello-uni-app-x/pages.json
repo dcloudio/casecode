@@ -12,18 +12,23 @@
 		}
 	},
 	"pages": [
-		// #ifdef VUE3-VAPOR
-		{"path": "pages/tabBar/tab-bar", "style": { "disableScroll": true }},
+		// #ifdef VUE3-VAPOR && !APP-HARMONY
+		{
+			"path": "pages/tabBar/tab-bar",
+			"style": {
+				"disableScroll": true
+			}
+		},
 		// #endif
-    // #ifndef VUE3-VAPOR
-    {
+		// #ifdef !VUE3-VAPOR || APP-HARMONY
+		{
 			"path": "pages/tabBar/component",
 			"style": {
 				"navigationBarTitleText": "内置组件",
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
 			}
 		},
-    // #endif
+		// #endif
 		{
 			"path": "pages/component/view/view",
 			"group": "0,1,0",
@@ -75,21 +80,23 @@
 				"navigationBarTitleText": "swiper | 滑块视图容器 - 动画测试"
 			}
 		},
-		// #ifdef VUE3-VAPOR && APP-HARMONY
+		// #ifdef VUE3-VAPOR
 		{
 			"path": "pages/component/swiper/swiper-more",
 			"style": {
 				"navigationBarTitleText": "swiper | 更多示例"
 			}
 		},
-    {
-      "path": "pages/component/swiper/swiper-item-100",
-      "style": {
-        "navigationBarTitleText": "swiper | 性能测试"
-      }
-    },
 		// #endif
-		// #ifdef APP-ANDROID || MP-WEIXIN || APP-HARMONY || APP-IOS
+		// #ifdef VUE3-VAPOR
+		{
+			"path": "pages/component/swiper/swiper-item-100",
+			"style": {
+				"navigationBarTitleText": "swiper | 性能测试"
+			}
+		},
+		// #endif
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/component/match-media/match-media",
 			"group": "0,1,3",
@@ -102,7 +109,7 @@
 			"path": "pages/component/page-container/page-container",
 			"group": "0,1,4",
 			"style": {
-				"navigationBarTitleText": "page-container | 页面容器"
+				"navigationBarTitleText": "page-container | 页面容器组件"
 			}
 		},
 		{
@@ -163,7 +170,7 @@
 				"navigationBarTitleText": "带有type的list-item"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/component/sticky-section/sticky-section",
 			"group": "0,1,9,1",
@@ -172,7 +179,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/component/sticky-header/sticky-header",
 			"group": "0,1,9,0",
@@ -195,14 +202,12 @@
 				"navigationBarTitleText": "text-props"
 			}
 		},
-    // #ifdef WEB || VUE3-VAPOR
-    {
-    	"path": "pages/component/text/text-writer",
-    	"style": {
-    		"navigationBarTitleText": "text-writer"
-    	}
-    },
-		// #endif
+		{
+			"path": "pages/component/text/text-writer",
+			"style": {
+				"navigationBarTitleText": "text-writer"
+			}
+		},
 		{
 			"path": "pages/component/text/text-layout",
 			"style": {
@@ -234,14 +239,6 @@
 				"navigationBarTitleText": "rich-text-list"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
-		{
-			"path": "pages/component/rich-text/rich-text-dialog-page",
-			"style": {
-				"navigationBarTitleText": "rich-text-dialog-page"
-			}
-		},
-		// #endif
 		{
 			"path": "pages/component/progress/progress",
 			"group": "0,2,3",
@@ -379,14 +376,12 @@
 				"navigationBarTitleText": "大图测试"
 			}
 		},
-		// #ifdef APP-HARMONY
 		{
 			"path": "pages/component/image/image-switch",
 			"style": {
 				"navigationBarTitleText": "image-switch"
 			}
 		},
-		// #endif
 		{
 			"path": "pages/component/video/video",
 			"group": "0,5,1",
@@ -432,7 +427,7 @@
 				"navigationBarTitleText": "web-view-scroll"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/component/web-view/web-view/web-view-local",
 			"group": "0,9",
@@ -476,7 +471,7 @@
 				"navigationBarTitleText": "联系人详情"
 			}
 		},
-		// #ifdef !VUE3-VAPOR && (APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY)
+		// #ifndef VUE3-VAPOR
 		{
 			"path": "pages/component/unicloud-db/unicloud-db/mixin-datacom/mixin-datacom",
 			"group": "0,11",
@@ -538,18 +533,19 @@
 				"navigationBarTitleText": "preventDefault"
 			}
 		},
-    {
-    	"path": "pages/component/global-events/touch-events-preventDefault-click",
-    	"style": {
-    		"navigationBarTitleText": "preventDefault"
-    	}
-    },{
-    	"path": "pages/component/global-events/event-longpress",
-    	"style": {
-    		"navigationBarTitleText": "LongPress"
-    	}
-    },
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		{
+			"path": "pages/component/global-events/touch-events-preventDefault-click",
+			"style": {
+				"navigationBarTitleText": "preventDefault"
+			}
+		},
+		{
+			"path": "pages/component/global-events/event-longpress",
+			"style": {
+				"navigationBarTitleText": "LongPress"
+			}
+		},
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/component/nested-scroll-header/nested-scroll-header",
 			"group": "0,1,10,0",
@@ -558,7 +554,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/component/nested-scroll-body/nested-scroll-body",
 			"group": "0,1,10,1",
@@ -567,7 +563,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/component/swiper/swiper-list-view",
 			"style": {
@@ -585,7 +581,7 @@
 			}
 		},
 		// #endif
-		// #ifdef WEB || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-HARMONY || WEB || MP-WEIXIN
 		{
 			"path": "pages/component/label/label",
 			"group": "0,3,5",
@@ -615,7 +611,6 @@
 				"navigationBarTitleText": "cover-view"
 			}
 		},
-		// #ifdef APP-HARMONY || (!VUE3-VAPOR && APP-IOS) || (!VUE3-VAPOR && APP-ANDROID) || WEB || MP-WEIXIN
 		{
 			"path": "pages/component/editor/editor",
 			"group": "0,3,4",
@@ -623,7 +618,6 @@
 				"navigationBarTitleText": "editor | 富文本编辑器"
 			}
 		},
-		// #endif
 		{
 			"path": "pages/component/editor/editor-edit",
 			"style": {
@@ -663,7 +657,7 @@
 				"navigationBarTitleText": "涂鸦"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef (APP-ANDROID && !VUE3-VAPOR) || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/component/native-view/native-view",
 			"group": "0,2,5",
@@ -689,7 +683,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/component/waterflow/waterflow",
 			"group": "0,1,8",
@@ -698,7 +692,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/component/waterflow/waterflow-fit-height",
 			"style": {
@@ -775,8 +769,8 @@
 			}
 		},
 		// #endif
-		// #ifndef VUE3-VAPOR
-    {
+		// #ifdef !VUE3-VAPOR || APP-HARMONY
+		{
 			"path": "pages/tabBar/API",
 			"style": {
 				"navigationBarTitleText": "接口",
@@ -791,7 +785,7 @@
 				"navigationBarTitleText": "getApp | 获取当前应用实例"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/API/exit/exit",
 			"group": "1,1,5",
@@ -818,7 +812,7 @@
 				"enablePullDownRefresh": true
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/get-current-pages/set-page-style-disable-pull-down-refresh",
 			"style": {
@@ -841,7 +835,7 @@
 				"navigationBarTitleText": "uni.getEnterOptionsSync | 获取本次启动时的参数"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/animation-frame/animation-frame",
 			"group": "1,0,2",
@@ -871,7 +865,7 @@
 				"navigationBarTitleText": "uni.setNavigationBarTitle | 设置导航条标题"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/set-page-backgroundColorContent/set-page-backgroundColorContent",
 			"group": "1,2",
@@ -904,7 +898,7 @@
 				"navigationBarTitleText": "onLoad 生命周期测试"
 			}
 		},
-		// #ifdef !VUE3-VAPOR && (APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY)
+		// #ifdef APP-ANDROID || APP-IOS || (!VUE3-VAPOR && APP-HARMONY) || WEB || MP-WEIXIN
 		{
 			"path": "pages/API/pull-down-refresh/pull-down-refresh",
 			"group": "1,2,6",
@@ -927,7 +921,7 @@
 				"navigationBarTitleText": "storage管理器"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/env/env",
 			"group": "1,1,0",
@@ -1109,7 +1103,7 @@
 				"navigationBarTitleText": "uni.getAppBaseInfo | 获取APP基础信息"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/get-system-setting/get-system-setting",
 			"group": "1,6,6",
@@ -1132,7 +1126,7 @@
 				"navigationBarTitleText": "getAttribute | 获取元素的属性值"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/API/element-takesnapshot/element-takesnapshot",
 			"group": "1,30",
@@ -1142,7 +1136,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/get-app-authorize-setting/get-app-authorize-setting",
 			"group": "1,6,4",
@@ -1158,12 +1152,12 @@
 				"navigationBarTitleText": "uni.previewImage | 图片预览"
 			}
 		},
-    {
-    	"path": "pages/API/preview-image/preview-image-multi",
-    	"style": {
-    		"navigationBarTitleText": "uni.previewImage | 图片预览"
-    	}
-    },
+		{
+			"path": "pages/API/preview-image/preview-image-multi",
+			"style": {
+				"navigationBarTitleText": "uni.previewImage | 图片预览"
+			}
+		},
 		{
 			"path": "pages/API/choose-image/choose-image",
 			"group": "1,7,0",
@@ -1178,7 +1172,7 @@
 				"navigationBarTitleText": "uni.getImageInfo | 获取图片信息"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/compress-image/compress-image",
 			"group": "1,7,4",
@@ -1194,7 +1188,7 @@
 				"navigationBarTitleText": "uni.chooseVideo | 拍摄视频或从相册中选择视频"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/compress-video/compress-video",
 			"group": "1,7,8",
@@ -1203,7 +1197,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/choose-media/choose-media",
 			"group": "1,7,9",
@@ -1212,7 +1206,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/choose-media/fullscreen-video",
 			"style": {
@@ -1269,6 +1263,7 @@
 				"navigationBarTitleText": "database | 数据库"
 			}
 		},
+		// #ifdef APP-ANDROID || APP-IOS || (!VUE3-VAPOR && APP-HARMONY) || WEB || MP-WEIXIN
 		{
 			"path": "pages/API/get-battery-info/get-battery-info",
 			"group": "1,6,8",
@@ -1276,6 +1271,7 @@
 				"navigationBarTitleText": "uni.getBatteryInfo | 获取电池电量信息"
 			}
 		},
+		// #endif
 		{
 			"path": "pages/API/get-window-info/get-window-info",
 			"group": "1,6,2",
@@ -1290,7 +1286,7 @@
 				"navigationStyle": "custom"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/API/element-draw/element-draw",
 			"group": "1,30",
@@ -1300,7 +1296,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/API/element-request-fullscreen/element-request-fullscreen",
 			"group": "1,30",
@@ -1309,7 +1305,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/API/element-request-fullscreen/element-request-fullscreen-bugs",
 			"style": {
@@ -1317,7 +1313,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/facial-recognition-meta-info/facial-recognition-meta-info",
 			"group": "1,12,2",
@@ -1327,7 +1323,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/API/get-uni-verify-manager/get-uni-verify-manager",
 			"group": "1,12,1",
@@ -1338,7 +1334,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/API/get-uni-verify-manager/uni-verify-custom-page",
 			"style": {
@@ -1347,7 +1343,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/API/get-uni-verify-manager/full-webview-page",
 			"style": {
@@ -1374,7 +1370,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/request-payment/request-payment",
 			"group": "1,14,0",
@@ -1498,14 +1494,12 @@
 				"navigationBarTitleText": "获取节点-多根节点"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
-    {
-      "path": "pages/API/get-element-by-id/get-element-by-id-get-bounding-client-rect",
-      "style": {
-        "navigationBarTitleText": "getBoundingClientRect 测试"
-      }
-    },
-		// #endif
+		{
+			"path": "pages/API/get-element-by-id/get-element-by-id-get-bounding-client-rect",
+			"style": {
+				"navigationBarTitleText": "getBoundingClientRect 测试"
+			}
+		},
 		{
 			"path": "pages/API/create-selector-query/create-selector-query",
 			"group": "1,3,2",
@@ -1513,12 +1507,12 @@
 				"navigationBarTitleText": "uni.createSelectorQuery | 创建 SelectorQuery 实例"
 			}
 		},
-    {
-    	"path": "pages/API/create-selector-query/create-selector-query-onScroll",
-    	"style": {
-    		"navigationBarTitleText": "createSelectorQuery onScroll"
-    	}
-    },
+		{
+			"path": "pages/API/create-selector-query/create-selector-query-onScroll",
+			"style": {
+				"navigationBarTitleText": "createSelectorQuery onScroll"
+			}
+		},
 		{
 			"path": "pages/API/animate/animate",
 			"group": "1,30",
@@ -1536,7 +1530,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/uni-resize-observer/uni-resize-observer",
 			"group": "1,30",
@@ -1545,7 +1539,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/API/provider/provider",
 			"group": "1,1,6",
@@ -1554,7 +1548,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/privacy/privacy",
 			"group": "1,1,8",
@@ -1574,7 +1568,7 @@
 			"path": "pages/API/uni-push/uni-push",
 			"group": "1,16,0",
 			"style": {
-				"navigationBarTitleText": "uni-push示例"
+				"navigationBarTitleText": "推送"
 			}
 		},
 		// #ifdef APP-ANDROID || APP-IOS || WEB
@@ -1586,7 +1580,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/dialog-page/dialog-page",
 			"group": "1,2,1",
@@ -1595,7 +1589,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/dialog-page/next-page",
 			"style": {
@@ -1603,7 +1597,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/dialog-page/dialog-1",
 			"style": {
@@ -1611,7 +1605,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/dialog-page/dialog-1-1",
 			"style": {
@@ -1619,7 +1613,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/dialog-page/dialog-2",
 			"style": {
@@ -1627,7 +1621,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/dialog-page/dialog-3",
 			"style": {
@@ -1638,7 +1632,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/dialog-page/dialog-4",
 			"style": {
@@ -1647,7 +1641,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/dialog-page/dialog-5",
 			"style": {
@@ -1655,7 +1649,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/dialog-page/dialog-6",
 			"style": {
@@ -1663,7 +1657,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/dialog-page/dialog-textarea",
 			"style": {
@@ -1671,11 +1665,19 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/API/dialog-page/dialog-input",
 			"style": {
 				"navigationBarTitleText": "dialog-input"
+			}
+		},
+		// #endif
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
+		{
+			"path": "pages/API/dialog-page/rich-text-in-dialog-page",
+			"style": {
+				"navigationBarTitleText": "rich-text-in-dialog-page"
 			}
 		},
 		// #endif
@@ -1689,7 +1691,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/get-background-audio-manager/get-background-audio-manager",
 			"group": "1,7,13",
@@ -1709,7 +1711,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/get-recorder-manager/get-recorder-manager",
 			"group": "1,7,14",
@@ -1719,7 +1721,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/API/share-with-system/share-with-system",
 			"group": "1,15,1",
@@ -1729,16 +1731,16 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-HARMONY || APP-ANDROID || APP-IOS
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
-			"path": "pages/API/uni-share/uni-share",
+			"path": "pages/API/share/share",
 			"group": "1,15,0",
 			"style": {
 				"navigationBarTitleText": "uni.share | 分享"
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/open-app-authorize-setting/open-app-authorize-setting",
 			"group": "1,6,5",
@@ -1765,7 +1767,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/capture-screen/capture-screen",
 			"group": "1,6,18",
@@ -1774,7 +1776,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/open-document/open-document",
 			"group": "1,8,1",
@@ -1799,7 +1801,7 @@
 				"navigationBarTitleText": "uni.getVideoInfo | 获取视频信息"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/save-image-to-photos-album/save-image-to-photos-album",
 			"group": "1,7,2",
@@ -1808,7 +1810,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS || MP-WEIXIN || APP-HARMONY
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/save-video-to-photos-album/save-video-to-photos-album",
 			"group": "1,7,6",
@@ -1824,7 +1826,7 @@
 				"navigationBarTitleText": "keyboard | 键盘"
 			}
 		},
-		// #ifdef APP-HARMONY || (!VUE3-VAPOR && (APP-ANDROID || APP-IOS || MP-WEIXIN))
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || MP-WEIXIN
 		{
 			"path": "pages/API/oauth/oauth",
 			"group": "1,12,0",
@@ -1833,15 +1835,32 @@
 			}
 		},
 		// #endif
-		// #ifndef VUE3-VAPOR
-    {
+		// #ifdef APP-ANDROID || APP-HARMONY || WEB || MP-WEIXIN
+		{
+			"path": "pages/API/create-worker/create-worker",
+			"group": "1,19,0",
+			"style": {
+				"navigationBarTitleText": "uni.createWorker | 创建 worker 对象"
+			}
+		},
+		// #endif
+		{
+			"path": "pages/API/create-worker/uts-create-worker",
+			"style": {
+				"navigationBarTitleText": "uni.createWorker | UTS插件示例"
+			}
+		},
+		// #ifdef !VUE3-VAPOR || APP-HARMONY
+		{
 			"path": "pages/tabBar/CSS",
 			"style": {
 				"navigationBarTitleText": "CSS",
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
 			}
 		},
-    {
+		// #endif
+		// #ifdef !VUE3-VAPOR || APP-HARMONY
+		{
 			"path": "pages/tabBar/template",
 			"style": {
 				"navigationBarTitleText": "模板",
@@ -1849,7 +1868,7 @@
 			}
 		},
 		// #endif
-		// #ifndef VUE3-VAPOR
+		// #ifdef !VUE3-VAPOR || APP-HARMONY
 		{
 			"path": "pages/tabBar/uni-ui",
 			"style": {
@@ -1964,7 +1983,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS
+		// #ifdef (APP-ANDROID && !VUE3-VAPOR) || APP-IOS
 		{
 			"path": "pages/component/native-view/native-view-time-picker-dialog",
 			"style": {
@@ -1978,26 +1997,10 @@
 				"navigationBarTitleText": ""
 			}
 		},
-    {
-    	"path": "pages/component/image/image-orientation",
-    	"style": {
-    		"navigationBarTitleText": "图片自动转向测试"
-    	}
-    },
-		// #ifdef APP-ANDROID || WEB || MP-WEIXIN || APP-HARMONY
 		{
-			"path": "pages/API/create-worker/create-worker",
-			"group": "1,19,0",
+			"path": "pages/component/image/image-orientation",
 			"style": {
-				"navigationBarTitleText": "uni.createWorker | 创建 worker 对象"
-			}
-		},
-		// #endif
-		{
-			"path": "pages/API/create-worker/uts-create-worker",
-			"group": "1,19,0",
-			"style": {
-				"navigationBarTitleText": "uni.createWorker | UTS插件示例"
+				"navigationBarTitleText": "图片自动转向测试"
 			}
 		},
 		// #ifdef APP-HARMONY || WEB
@@ -2200,7 +2203,7 @@
 						"navigationBarTitleText": "横滑分页标签栏（字体缩放高亮）"
 					}
 				},
-        // #ifdef APP && VUE3-VAPOR
+				// #ifdef APP && VUE3-VAPOR
 				{
 					"path": "4050/4050",
 					"style": {
@@ -2213,13 +2216,19 @@
 						"navigationBarTitleText": "2000-image"
 					}
 				},
-        // #endif
-        {
-        	"path": "long-rich-text/long-rich-text",
-        	"style": {
-        		"navigationBarTitleText": "5万字rich-text性能测试"
-        	}
-        },
+				{
+					"path": "2000-image/2000-image-svg",
+					"style": {
+						"navigationBarTitleText": "2000-image-svg"
+					}
+				},
+				// #endif
+				{
+					"path": "long-rich-text/long-rich-text",
+					"style": {
+						"navigationBarTitleText": "5万字rich-text性能测试"
+					}
+				},
 				{
 					"path": "slider-100/slider-100",
 					"style": {
@@ -2283,7 +2292,7 @@
 				{
 					"path": "scroll-view-sticky-section/scroll-view-sticky-section",
 					"style": {
-						"navigationBarTitleText": "scroll-view 分段吸顶列表"
+						"navigationBarTitleText": "自定义吸顶"
 					}
 				},
 				// #endif
@@ -2323,15 +2332,15 @@
 						"enablePullDownRefresh": true
 					}
 				},
-        // #ifdef APP || WEB
+				// #ifdef APP || WEB
 				{
 					"path": "list-delete-swipe-batch/list-delete-swipe-batch",
 					"style": {
 						"navigationBarTitleText": "可侧滑删除和多选删除的列表"
 					}
 				},
-        // #endif
-        // #ifdef VUE3-VAPOR && APP || WEB
+				// #endif
+				// #ifdef VUE3-VAPOR && APP || WEB
 				{
 					"path": "long-list-perf/long-list-perf",
 					"style": {
@@ -2344,7 +2353,7 @@
 						"navigationBarTitleText": "waterflow滚动加载长列表"
 					}
 				},
-        // #endif
+				// #endif
 				// #ifdef APP
 				{
 					"path": "banner-tabs-long-list-nested-scroll/banner-tabs-long-list-nested-scroll",
@@ -2379,10 +2388,20 @@
 					}
 				},
 				// #ifdef APP && !VUE3-VAPOR
-				{"path": "calendar/calendar","style": {"navigationBarTitleText": "日历"}},
+				{
+					"path": "calendar/calendar",
+					"style": {
+						"navigationBarTitleText": "日历"
+					}
+				},
 				// #endif
 				// #ifdef MP || VUE3-VAPOR
-				{"path": "calendar-vapor/calendar-vapor","style": {"navigationBarTitleText": "日历"}},
+				{
+					"path": "calendar-vapor/calendar-vapor",
+					"style": {
+						"navigationBarTitleText": "日历"
+					}
+				},
 				// #endif
 				// #ifdef APP-ANDROID || APP-IOS || WEB || APP-HARMONY
 				{
@@ -3214,9 +3233,10 @@
 		"backgroundColorContent": "@backgroundColorContent",
 		"backgroundColor": "@backgroundColor",
 		"backgroundTextStyle": "@backgroundTextStyle"
-    // #ifdef VUE3-VAPOR
-    ,"animationDuration": 150
-    // #endif
+		// #ifdef VUE3-VAPOR
+		,
+		"animationDuration": 150
+		// #endif
 	},
 	"tabBar": {
 		"color": "@tabBarColor",
@@ -3980,7 +4000,7 @@
 					"name": "分享",
 					"children": [
 						{
-							"id": "api.share.uniShare",
+							"id": "api.share.share",
 							"name": "uni.share"
 						},
 						{
@@ -4186,8 +4206,8 @@
 							"name": "justify-content"
 						},
 						{
-						  "id": "css.properties.flex.flex-wrap",
-						  "name": "flex-wrap"
+							"id": "css.properties.flex.flex-wrap",
+							"name": "flex-wrap"
 						},
 						{
 							"id": "css.properties.flex.align-items",
@@ -4242,22 +4262,22 @@
 							"id": "css.properties.position.position",
 							"name": "position"
 						},
-            {
-              "id": "css.properties.position.top",
-              "name": "top"
-            },
-            {
-              "id": "css.properties.position.bottom",
-              "name": "bottom"
-            },
-            {
-              "id": "css.properties.position.left",
-              "name": "left"
-            },
-            {
-              "id": "css.properties.position.right",
-              "name": "right"
-            }
+						{
+							"id": "css.properties.position.top",
+							"name": "top"
+						},
+						{
+							"id": "css.properties.position.bottom",
+							"name": "bottom"
+						},
+						{
+							"id": "css.properties.position.left",
+							"name": "left"
+						},
+						{
+							"id": "css.properties.position.right",
+							"name": "right"
+						}
 					]
 				},
 				{

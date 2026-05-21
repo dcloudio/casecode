@@ -237,12 +237,12 @@ export function get_route(page : Page | null = null) : RouteParams {
 	options = _self.options
 	// #endif
 	// TODO 条件编译处理参数问题，安卓上 options返回的是map，需要处理成 utsobject
-	// #ifdef APP-ANDROID
+	// #ifdef APP-ANDROID && !VUE3-VAPOR
 	const opts = new UTSJSONObject(options)
 	// TODO 上报页面参数需要处理
 	url_params = Serialize(opts)
 	// #endif
-	// #ifndef APP-ANDROID
+	// #ifndef APP-ANDROID && !VUE3-VAPOR
 	// @ts-ignore
 	url_params = Serialize(options)
 	// #endif
@@ -413,12 +413,12 @@ export const uni_cloud_config = () : UniCloudInitOptions | null => {
 export const get_space = (config : UniCloudInitOptions) : UniCloudInitOptions | null => {
 	const uniCloudConfig = uni_cloud_config()
 	if (uniCloudConfig == null) {
-		// #ifdef APP-ANDROID
+		// #ifdef APP-ANDROID && !VUE3-VAPOR
 		if (config.spaceId != '') {
 			return config
 		}
 		// #endif
-		// #ifndef APP-ANDROID
+		// #ifndef APP-ANDROID && !VUE3-VAPOR
 		if (config?.spaceId != '') {
 			return config
 		}
@@ -465,45 +465,48 @@ export const is_push_clientid = () : boolean => {
  * 获取崩溃日志文件地址
  */
 export const get_crash_logs = (fn : (value : string[]) => void) => {
-	const crash_data = uni.__getAppCrashInfo()
-	if (crash_data != null && crash_data.length > 0) {
-		const sysManager = uni.getFileSystemManager();
-		const reportLogs : Promise<string>[] = []
-		for (let i = 0; i < crash_data.length; i++) {
-			const item = crash_data[i];
-			let file_text : string;
-			// #ifdef APP-ANDROID
-			file_text = item.get('file') as string
-			// #endif
-			// #ifdef APP-IOS
-			file_text = item.file as string
-			// #endif
+  // #ifndef APP-IOS
+  const crash_data = uni.__getAppCrashInfo()
+  if (crash_data != null && crash_data.length > 0) {
+  	const sysManager = uni.getFileSystemManager();
+  	const reportLogs : Promise<string>[] = []
+  	for (let i = 0; i < crash_data.length; i++) {
+  		const item = crash_data[i];
+  		let file_text : string;
+  		// #ifdef APP-ANDROID && !VUE3-VAPOR
+  		file_text = item.get('file') as string
+  		// #endif
+  		// #ifdef APP-IOS
+  		file_text = item.file as string
+  		// #endif
 
-			const logPromise = new Promise<string>((resolve, reject) => {
-				sysManager.readFile({
-					filePath: file_text,
-					encoding: 'utf-8',
-					success: (res) => {
-						const crash_text = res.data as string
-						resolve(crash_text); // 成功上报后 resolve
-					},
-					fail: (err : any) => {
-						reject(err); // 读取文件失败时 reject
-					}
-				});
-			});
+  		const logPromise = new Promise<string>((resolve, reject) => {
+  			sysManager.readFile({
+  				filePath: file_text,
+  				encoding: 'utf-8',
+  				success: (res) => {
+  					const crash_text = res.data as string
+  					resolve(crash_text); // 成功上报后 resolve
+  				},
+  				fail: (err : any) => {
+  					reject(err); // 读取文件失败时 reject
+  				}
+  			});
+  		});
 
-			reportLogs.push(logPromise);
-		}
+  		reportLogs.push(logPromise);
+  	}
 
-		Promise.all(reportLogs)
-			.then((res) => {
-				fn(res)
-			})
-			.catch((err) => {
-				console.log('Errorlogs:', err);
-			});
-	}
+  	Promise.all(reportLogs)
+  		.then((res) => {
+  			fn(res)
+  		})
+  		.catch((err) => {
+  			console.log('Errorlogs:', err);
+  		});
+  }
+  // #endif
+
 }
 
 

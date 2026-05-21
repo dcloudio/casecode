@@ -8,7 +8,7 @@ import { OPERATING_TIME, STAT_VERSION, Config } from '../config.uts'
 // import Config from '../config'
 
 
-// #ifdef APP-ANDROID
+// #ifdef APP-ANDROID && !VUE3-VAPOR
 // @ts-ignore
 class CloudObjectToDo extends InternalUniCloudCloudObjectCaller {
   // @ts-ignore
@@ -300,7 +300,7 @@ export class Report {
 
   appError(em : any) {
     let errmsg : string
-    // #ifdef APP-ANDROID
+    // #ifdef APP-ANDROID && !VUE3-VAPOR
     // @ts-ignore
     if (em instanceof Exception) {
       errmsg = em.stackTraceToString()
@@ -310,7 +310,7 @@ export class Report {
       errmsg = JSON.stringify(em)
     }
     // #endif
-    // #ifndef APP-ANDROID
+    // #ifndef APP-ANDROID && !VUE3-VAPOR
     // 处理h5
     errmsg = em.stack ?? em.message
     // #endif
@@ -375,13 +375,15 @@ export class Report {
       // "url": "", // 页面url
       "log": "" // 错误日志
     }
-
+    // #ifndef APP-IOS
     get_net().then((net : string) => {
       options.net = net
       this.crashRequest(options, crash_data)
     }).catch(() => {
       this.crashRequest(options, crash_data)
     })
+    // #endif
+
 
   }
 
@@ -566,6 +568,7 @@ export class Report {
    * @param {Object} type 是否上报
    */
   crashRequest(data : StatDefault, crash_data : string[]) {
+    // #ifndef APP-IOS
     // let data = JSON.parse(JSON.stringify(stata_data))
     const statConfig = Config.getOptions()
     let time = get_time()
@@ -634,6 +637,8 @@ export class Report {
     dbRemove('__UNI__STAT__DATA')
 
     this.sendRequest(optionsData, true)
+    // #endif
+
   }
   /**
    * 发送请求
@@ -641,6 +646,7 @@ export class Report {
    * @param {Object} type 类型
    */
   request(data : StatDefault, type : boolean = false) {
+    // #ifndef APP-IOS
     const statConfig = Config.getOptions()
     let time = get_time()
 
@@ -716,9 +722,12 @@ export class Report {
     dbRemove('__UNI__STAT__DATA')
 
     this.sendRequest(optionsData)
+    // #endif
+
   }
 
   sendRequest(options : RequestData, delCrash : boolean = false) {
+    // #ifndef APP-IOS
     const statConfig = Config.getOptions()
 
     if (Report.uniCloudInstance != null) {
@@ -726,14 +735,14 @@ export class Report {
       // 数据上报
       const app = Report.uniCloudInstance!
 
-      // #ifdef APP-ANDROID
+      // #ifdef APP-ANDROID && !VUE3-VAPOR
       // @ts-ignore
       const uniCloudObj = app.importObject('uni-stat-receiver', {
         customUI: true,
         // @ts-ignore
       } as UniCloudImportObjectOptions, UTSAndroid.getJavaClass(CloudObjectToDo))
       // #endif
-      // #ifndef APP-ANDROID
+      // #ifndef APP-ANDROID && !VUE3-VAPOR
       // @ts-ignore
       const uniCloudObj = app.importObject(
         'uni-stat-receiver',
@@ -765,6 +774,7 @@ export class Report {
           console.log('=== 统计上报错误 :', JSON.stringify(err))
         })
     }
+    // #endif
 
   }
 }

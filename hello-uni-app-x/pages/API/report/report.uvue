@@ -52,14 +52,18 @@
   })
 
   onUnmounted(() => {
+    // #ifndef APP-IOS
     uni.report({
       name: '自定义上报-report页面关闭',
       options: '1'
     })
+    // #endif
+
   })
 
   const handleAppLaunch = () => {
     const options = uni.getLaunchOptionsSync()
+    // #ifndef APP-IOS
     uni.report({
       name: 'uni-app-launch',
       options: options,
@@ -71,9 +75,12 @@
         console.log(err);
       }
     })
+    // #endif
+
   }
 
   const handleAppHide = () => {
+    // #ifndef APP-IOS
     uni.report({
       name: 'uni-app-hide',
       success: (res) => {
@@ -84,10 +91,13 @@
         console.log(err);
       }
     })
+    // #endif
+
   }
 
   const handleAppShow = () => {
     // const options = uni.getLaunchOptionsSync()
+    // #ifndef APP-IOS
     uni.report({
       name: 'uni-app-show',
       success: (res) => {
@@ -98,10 +108,13 @@
         console.log(err);
       }
     })
+    // #endif
+
   }
 
   const handleAppError = () => {
     const errmsg = '测试错误'
+    // #ifndef APP-IOS
     uni.report({
       name: 'uni-app-error',
       options: errmsg,
@@ -113,10 +126,13 @@
         console.log(err);
       }
     })
+    // #endif
+
   }
 
   const handleEvent = () => {
     // 此处name为用户自定义
+    // #ifndef APP-IOS
     uni.report({
       name: 'custom-event',
       options: {
@@ -131,10 +147,13 @@
         console.log(err);
       }
     })
+    // #endif
+
   }
 
   const handleTitle = () => {
     // 此处name为用户自定义
+    // #ifndef APP-IOS
     uni.report({
       name: 'title',
       options: '自定义title测试上报',
@@ -146,6 +165,8 @@
         console.log(err);
       }
     })
+    // #endif
+
   }
 
   defineExpose({

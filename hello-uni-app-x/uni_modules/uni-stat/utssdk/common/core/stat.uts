@@ -39,7 +39,7 @@ export class Stat {
 
         // 初始化 uniCloud
         // @ts-ignore
-        Report.uniCloudInstance = uniCloud.init(spaceData)
+        // Report.uniCloudInstance = uniCloud.init(spaceData)
 
       } else {
         if (!Stat.no_space) {
@@ -83,7 +83,7 @@ export class Stat {
     // 设置上报周期时间
     reportInstance.eportInterval = uniStatConfig.reportInterval ?? 10
 
-    // #ifdef APP-ANDROID || APP-IOS
+    // #ifdef APP-ANDROID && !VUE3-VAPOR
     // 获取崩溃日志
     get_crash_logs((logs) => {
       this.registerEvent(StatType.Crash, null, logs)
@@ -231,7 +231,10 @@ export class Stat {
         }
         break
       case StatType.Crash:
+        // #ifndef APP-IOS
         reportInstance.appCrash(options as string[])
+        // #endif
+
         break
     }
   }

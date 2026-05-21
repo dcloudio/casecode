@@ -159,7 +159,7 @@
 
 	const testOpenDialogPage = () => {
 		uni.openDialogPage({
-			url: '/pages/component/rich-text/rich-text-dialog-page'
+			url: '/pages/API/dialog-page/rich-text-in-dialog-page'
 		});
 	}
 

@@ -20,11 +20,11 @@
         <!-- 原有的基础拍平测试 -->
         <text class="uni-title-text uni-common-mt">基础（右边为拍平）</text>
         <view class="uni-center image-bg">
-            #<!-- #ifndef APP-IOS -->
+            <!-- #ifndef APP-IOS -->
             <image class="image"  :fade-show="true" mode="widthFix" :src="data.imageSrc" @error="error" @load="load"></image>
             <image class="image"  :fade-show="true" mode="widthFix" :src="data.imageSrc" @error="error" @load="load" flatten></image>
             <!-- #endif -->
-            #<!-- #ifdef APP-IOS -->
+            <!-- #ifdef APP-IOS -->
             <image class="image"  mode="widthFix" :src="data.imageSrc" @error="error" @load="load"></image>
             <image class="image"  mode="widthFix" :src="data.imageSrc" @error="error" @load="load" flatten></image>
             <!-- #endif -->
@@ -40,6 +40,9 @@
         <!-- #ifdef VUE3-VAPOR -->
         <navigator url="/pages/template/2000-image/2000-image">
           <button class="uni-btn">组件性能测试</button>
+        </navigator>
+        <navigator url="/pages/template/2000-image/2000-image-svg">
+          <button class="uni-btn">组件性能测试(SVG)</button>
         </navigator>
         <!-- #endif -->
       </view>

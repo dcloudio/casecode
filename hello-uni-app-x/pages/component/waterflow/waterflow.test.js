@@ -4,10 +4,11 @@ const isWeb = platformInfo.startsWith('web')
 const isHarmony = platformInfo.startsWith('harmony')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
+const isIOS = platformInfo.startsWith('ios')
 
 describe('component-native-waterflow', () => {
   // 鸿蒙平台api 20支持滚动相关事件，api 18支持load-more。目前先手动测试，后续升级测试机后再放开测试
-  if (isMP || isWeb || isAppWebView || isHarmony) {
+  if (isMP || isWeb || isAppWebView) {
   	it('not support', () => {
   		expect(1).toBe(1)
   	})
@@ -109,8 +110,8 @@ describe('component-native-waterflow', () => {
     await page.waitFor(2000)
   })
 
-  if(!isHarmony) {
-    // 鸿蒙平台waterflow不支持scroll-into-view
+  if(!isHarmony && !isDom2) {
+    // 鸿蒙平台或蒸汽模式waterflow不支持scroll-into-view
     //检测竖向scroll_into_view属性赋值
     it('check_scroll_into_view_top', async () => {
       await page.callMethod('setScrollIntoView', 'item---3')

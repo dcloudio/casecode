@@ -23,7 +23,7 @@
       //   entryTypes: ['render', 'navigation'],
       // } as PerformanceObserverOptions)
       // 统计上报 - 应用启动
-      // #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
+      // #ifdef APP-ANDROID || WEB || MP-WEIXIN || APP-HARMONY
       uni.report({
       	name: 'uni-app-launch',
       	options: res,
@@ -105,7 +105,7 @@
     setLifeCycleNum(state.lifeCycleNum + 100)
     console.log('App Show')
 
-    // #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
+    // #ifdef APP-ANDROID || WEB || MP-WEIXIN || APP-HARMONY
     // 统计上报 - 应用显示
     uni.report({
     	name: 'uni-app-show',
@@ -123,7 +123,7 @@
     console.log('App Hide')
 
     // 统计上报 - 应用进入后台
-    // #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
+    // #ifdef APP-ANDROID || WEB || MP-WEIXIN || APP-HARMONY
     uni.report({
     	name: 'uni-app-hide',
     	success(res) {
@@ -161,7 +161,7 @@
     console.log('App Error', err)
     setLifeCycleNum(state.lifeCycleNum + 100)
     // 统计上报 - 应用发生错误
-    // #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
+    // #ifdef APP-ANDROID || WEB || MP-WEIXIN || APP-HARMONY
     uni.report({
     	name: 'uni-app-error',
     	options: err,

@@ -40,7 +40,7 @@
           <input id="uni-input-type-url" class="uni-input" type="url" placeholder="url输入键盘" />
         </view>
         <view class="input-wrapper">
-          <input id="uni-input-type-none" class="uni-input" type="none" placeholder="聚焦但不弹出键盘" />
+          <input id="uni-input-type-none" class="uni-input" type="none" :focus="data.typeNoneFocus" placeholder="聚焦但不弹出键盘" />
         </view>
         <!-- #endif -->
       </view>
@@ -464,6 +464,7 @@
     triggerFocus: boolean;
     triggerBlur: boolean;
     showTypeNoneAndFocusCase: boolean;
+    typeNoneFocus: boolean;
   }
 
   // 使用reactive避免ref数据在自动化测试中无法访问
@@ -505,7 +506,8 @@
     syncDisplayValue: '',
     triggerFocus: false,
     triggerBlur: false,
-    showTypeNoneAndFocusCase: false
+    showTypeNoneAndFocusCase: false,
+    typeNoneFocus: false
   } as DataType)
 
   const togglePlaceholderClass = () => {

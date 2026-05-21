@@ -1,5 +1,5 @@
 <template>
-    <view ref="pageRef" class="page">
+  <view ref="pageRef" class="page">
     <text class="tip">半屏弹窗，演示了弹出层内scroll-view滚动到顶时由滚变拖。本效果是通过监听TouchEvent实现，当半屏窗口移动时禁用scroll-view的滚动，避免两者的冲突。</text>
     <button class="bottomButton" @click="switchHalfScreen(true)">打开弹窗</button>
     <view ref="halfScreenRef" class="halfScreen" @touchstart="onHalfTouchStart" @touchmove="onHalfTouchMove"

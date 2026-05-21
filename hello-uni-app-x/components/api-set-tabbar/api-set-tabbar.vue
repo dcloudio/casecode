@@ -72,13 +72,6 @@
   })
 
   const setTabBarTitle = () => {
-    // #ifdef APP-HARMONY
-    uni.showToast({
-      title: "暂不支持"
-    })
-    // #endif
-
-    // #ifndef APP-HARMONY
     let tabBarOptions = {
       visible: true,
       index: 1,
@@ -98,7 +91,6 @@
     }
     uni.setTabBarItem(tabBarOptions)
     hasSetLongTitle.value = !hasSetLongTitle.value
-    // #endif
   }
 
   const hideTabBarItem = () => {
@@ -202,13 +194,6 @@
   }
 
   const customItem = () => {
-    // #ifdef APP-HARMONY
-    uni.showToast({
-      title: "暂不支持"
-    })
-    // #endif
-
-    // #ifndef APP-HARMONY
     let tabBarOptions = {
       index: 1,
       text: '接口',
@@ -222,7 +207,6 @@
       uni.setTabBarItem(tabBarOptions)
     }
     hasCustomedItem.value = !hasCustomedItem.value
-    // #endif
   }
 
 
