@@ -173,9 +173,30 @@
       </view>
       <text>拍平</text>
       <view class="backgroundview">
-        <view class="box-visible-border-width" flatten>
-          <view style="overflow: hidden; width: 100px; height: 100px;" flatten>
+        <view class="box-visible-border-width">
+          <view style="overflow: hidden; width: 100px; height: 100px;">
             <view style="width: 50px; height: 130px; background-color: greenyellow;position: absolute;" flatten></view>
+          </view>
+        </view>
+      </view>
+
+      <text style="font-size: 15px;">overflow=visible 多层view嵌套visible</text>
+      <view class="backgroundview">
+        <view style="overflow: visible; flex-direction: row; background-color: green;">
+      		<view style="overflow: visible; width: 50px; height: 100px;">
+      			<view style="width: 50px; height: 130px; background-color: greenyellow;position: absolute;"></view>
+      		</view>
+          <view style="overflow: hidden; width: 50px; height: 100px;"></view>
+        </view>
+      </view>
+      <text>拍平</text>
+      <view class="backgroundview">
+        <view class="backgroundview">
+          <view style="overflow: visible; flex-direction: row; background-color: green;">
+        		<view style="overflow: visible; width: 50px; height: 100px;">
+        			<view style="width: 50px; height: 130px; background-color: greenyellow;position: absolute;" flatten></view>
+        		</view>
+            <view style="overflow: hidden; width: 50px; height: 100px;" flatten></view>
           </view>
         </view>
       </view>

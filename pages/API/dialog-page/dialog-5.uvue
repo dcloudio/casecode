@@ -2,20 +2,32 @@
   <view class="dialog-container">
     <view class="dialog-content">
       <text>title: {{ title }}</text>
-      <view class="uni-common-mt flex-row" v-if="pageBody != null">pageBody: {
-        top: <text id="page-body-top">{{pageBody!.top}}</text>,
-        right: <text id="page-body-right">{{pageBody!.right}}</text>,
-        bottom: <text id="page-body-bottom">{{pageBody!.bottom}}</text>,
-        left: <text id="page-body-left">{{pageBody!.left}}</text>,
-        width: <text id="page-body-width">{{pageBody!.width}}</text>,
-        height: <text id="page-body-height">{{pageBody!.height}}</text>
+      <view class="uni-common-mt flex-row" v-if="pageBody != null">
+        <text>pageBody: {</text>
+        <text>top: </text>
+        <text id="page-body-top">{{pageBody!.top}}</text><text>,</text>
+        <text>right: </text>
+        <text id="page-body-right">{{pageBody!.right}}</text><text>,</text>
+        <text>bottom: </text>
+        <text id="page-body-bottom">{{pageBody!.bottom}}</text><text>,</text>
+        <text>left: </text>
+        <text id="page-body-left">{{pageBody!.left}}</text><text>,</text>
+        <text>width: </text>
+        <text id="page-body-width">{{pageBody!.width}}</text><text>,</text>
+        <text>height: </text>
+        <text id="page-body-height">{{pageBody!.height}}</text>
         }
       </view>
-      <view class="uni-common-mt flex-row" v-if="safeAreaInsets != null">safeAreaInsets: {
-        top: <text id="page-safe-area-insets-top">{{safeAreaInsets!.top}}</text>,
-        right: <text id="page-safe-area-insets-right">{{safeAreaInsets!.right}}</text>,
-        bottom: <text id="page-safe-area-insets-bottom">{{safeAreaInsets!.bottom}}</text>,
-        left: <text id="page-safe-area-insets-left">{{safeAreaInsets!.left}}</text>}
+      <view class="uni-common-mt flex-row" v-if="safeAreaInsets != null">
+        <text>safeAreaInsets: {</text>
+        <text>top: </text>
+        <text id="page-safe-area-insets-top">{{safeAreaInsets!.top}}</text><text>,</text>
+        <text>right: </text>
+        <text id="page-safe-area-insets-right">{{safeAreaInsets!.right}}</text><text>,</text>
+        <text>bottom: </text>
+        <text id="page-safe-area-insets-bottom">{{safeAreaInsets!.bottom}}</text><text>,</text>
+        <text>left: </text>
+        <text id="page-safe-area-insets-left">{{safeAreaInsets!.left}}</text>}
       </view>
       <!-- #ifdef APP-ANDROID || APP-IOS || WEB -->
       <view class="uni-common-mt flex-row" v-if="width != null">width: <text>{{width!}}</text>

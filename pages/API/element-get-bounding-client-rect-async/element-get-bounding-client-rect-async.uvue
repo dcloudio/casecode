@@ -4,7 +4,7 @@
   <!-- #endif -->
     <view class="page" id="page">
       <page-head :title="title"></page-head>
-      <page-intro content="本页演示元素获取布局矩形：getBoundingClientRectAsync 异步接口与 getBoundingClientRect 同步方法，返回 x、y、width、height、left、top、right、bottom；对 view、text、image、scroll-view 等组件分别测试，并含拍平（flatten）对比。"></page-intro>
+      <page-intro content="本页演示元素获取布局矩形：getBoundingClientRectAsync 异步接口与 getBoundingClientRect 同步方法，返回 x、y、width、height、left、top、right、bottom；对 view、text、image、scroll-view 等组件分别测试，并含拍平（flatten）对比，以及 box-shadow 导致尺寸变大的现象演示。"></page-intro>
       <button class="uni-common-mt" @click="getBoundingClientRectAsync">getBoundingClientRectAsync</button>
       <view id="rect-test" ref="rectTest" class="rect-test"></view>
       <view class="rect-info" v-if="data.rectInfo != null">
@@ -234,6 +234,40 @@
         </view>
       </view>
 
+      <view class="test-group">
+        <view class="test-buttons">
+          <button class="btn-small" @click="getShadowBaseRect">View(无阴影)</button>
+          <button class="btn-small" @click="getShadowBugRect">View(box-shadow)</button>
+        </view>
+        <text class="test-tip">两个元素样式尺寸一致，右侧仅增加 box-shadow，用于演示获取到的宽高可能变大。</text>
+        <view class="test-elements">
+          <view id="rect-test-shadow-base" class="shadow-demo-box"></view>
+          <view id="rect-test-shadow-bug" class="shadow-demo-box shadow-demo-box-bug"></view>
+        </view>
+      </view>
+      <view class="rect-row" v-if="syncData.shadowBaseRectInfo != null || syncData.shadowBugRectInfo != null">
+        <view class="rect-data-col" v-if="syncData.shadowBaseRectInfo != null">
+          <text class="rect-data-item">无阴影 x: {{syncData.shadowBaseRectInfo!.x}}</text>
+          <text class="rect-data-item">无阴影 y: {{syncData.shadowBaseRectInfo!.y}}</text>
+          <text class="rect-data-item">无阴影 width: {{syncData.shadowBaseRectInfo!.width}}</text>
+          <text class="rect-data-item">无阴影 height: {{syncData.shadowBaseRectInfo!.height}}</text>
+          <text class="rect-data-item">无阴影 left: {{syncData.shadowBaseRectInfo!.left}}</text>
+          <text class="rect-data-item">无阴影 top: {{syncData.shadowBaseRectInfo!.top}}</text>
+          <text class="rect-data-item">无阴影 right: {{syncData.shadowBaseRectInfo!.right}}</text>
+          <text class="rect-data-item">无阴影 bottom: {{syncData.shadowBaseRectInfo!.bottom}}</text>
+        </view>
+        <view class="rect-data-col" v-if="syncData.shadowBugRectInfo != null">
+          <text class="rect-data-item">阴影 x: {{syncData.shadowBugRectInfo!.x}}</text>
+          <text class="rect-data-item">阴影 y: {{syncData.shadowBugRectInfo!.y}}</text>
+          <text class="rect-data-item">阴影 width: {{syncData.shadowBugRectInfo!.width}}</text>
+          <text class="rect-data-item">阴影 height: {{syncData.shadowBugRectInfo!.height}}</text>
+          <text class="rect-data-item">阴影 left: {{syncData.shadowBugRectInfo!.left}}</text>
+          <text class="rect-data-item">阴影 top: {{syncData.shadowBugRectInfo!.top}}</text>
+          <text class="rect-data-item">阴影 right: {{syncData.shadowBugRectInfo!.right}}</text>
+          <text class="rect-data-item">阴影 bottom: {{syncData.shadowBugRectInfo!.bottom}}</text>
+        </view>
+      </view>
+
    </view>
   <!-- #ifdef APP -->
   </scroll-view>
@@ -262,6 +296,8 @@
     viewRectInfo: DomRectType | null,
     textRectInfo: DomRectType | null,
     imageRectInfo: DomRectType | null,
+    shadowBaseRectInfo: DomRectType | null,
+    shadowBugRectInfo: DomRectType | null,
     viewRectInfoFlat: DomRectType | null,
     textRectInfoFlat: DomRectType | null,
     imageRectInfoFlat: DomRectType | null,
@@ -269,11 +305,8 @@
     customComponentRectInfo: DomRectType | null,
   }
 
-  const title = ref('getBoundingClientRectAsync')
-  const rectTest = ref<UniElement | null>(null)
-
-  const data = reactive({
-    rectInfo: {
+  function createEmptyRectInfo(): DomRectType {
+    return {
       x: 0,
       y: 0,
       width: 0,
@@ -282,42 +315,11 @@
       top: 0,
       right: 0,
       bottom: 0,
-    },
-  } as DataType)
-
-  const syncData = reactive({
-    viewRectInfo: null,
-    textRectInfo: null,
-    imageRectInfo: null,
-    viewRectInfoFlat: null,
-    textRectInfoFlat: null,
-    imageRectInfoFlat: null,
-    scrollViewRectInfo: null,
-    customComponentRectInfo: null,
-  } as SyncDataType)
-
-  function getBoundingClientRectAsync() {
-    if (rectTest.value != null) {
-      rectTest.value!.getBoundingClientRectAsync()!.then((rect : DOMRect) => {
-        data.rectInfo = {
-          x: rect.x,
-          y: rect.y,
-          width: rect.width,
-          height: rect.height,
-          left: rect.left,
-          top: rect.top,
-          right: rect.right,
-          bottom: rect.bottom,
-        } as DomRectType
-      })
     }
   }
 
-  // 通用方法：获取元素的位置信息
-  function getRectInfo(elementId: string, dataKey: keyof SyncDataType) {
-    const element = uni.getElementById(elementId)!
-    const rect = element.getBoundingClientRect()
-    syncData[dataKey] = {
+  function createRectInfo(rect : DOMRect): DomRectType {
+    return {
       x: rect.x,
       y: rect.y,
       width: rect.width,
@@ -326,7 +328,42 @@
       top: rect.top,
       right: rect.right,
       bottom: rect.bottom,
-    } as DomRectType
+    }
+  }
+
+  const title = ref('getBoundingClientRectAsync')
+  const rectTest = ref<UniElement | null>(null)
+
+  const data = reactive<DataType>({
+    rectInfo: createEmptyRectInfo(),
+  })
+
+  const syncData = reactive<SyncDataType>({
+    viewRectInfo: null,
+    textRectInfo: null,
+    imageRectInfo: null,
+    shadowBaseRectInfo: null,
+    shadowBugRectInfo: null,
+    viewRectInfoFlat: null,
+    textRectInfoFlat: null,
+    imageRectInfoFlat: null,
+    scrollViewRectInfo: null,
+    customComponentRectInfo: null,
+  })
+
+  function getBoundingClientRectAsync() {
+    if (rectTest.value != null) {
+      rectTest.value!.getBoundingClientRectAsync()!.then((rect : DOMRect) => {
+        data.rectInfo = createRectInfo(rect)
+      })
+    }
+  }
+
+  // 通用方法：获取元素的位置信息
+  function getRectInfo(elementId: string, dataKey: keyof SyncDataType) {
+    const element = uni.getElementById(elementId)!
+    const rect = element.getBoundingClientRect()
+    syncData[dataKey] = createRectInfo(rect)
   }
 
   function getViewRect() {
@@ -339,6 +376,14 @@
 
   function getImageRect() {
     getRectInfo('rect-test-image', 'imageRectInfo')
+  }
+
+  function getShadowBaseRect() {
+    getRectInfo('rect-test-shadow-base', 'shadowBaseRectInfo')
+  }
+
+  function getShadowBugRect() {
+    getRectInfo('rect-test-shadow-bug', 'shadowBugRectInfo')
   }
 
   function getViewRectFlat() {
@@ -368,6 +413,8 @@
     getViewRect,
     getTextRect,
     getImageRect,
+    getShadowBaseRect,
+    getShadowBugRect,
     getViewRectFlat,
     getTextRectFlat,
     getImageRectFlat,
@@ -438,11 +485,19 @@
     margin: 0 5px;
   }
 
+  .test-tip {
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 18px;
+    color: #909399;
+  }
+
   .test-elements {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     margin-bottom: 10px;
+    padding: 14px 0;
   }
 
   .rect-test-small {
@@ -463,6 +518,20 @@
     width: 45%;
     height: 60px;
     background-color: #f0f0f0;
+  }
+
+  .shadow-demo-box {
+    width: 45%;
+    height: 60px;
+    background-color: #67c23a;
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #4f9a2a;
+  }
+
+  .shadow-demo-box-bug {
+    box-shadow: 0px 0px 24px 12px rgba(0, 0, 0, 0.35);
   }
 
   .rect-row {

@@ -105,13 +105,18 @@
       <view class="uni-title">
         <text class="uni-title-text">属性示例</text>
       </view>
-      <input class="input margin-10" type="string" placeholder="设置播放资源" @confirm="onSrcComfirm"></input>
-      <input class="input margin-10" type="number" placeholder="设置初始播放位置（播放前设置有效）"
-        @confirm="onInitialTimeComfirm"></input>
-      <input class="input margin-10" type="number" placeholder="设置视频时长（播放前设置有效）" @confirm="onDurationComfirm"></input>
-      <input class="input margin-10" type="string" placeholder="设置视频封面" @confirm="onPosterComfirm"></input>
-      <input class="input margin-10" type="string" placeholder="设置视频标题（仅限非 Web 平台）" @confirm="onTitleComfirm"></input>
-      <input class="input margin-10" type="string" placeholder="设置header(json格式)" @confirm="onHeaderComfirm"></input>
+
+      <!-- //TODO: ios dom2 加一层父view，scrll-view组件滚动方向逻辑就正常了，dom2需要排查input和scroll-view 在该场景导致direction 失效的问题 -->
+      <view class="uni-btn-v">
+        <input class="input margin-10" type="string" placeholder="设置播放资源" @confirm="onSrcComfirm"></input>
+        <input class="input margin-10" type="number" placeholder="设置初始播放位置（播放前设置有效）"
+          @confirm="onInitialTimeComfirm"></input>
+        <input class="input margin-10" type="number" placeholder="设置视频时长（播放前设置有效）" @confirm="onDurationComfirm"></input>
+        <input class="input margin-10" type="string" placeholder="设置视频封面" @confirm="onPosterComfirm"></input>
+        <input class="input margin-10" type="string" placeholder="设置视频标题（仅限非 Web 平台）" @confirm="onTitleComfirm"></input>
+        <input class="input margin-10" type="string" placeholder="设置header(json格式)" @confirm="onHeaderComfirm"></input>
+      </view>
+
       <boolean-data title="设置是否展示弹幕（播放前设置有效）" :defaultValue="data.enableDanmu" @change="onEnableDanmuChange"></boolean-data>
       <boolean-data title="设置是否自动播放（播放前设置有效）" :defaultValue="data.autoplay" @change="onAutoplayChange"></boolean-data>
       <boolean-data title="设置是否循环播放（播放完成后生效）" :defaultValue="data.loop" @change="onLoopChange"></boolean-data>
@@ -332,7 +337,8 @@
     data.videoContext?.pause();
     // #endif
     // #ifdef APP
-    (uni.getElementById("video") as UniVideoElement).pause(); //as写法测试。注意id不对时as会崩溃
+    data.videoContext?.pause()
+    // (uni.getElementById("video") as UniVideoElement).pause(); //as写法测试。注意id不对时as会崩溃
     // #endif
   }
 
@@ -380,7 +386,8 @@
     data.videoContext?.stop();
     // #endif
     // #ifndef MP
-    uni.getElementById<UniVideoElement>("video")?.stop(); //泛型写法测试
+    data.videoContext?.stop();
+    // uni.getElementById<UniVideoElement>("video")?.stop(); //泛型写法测试
     // #endif
   }
 

@@ -46,7 +46,6 @@
           <!-- <textarea class="uni-input" name="comment" :value="comment" placeholder="这个class的写法，导致iOS和Android产生了高度差异"/> -->
         </view>
         <!-- picker -->
-        <!-- #ifdef APP-HARMONY || WEB || MP -->
         <view class="uni-form-item flex-row">
           <text class="picker-title">时区</text>
           <picker class="picker" name="timeZone" @change="onTimeZoneChange" :value="data.timeZoneIndex" :range="data.timeZoneList">
@@ -55,7 +54,7 @@
         </view>
         <view class="uni-form-item flex-row">
           <text class="picker-title">多列选择器</text>
-          <picker class="picker pickerMulti" mode="multiSelector" @columnchange="onMultiPickerColumnChange"
+          <picker class="picker pickerMulti" name="picker-mode-multiSelector" mode="multiSelector" @columnchange="onMultiPickerColumnChange"
             :value="data.multiIndex" :range="data.multiArray">
             <view class="uni-picker-select-value pickerMultiValue">
               {{data.multiArray[0][data.multiIndex[0]]}}，{{data.multiArray[1][data.multiIndex[1]]}}，{{data.multiArray[2][data.multiIndex[2]]}}
@@ -64,18 +63,17 @@
         </view>
         <view class="uni-form-item flex-row">
           <text class="picker-title">时间选择器</text>
-          <picker class="picker pickerTime" mode="time" :value="data.timePickerValue" start="09:01" end="21:01" @change="onTimeChange">
+          <picker class="picker pickerTime" name="picker-mode-time" mode="time" :value="data.timePickerValue" start="09:01" end="21:01" @change="onTimeChange">
             <view class="uni-picker-select-value">{{data.timePickerValue}}</view>
           </picker>
         </view>
         <view class="uni-form-item flex-row">
           <text class="picker-title">日期选择器</text>
-          <picker class="picker pickerDate" mode="date" :value="data.datePickerValue" :start="data.startDate" :end="data.endDate"
+          <picker class="picker pickerDate" name="picker-mode-date" mode="date" :value="data.datePickerValue" :start="data.startDate" :end="data.endDate"
             @change="onDateChange">
             <view class="uni-picker-select-value">{{data.datePickerValue}}</view>
           </picker>
         </view>
-        <!-- #endif -->
         <view class="uni-form-item">
           <text class="title">时间</text>
           <picker-view class="picker-view" name="time" :value="data.time" indicator-style="height:50px">
@@ -190,7 +188,6 @@
     return JSON.stringify(data.formData)
   })
 
-  // #ifdef APP-HARMONY
   const onTimeZoneChange = (e: UniPickerChangeEvent) => {
     data.timeZoneIndex = e.detail.value as number
     console.log('时区选择改变，携带值为：' + e.detail.value)
@@ -249,7 +246,6 @@
   const onTimeChange = (e: UniPickerChangeEvent) => {
     data.timePickerValue = e.detail.value as string
   }
-  // #endif
 
   const onFormSubmit = (e: UniFormSubmitEvent) => {
     data.formData = e.detail.value
@@ -348,12 +344,7 @@
     height: 41px;
     padding: 0 13px;
     font-size: 14px;
-    /* #ifndef VUE3-VAPOR */
     background: var(--list-background-color,#ffffff);
-    /* #endif */
-    /* #ifdef VUE3-VAPOR */
-    background: #ffffff;
-    /* #endif */
     justify-content: center;
   }
 </style>

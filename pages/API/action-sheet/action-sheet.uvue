@@ -261,7 +261,9 @@
     })
   }
 
-  onLoad(() => {
+  //TODO: 暂时使用onReady替换onLoad解决当前页面弹两次的问题， modal示例页面未替换，保留该复现问题
+  //ios需要排查解决： uni.openDialogPage方法在页面生命周期onLoad中弹出当前页面的问题，
+  onReady(() => {
     uni.showActionSheet({
       title: "onLoad 调用示例,请手动取消",
       itemList: ['item1', 'item2'],

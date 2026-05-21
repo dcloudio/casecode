@@ -255,8 +255,14 @@
     const page = getCurrentPage()
     const androidView = page.getAndroidView()
     const res = androidView != null
+    let failTitle = 'check fail'
+    // #ifdef APP-ANDROID && VUE3-VAPOR
+    if (!res) {
+      failTitle = '仅 Android uts 插件环境支持'
+    }
+    // #endif
     console.log('check getAndroidView', res)
-    uni.showToast(res ? { title: 'check success' } : { title: 'check fail', icon: 'error' })
+    uni.showToast(res ? { title: 'check success' } : { title: failTitle, icon: 'error' })
     return res
   }
   const checkGetIOSView = () : boolean => {
@@ -279,8 +285,14 @@
     const page = getCurrentPage()
     const activity = page.getAndroidActivity()
     const res = activity != null
+    let failTitle = 'check fail'
+    // #ifdef APP-ANDROID && VUE3-VAPOR
+    if (!res) {
+      failTitle = '仅 Android uts 插件环境支持'
+    }
+    // #endif
     console.log('check getAndroidActivity', res)
-    uni.showToast(res ? { title: 'check success' } : { title: 'check fail', icon: 'error' })
+    uni.showToast(res ? { title: 'check success' } : { title: failTitle, icon: 'error' })
     return res
   }
 

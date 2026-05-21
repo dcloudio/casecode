@@ -1,7 +1,7 @@
 {
   "id": "uni-recycle-view",
   "displayName": "uni-recycle-view",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "优化了加载速度及内存占用的长列表组件",
   "keywords": [
     "recycle-view",

@@ -19,6 +19,8 @@
       <uni-collapse>
         <template v-for="(item, index) in list" :key="item.id">
           <uni-collapse-item v-if="item.pages.length > 0" class="uni-panel pl-4 pr-4" :open="item.open" :title="item.name"
+            title-wrap-class="component-collapse-title-wrap" title-class="component-collapse-title"
+            content-wrap-class="component-collapse-content-wrap" arrow-class="component-collapse-arrow"
             @change="syncCollapseState(index, $event as boolean)">
             <view style="padding-left: 18px;" class="uni-navigate-item"
               :hover-class="page.enable == false ? '' : 'is--active'" v-for="(page, key) in item.pages" :key="key"
@@ -294,6 +296,23 @@
     border-right-color: var(--arrow-color, #999999);
     border-bottom-width: 1px;
     border-bottom-style: solid;
+    border-bottom-color: var(--arrow-color, #999999);
+  }
+
+  .component-collapse-title-wrap {
+    background-color: var(--list-background-color, #ffffff);
+  }
+
+  .component-collapse-title {
+    color: var(--text-color, #333333);
+  }
+
+  .component-collapse-content-wrap {
+    background-color: var(--list-background-color, #ffffff);
+  }
+
+  .component-collapse-arrow {
+    border-right-color: var(--arrow-color, #999999);
     border-bottom-color: var(--arrow-color, #999999);
   }
 </style>

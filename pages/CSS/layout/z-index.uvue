@@ -169,6 +169,7 @@
     data.zIndexActualImage = imageRef.value?.style.getPropertyValue('z-index') ?? ''
   }
 
+  const ins = getCurrentInstance()
   const changeZIndexProperty = (value: number) => {
     data.zIndexValue = value
     viewRef.value?.style.setProperty('z-index', value)
@@ -177,7 +178,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeZIndex = (index: number) => {

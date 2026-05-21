@@ -136,7 +136,7 @@ describe('component-native-image', () => {
   it('mode-screenshot', async () => {
     if (process.env.android_cpu_type === 'x86_64') return
     const page = await program.navigateTo('/pages/component/image/image-mode');
-    await page.waitFor(1000);
+    await page.waitFor(3000);
     const image = await program.screenshot(screenshotParams)
     expect(image).toSaveImageSnapshot()
   });

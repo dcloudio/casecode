@@ -8,7 +8,8 @@
         <!-- 多选模式下显示 checkbox -->
         <checkbox v-if="isMultiSelectMode" style="margin-left: 10px;" :checked="selectedIds.includes(item.id)"
           @click="toggleSelect(item.id)" />
-        <view class="item-content" :style="{ height: item.height + 'px', transform: 'translateX(' + itemMetas[index].translateX + 'px)' }">
+        <view class="item-content"
+          :style="{ height: item.height + 'px', transform: 'translateX(' + itemMetas[index].translateX + 'px)' }">
           <text class="item-text">试试左滑和长按 {{ item.id + 1 }}</text>
           <text class="item-info">高度: {{ item.height }}px</text>
           <view class="item-sub-items">
@@ -20,8 +21,7 @@
       </list-item>
     </list-view>
     <!-- 全局侧滑菜单（始终渲染，通过 visibility 控制显示） -->
-    <view class="swipe-menu"
-      :style="{ transform: menuTransform, height: menuHeight + 'px' }">
+    <view class="swipe-menu" :style="{ transform: menuTransform, height: menuHeight + 'px' }">
       <view class="menu-item delete-btn" @click="onDeleteClick">
         <text class="menu-text">删除</text>
       </view>
@@ -206,7 +206,7 @@
     // 获取 安全区高度
     const containerEle = uni.getElementById('container')
     const containerRect = containerEle?.getBoundingClientRect()
-    if(containerRect != null) {
+    if (containerRect != null) {
       containerTop = containerRect.top
     }
   })
@@ -216,25 +216,6 @@
   const menuTransform = computed(() : string => {
     return `translateY(${menuTop.value}px) translateX(${-menuShowWidth.value}px)`
   })
-
-  // 查找列表项元素（兼容 APP 和 WEB）
-  const findListItemElement = (target : UniElement | null) : UniElement | null => {
-    if (target == null) return null
-    let element : UniElement | null = target
-    // APP 平台查找 LIST-ITEM，WEB 平台查找带 scroll-item class 的元素
-    while (element != null) {
-      if (element.tagName == 'LIST-ITEM') {
-        return element
-      }
-      // WEB 平台检查 class - 使用 getAttribute 替代 classList.contains
-      const classAttr = element.getAttribute('class')
-      if (classAttr != null && classAttr.indexOf('scroll-item') != -1) {
-        return element
-      }
-      element = element.parentElement
-    }
-    return null
-  }
 
   // 关闭菜单（需要在调用之前定义）
   const closeMenu = () => {
@@ -255,10 +236,12 @@
   const updateMenuPosition = () => {
     if (currentListItemElement == null) return
     if (currentIndex == -1 || currentIndex >= items.value.length) return
-    if(!menuVisible.value) {
+
+    if (!menuVisible.value) {
       // 获取列表项的位置，如下值在一次menu显示期间仅需更新一次
       menuVisible.value = true
       const rect = currentListItemElement!.getBoundingClientRect()
+      console.log('item rect:', rect)
       const item = items.value[currentIndex]
       menuTop.value = rect.top - containerTop
       menuHeight.value = item.height
@@ -344,8 +327,8 @@
     }
 
     // 保存当前列表项元素引用
-    const target = e.target as UniElement | null
-    currentListItemElement = findListItemElement(target)
+    const target = e.currentTarget as UniElement | null
+    currentListItemElement = target!
 
     // 如果当前项已展开，从展开位置开始
     if (activeIndex.value == index) {
@@ -382,7 +365,7 @@
     } else {
       // #ifdef WEB
       // 滚动已经开始等情况时，web端不可阻止默认行为。去除此if会在控制台告警
-      if(e.cancelable) {
+      if (e.cancelable) {
         e.preventDefault()
       }
       // #endif
@@ -530,7 +513,7 @@
     menuShowWidth.value = 0
     currentListItemElement = null
     deleteAnimationIndexToDelete = -1
-    
+
     items.value.splice(indexToDelete, 1)
     itemMetas.value.splice(indexToDelete, 1)
     resetAllItemMetas()
@@ -579,29 +562,12 @@
     menuVisible.value = false
     activeIndex.value = -1
 
-    let itemElements = listRef.value!.querySelectorAll('.item-wrapper')!
-    // #ifdef VUE3-VAPOR && APP
-    // TODO 底层处理querySelectorAll顺序问题后移除此排序逻辑
-    itemElements = itemElements.sort((itemElement1, itemElement2) => {
-      return itemElement1.getBoundingClientRect().top - itemElement2.getBoundingClientRect().top
-    })
-    // #endif
-    // #ifdef WEB
-    // WEB平台itemElements并非普通数组，需要转换为数组后才能使用indexOf等方法，为方便后续操作我们转换一下
-    itemElements = Array.from(itemElements)
-    // #endif
-    // 按照删除项位置计算上下偏移目标
-    const itemRenderIndex = itemElements.indexOf(currentListItemElement!)
-    if (itemRenderIndex == -1) return
-    const lastItemElement = itemElements[itemElements.length - 1]
-    const lastItemRect = lastItemElement.getBoundingClientRect()
-    const lastItemBottom = lastItemRect.top + lastItemRect.height
-    const listRect = listRef.value!.getBoundingClientRect()
-    const listBottom = listRect.top + listRect.height
-    const lastItemOffsetBottom = Math.max(0, lastItemBottom - listBottom)
-    if (lastItemOffsetBottom < deletedItemHeight) {
-      deleteAnimationTargetBelow = lastItemOffsetBottom
-      deleteAnimationTargetAbove = deletedItemHeight - lastItemOffsetBottom
+    const listElement = listRef.value!
+    const listRect = listElement.getBoundingClientRect()
+    const scrollOffsetBottom = Math.max(0, listElement.scrollHeight - listElement.scrollTop - listRect.height)
+    if (scrollOffsetBottom < deletedItemHeight) {
+      deleteAnimationTargetBelow = scrollOffsetBottom
+      deleteAnimationTargetAbove = deletedItemHeight - scrollOffsetBottom
     } else {
       deleteAnimationTargetBelow = deletedItemHeight
       deleteAnimationTargetAbove = 0
@@ -611,32 +577,15 @@
     deleteAnimationTargetHorizontal = -(MENU_WIDTH + 400)
     deleteAnimationIndexToDelete = indexToDelete
 
-    visibleStartIndex = indexToDelete
-    visibleEndIndex = indexToDelete
-    for (let i = itemRenderIndex - 1; i >= 0; i--) {
-      const itemElement = itemElements[i]
-      const itemRect = itemElement.getBoundingClientRect()
-      const itemBottom = itemRect.top + itemRect.height
-      if (itemBottom <= listRect.top || i == 0) {
-        visibleStartIndex = Math.max(0, indexToDelete - itemRenderIndex + i - 1)
-        break
-      }
-    }
-    for (let i = itemRenderIndex + 1; i < itemElements.length; i++) {
-      const itemElement = itemElements[i]
-      const itemRect = itemElement.getBoundingClientRect()
-      if (itemRect.top >= listRect.bottom || i == itemElements.length - 1) {
-        visibleEndIndex = Math.min(indexToDelete + i - itemRenderIndex + 1, items.value.length - 1)
-        break
-      }
-    }
+    visibleStartIndex = Math.max(0, indexToDelete - 15)
+    visibleEndIndex = Math.min(items.value.length - 1, indexToDelete + 15)
     // 开始动画
     scheduleNextAnimationFrame()
   }
 
   type DataType = {
-    listTop: number
-    listWidth: number
+    listTop : number
+    listWidth : number
   }
   const data = reactive({
     listTop: 0,
