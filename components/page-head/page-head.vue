@@ -5,16 +5,11 @@
         </view>
     </view>
 </template>
-<script>
-    export default {
-        name: "page-head",
-        props: {
-            title: {
-                type: String,
-                default: ""
-            }
-        }
-    }
+<script setup lang="uts">
+  const name = ref('page-head')
+  const props = defineProps({
+    title: { type: String, default: "" }
+  })
 </script>
 <style>
     .common-page-head {

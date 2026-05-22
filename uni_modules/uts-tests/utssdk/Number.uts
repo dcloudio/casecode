@@ -328,7 +328,7 @@ export function testNumber(): Result {
       expect(a1 == b1).toEqual(true);
       expect(a1 === b1).toEqual(true);
       expect(a1 !== 10.123001).toEqual(true);
-      expect(a1 != c1).toEqual(true);
+      expect(a1 != c1).toEqual(true)
 
       let a2 = 0
       let b2 = 0.0
@@ -359,17 +359,19 @@ export function testNumber(): Result {
       expect(b6 === c6).toEqual(true);
       expect(b6 !== c6 * 1.001).toEqual(true);
       expect(b6 != c6 * 1.001).toEqual(true);
-
+      
       let a7 = -10 * 123.2
       let b7 = - 1232
       expect(a7 == b7).toEqual(true);
       expect(a7 != b7 * -1).toEqual(true);
+      
 
       let a8 = -101 * 123.201
       expect(a8 == -12443.301).toEqual(true);
       expect(a8 === -12443.301).toEqual(true);
       expect(a8 !== -12443.301 * 0.999).toEqual(true);
       expect(a8 != -12443.301 * 0.999999).toEqual(true);
+      
 
       let a9 = -0.02 * -123456
       expect(a9 == 2469.12).toEqual(true);

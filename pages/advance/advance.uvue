@@ -18,212 +18,223 @@
         </view>
     </view>
 </template>
-<script>
-    import {
-        doTimerTask,
-        doIntervalTask,
-        clearIntervalTask,
-        playAssetAudio,
-        getMetaConfig,
-        quitApp,
-        TimerOptions
-    } from "../../uni_modules/uts-advance";
+<script setup lang="uts">
+import {
+  doTimerTask,
+  doIntervalTask,
+  clearIntervalTask,
+  playAssetAudio,
+  getMetaConfig,
+  quitApp,
+  TimerOptions
+} from "../../uni_modules/uts-advance"
 
-    type Page = {
-        name : string,
-        url ?: string
-        function ?: string
+type Page = {
+  name: string,
+  url?: string
+  function?: string
+}
+
+type ListItem = {
+  name: string,
+  open: boolean,
+  pages: Page[],
+}
+
+const title = 'UTS进阶示例'
+const taskId = ref(0)
+const list = ref([{
+  name: "延迟任务",
+  open: false,
+  pages: [{
+    name: "开启延迟任务",
+    function: "testTimer"
+  }] as Page[]
+},
+{
+  name: "定时任务",
+  open: false,
+  pages: [{
+    name: "开启定时任务",
+    function: "testInterval"
+  }, {
+    name: "关闭定时任务",
+    function: "testClearInterval"
+  }] as Page[]
+},
+{
+  name: "语法示例",
+  open: false,
+  pages: [{
+    name: "进阶语法示例",
+    url: "SyntaxCase/index"
+  }, {
+    name: "参数传递示例",
+    url: "SyntaxCase/paramTest"
+  }, {
+    name: "实例测试示例",
+    url: "SyntaxCase/instanceTest"
+  },
+  {
+    name: "混编测试示例",
+    url: "SyntaxCase/MixNativeCode"
+  },
+  {
+    name: "issue-20232",
+    url: "issues/issue-20232/issue-20232"
+  },
+  {
+    name: "issue-26943",
+    url: "issues/issue-26943/issue-26943"
+  },
+  {
+    name: "issue-29085",
+    url: "issues/issue-29085/issue-29085"
+  }
+  ] as Page[]
+},
+// #ifdef APP-ANDROID
+{
+  name: "日志打印",
+  open: false,
+  pages: [{
+    name: "console示例",
+    url: "SyntaxCase/consoleTest"
+  }] as Page[]
+},
+// #endif
+// #ifndef VUE3-VAPOR
+{
+  name: "组件开发示例",
+  open: false,
+  pages: [{
+    name: "Hello UTS Component",
+    url: "component/helloView"
+  }]
+},
+// #endif
+{
+  name: "平台代码示例",
+  open: false,
+  pages: [
+    // #ifdef APP-ANDROID
+    {
+      name: "UTSAndroid",
+      url: "SyntaxCase/utsAndroid"
+    }, 
+    // #endif
+    // #ifdef APP-IOS
+    {
+      name: "UTSiOS",
+      url: "SyntaxCase/utsiOS"
+    },
+    // #endif
+  ] as Page[]
+},
+] as ListItem[])
+const arrowUpIcon = '/static/icons/arrow-up.png'
+const arrowDownIcon = '/static/icons/arrow-down.png'
+const arrowRightIcon = '/static/icons/arrow-right.png'
+
+function triggerCollapse(index: number) {
+  for (let i = 0; i < list.value.length; ++i) {
+    if (index == i) {
+      list.value[i].open = !list.value[i].open
+    } else {
+      list.value[i].open = false
     }
-    type ListItem = {
-        name : string,
-        open : boolean,
-        pages : Page[],
+  }
+}
+
+function goDetailPage(e: Page) {
+  if (e.function != null) {
+    const funName = e.function
+    switch (funName) {
+      case 'testTimer':
+        testTimer()
+        break
+      case 'testInterval':
+        testInterval()
+        break
+      case 'testClearInterval':
+        testClearInterval()
+        break
     }
+    return
+  }
+  uni.navigateTo({
+    url: `/pages/${e.url}`
+  })
+}
 
+/**
+ * 测试延迟任务
+ */
+function testTimer() {
+  doTimerTask({
+    start: function(response) {
+      uni.showToast({
+        title: response,
+        icon: 'none'
+      })
+    },
+    work: function(response) {
+      uni.showToast({
+        title: response,
+        icon: 'none'
+      })
+    },
+  } as TimerOptions)
+}
 
-    export default {
-        data() {
-            return {
-                title: 'UTS进阶示例',
-                taskId: 0,
+/**
+ * 测试周期任务
+ */
+function testInterval() {
+  const ret = doIntervalTask({
+    start: function(response) {
+      uni.showToast({
+        title: response,
+        icon: 'none'
+      })
+    },
+    work: function(response) {
+      uni.showToast({
+        title: response,
+        icon: 'none'
+      })
+    },
+  } as TimerOptions)
+  if (ret.taskId != null) {
+    taskId.value = ret.taskId!
+  }
+}
 
-                list: [{
-                    name: "延迟任务",
-                    open: false,
-                    pages: [{
-                        name: "开启延迟任务",
-                        function: "testTimer"
-                    }] as Page[]
-                },
-                {
-                    name: "定时任务",
-                    open: false,
-                    pages: [{
-                        name: "开启定时任务",
-                        function: "testInterval"
-                    }, {
-                        name: "关闭定时任务",
-                        function: "testClearInterval"
-                    }] as Page[]
-                },
-                {
-                    name: "语法示例",
-                    open: false,
-                    pages: [{
-                        name: "进阶语法示例",
-                        url: "SyntaxCase/index"
-                    }, {
-                        name: "参数传递示例",
-                        url: "SyntaxCase/paramTest"
-                    }, {
-                        name: "实例测试示例",
-                        url: "SyntaxCase/instanceTest"
-                    },
-                    {
-                        name: "混编测试示例",
-                        url: "SyntaxCase/MixNativeCode"
-                    },
-                    {
-                        name: "issue-20232",
-                        url: "issues/issue-20232/issue-20232"
-                    },
-                    {
-                        name: "issue-26943",
-                        url: "issues/issue-26943/issue-26943"
-                    },
-                    ] as Page[]
-                },
-                {
-                    name: "日志打印",
-                    open: false,
-                    pages: [{
-                        name: "console示例",
-                        url: "SyntaxCase/consoleTest"
-                    }] as Page[]
-                },
-                {
-                    name: "组件开发示例",
-                    open: false,
-                    pages: [{
-                        name: "Hello UTS Component",
-                        url: "component/helloView"
-                    }]
-                },
-                {
-                    name: "平台代码示例",
-                    open: false,
-                    pages: [{
-                        name: "UTSAndroid",
-                        url: "SyntaxCase/utsAndroid"
-                    }, {
-                        name: "UTSiOS",
-                        url: "SyntaxCase/utsiOS"
-                    }] as Page[]
-                },
-                ] as ListItem[],
-                arrowUpIcon: '/static/icons/arrow-up.png',
-                arrowDownIcon: '/static/icons/arrow-down.png',
-                arrowRightIcon: '/static/icons/arrow-right.png',
-            }
-        },
-        methods: {
-            triggerCollapse(index : number) {
-                for (var i = 0; i < this.list.length; ++i) {
-                    if (index == i) {
-                        this.list[i].open = !this.list[i].open;
-                    } else {
-                        this.list[i].open = false;
-                    }
-                }
-            },
-            goDetailPage(e : Page) {
-                if (e.function != null) {
-                    const funName = e.function
-                    switch (funName) {
-                        case 'testTimer':
-                            this.testTimer()
-                            break
-                        case 'testInterval':
-                            this.testInterval()
-                            break
-                        case 'testClearInterval':
-                            this.testClearInterval()
-                            break
-                    }
-                    return
-                }
-                uni.navigateTo({
-                    url: `/pages/${e.url}`
-                })
-            },
+/**
+ * 取消周期任务
+ */
+function testClearInterval() {
+  console.log(taskId.value)
+  clearIntervalTask(taskId.value)
+}
 
-            /**
-             * 测试延迟任务
-             */
-            testTimer: function () {
-                doTimerTask({
-                    start: function (response) {
-                        uni.showToast({
-                            title: response,
-                            icon: 'none'
-                        });
-                    },
-                    work: function (response) {
-                        uni.showToast({
-                            title: response,
-                            icon: 'none'
-                        });
-                    },
-                } as TimerOptions);
-            },
-            /**
-             * 测试周期任务
-             */
-            testInterval: function () {
-                var ret = doIntervalTask({
-                    start: function (response) {
-                        uni.showToast({
-                            title: response,
-                            icon: 'none'
-                        });
-                    },
-                    work: function (response) {
-                        uni.showToast({
-                            title: response,
-                            icon: 'none'
-                        });
-                    },
-                } as TimerOptions);
-                if (ret.taskId != null) {
-                    this.taskId = ret.taskId!;
-                }
-            },
-            /**
-             * 取消周期任务
-             */
-            testClearInterval: function () {
-                console.log(this.taskId);
-                clearIntervalTask(this.taskId);
-            },
-            // testInputDialog() {
-            //     getUserInput(function (res) {
-            //         console.log(res);
-            //     });
-            // },
-            testQuitApp() {
-                quitApp()
-            },
-            testMetaRead() {
-                let ret = getMetaConfig();
-                uni.showToast({
-                    icon: "none",
-                    title: '读取成功,注意查看控制台输出'
-                });
-                console.log(ret);
-            }
+// testInputDialog() {
+//     getUserInput(function (res) {
+//         console.log(res);
+//     });
+// },
+function testQuitApp() {
+  quitApp()
+}
 
-        }
-    }
+function testMetaRead() {
+  const ret = getMetaConfig()
+  uni.showToast({
+    icon: "none",
+    title: '读取成功,注意查看控制台输出'
+  })
+  console.log(ret)
+}
 </script>
 
 <style>

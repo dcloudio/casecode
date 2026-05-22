@@ -15,32 +15,20 @@
 	
 </template>
 
-<script>
-	import { showToast } from '@/uni_modules/uts-toast'
-	
-	
-	export default {
-		
-		data() {
-			return {
-				title:"Toast 示例"
-			}
-		},
-		methods:{
-			testToastShow(){
-				let ret = showToast();
-				if(!ret){
-					uni.showToast({
-						icon:'none',
-						title:'需要在自定义基座中运行'
-					})
-				}
-			}
-		}
-		
-	}
-	
-	
+<script setup lang="uts">
+import { showToast } from '@/uni_modules/uts-toast'
+
+const title = "Toast 示例"
+
+function testToastShow() {
+  const ret = showToast()
+  if (!ret) {
+    uni.showToast({
+      icon: 'none',
+      title: '需要在自定义基座中运行'
+    })
+  }
+}
 </script>
 
 <style>

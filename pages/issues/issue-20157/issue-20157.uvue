@@ -8,23 +8,16 @@
   <!-- #endif -->
 </template>
 
-<script>
-  import { A } from '@/uni_modules/issue-20157'
-  const a = {
-    a: 'ab',
-    b: 12
-  } as A
-  export default {
-    data() {
-      return {
-        a: a.a,
-        b: a.b
-      }
-    },
-    methods: {
-      
-    }
-  }
+<script setup lang="uts">
+import { A } from '@/uni_modules/issue-20157'
+
+const a = {
+  a: 'ab',
+  b: 12
+} as A
+
+const aValue = a.a
+const b = a.b
 </script>
 
 <style>

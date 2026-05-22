@@ -20,46 +20,40 @@
 		</view>
 	</view>
 </template>
-<script>
-	import { initAppLifecycle,unRegLifecycle,goOtherActivity } from '../../uni_modules/uts-advance';
-	export default {
-		data() {
-			return {
-				title: '生命周期监听',
-				text: '',
-				selectImage:""
-			}
-		},
-		onLoad:function(){
-			let that = this;
-			initAppLifecycle(function(eventLog){
-				// 展示捕捉到的声明周期日志
-				that.text += eventLog;
-				that.text += '\n';
-			});
-		},
-		methods:{
-			testGoOtherActivity(){
-				var that = this;
-				let ret = goOtherActivity(function(file){
-					// 展示捕捉到的声明周期日志
-					console.log(file);
-					that.selectImage = "file://" + file;
-				});
-				
-				if(!ret){
-					uni.showToast({
-						icon:'none',
-						title:'请授予权限后重试'
-					})
-				}
-			},
-			testUnRegLifecycle(){
-				// 取消注册生命周期
-				unRegLifecycle();
-			}
-		}
-	}
+<script setup lang="uts">
+import { initAppLifecycle, unRegLifecycle, goOtherActivity } from '../../uni_modules/uts-advance'
+
+const title = '生命周期监听'
+const text = ref('')
+const selectImage = ref("")
+
+onLoad(() => {
+  initAppLifecycle(function(eventLog) {
+    // 展示捕捉到的声明周期日志
+    text.value += eventLog
+    text.value += '\n'
+  })
+})
+
+function testGoOtherActivity() {
+  const ret = goOtherActivity(function(file) {
+    // 展示捕捉到的声明周期日志
+    console.log(file)
+    selectImage.value = "file://" + file
+  })
+
+  if (!ret) {
+    uni.showToast({
+      icon: 'none',
+      title: '请授予权限后重试'
+    })
+  }
+}
+
+function testUnRegLifecycle() {
+  // 取消注册生命周期
+  unRegLifecycle()
+}
 </script>
 
 <style>

@@ -30,7 +30,7 @@
   </scroll-view>
   <!-- #endif -->
 </template>
-<script lang="ts">
+<script setup lang="uts">
 import { testEncoder } from './basicEncoder'
 import { testCondition } from './basicCondition'
 import { runTests, Result } from '../../uni_modules/uts-tests'
@@ -44,55 +44,51 @@ import type { TestType } from '@/uni_modules/uts-tests'
 // #endif
 import { testSyntaxUnion } from '@/uni_modules/uts-test-syntax-union'
 // #ifdef APP-ANDROID || APP-IOS
-import { testBuildinNative  } from '@/uni_modules/uts-tests-hybrid'
+import { testBuildinNative } from '@/uni_modules/uts-tests-hybrid'
 // #endif
-export default {
-  data() {
-    return {
-      title: 'UTS基础语法',
-      resultArray: [] as Result[],
-      result: {} as UTSJSONObject,
-      uvueResult: [] as boolean[],
-      uvuePassed: [] as string[],
-      uvueFailed: [] as string[],
-      names: [] as string[],
-    }
-  },
-  onReady() {
-    testSyntaxUnion()
-    // #ifdef APP-ANDROID || APP-IOS
-    testBuildinNative()
-    // #endif
-    this.test()
-  },
-  methods: {
-    test() {
-      const encoderTests = testEncoder()
-      const conditionTests = testCondition()
-      this.uvueResult = encoderTests.map(item => item.pass).concat(conditionTests.map(item => item.pass))
-      this.uvuePassed = encoderTests.filter(item => item.pass).map(item => item.name).concat(conditionTests.filter(item => item.pass).map(item => item.name))
-      this.uvueFailed = encoderTests.filter(item => !item.pass).map(item => item.name).concat(conditionTests.filter(item => !item.pass).map(item => item.name))
-      this.result = runTests()
-      // const resultMap = this.result.toMap()
-      // resultMap.forEach((res, name) => {
-      //   this.names.push(name)
-      //   this.resultArray.push(res as Result)
-      // })
-      const resultMap = this.result
-      for (const key in resultMap) {
-        this.names.push(key)
-        this.resultArray.push(resultMap[key] as Result)
-      }
-    },
-    // #ifdef APP-IOS
-    jest_testTypeFromAppJs() {
-      return testTypeFromAppJs({
-        num: 1
-      } as Options)
-    }
-    // #endif
-  },
+
+const title = 'UTS基础语法'
+const resultArray = ref([] as Result[])
+const result = ref({} as UTSJSONObject)
+const uvueResult = ref([] as boolean[])
+const uvuePassed = ref([] as string[])
+const uvueFailed = ref([] as string[])
+const names = ref([] as string[])
+
+onReady(() => {
+  testSyntaxUnion()
+  // #ifdef APP-ANDROID || APP-IOS
+  testBuildinNative()
+  // #endif
+  test()
+})
+
+function test() {
+  const encoderTests = testEncoder()
+  const conditionTests = testCondition()
+  uvueResult.value = encoderTests.map(item => item.pass).concat(conditionTests.map(item => item.pass))
+  uvuePassed.value = encoderTests.filter(item => item.pass).map(item => item.name).concat(conditionTests.filter(item => item.pass).map(item => item.name))
+  uvueFailed.value = encoderTests.filter(item => !item.pass).map(item => item.name).concat(conditionTests.filter(item => !item.pass).map(item => item.name))
+  result.value = runTests()
+  // const resultMap = result.value.toMap()
+  // resultMap.forEach((res, name) => {
+  //   names.value.push(name)
+  //   resultArray.value.push(res as Result)
+  // })
+  const resultMap = result.value
+  for (const key in resultMap) {
+    names.value.push(key)
+    resultArray.value.push(resultMap[key] as Result)
+  }
 }
+
+// #ifdef APP-IOS
+function jest_testTypeFromAppJs() {
+  return testTypeFromAppJs({
+    num: 1
+  } as Options)
+}
+// #endif
 </script>
 <style>
 @import '@/common/uni-uvue.css';

@@ -10,18 +10,14 @@
 	
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-    }
-  },
-  methods: {
-    // 调用组件内的方法
-    doSth() {
-      // uvue 页面调用方法
-      (this.$refs["helloView"] as UtsHelloViewElement).doSth("param doSomething");
-    }
+<script setup lang="uts">
+const helloView = ref(null as UtsHelloViewElement | null)
+
+// 调用组件内的方法
+function doSth() {
+  // uvue 页面调用方法
+  if (helloView.value != null) {
+    helloView.value!.doSth("param doSomething")
   }
 }
 </script>

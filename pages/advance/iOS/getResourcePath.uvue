@@ -4,20 +4,17 @@
 		<button @tap="getResourcePath">获取本地资源路径</button>
 	</view>
 </template>
-<script>
+<script setup lang="uts">
 // import { getResourcePath } from '@/uni_modules/uts-advance'
 // import { removeExampleImageView } from '@/uni_modules/uts-advance'
-	
-	export default {
-		onUnload() {
-			// removeExampleImageView()
-		},
-		methods:{
-			getResourcePath(){
-				// getResourcePath("/static/logo.png")
-			}
-		}
-	}
+
+onUnload(() => {
+  // removeExampleImageView()
+})
+
+function getResourcePath() {
+  // getResourcePath("/static/logo.png")
+}
 </script>
 
 <style>

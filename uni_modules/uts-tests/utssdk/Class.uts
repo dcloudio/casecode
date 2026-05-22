@@ -17,10 +17,22 @@ class TestStaticMethodClass {
   }
 }
 
+interface TestStringKeyInterface {
+  'name' : string
+}
+
+class TestStringKeyClass implements TestStringKeyInterface {
+  name : string = 'Tom'
+}
+
 export function testClass() : Result {
   return describe("Class", () => {
     test('Class static method', () => {
       expect(TestStaticMethodClass.setup()).toEqual(true)
+    })
+    test('Class implements string key interface', () => {
+      const person = new TestStringKeyClass()
+      expect(person.name).toEqual('Tom')
     })
   })
 }
