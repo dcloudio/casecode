@@ -10,9 +10,7 @@ if(isAndroid) {
 
 describe('issue-29085', () => {
   it('issue-29085', async () => {
-    const {
-      testStatus29085,
-    } = await page.data()
+    const testStatus29085 = await page.data('data.testStatus29085')
     expect(testStatus29085).toBe('测试通过')
   })
 });

@@ -1,29 +1,28 @@
 <template>
   <view>
-    <text>issue-29085：{{testStatus29085}}</text>
+    <text>issue-29085：{{data.testStatus29085}}</text>
   </view>
 </template>
 
-<script>
-  import { testUTSJSONObjectArray } from '@/uni_modules/issue-29085'
-  export default {
-    data() {
-      return {
-        testStatus29085: "测试未通过"
-      }
-    },
-    onLoad() {
-      const objs = testUTSJSONObjectArray({
-        objs: [{ name: "obj1" }, { name: "obj2" }]
-      })
-      if (objs.length == 2) {
-        this.testStatus29085 = "测试通过"
-      }
-    },
-    methods: {
+<script setup lang="uts">
+import { testUTSJSONObjectArray } from '@/uni_modules/issue-29085'
 
-    }
+type DataType = {
+  testStatus29085: string;
+}
+
+const data = reactive({
+  testStatus29085: '测试未通过'
+} as DataType)
+
+onLoad(() => {
+  const objs = testUTSJSONObjectArray({
+    objs: [{ name: "obj1" }, { name: "obj2" }]
+  })
+  if (objs.length == 2) {
+    data.testStatus29085 = "测试通过"
   }
+})
 </script>
 
 <style>

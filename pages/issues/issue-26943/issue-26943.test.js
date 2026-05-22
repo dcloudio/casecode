@@ -17,9 +17,7 @@ describe('issue-26943', () => {
   }
   
   it('issue-26943', async () => {
-    const {
-      testStatus26943,
-    } = await page.data()
+    const testStatus26943 = await page.data('data.testStatus26943')
     expect(testStatus26943).toBe('测试通过')
   })
 });

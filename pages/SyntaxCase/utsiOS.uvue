@@ -51,7 +51,6 @@ import {
   tepeofTest,
   dataConvertTest,
 } from "@/uni_modules/uts-platform-api"
-// #endif
 
 const title = "UTSiOS test"
 const currentVCResult = ref({} as UTSJSONObject)
@@ -145,6 +144,9 @@ function testAll() {
   testTypeof()
   testDataConvert()
 }
+
+// #endif
+
 </script>
 
 <style>

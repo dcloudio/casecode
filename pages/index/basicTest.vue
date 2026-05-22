@@ -1,61 +1,120 @@
 <template>
+  <!-- #ifdef APP -->
+  <scroll-view style="flex: 1">
+    <!-- #endif -->
     <view class="content">
-		<page-head :title="title"></page-head>
-        <view v-for="(item,name) in result" :key="name" class="result">
-            <view>{{name}}测试结果：</view>
-             <view>
-                测试api：{{item.passed.join(', ')}}
-            </view>
-            <view>总共：{{item.total}}</view>
-            <view>通过：{{item.passed.length}}</view>
-            <view>失败：{{item.failed.length}}</view>
-            <view v-for="(fail,index) in item.failed" :key="index" class="failed">
-                <view>{{fail.split('\n')[0]}}</view>
-                <view>{{fail.split('\n')[1]}}</view>
-            </view>
+      <page-head :title="title"></page-head>
+      <view v-for="(item, index) in resultArray" :key="index" class="result">
+        <view>{{ names[index] }}测试结果：</view>
+        <view> 测试api：{{ item.passed.join(', ') }} </view>
+        <view>总共：{{ item.total }}</view>
+        <view>通过：{{ item.passed.length }}</view>
+        <view>失败：{{ item.failed.length }}</view>
+        <view v-for="(fail, i) in item.failed" :key="i">
+          <text class="failed">{{ fail }}</text>
         </view>
+      </view>
+      <view class="result">
+        <view> uvue 测试</view>
+        <view> 测试api：{{ uvuePassed.join(', ') }} </view>
+        <view>总共：{{ uvueResult.length }}</view>
+        <view>通过：{{ uvuePassed.length }}</view>
+        <view>失败：{{ uvueFailed.length }}</view>
+        <view v-for="(fail, i) in uvueFailed" :key="i">
+          <text class="failed">{{ fail }}</text>
+        </view>
+      </view>
+      
     </view>
+    <!-- #ifdef APP -->
+  </scroll-view>
+  <!-- #endif -->
 </template>
-<script>
-    import {
-        runTests
-    } from '../../uni_modules/uts-tests'
-    import { testSyntaxUnion } from '@/uni_modules/uts-test-syntax-union'
-    export default {
-        data() {
-            return {
-				title: 'UTS基础语法',
-                result: {}
-            }
-        },
-        onReady() {
-            testSyntaxUnion()
-            this.test()
-        },
-        methods: {
-            test() {
-                this.result = runTests()
-                console.log(this.result)
-            }
-        }
+<script setup lang="uts">
+import { testEncoder } from './basicEncoder'
+import { testCondition } from './basicCondition'
+import { runTests, Result } from '../../uni_modules/uts-tests'
+// #ifdef APP-IOS
+import { testTypeFromAppJs, Options } from '@/uni_modules/uts-ios-tests'
+// #endif
+// #ifdef APP-ANDROID
+// 故意使用 import type 引入一个不存在的类型，测试编译器是否会报错，旧版本不会报错，但android补充了移除type类型的transformer就会报错
+// 目前android已经不再启用移除type类型的transformer
+import type { TestType } from '@/uni_modules/uts-tests'
+// #endif
+import { testSyntaxUnion } from '@/uni_modules/uts-test-syntax-union'
+// #ifdef APP-ANDROID || APP-IOS
+import { testBuildinNative } from '@/uni_modules/uts-tests-hybrid'
+// #endif
+
+type DataType = {
+  result: UTSJSONObject|null
+}
+
+const data = reactive({
+  result: null
+} as DataType)
+
+const title = 'UTS基础语法'
+const resultArray = ref([] as Result[])
+const uvueResult = ref([] as boolean[])
+const uvuePassed = ref([] as string[])
+const uvueFailed = ref([] as string[])
+const names = ref([] as string[])
+
+function test() {
+  const encoderTests = testEncoder()
+  const conditionTests = testCondition()
+  uvueResult.value = encoderTests.map(item => item.pass).concat(conditionTests.map(item => item.pass))
+  uvuePassed.value = encoderTests.filter(item => item.pass).map(item => item.name).concat(conditionTests.filter(item => item.pass).map(item => item.name))
+  uvueFailed.value = encoderTests.filter(item => !item.pass).map(item => item.name).concat(conditionTests.filter(item => !item.pass).map(item => item.name))
+  data.result = runTests()
+  if(null != data.result){
+    for (const key in data.result) {
+      names.value.push(key)
+      resultArray.value.push(data.result[key] as Result)
     }
+  }
+}
+
+// #ifdef APP-IOS
+const jest_testTypeFromAppJs = function() {
+  return testTypeFromAppJs({
+    num: 1
+  } as Options)
+}
+// #endif
+
+
+onReady(() => {
+  testSyntaxUnion()
+  // #ifdef APP-ANDROID || APP-IOS
+  testBuildinNative()
+  // #endif
+  test()
+})
+
+
+defineExpose({
+  data
+})
+
 </script>
 <style>
-	@import '@/common/uni-uvue.css';
-	
-    .content {
-		min-height: 100%;
-        padding: 32rpx;
-    }
+@import '@/common/uni-uvue.css';
+.content {
+  padding: 32rpx;
+}
 
-    .passed {
-        color: green;
-    }
+.passed {
+  color: green;
+}
 
-    .failed {
-        color: red;
-    }
-    .result {
-        margin-bottom: 20rpx;
-    }
+.failed {
+  color: red;
+}
+
+.result {
+  margin-bottom: 20rpx;
+}
 </style>
