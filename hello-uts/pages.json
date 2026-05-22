@@ -1,12 +1,22 @@
 {
   "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    // #ifdef VUE3-VAPOR
+    {
+      "path": "pages/tabbar/tab-bar",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    // #endif 
     {
       "path": "pages/index/index",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    }, {
+    },
+    {
       "path": "pages/issues/issue-26943/issue-26943",
       "style": {
         "navigationBarTitleText": "issue-26943"
@@ -41,6 +51,7 @@
         "navigationBarTitleText": ""
       }
     },
+    // #ifndef VUE3-VAPOR
     {
       "path": "pages/component/helloView",
       "style": {
@@ -75,8 +86,9 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-
+    
     },
+    // #endif 
     {
       "path": "pages/lifecycle/lifecycle",
       "style": {
@@ -195,8 +207,14 @@
       }
     }
     // #endif 
+    , {
+      "path": "pages/issues/issue-29085/issue-29085",
+      "style": {
+        "navigationBarTitleText": "issue-29085"
+      }
+    }
   ],
-  // #ifndef WEB || MP || APP-HARMONY
+  // #ifndef WEB || MP || APP-HARMONY && !VUE3-VAPOR
   "tabBar": {
     "color": "#7A7E83",
     "selectedColor": "#007AFF",
@@ -214,10 +232,12 @@
         "pagePath": "pages/SystemAPI/SystemAPI",
         "text": "系统API"
       },
+      // #ifndef VUE3-VAPOR
       {
         "pagePath": "pages/SDKIntegration/SDKIntegration",
         "text": "三方SDK"
       }
+      // #endif 
     ]
   },
   // #endif

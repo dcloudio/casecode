@@ -13,48 +13,39 @@
         </view>
     </view>
 </template>
-<script>
-    // #ifdef APP-ANDROID && UNI-APP-X
-    import { callKotlinMethodGetInfo, callJavaMethodGetInfo,callKotlinCallbackUTS,callKotlinStopCallbackUTS} from "../../uni_modules/uts-syntaxcase";
-    // #endif
-    
-    export default {
-        data() {
-            return {
-                title: 'UTS混编示例',
-                memInfo:''
-            }
-        },
+<script setup lang="uts">
+// #ifdef APP-ANDROID && UNI-APP-X
+import { callKotlinMethodGetInfo, callJavaMethodGetInfo, callKotlinCallbackUTS, callKotlinStopCallbackUTS } from "../../uni_modules/uts-syntaxcase"
+// #endif
 
-        methods: {
-            // #ifdef APP-ANDROID && UNI-APP-X
-            callKotlinMethodGetInfoTest: function () {
+const title = 'UTS混编示例'
+const memInfo = ref('')
 
-                let phoneInfo = callKotlinMethodGetInfo();
-                uni.showToast({
-                  title:phoneInfo
-                })
-            },
-            callJavaMethodGetInfoTest: function () {
-                let javaInfo = callJavaMethodGetInfo();
-                uni.showToast({
-                  title:javaInfo
-                })
-            },
-            kotlinMemListenTest: function () {
-                callKotlinCallbackUTS(function(ret:string){
-                  this.memInfo = ret
-                })
-            },
-            
-            kotlinStopMemListenTest:function () {
-                callKotlinStopCallbackUTS()
-            },
-            
-            // #endif
+// #ifdef APP-ANDROID && UNI-APP-X
+function callKotlinMethodGetInfoTest() {
+  const phoneInfo = callKotlinMethodGetInfo()
+  uni.showToast({
+    title: phoneInfo
+  })
+}
 
-        }
-    }
+function callJavaMethodGetInfoTest() {
+  const javaInfo = callJavaMethodGetInfo()
+  uni.showToast({
+    title: javaInfo
+  })
+}
+
+function kotlinMemListenTest() {
+  callKotlinCallbackUTS(function(ret: string) {
+    memInfo.value = ret
+  })
+}
+
+function kotlinStopMemListenTest() {
+  callKotlinStopCallbackUTS()
+}
+// #endif
 </script>
 
 <style>

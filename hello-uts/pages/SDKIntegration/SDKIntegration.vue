@@ -32,10 +32,12 @@
                         name: "Toast示例",
                         url: "SDKIntegration/Toast/Toast"
                     },
+                    // #ifndef VUE3-VAPOR
                     {
                         name: "Lottie动画示例",
                         function: "gotoLottie"
                     }
+                    // #endif
                 ],
                 arrowRightIcon: '/static/icons/arrow-right.png',
             }

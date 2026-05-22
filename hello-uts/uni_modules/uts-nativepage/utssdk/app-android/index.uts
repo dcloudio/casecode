@@ -384,7 +384,7 @@ class DemoActivity  extends Activity{
     }
     override handleMessage(msg: android.os.Message) {
       super.handleMessage(msg)
-      if(msg.what = 111){
+      if(msg.what == 111){
         console.log("handle message received:111")
       }
     }

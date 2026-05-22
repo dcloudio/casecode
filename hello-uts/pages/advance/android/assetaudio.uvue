@@ -8,36 +8,25 @@
 	</view>
 </template>
 
-<script>
-	import {
-		playAssetAudio,
-		stopAssetAudio
-	} from "../../../uni_modules/uts-advance";
-	
-	export default {
-		data() {
-			return {
-			}
-		},
-	
-		methods: {
+<script setup lang="uts">
+import {
+  playAssetAudio,
+  stopAssetAudio
+} from "../../../uni_modules/uts-advance"
 
-			/**
-			 * 测试添加View实例至顶层容器
-			 */
-			testStart: function() {
-				playAssetAudio();
-			},
-			/**
-			 * 测试移除顶层容器的View实例
-			 */
-			testStop: function() {
-				stopAssetAudio();
-			}
-	
-	
-		}
-	}
+/**
+ * 测试添加View实例至顶层容器
+ */
+function testStart() {
+  playAssetAudio()
+}
+
+/**
+ * 测试移除顶层容器的View实例
+ */
+function testStop() {
+  stopAssetAudio()
+}
 </script>
 
 <style>

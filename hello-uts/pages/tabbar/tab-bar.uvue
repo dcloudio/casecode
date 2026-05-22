@@ -1,0 +1,87 @@
+<template>
+	<uni-tab style="flex: 1;height: 100%;" :active-index="activeIndex" @change="handleChange">
+		<!-- 内容区域 -->
+    <!-- 注意tab的逻辑是：第一次使用v-if创建，创建之后不再使用v-if，而是设置visibility来隐藏和显示。不能设置tab的v-if为false，因为销毁再创建影响性能 -->
+		<view style="width: 100%;height: 100%;position: absolute;" :style="{visibility:(activeIndex==0?'visible':'hidden'),height: (tabContentHeight + 'px')}"
+     > <basetab /> </view>
+		<view style="width: 100%;height: 100%;position: absolute;" :style="{visibility:(activeIndex==1?'visible':'hidden'),height: (tabContentHeight + 'px')}"
+    v-if="isTabInitArray[1]" > <advancetab /> </view>
+		<view style="width: 100%;height: 100%;position: absolute;" :style="{visibility:(activeIndex==2?'visible':'hidden'),height: (tabContentHeight + 'px')}"
+    v-if="isTabInitArray[2]" > <systemApitab /> </view>
+
+		<!-- 底部选项卡 -->
+		<uni-tab-bar :style="{ backgroundColor: tabBarBgColor }">
+			<!-- 图标高度24，文字字号10px。如需角标，在 <uni-tab-item> 上设置 badge-text="99+" -->
+			<uni-tab-item>
+				<text class="tab-label" :class="[activeIndex == 0 ? 'tab-label-active' : '', darkTextClass]" flatten>入门</text>
+			</uni-tab-item>
+			<uni-tab-item>
+				<text class="tab-label" :class="[activeIndex == 1 ? 'tab-label-active' : '', darkTextClass]" flatten>进阶</text>
+			</uni-tab-item>
+			<uni-tab-item>
+				<text class="tab-label" :class="[activeIndex == 2 ? 'tab-label-active' : '', darkTextClass]" flatten>系统API</text>
+			</uni-tab-item>
+		</uni-tab-bar>
+	</uni-tab>
+</template>
+
+<script setup lang="uts">
+	import basetab from '../index/index.uvue'
+	import advancetab from '../advance/advance.uvue'
+	import systemApitab from '../SystemAPI/SystemAPI.uvue'
+  
+  const tabBarBgColor = computed((): string => {
+  	return '#F8F8F8'
+  })
+  
+  const darkTextClass = computed((): string => {
+  	return ''
+  })
+
+	const windowInfo = uni.getWindowInfo()
+	// tab内容区域高度 = 窗口高度 - tab-bar高度(50) - 底部安全区
+	const tabContentHeight = ref<number>(windowInfo.windowHeight - 50 - (windowInfo.safeAreaInsets.bottom))
+	const activeIndex = ref<number>(0)
+	// 记录每个tab是否初始化过，未激活过的tab先不创建，等首次激活再创建
+	let isTabInitArray = ref<boolean[]>([true, false, false])
+
+
+	// uni-tab-item 点击后由 <uni-tab> 抛出 change 事件，携带新激活的索引
+	function handleChange(index : number) : void {
+		activeIndex.value = index
+		switch (index) {
+			case 0:
+				uni.setNavigationBarTitle({ title: '入门' })
+				break
+			case 1:
+				uni.setNavigationBarTitle({ title: '进阶' })
+				isTabInitArray.value[1] = true
+				break
+			case 2:
+				uni.setNavigationBarTitle({ title: '系统API' })
+				isTabInitArray.value[2] = true
+				break
+		}
+	}
+</script>
+
+<style>
+
+	.tab-icon-image {
+		height: 24px;
+		width: 24px;
+	}
+
+	.tab-label {
+		font-size: 10px;
+    color: rgb(122, 126, 131);
+	}
+
+	.tab-label-dark {
+		color: #CACACA;
+	}
+
+	.tab-label-active {
+		color: #007aff;
+	}
+</style>

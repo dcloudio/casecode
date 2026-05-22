@@ -5,24 +5,15 @@
 			
 	</view>
 </template>
-<script>
-	
-	import { getLogoPath } from '../../uni_modules/uts-advance'
-	
-	
-	export default {
-		
-		data() {
-			return {
-				title: '资源加载示例',
-				logo:""
-			}
-		},
-		onLoad:function(){
-			this.logo = getLogoPath()
-		}
-		
-	}
+<script setup lang="uts">
+import { getLogoPath } from '../../uni_modules/uts-advance'
+
+const title = '资源加载示例'
+const logo = ref("")
+
+onLoad(() => {
+  logo.value = getLogoPath()
+})
 </script>
 
 <style>

@@ -1,0 +1,7 @@
+export type TestUTSJSONObjectArrayOptions = {
+  objs : UTSJSONObject[]
+}
+
+export function testUTSJSONObjectArray(options : TestUTSJSONObjectArrayOptions) : UTSJSONObject[] {
+  return options.objs
+}

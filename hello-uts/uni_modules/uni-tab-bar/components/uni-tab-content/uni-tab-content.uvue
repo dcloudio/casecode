@@ -1,0 +1,86 @@
+<template>
+	<view v-if="hasRendered" class="uni-tab-content-root"
+		:style="{ visibility: (isActive ? 'visible' : 'hidden'), bottom: (contentBottom + 'px') }">
+		<slot></slot>
+	</view>
+</template>
+
+<script setup lang="uts">
+  /**
+   * 选项卡内容
+   * @description 选项卡内容组件
+   * @uniPlatform {
+   *   "app": {
+   *     "android": {
+   *       "uniVer": "x",
+   *       "unixVer": "5.07",
+   *       "unixVaporVer": "x"
+   *     },
+   *     "ios": {
+   *       "uniVer": "x",
+   *       "unixVer": "5.07",
+   *       "unixVaporVer": "x"
+   *     },
+   *     "harmony": {
+   *       "uniVer": "x",
+   *       "unixVer": "5.07",
+   *       "unixVaporVer": "5.07"
+   *     }
+   *   },
+   *   "mp": {
+   *     "weixin": {
+   *       "uniVer": "x",
+   *       "unixVer": "5.07"
+   *     }
+   *   },
+   *   "web": {
+   *     "uniVer": "x",
+   *     "unixVer": "5.07"
+   *   }
+   * }
+   */
+// 从父组件注入数据和方法
+const currentIndex = inject<Ref<number>>('uniTabBarCurrentIndex', ref(0))
+const registerContent = inject<() => number>('uniTabBarRegisterContent', () => 0)
+const contentBottom = inject<Ref<number>>('uniTabBarContentBottom', ref(0))
+
+// 当前 content 的索引
+const contentIndex = ref<number>(-1)
+
+// 是否已经渲染过（按需加载）
+const hasRendered = ref<boolean>(false)
+
+// 组件挂载时分配索引
+onMounted(() => {
+	contentIndex.value = registerContent()
+
+	// 如果是第一个激活的 tab-content，立即渲染
+	if (contentIndex.value == currentIndex.value) {
+		hasRendered.value = true
+	}
+})
+
+// 计算是否激活
+const isActive = computed((): boolean => {
+	return currentIndex.value == contentIndex.value
+})
+
+// 监听激活状态，首次激活时渲染
+watch((): boolean => {
+	return isActive.value
+}, (newValue: boolean) => {
+	if (newValue && hasRendered.value == false) {
+		hasRendered.value = true
+	}
+})
+</script>
+
+<style>
+.uni-tab-content-root {
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	flex-direction: column;
+}
+</style>

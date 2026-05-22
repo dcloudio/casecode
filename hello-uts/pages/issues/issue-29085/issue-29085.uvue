@@ -1,0 +1,24 @@
+<template>
+  <view>
+    <text>issue-29085：{{testStatus29085}}</text>
+  </view>
+</template>
+
+<script setup lang="uts">
+import { testUTSJSONObjectArray } from '@/uni_modules/issue-29085'
+
+const testStatus29085 = ref("测试未通过")
+
+onLoad(() => {
+  const objs = testUTSJSONObjectArray({
+    objs: [{ name: "obj1" }, { name: "obj2" }]
+  })
+  if (objs.length == 2) {
+    testStatus29085.value = "测试通过"
+  }
+})
+</script>
+
+<style>
+
+</style>

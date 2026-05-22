@@ -19,6 +19,16 @@ export function testType() : Result {
       expect(a instanceof Person).toEqual(true);
       expect(b instanceof Person).toEqual(true);
     })
+    test("Type string key", () => {
+      type Person = {
+        'name' : string
+      }
+      const person = {
+        name: 'Tom'
+      } as Person
+
+      // expect(person.name).toEqual('Tom');
+    })
     test("Type with any[]", () => {
       type Person = {
         age : number,

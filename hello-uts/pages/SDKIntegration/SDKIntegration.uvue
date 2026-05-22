@@ -10,93 +10,82 @@
         </view>
     </view>
 </template>
-<script lang="ts">
-    import {
-        checkHasIntegration
-    } from "@/uni_modules/uts-tencentgeolocation";
+<script setup lang="uts">
+import { checkHasIntegration } from "@/uni_modules/uts-tencentgeolocation"
+import { checkHasLottieIntegration } from "@/uni_modules/uts-animation-view"
 
-    import {
-        checkHasLottieIntegration
-    } from "@/uni_modules/uts-animation-view";
+type ListItem = {
+  name: string,
+  open?: boolean,
+  function?: string,
+  url?: string
+}
 
-    type ListItem = {
-        name : string,
-        open ?: boolean,
-        function ?: string,
-        url ?: string
+const title = 'SDK集成示例'
+const list = [{
+  name: "腾讯定位sdk集成示例",
+  function: "gotoTencentLocation",
+},
+{
+  name: "Toast示例",
+  url: "SDKIntegration/Toast/Toast"
+},
+{
+  name: "Lottie动画示例",
+  function: "gotoLottie"
+}] as ListItem[]
+const arrowRightIcon = '/static/icons/arrow-right.png'
+
+function goDetailPage(e: ListItem) {
+  if (e.function != null) {
+    const funName = e.function
+    switch (funName) {
+      case 'gotoTencentLocation':
+        gotoTencentLocation()
+        break
+      case 'gotoLottie':
+        gotoLottie()
+        break
     }
+    return
+  }
+  uni.navigateTo({
+    url: `/pages/${e.url!}`
+  })
+}
 
-    export default {
-        data() {
-            return {
-                title: 'SDK集成示例',
+function gotoLottie() {
+  if (checkHasLottieIntegration()) {
+    uni.navigateTo({
+      url: '/pages/SDKIntegration/Lottie/index'
+    })
+  } else {
+    uni.showToast({
+      icon: 'none',
+      title: '需要在自定义基座中运行'
+    })
+  }
+}
 
-                list: [{
-                    name: "腾讯定位sdk集成示例",
-                    function: "gotoTencentLocation",
-                },
-                {
-                    name: "Toast示例",
-                    url: "SDKIntegration/Toast/Toast"
-                },
-                {
-                    name: "Lottie动画示例",
-                    function: "gotoLottie"
-                }
-                ] as ListItem[],
-                arrowRightIcon: '/static/icons/arrow-right.png',
-            }
-        },
-        methods: {
-            goDetailPage(e : ListItem) {
-                if (e.function != null) {
-                    const funName = e.function
-                    switch (funName) {
-                        case 'gotoTencentLocation':
-                            this.gotoTencentLocation()
-                            break
-                        case 'gotoLottie':
-                            this.gotoLottie()
-                            break
-                    }
-                    return
-                }
-                uni.navigateTo({
-                    url: `/pages/${e.url!}`
-                })
-            },
-            gotoLottie: function () {
-              if (checkHasLottieIntegration()) {
-                  uni.navigateTo({
-                      url: '/pages/SDKIntegration/Lottie/index'
-                  })
-              } else {
-                  uni.showToast({
-                      icon: 'none',
-                      title: '需要在自定义基座中运行'
-                  })
-              }
-            },
-            gotoTencentLocation: function () {
-              let ret = checkHasIntegration();
-              if (!ret) {
-                  uni.showToast({
-                      icon: 'none',
-                      title: '需要在自定义基座中运行'
-                  })
-              } else {
-                  uni.navigateTo({
-                      url: '/pages/SDKIntegration/TencentLocation/TencentLocation'
-                  })
-              }
-            },
-            gotoTencentMap: function () {
-                uni.navigateTo({
-                    url: '/pages/SDKIntegration/TencentMap/TencentMap'
-                })
-            }
-        }
-    }
+function gotoTencentLocation() {
+  const ret = checkHasIntegration()
+  if (!ret) {
+    uni.showToast({
+      icon: 'none',
+      title: '需要在自定义基座中运行'
+    })
+  } else {
+    uni.navigateTo({
+      url: '/pages/SDKIntegration/TencentLocation/TencentLocation'
+    })
+  }
+}
+
+function gotoTencentMap() {
+  uni.navigateTo({
+    url: '/pages/SDKIntegration/TencentMap/TencentMap'
+  })
+}
 </script>
 
 <style>

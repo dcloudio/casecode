@@ -16,64 +16,63 @@
     </div>
 </template>
 
-<script lang="ts">
-  
-    export default {
-        data() {
-            return {
-                hidden: false,
-                autoplay: false,
-                action: "play",
-                loop: false,
-                yanse: "red",
-                widthNum: 750,
-                heightNum: 200,
-                comShow: true,
-                animUrl: "/static/anim_a.json"
-            }
-        },
-        
-        methods: {
+<script setup lang="uts">
+const hidden = ref(false)
+const autoplay = ref(false)
+const action = ref("play")
+const loop = ref(false)
+const yanse = ref("red")
+const widthNum = ref(750)
+const heightNum = ref(200)
+const comShow = ref(true)
+const animUrl = ref("/static/anim_a.json")
+const animView = ref(null as UtsAnimationViewElement | null)
 
-            changeAutoPlay: function() {
-                this.autoplay = !this.autoplay
-            },
-            changeUrl: function() {
-                if (this.animUrl == "/static/anim_a.json") {
-                    this.animUrl = "/static/anim_b.json"
-                } else {
-                    this.animUrl = "/static/anim_a.json"
-                }
-            },
+function changeAutoPlay() {
+  autoplay.value = !autoplay.value
+}
 
-			changeServerUrl: function() {
-                this.animUrl = "https://b.bdstatic.com/miniapp/images/lottie_example_one.json"
-            },
-            changeAction: function(type: number) {
-                if (type == 1) {
-                    this.action = "play"
-                } else if (type == 2) {
-                    this.action = "pause"
-                } else if (type == 3) {
-                    this.action = "stop"
-                }
-            },
-            changeLoop: function() {
-                this.loop = !this.loop
-            },
-            testAnimEnd: function() {
-                console.log("testAnimEnd");
-            },
+function changeUrl() {
+  if (animUrl.value == "/static/anim_a.json") {
+    animUrl.value = "/static/anim_b.json"
+  } else {
+    animUrl.value = "/static/anim_a.json"
+  }
+}
 
-            changeRepeat: function() {
-                (this.$refs["animView"] as UtsAnimationViewElement).setRepeatMode("RESTART");
-            },
-            lottieClickTest: function() {
-                console.log("lottieClickTest");
-            },
-            lottieLongpressTest: function() {
-                console.log("lottieClickTest");
-            },
-        }
-    }
+function changeServerUrl() {
+  animUrl.value = "https://b.bdstatic.com/miniapp/images/lottie_example_one.json"
+}
+
+function changeAction(type: number) {
+  if (type == 1) {
+    action.value = "play"
+  } else if (type == 2) {
+    action.value = "pause"
+  } else if (type == 3) {
+    action.value = "stop"
+  }
+}
+
+function changeLoop() {
+  loop.value = !loop.value
+}
+
+function testAnimEnd() {
+  console.log("testAnimEnd")
+}
+
+function changeRepeat() {
+  if (animView.value != null) {
+    animView.value!.setRepeatMode("RESTART")
+  }
+}
+
+function lottieClickTest() {
+  console.log("lottieClickTest")
+}
+
+function lottieLongpressTest() {
+  console.log("lottieClickTest")
+}
 </script>
