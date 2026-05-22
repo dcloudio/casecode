@@ -167,23 +167,6 @@ function format(v: any | null): string {
   return "未通过"
 }
 
-function testAll() {
-  testUtsSync()
-  testUtsSyncWithCallback()
-  testUtsAsync()
-  testUtsAsyncMulitParam()
-  testUtsClassConstructor()
-  testUtsClassStaticProp()
-  testUtsClassStaticSyncWithCallback()
-  testUtsClassStaticAsync()
-  testUtsClassProp()
-  testUtsClassSyncWithCallback()
-  testUtsClassAsync()
-  testUtsClassInstance()
-  testUtsClassSetter()
-  testUtsReturnPromise()
-}
-
 function testUtsSync() {
   testUtsSyncResult.value = false
   try {
@@ -570,4 +553,23 @@ function doTestNestedBufferReturnedValue() {
   console.log(dataView.getInt16(1))
 }
 // #endif
+
+function testAll() {
+  testUtsSync()
+  testUtsSyncWithCallback()
+  testUtsAsync()
+  testUtsAsyncMulitParam()
+  testUtsClassConstructor()
+  testUtsClassStaticProp()
+  testUtsClassStaticSyncWithCallback()
+  testUtsClassStaticAsync()
+  testUtsClassProp()
+  testUtsClassSyncWithCallback()
+  testUtsClassAsync()
+  testUtsClassInstance()
+  testUtsClassSetter()
+  testUtsReturnPromise()
+}
+
+
 </script>

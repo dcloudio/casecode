@@ -47,13 +47,44 @@ import { testSyntaxUnion } from '@/uni_modules/uts-test-syntax-union'
 import { testBuildinNative } from '@/uni_modules/uts-tests-hybrid'
 // #endif
 
+type DataType = {
+  result: UTSJSONObject|null
+}
+
+const data = reactive({
+  result: null
+} as DataType)
+
 const title = 'UTS基础语法'
 const resultArray = ref([] as Result[])
-const result = ref({} as UTSJSONObject)
 const uvueResult = ref([] as boolean[])
 const uvuePassed = ref([] as string[])
 const uvueFailed = ref([] as string[])
 const names = ref([] as string[])
+
+function test() {
+  const encoderTests = testEncoder()
+  const conditionTests = testCondition()
+  uvueResult.value = encoderTests.map(item => item.pass).concat(conditionTests.map(item => item.pass))
+  uvuePassed.value = encoderTests.filter(item => item.pass).map(item => item.name).concat(conditionTests.filter(item => item.pass).map(item => item.name))
+  uvueFailed.value = encoderTests.filter(item => !item.pass).map(item => item.name).concat(conditionTests.filter(item => !item.pass).map(item => item.name))
+  data.result = runTests()
+  if(null != data.result){
+    for (const key in data.result) {
+      names.value.push(key)
+      resultArray.value.push(data.result[key] as Result)
+    }
+  }
+}
+
+// #ifdef APP-IOS
+const jest_testTypeFromAppJs = function() {
+  return testTypeFromAppJs({
+    num: 1
+  } as Options)
+}
+// #endif
+
 
 onReady(() => {
   testSyntaxUnion()
@@ -63,32 +94,11 @@ onReady(() => {
   test()
 })
 
-function test() {
-  const encoderTests = testEncoder()
-  const conditionTests = testCondition()
-  uvueResult.value = encoderTests.map(item => item.pass).concat(conditionTests.map(item => item.pass))
-  uvuePassed.value = encoderTests.filter(item => item.pass).map(item => item.name).concat(conditionTests.filter(item => item.pass).map(item => item.name))
-  uvueFailed.value = encoderTests.filter(item => !item.pass).map(item => item.name).concat(conditionTests.filter(item => !item.pass).map(item => item.name))
-  result.value = runTests()
-  // const resultMap = result.value.toMap()
-  // resultMap.forEach((res, name) => {
-  //   names.value.push(name)
-  //   resultArray.value.push(res as Result)
-  // })
-  const resultMap = result.value
-  for (const key in resultMap) {
-    names.value.push(key)
-    resultArray.value.push(resultMap[key] as Result)
-  }
-}
 
-// #ifdef APP-IOS
-function jest_testTypeFromAppJs() {
-  return testTypeFromAppJs({
-    num: 1
-  } as Options)
-}
-// #endif
+defineExpose({
+  data
+})
+
 </script>
 <style>
 @import '@/common/uni-uvue.css';

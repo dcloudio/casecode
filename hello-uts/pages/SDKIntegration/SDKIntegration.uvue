@@ -36,24 +36,6 @@ const list = [{
 }] as ListItem[]
 const arrowRightIcon = '/static/icons/arrow-right.png'
 
-function goDetailPage(e: ListItem) {
-  if (e.function != null) {
-    const funName = e.function
-    switch (funName) {
-      case 'gotoTencentLocation':
-        gotoTencentLocation()
-        break
-      case 'gotoLottie':
-        gotoLottie()
-        break
-    }
-    return
-  }
-  uni.navigateTo({
-    url: `/pages/${e.url!}`
-  })
-}
-
 function gotoLottie() {
   if (checkHasLottieIntegration()) {
     uni.navigateTo({
@@ -79,6 +61,24 @@ function gotoTencentLocation() {
       url: '/pages/SDKIntegration/TencentLocation/TencentLocation'
     })
   }
+}
+
+function goDetailPage(e: ListItem) {
+  if (e.function != null) {
+    const funName = e.function
+    switch (funName) {
+      case 'gotoTencentLocation':
+        gotoTencentLocation()
+        break
+      case 'gotoLottie':
+        gotoLottie()
+        break
+    }
+    return
+  }
+  uni.navigateTo({
+    url: `/pages/${e.url!}`
+  })
 }
 
 function gotoTencentMap() {

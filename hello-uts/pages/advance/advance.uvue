@@ -136,37 +136,6 @@ const arrowUpIcon = '/static/icons/arrow-up.png'
 const arrowDownIcon = '/static/icons/arrow-down.png'
 const arrowRightIcon = '/static/icons/arrow-right.png'
 
-function triggerCollapse(index: number) {
-  for (let i = 0; i < list.value.length; ++i) {
-    if (index == i) {
-      list.value[i].open = !list.value[i].open
-    } else {
-      list.value[i].open = false
-    }
-  }
-}
-
-function goDetailPage(e: Page) {
-  if (e.function != null) {
-    const funName = e.function
-    switch (funName) {
-      case 'testTimer':
-        testTimer()
-        break
-      case 'testInterval':
-        testInterval()
-        break
-      case 'testClearInterval':
-        testClearInterval()
-        break
-    }
-    return
-  }
-  uni.navigateTo({
-    url: `/pages/${e.url}`
-  })
-}
-
 /**
  * 测试延迟任务
  */
@@ -235,6 +204,39 @@ function testMetaRead() {
   })
   console.log(ret)
 }
+
+function triggerCollapse(index: number) {
+  for (let i = 0; i < list.value.length; ++i) {
+    if (index == i) {
+      list.value[i].open = !list.value[i].open
+    } else {
+      list.value[i].open = false
+    }
+  }
+}
+
+function goDetailPage(e: Page) {
+  if (e.function != null) {
+    const funName = e.function
+    switch (funName) {
+      case 'testTimer':
+        testTimer()
+        break
+      case 'testInterval':
+        testInterval()
+        break
+      case 'testClearInterval':
+        testClearInterval()
+        break
+    }
+    return
+  }
+  uni.navigateTo({
+    url: `/pages/${e.url}`
+  })
+}
+
+
 </script>
 
 <style>

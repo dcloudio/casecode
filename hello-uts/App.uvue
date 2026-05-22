@@ -3,39 +3,40 @@
   // #ifdef APP-ANDROID || APP-HARMONY
   let firstBackTime = 0
   // #endif
-    onLaunch(() => {
-      console.log('App Launch')
-    }),
-    
-    onShow(() => {
-      console.log('App Show')
-    }),
-    
-    onHide(() => {
-      console.log('App Hide')
-    }),
-    
-    // #ifdef UNI-APP-X && APP-ANDROID || APP-HARMONY
-    onLastPageBackPress(() => {
-      console.log('App LastPageBackPress')
-      if (firstBackTime == 0) {
-        uni.showToast({
-          title: '再按一次退出应用',
-          position: 'bottom',
-        })
-        firstBackTime = Date.now()
-        setTimeout(() => {
-          firstBackTime = 0
-        }, 2000)
-      } else if (Date.now() - firstBackTime < 2000) {
-        firstBackTime = Date.now()
-        uni.exit()
-      }
-    }),
-    // #endif
-    onExit(() => {
-      console.log('App Exit')
-    })
+  onLaunch(() => {
+    console.log('App Launch')
+  })
+
+  onShow(() => {
+    console.log('App Show')
+  })
+
+  onHide(() => {
+    console.log('App Hide')
+  })
+
+  // #ifdef UNI-APP-X && APP-ANDROID || APP-HARMONY
+  onLastPageBackPress(() => {
+    console.log('App LastPageBackPress')
+    if (firstBackTime == 0) {
+      uni.showToast({
+        title: '再按一次退出应用',
+        position: 'bottom',
+      })
+      firstBackTime = Date.now()
+      setTimeout(() => {
+        firstBackTime = 0
+      }, 2000)
+    } else if (Date.now() - firstBackTime < 2000) {
+      firstBackTime = Date.now()
+      uni.exit()
+    }
+  })
+  // #endif
+
+  onExit(() => {
+    console.log('App Exit')
+  })
 </script>
 
 <style>

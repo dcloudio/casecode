@@ -108,12 +108,6 @@ const arrowRightIcon = '/static/icons/arrow-right.png'
 const callback = ref([] as Any[])
 const cbText = ref('')
 
-onUnload(() => {
-  // #ifdef APP-ANDROID
-  unRegActivityCallback()
-  // #endif
-})
-
 function triggerCollapse(index: number) {
   for (let i = 0; i < list.value.length; ++i) {
     if (index == i) {
@@ -122,38 +116,6 @@ function triggerCollapse(index: number) {
       list.value[i].open = false
     }
   }
-}
-
-function goDetailPage(e: Page) {
-  if (e.function != null) {
-    const funName = e.function
-    switch (funName) {
-      case 'testGetBatteryCapacity':
-        testGetBatteryCapacity()
-        break
-      case 'testPictureInPicture':
-        testPictureInPicture()
-        break
-      case 'testActivityCallback':
-        // #ifdef APP-ANDROID
-        testActivityCallback()
-        // #endif
-        break
-      case 'testGotoDemoActivity':
-        testGotoDemoActivity()
-        break
-      case 'testNativeJar':
-        testNativeJar()
-        break
-      case 'testNativeSO':
-        testNativeSO()
-        break
-    }
-    return
-  }
-  uni.navigateTo({
-    url: `/pages/${e.url}`
-  })
 }
 
 function testPictureInPicture() {
@@ -188,10 +150,6 @@ function testGetBatteryCapacity() {
 }
 
 // #ifdef APP-ANDROID
-function testActivityCallback() {
-  activityCallback()
-}
-
 function activityCallback() {
   uni.showToast({
     title: "注册成功，请尝试切换到其他app，在切换回来",
@@ -233,6 +191,10 @@ function activityCallback() {
       UTSAndroid.onActivityCallback(value)
     }
   })
+}
+
+function testActivityCallback() {
+  activityCallback()
 }
 
 function unRegActivityCallback() {
@@ -281,6 +243,48 @@ function testGotoDemoActivity() {
     })
   }
 }
+
+
+function goDetailPage(e: Page) {
+  if (e.function != null) {
+    const funName = e.function
+    switch (funName) {
+      case 'testGetBatteryCapacity':
+        testGetBatteryCapacity()
+        break
+      case 'testPictureInPicture':
+        testPictureInPicture()
+        break
+      case 'testActivityCallback':
+        // #ifdef APP-ANDROID
+        testActivityCallback()
+        // #endif
+        break
+      case 'testGotoDemoActivity':
+        testGotoDemoActivity()
+        break
+      case 'testNativeJar':
+        testNativeJar()
+        break
+      case 'testNativeSO':
+        testNativeSO()
+        break
+    }
+    return
+  }
+  uni.navigateTo({
+    url: `/pages/${e.url}`
+  })
+}
+
+
+onUnload(() => {
+  // #ifdef APP-ANDROID
+  unRegActivityCallback()
+  // #endif
+})
+
+
 </script>
 
 <style>
