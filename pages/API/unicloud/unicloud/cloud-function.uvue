@@ -148,7 +148,8 @@ function callVerifyFunction() {
   })
   uniCloud.callFunction({
     name: 'verify-client',
-    data: {}
+    data: {},
+    secretType: 'both'
   }).then(res => {
     uni.hideLoading()
     notify(JSON.stringify(res.result), '提示')
