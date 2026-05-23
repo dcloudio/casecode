@@ -1,6 +1,7 @@
 <template>
   <scroll-view ref="pageScrollView" class="page" :bounces="false"
-    @startnestedscroll="onStartNestedScroll" @nestedprescroll="onNestedPreScroll">
+    @startnestedscroll="onStartNestedScroll" @nestedprescroll="onNestedPreScroll"
+  :refresher-triggered="refresherTriggered" refresher-enabled="true" @refresherrefresh="onRefresherrefresh">
     <view ref="header" class="search-bar">
       <input placeholder="搜索..." :maxlength="-1"/>
     </view>
@@ -255,11 +256,13 @@ onReady(() => {
   });
 })
 
-onPullDownRefresh(() => {
+const refresherTriggered = ref(false);
+function onRefresherrefresh(e : UniRefresherEvent) {
+  refresherTriggered.value = true;
   (longPageRef.value as ComponentPublicInstance[])[swiperIndex.value].$callMethod('refreshData', () => {
-    uni.stopPullDownRefresh()
+    refresherTriggered.value = false;
   })
-})
+}
 
 </script>
 

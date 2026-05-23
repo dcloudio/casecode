@@ -898,7 +898,7 @@
 				"navigationBarTitleText": "onLoad 生命周期测试"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || (!VUE3-VAPOR && APP-HARMONY) || WEB || MP-WEIXIN
+		// #ifdef APP-ANDROID || (!VUE3-VAPOR && APP-IOS) || (!VUE3-VAPOR && APP-HARMONY) || WEB || MP-WEIXIN
 		{
 			"path": "pages/API/pull-down-refresh/pull-down-refresh",
 			"group": "1,2,6",
@@ -2321,15 +2321,13 @@
 				{
 					"path": "search-header-long-list/search-header-long-list",
 					"style": {
-						"navigationBarTitleText": "带搜索框的分栏长列表",
-						"enablePullDownRefresh": true
+						"navigationBarTitleText": "带搜索框的分栏长列表"
 					}
 				},
 				{
 					"path": "banner-tabs-feed-nested-scroll/banner-tabs-feed-nested-scroll",
 					"style": {
-						"navigationBarTitleText": "顶部 Banner 分栏信息流嵌套滚动",
-						"enablePullDownRefresh": true
+						"navigationBarTitleText": "顶部 Banner 分栏信息流嵌套滚动"
 					}
 				},
 				// #ifdef APP || WEB
@@ -2358,8 +2356,7 @@
 				{
 					"path": "banner-tabs-long-list-nested-scroll/banner-tabs-long-list-nested-scroll",
 					"style": {
-						"navigationBarTitleText": "顶部 Banner 分栏长列表嵌套滚动",
-						"enablePullDownRefresh": true
+						"navigationBarTitleText": "顶部 Banner 分栏长列表嵌套滚动"
 					}
 				},
 				{
@@ -2373,8 +2370,7 @@
 				{
 					"path": "banner-waterfall-nested-scroll/banner-waterfall-nested-scroll",
 					"style": {
-						"navigationBarTitleText": "顶部 Banner 瀑布流嵌套滚动",
-						"enablePullDownRefresh": true
+						"navigationBarTitleText": "顶部 Banner 瀑布流嵌套滚动"
 					}
 				},
 				// #endif
