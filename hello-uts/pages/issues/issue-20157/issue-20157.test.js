@@ -17,11 +17,8 @@ describe('issue-20157', () => {
   }
   
   it('issue-20157', async () => {
-    const {
-      a,
-      b
-    } = await page.data()
-    expect(a).toBe('ab')
-    expect(b).toBe(12)
+    const data = await page.data('data')
+    expect(data.a).toBe('ab')
+    expect(data.b).toBe(12)
   })
 });

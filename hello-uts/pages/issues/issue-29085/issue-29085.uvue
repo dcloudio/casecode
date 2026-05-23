@@ -23,6 +23,10 @@ onLoad(() => {
     data.testStatus29085 = "测试通过"
   }
 })
+
+defineExpose({
+  data
+})
 </script>
 
 <style>

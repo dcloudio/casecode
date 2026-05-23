@@ -15,13 +15,16 @@ const data = reactive({
   testStatus26943: '测试未通过'
 } as DataType)
 
-
 onLoad(() => {
   testGenericCallback({
     success(res) {
       data.testStatus26943 = JSON.stringify(res) == JSON.stringify(["a", "b"]) ? "测试通过" : "测试未通过"
     }
   })
+})
+
+defineExpose({
+  data
 })
 </script>
 
