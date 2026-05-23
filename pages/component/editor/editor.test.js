@@ -125,6 +125,12 @@ describe('editor.uvue', () => {
     await screenshot('editor-props-placeholder')
   })
 
+  it('方法调用截图', async () => {
+    await page.callMethod('insertSampleText')
+    await page.callMethod('insertMention')
+    await screenshot('editor-event-invoke')
+  })
+
   it('readOnly 修改后截图', async () => {
     expect(await page.data('data.readOnly')).toBe(false)
     expect(await page.data('data.editorType')).toBeFalsy()

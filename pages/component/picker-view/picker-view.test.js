@@ -36,12 +36,21 @@ describe('PickerView.uvue', () => {
     await page.waitFor(500);
   }
 
+  async function getPickerViewValue() {
+    const value = await pickerViewEl.property('value')
+    return value == null ? await page.data('data.value') : value
+  }
+
+  function stringifyPickerViewValue(value) {
+    return Array.isArray(value) ? value.join(',') : String(value)
+  }
+
   it('value', async () => {
     await page.callMethod('setValue')
     await page.waitFor(1500)
-    const newValue1 = await pickerViewEl.property('value')
+    const newValue1 = await getPickerViewValue()
     // TODO
-    expect(newValue1.toString()).toEqual('0,1,30')
+    expect(stringifyPickerViewValue(newValue1)).toEqual('0,1,30')
     // 仅在App端，setValue可触发change事件
     if (isAndroid || (isIOS && !isDom2)) {
       const res = await page.data('data.result')
@@ -50,9 +59,9 @@ describe('PickerView.uvue', () => {
     }
     await page.callMethod('setValue1')
     await page.waitFor(1500)
-    const newValue2 = await pickerViewEl.property('value')
+    const newValue2 = await getPickerViewValue()
     // TODO
-    expect(newValue2.toString()).toEqual('10,10,10')
+    expect(stringifyPickerViewValue(newValue2)).toEqual('10,10,10')
     if (isAndroid || (isIOS && !isDom2)) {
       const res = await page.data('data.result')
       await page.waitFor(500)
