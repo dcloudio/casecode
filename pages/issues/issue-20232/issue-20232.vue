@@ -15,11 +15,14 @@ const data = reactive({
   testStatus20232: '测试未通过'
 } as DataType)
 
-
 onLoad(() => {
   const a1 = testArrayBufferToBase64()
   console.log("a1", a1)
   data.testStatus20232 = a1 == 1708 ? "测试通过" : "测试未通过"
+})
+
+defineExpose({
+  data
 })
 </script>
 
