@@ -63,6 +63,9 @@
         <view class="preview-toolbar-item" @tap="blurEditor">
           <text class="preview-toolbar-icon iconfont">{{"&#xe69a;"}}</text>
         </view>
+        <view class="preview-toolbar-item" @tap="insertMention">
+          <text class="preview-toolbar-icon iconfont">@</text>
+        </view>
       </view>
     </view>
 
@@ -368,6 +371,16 @@ function insertSampleImage() {
   })
 }
 
+const insertMention = () => {
+  data.editorCtx?.insertMention({
+    id: '000',
+    name: 'uni-app x',
+    success: (res: any) => {
+      console.log('insert mention success')
+    }
+  })
+}
+
 function toggleBold() {
   data.editorCtx?.format('bold', null)
   appendLog('action', `请求切换加粗 => ${!data.boldActive}`)
@@ -432,6 +445,7 @@ defineExpose({
   onDraftShowImgResizeChange,
   rebuildEditor,
   insertSampleText,
+  insertMention,
   insertSampleImage,
   toggleBold,
   setAlignCenter,

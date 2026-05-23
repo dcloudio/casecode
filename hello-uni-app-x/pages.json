@@ -1263,7 +1263,7 @@
 				"navigationBarTitleText": "database | 数据库"
 			}
 		},
-		// #ifdef APP-ANDROID || APP-IOS || (!VUE3-VAPOR && APP-HARMONY) || WEB || MP-WEIXIN
+		// #ifdef APP-ANDROID || APP-IOS || APP-HARMONY || WEB || MP-WEIXIN
 		{
 			"path": "pages/API/get-battery-info/get-battery-info",
 			"group": "1,6,8",

@@ -105,6 +105,7 @@ function moveCard() {
 }
 
 function touchstart(e : TouchEvent) {
+  e.preventDefault()
   if (floating) {
     return
   }
@@ -116,6 +117,7 @@ function touchstart(e : TouchEvent) {
 }
 
 function touchmove(e : TouchEvent) {
+  e.preventDefault()
   if (!touchstartAfter || floating) {
     return
   }
@@ -124,9 +126,6 @@ function touchmove(e : TouchEvent) {
   sX = e.touches[0].screenX
   sY = e.touches[0].screenY
   moveCard()
-  // #ifdef WEB
-  e.preventDefault()
-  // #endif
 }
 
 function touchend() {

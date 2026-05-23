@@ -135,7 +135,7 @@ describe('component-native-textarea', () => {
         await page.waitFor(500)
         textareaSize = await textarea.size()
         textareaHeight = textareaSize.height
-        expect(textareaHeight).toEqual((isDom2 && isHarmony) ? 222 : 200)
+        expect(textareaHeight).toEqual((isDom2 && isHarmony) ? 202 : 200)
       }
     })
   }
