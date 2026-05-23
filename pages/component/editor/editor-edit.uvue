@@ -1037,8 +1037,9 @@ function applyFormat(name: string, value: string | number | null | undefined) {
   if (editor == null) {
     return
   }
-  // Web 端 statuschange 可能先回流旧的选区状态，短暂锁定可避免覆盖本地工具栏状态。
+  // #ifndef WEB
   statusSyncLockedUntil = Date.now() + 400
+  // #endif
   setTimeout(() => {
     editor.format(name, value)
     editor.scrollIntoView(null)
@@ -2351,9 +2352,11 @@ function onEditorBlur(event: UniEditorBlurEvent) {
 }
 
 function onStatusChange(event: UniEditorStatusChangeEvent) {
+  // #ifndef WEB
   if (Date.now() < statusSyncLockedUntil) {
     return
   }
+  // #endif
   const formats = event.detail
   const formatObject = JSON.parse<UTSJSONObject>(JSON.stringify(formats))
 
