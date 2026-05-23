@@ -5,15 +5,10 @@
         </view>
     </view>
 </template>
-<script>
-export default {
-  props: {
-    title: {
-      type: String,
-      default: ''
-    }
-  }
-}
+<script setup lang="uts">
+  const props = defineProps({
+    title: { type: String, default: "" }
+  })
 </script>
 <style>
     .common-page-head {
