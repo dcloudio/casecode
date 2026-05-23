@@ -1,8 +1,6 @@
 <template>
   <scroll-view ref="pageScrollView" class="page" :bounces="false" type="nested"
-  <!-- #ifdef VUE3-VAPOR && APP -->
   :refresher-triggered="refresherTriggered" refresher-enabled="true" @refresherrefresh="onRefresherrefresh"
-  <!-- #endif -->
   >
     <nested-scroll-header>
       <swiper ref="header" indicator-dots="true" circular="true" style="height: 150px;">
@@ -108,7 +106,6 @@
   const swiper = ref<UniSwiperElement | null>(null);
   const longPageRef = ref<ComponentPublicInstance[]>([]);
 
-  //目前仅dom2 Harmony平台使用组件的下拉刷新 其他平台使用页面下拉刷新
   const refresherTriggered = ref(false);
   function onRefresherrefresh(e : UniRefresherEvent) {
     refresherTriggered.value = true;
@@ -223,12 +220,6 @@
     swiperWidth = swiper.value!.getBoundingClientRect().width
     cacheTabItemsSize()
     updateTabIndicator(swiperIndex.value, swiperIndex.value, 1)
-  });
-
-  onPullDownRefresh(() => {
-    longPageRef.value[swiperIndex.value].$callMethod('refreshData', () => {
-      uni.stopPullDownRefresh()
-    })
   });
 </script>
 

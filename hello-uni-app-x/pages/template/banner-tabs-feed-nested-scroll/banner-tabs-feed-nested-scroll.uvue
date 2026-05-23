@@ -4,6 +4,7 @@
   @startnestedscroll="onStartNestedScroll" @nestedprescroll="onNestedPreScroll"
   :nested-scroll-child="nestedScrollChildId"
   <!-- #endif -->
+  :refresher-triggered="refresherTriggered" refresher-enabled="true" @refresherrefresh="onRefresherrefresh"
     >
     <swiper ref="header" indicator-dots="true" circular="true">
       <swiper-item  v-for="i in 3" :item-id="'' + i">
@@ -245,11 +246,13 @@
     }
   }
 
-  onPullDownRefresh(() => {
+  const refresherTriggered = ref(false);
+  function onRefresherrefresh(e : UniRefresherEvent) {
+    refresherTriggered.value = true;
     (longPageRef.value! as ComponentPublicInstance[])[swiperIndex.value].$callMethod('refreshData', () => {
-      uni.stopPullDownRefresh()
+      refresherTriggered.value = false;
     })
-  })
+  }
 
   onReady(() => {
     headerHeight = (header.value as UniElement).offsetHeight

@@ -1,5 +1,6 @@
 <template>
-  <scroll-view ref="pageScrollView" class="page" :bounces="false" type="nested">
+  <scroll-view ref="pageScrollView" class="page" :bounces="false" type="nested"
+  :refresher-triggered="refresherTriggered" refresher-enabled="true" @refresherrefresh="onRefresherrefresh">
     <nested-scroll-header>
       <swiper ref="header" indicator-dots="true" circular="true">
         <swiper-item v-for="i in 3" :item-id="''+i">
@@ -211,11 +212,13 @@
     updateTabIndicator(swiperIndex.value, swiperIndex.value, 1)
   });
 
-  onPullDownRefresh(() => {
+  const refresherTriggered = ref(false);
+  function onRefresherrefresh(e : UniRefresherEvent) {
+    refresherTriggered.value = true;
     longPageRef.value[swiperIndex.value].$callMethod('refreshData', () => {
-      uni.stopPullDownRefresh()
+      refresherTriggered.value = false;
     })
-  });
+  }
 </script>
 
 <style>
