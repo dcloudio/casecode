@@ -128,6 +128,7 @@ describe('editor.uvue', () => {
   it('方法调用截图', async () => {
     await page.callMethod('insertSampleText')
     await page.callMethod('insertMention')
+    await page.waitFor(500)
     await screenshot('editor-event-invoke')
   })
 
