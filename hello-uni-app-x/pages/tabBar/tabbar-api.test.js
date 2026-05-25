@@ -1,11 +1,8 @@
-jest.setTimeout(60000)
-
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isAndroid = platformInfo.startsWith('android')
 const isIos = platformInfo.startsWith('ios')
 const isHarmony = platformInfo.startsWith('harmony')
 const isApp = isAndroid || isIos || isHarmony
-const isMP = platformInfo.startsWith('mp')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === 'true'
 
@@ -26,7 +23,7 @@ const DEFAULT_TAB_BAR_ITEM = {
 }
 
 describe('tab bar api screenshot', () => {
-  if (isMP || (isDom2 && !isHarmony)) {
+  if (!isApp || (isDom2 && !isHarmony)) {
     it('not support', () => {
       expect(1).toBe(1)
     })
@@ -69,13 +66,11 @@ describe('tab bar api screenshot', () => {
 
   beforeAll(async () => {
     const windowInfo = await program.callUniMethod('getWindowInfo')
-    if (isApp && !isAppWebView) {
-      screenShotOptions = {
-        deviceShot: true,
-        area: {
-          x: 0,
-          y: windowInfo.safeAreaInsets.top + 44
-        }
+    screenShotOptions = {
+      deviceShot: true,
+      area: {
+        x: 0,
+        y: windowInfo.safeAreaInsets.top + 44
       }
     }
   })
