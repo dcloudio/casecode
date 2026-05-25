@@ -9,6 +9,7 @@
       }
     },
     // #endif 
+    // #ifndef VUE3-VAPOR
     {
       "path": "pages/index/index",
       "style": {
@@ -16,21 +17,6 @@
         "enablePullDownRefresh": false
       }
     },
-    {
-      "path": "pages/issues/issue-26943/issue-26943",
-      "style": {
-        "navigationBarTitleText": "issue-26943"
-      }
-    },
-    {
-      "path": "pages/index/basicTest",
-      "style": {
-        "navigationBarTitleText": "",
-        "enablePullDownRefresh": false
-      }
-    }
-    // #ifndef WEB || MP || APP-HARMONY
-    ,
     {
       "path": "pages/advance/advance",
       "style": {
@@ -46,128 +32,134 @@
       }
     },
     {
-      "path": "pages/SystemAPI/Alert/alert",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    // #ifndef VUE3-VAPOR
-    {
-      "path": "pages/component/helloView",
-      "style": {
-        "navigationBarTitleText": "",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
       "path": "pages/SDKIntegration/SDKIntegration",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
+    }
+    // #endif 
+    ,{
+      "path": "pages/issues/issue-26943/issue-26943",
+      "style": {
+        "navigationBarTitleText": "issue-26943"
+      }
+    }
+    ,{
+      "path": "pages/index/basicTest",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }
+    // #ifdef APP-ANDROID || APP-IOS || APP-PLUS
+    ,{
+      "path": "pages/SystemAPI/Alert/alert",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    }
+    ,{
       "path": "pages/SDKIntegration/TencentLocation/TencentLocation",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
-      "path": "pages/SDKIntegration/Lottie/index",
-      "style": {
-        "navigationBarTitleText": "",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
+    }
+    ,{
       "path": "pages/SDKIntegration/Toast/Toast",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    
-    },
+    }
+    // #ifndef VUE3-VAPOR
+    ,{
+      "path": "pages/component/helloView",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }
+    ,{
+      "path": "pages/SDKIntegration/Lottie/index",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }
     // #endif 
-    {
+    ,{
       "path": "pages/lifecycle/lifecycle",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-
-    },
-    {
+    }
+    ,{
       "path": "pages/resource/resource",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
+    }
+    ,{
       "path": "pages/advance/android/decorview",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
+    }
+    ,{
       "path": "pages/advance/iOS/getResourcePath",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
+    }
+    ,{
       "path": "pages/advance/android/assetaudio",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
+    }
+    ,{
       "path": "pages/SystemAPI/ScreenListen/screenlisten",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
+    }
+    ,{
       "path": "pages/SyntaxCase/index",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
-      "path": "pages/SyntaxCase/paramTest",
-      "style": {
-        "navigationBarTitleText": "",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/SyntaxCase/consoleTest",
-      "style": {
-        "navigationBarTitleText": "",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
+    }
+    ,{
       "path": "pages/SyntaxCase/MixNativeCode",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
+    }
+    ,{
       "path": "pages/SyntaxCase/nvueTest",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
+    }
+    ,{
+      "path": "pages/SyntaxCase/paramTest",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }
+    ,{
       "path": "pages/SyntaxCase/instanceTest",
       "style": {
         "navigationBarTitleText": "",
@@ -175,46 +167,53 @@
       }
     }
     // #endif
-    // #ifdef APP-ANDROID || APP-IOS
-    , {
+    // #ifdef APP-ANDROID
+    ,{
       "path": "pages/SyntaxCase/utsAndroid",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    },
-    {
-      "path": "pages/SyntaxCase/utsiOS",
+    }
+    ,{
+      "path": "pages/SyntaxCase/consoleTest",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
     }
-    // #endif
-    // #ifdef APP-HARMONY
-    , {
-      "path": "pages/issues/issue-20157/issue-20157",
-      "style": {
-        "navigationBarTitleText": "issue-20157"
-      }
-    }
-    // #endif 
-    // #ifdef APP-ANDROID
-    , {
+    ,{
       "path": "pages/issues/issue-20232/issue-20232",
       "style": {
         "navigationBarTitleText": "issue-20232"
       }
     }
     // #endif 
-    , {
+    ,{
       "path": "pages/issues/issue-29085/issue-29085",
       "style": {
         "navigationBarTitleText": "issue-29085"
       }
     }
+    // #ifdef APP-IOS
+    ,{
+      "path": "pages/SyntaxCase/utsiOS",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }
+    // #endif 
+    // #ifdef APP-HARMONY
+    ,{
+      "path": "pages/issues/issue-20157/issue-20157",
+      "style": {
+        "navigationBarTitleText": "issue-20157"
+      }
+    }
+    // #endif
   ],
-  // #ifndef WEB || MP || APP-HARMONY && !VUE3-VAPOR
+  // #ifndef VUE3-VAPOR
   "tabBar": {
     "color": "#7A7E83",
     "selectedColor": "#007AFF",
@@ -232,12 +231,10 @@
         "pagePath": "pages/SystemAPI/SystemAPI",
         "text": "系统API"
       },
-      // #ifndef VUE3-VAPOR
       {
         "pagePath": "pages/SDKIntegration/SDKIntegration",
         "text": "三方SDK"
       }
-      // #endif 
     ]
   },
   // #endif
