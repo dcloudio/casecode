@@ -1,4 +1,4 @@
-type TestOptions = {
+export type TestOptions = {
   success : (messages : any) => void
 }
 

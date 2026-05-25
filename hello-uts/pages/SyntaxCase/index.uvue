@@ -82,7 +82,7 @@ import {
   request,
   SetterTest,
   PromiseReturnDemo,
-} from "../../uni_modules/uts-syntaxcase"
+} from "@/uni_modules/uts-syntaxcase"
 // #endif
 // #ifdef APP-IOS
 import {

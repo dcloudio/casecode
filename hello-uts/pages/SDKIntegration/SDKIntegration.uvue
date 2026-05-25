@@ -1,93 +1,113 @@
 <template>
-    <view class="uni-container">
-        <page-head :title="title"></page-head>
-        <view class="uni-panel" v-for="(item, index) in list" :key="index">
-            <view class="uni-panel-h" :class="item.open == true ? 'uni-panel-h-on' : ''" @click="goDetailPage(item)"
-                hover-class="uni-navigate-item-active">
-                <text class="uni-panel-text">{{item.name}}</text>
-                <image :src="arrowRightIcon" class="uni-icon"></image>
-            </view>
-        </view>
+  <view class="uni-container">
+    <page-head :title="title"></page-head>
+<!-- #ifdef APP-ANDROID || APP-IOS -->
+    <view class="uni-panel" v-for="(item, index) in list" :key="index">
+      <view class="uni-panel-h" :class="item.open == true ? 'uni-panel-h-on' : ''" @click="goDetailPage(item)"
+        hover-class="uni-navigate-item-active">
+        <text class="uni-panel-text">{{item.name}}</text>
+        <image :src="arrowRightIcon" class="uni-icon"></image>
+      </view>
     </view>
+<!-- #endif -->
+<!-- #ifndef APP-ANDROID || APP-IOS -->
+    <view class="uni-panel">
+      <text>暂不支持此功能</text>
+    </view>
+<!-- #endif -->
+  </view>
 </template>
 <script setup lang="uts">
-import { checkHasIntegration } from "@/uni_modules/uts-tencentgeolocation"
-import { checkHasLottieIntegration } from "@/uni_modules/uts-animation-view"
+  const title = 'SDK集成示例'
 
-type ListItem = {
-  name: string,
-  open?: boolean,
-  function?: string,
-  url?: string
-}
+// #ifdef APP-ANDROID || APP-IOS
+  import { checkHasIntegration } from "@/uni_modules/uts-tencentgeolocation"
+  // #ifndef VUE3-VAPOR
+  import { checkHasLottieIntegration } from "@/uni_modules/uts-animation-view"
+  // #endif
 
-const title = 'SDK集成示例'
-const list = [{
-  name: "腾讯定位sdk集成示例",
-  function: "gotoTencentLocation",
-},
-{
-  name: "Toast示例",
-  url: "SDKIntegration/Toast/Toast"
-},
-{
-  name: "Lottie动画示例",
-  function: "gotoLottie"
-}] as ListItem[]
-const arrowRightIcon = '/static/icons/arrow-right.png'
-
-function gotoLottie() {
-  if (checkHasLottieIntegration()) {
-    uni.navigateTo({
-      url: '/pages/SDKIntegration/Lottie/index'
-    })
-  } else {
-    uni.showToast({
-      icon: 'none',
-      title: '需要在自定义基座中运行'
-    })
+  type ListItem = {
+    name : string,
+    open ?: boolean,
+    function ?: string,
+    url ?: string
   }
-}
 
-function gotoTencentLocation() {
-  const ret = checkHasIntegration()
-  if (!ret) {
-    uni.showToast({
-      icon: 'none',
-      title: '需要在自定义基座中运行'
-    })
-  } else {
-    uni.navigateTo({
-      url: '/pages/SDKIntegration/TencentLocation/TencentLocation'
-    })
-  }
-}
+  const list = [{
+    name: "腾讯定位sdk集成示例",
+    function: "gotoTencentLocation",
+  },
+  {
+    name: "Toast示例",
+    url: "SDKIntegration/Toast/Toast"
+  },
+  // #ifndef VUE3-VAPOR
+  {
+    name: "Lottie动画示例",
+    function: "gotoLottie"
+  },  
+  // #endif
+  ] as ListItem[]
+  const arrowRightIcon = '/static/icons/arrow-right.png'
 
-function goDetailPage(e: ListItem) {
-  if (e.function != null) {
-    const funName = e.function
-    switch (funName) {
-      case 'gotoTencentLocation':
-        gotoTencentLocation()
-        break
-      case 'gotoLottie':
-        gotoLottie()
-        break
+  function gotoTencentLocation() {
+    const ret = checkHasIntegration()
+    if (!ret) {
+      uni.showToast({
+        icon: 'none',
+        title: '需要在自定义基座中运行'
+      })
+    } else {
+      uni.navigateTo({
+        url: '/pages/SDKIntegration/TencentLocation/TencentLocation'
+      })
     }
-    return
   }
-  uni.navigateTo({
-    url: `/pages/${e.url!}`
-  })
-}
 
-function gotoTencentMap() {
-  uni.navigateTo({
-    url: '/pages/SDKIntegration/TencentMap/TencentMap'
-  })
-}
+  // #ifndef VUE3-VAPOR
+  function gotoLottie() {
+    if (checkHasLottieIntegration()) {
+      uni.navigateTo({
+        url: '/pages/SDKIntegration/Lottie/index'
+      })
+    } else {
+      uni.showToast({
+        icon: 'none',
+        title: '需要在自定义基座中运行'
+      })
+    }
+  }
+  // #endif
+
+  function goDetailPage(e : ListItem) {
+    if (e.function != null) {
+      const funName = e.function
+      switch (funName) {
+        case 'gotoTencentLocation':
+          gotoTencentLocation()
+          break
+        // #ifndef VUE3-VAPOR
+        case 'gotoLottie':
+          gotoLottie()
+          break
+        // #endif
+      }
+      return
+    }
+    uni.navigateTo({
+      url: `/pages/${e.url!}`
+    })
+  }
+
+  function gotoTencentMap() {
+    uni.navigateTo({
+      url: '/pages/SDKIntegration/TencentMap/TencentMap'
+    })
+  }
+
+// #endif
 </script>
 
 <style>
-    @import '@/common/uni-uvue.css';
+  @import '@/common/uni-uvue.css';
 </style>

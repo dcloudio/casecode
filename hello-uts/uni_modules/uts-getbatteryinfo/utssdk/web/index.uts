@@ -18,3 +18,5 @@ export const getBatteryInfo: GetBatteryInfo = function (options: GetBatteryInfoO
 		options.complete && options.complete(res)
 	}
 }
+
+export {GetBatteryInfo, GetBatteryInfoOptions, GetBatteryInfoSuccess}

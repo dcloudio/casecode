@@ -2,7 +2,7 @@ const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isAndroid = platformInfo.startsWith('android')
 
 let page 
-if(isAndroid) {
+if(isAndroid && process.env.UNI_APP_X==='true') {
   beforeAll(async () => {
     page = await program.reLaunch('/pages/issues/issue-20232/issue-20232')
   });
