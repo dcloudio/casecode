@@ -24,7 +24,7 @@
 
       <view class="preview-editor-box">
         <editor
-          :key="data.editorKey"
+          v-if="data.showEditor"
           id="editor-props-demo"
           class="preview-editor"
           :read-only="data.readOnly"
@@ -140,7 +140,7 @@
 import { ItemType } from '@/components/enum-data/enum-data-types'
 
 type EditorPropsPageData = {
-  editorKey: number
+  showEditor: boolean
   readOnly: boolean
   editorType: string | null
   draftPlaceholder: string
@@ -178,10 +178,10 @@ function createTypeItems(selectedValue: number): ItemType[] {
   ]
 }
 
-const showLogs = process.env.NODE_ENV === 'development' // 仅开发环境显示事件日志，避免生产环境性能问题
+const showLogs = false
 
 const initialData: EditorPropsPageData = {
-  editorKey: 0,
+  showEditor: true,
   readOnly: false,
   editorType: null,
   draftPlaceholder: '请输入内容，placeholder 仅初始化生效',
@@ -277,7 +277,10 @@ function rebuildEditor() {
   data.boldActive = false
   data.alignCenterActive = false
   data.statusSummary = '等待 @statuschange'
-  data.editorKey += 1
+  data.showEditor = false
+  setTimeout(() => {
+    data.showEditor = true
+  }, 0)
   appendLog('rebuild', '已重建 editor，初始化属性已重新应用')
 }
 
