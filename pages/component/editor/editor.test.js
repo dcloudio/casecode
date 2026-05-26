@@ -122,6 +122,7 @@ describe('editor.uvue', () => {
     await page.callMethod('onPlaceholderChange', '自动化测试 editor placeHolder 修改')
     await page.callMethod('rebuildEditor')
     await waitForData('data.readyCount', value => value >= readyCount + 1, 2000)
+    await page.waitFor(500)
     await screenshot('editor-props-placeholder')
   })
 
