@@ -167,7 +167,7 @@
       }
     }
     // #endif
-    // #ifdef APP-ANDROID
+    // #ifdef APP-ANDROID || APP-PLUS
     ,{
       "path": "pages/SyntaxCase/utsAndroid",
       "style": {
@@ -195,7 +195,7 @@
         "navigationBarTitleText": "issue-29085"
       }
     }
-    // #ifdef APP-IOS
+    // #ifdef APP-IOS || APP-PLUS
     ,{
       "path": "pages/SyntaxCase/utsiOS",
       "style": {
@@ -213,7 +213,7 @@
     }
     // #endif
   ],
-  // #ifndef VUE3-VAPOR
+  // #ifndef VUE3-VAPOR && APP-PLUS
   "tabBar": {
     "color": "#7A7E83",
     "selectedColor": "#007AFF",
