@@ -83,7 +83,7 @@
                 name: "issue-29085",
                 url: "issues/issue-29085/issue-29085"
               },
-              // #ifdef APP-HARMONY
+              // #ifdef APP-HARMONY && UNI-APP-X
               {
                 name: "issue-20157",
                 url: "issues/issue-20157/issue-20157"

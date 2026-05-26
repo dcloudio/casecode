@@ -19,7 +19,7 @@
   </view>
 </template>·
 <script>
-  // #ifdef APP-ANDROID
+  // #ifdef APP-PLUS
   import {
     gotoDemoActivity
   } from "@/uni_modules/uts-nativepage";
@@ -58,7 +58,6 @@
               url: "SystemAPI/Alert/alert"
             }]
           },
-          // #ifdef APP-ANDROID
           {
             name: "android平台",
             open: false,
@@ -67,7 +66,6 @@
               function: "testGotoDemoActivity"
             }]
           },
-          // #endif
           // #endif
         ],
         arrowUpIcon: '/static/icons/arrow-up.png',
@@ -105,7 +103,6 @@
           }
         })
       },
-      // #ifdef APP-ANDROID
       testGotoDemoActivity() {
         let ret = gotoDemoActivity();
         if (!ret) {
@@ -115,7 +112,6 @@
           })
         }
       }
-      // #endif
     }
   }
 </script>

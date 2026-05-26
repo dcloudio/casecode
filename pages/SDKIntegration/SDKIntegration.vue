@@ -72,7 +72,6 @@
             title: '需要在自定义基座中运行'
           })
         }
-
       },
       gotoTencentLocation: function(e) {
         let ret = checkHasIntegration();
