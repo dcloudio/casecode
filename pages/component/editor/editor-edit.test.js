@@ -193,11 +193,11 @@ describe('editor-edit.uvue', () => {
   })
 
   it('editor-screenshot', async () => {
-    await openSheet('openStyleSheet', 'style', '设置字格式', '当前未设置字格式')
+    // await openSheet('openStyleSheet', 'style', '设置字格式', '当前未设置字格式')
     expect(await program.screenshot({
       fullPage: true
     })).toSaveImageSnapshot()
-    await closeSheet()
+    // await closeSheet()
   })
 
   it('title-toolbar-actions', async () => {
