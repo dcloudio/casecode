@@ -1,16 +1,7 @@
-const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
-const isMP = platformInfo.startsWith('mp')
 const BUTTON_PAGE_PATH = '/pages/component/button/button';
 const PAGE_CONTAINER_PAGE_PATH = '/pages/component/page-container/page-container';
 
 describe('page-container.uvue', () => {
-  if (isMP) {
-    it('skip', () => {
-      expect(1).toBe(1)
-    })
-    return
-  }
-
   let page;
   beforeAll(async () => {
     page = await program.reLaunch(BUTTON_PAGE_PATH);
