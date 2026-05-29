@@ -39,6 +39,7 @@ describe('rich-text-complex', () => {
 
   let page
 
+
   async function testItemClickEvent() {
     await setPageData({
       imageClicked: false
@@ -53,6 +54,37 @@ describe('rich-text-complex', () => {
     await program.tap(tapOption)
 
     await page.waitFor(500);
+
+    // 关闭弹窗逻辑各平台需要适配不同机型
+    if (isIOS) {
+      // 关闭弹窗 iPhone Pro 机型
+      await program.tap({
+        x: 200,
+        y: 433,
+        duration: 100
+      })
+
+      // 关闭弹窗 iPhone ProMax 机型
+      await program.tap({
+        x: 220,
+        y: 476,
+        duration: 100
+      })
+
+      // 关闭弹窗 iPhone plus 机型
+      await program.tap({
+        x: 220,
+        y: 526,
+        duration: 100
+      })
+
+      // 关闭弹窗 iPhone mini 机型
+      await program.tap({
+        x: 186,
+        y: 400,
+        duration: 100
+      })
+    }
 
     const imageClicked = await page.data('data.imageClicked')
     expect(imageClicked).toBe(true)
