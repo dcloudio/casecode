@@ -9,25 +9,20 @@ const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 const PAGE_PATH = '/pages/component/rich-text/rich-text-complex'
 
-describe('rich-text-test', () => {
-  if (isMP) {
+async function screenshot(name) {
+  const image = await program.screenshot({
+    fullPage: true
+  })
+  expect(image).toSaveImageSnapshot({
+    customSnapshotIdentifier() {
+      return name
+    }
+  })
+}
+
+describe('rich-text-complex', () => {
+  if (isMP || isWeb || process.env.UNI_TEST_DEVICES_DIRECTION == 'landscape') {
     it('skip', () => {
-      expect(1).toBe(1)
-    })
-    return
-  }
-
-
-  // 先屏蔽 android 及 web 平台
-  if (isWeb || isMP || isHarmony) {
-    it('other platform', () => {
-      expect(1).toBe(1)
-    })
-    return
-  }
-
-  if (process.env.UNI_TEST_DEVICES_DIRECTION == 'landscape') {
-    it('跳过横屏模式', () => {
       expect(1).toBe(1)
     })
     return
@@ -37,82 +32,74 @@ describe('rich-text-test', () => {
     page = await program.reLaunch(PAGE_PATH)
     await page.waitFor('view');
     await page.waitFor(2000);
-  })
-
-  // 不进行 app-webview 截图对比
-  if (!isAppWebView) {
-    it('screenshot', async () => {
-      const image = await program.screenshot({
-       fullPage: true,
-      });
-      expect(image).toSaveImageSnapshot();
+    await setPageData({
+      autoTest: true
     });
-  }
+  })
 
   let page
 
-  async function setPageData(newData) {
-    return await page.setData({ data: newData });
+  async function testItemClickEvent() {
+    await setPageData({
+      imageClicked: false
+    });
+    const rect = await page.callMethod("getBoundingClientRectForRichtext")
+    const windowInfo = await program.callUniMethod('getWindowInfo');
+    const tapOption = {
+      x: Math.ceil(rect.left + 30),
+      y: Math.ceil(windowInfo.statusBarHeight + 44 + rect.top + 60),
+      duration: 100
+    }
+    await program.tap(tapOption)
+
+    await page.waitFor(500);
+
+    const imageClicked = await page.data('data.imageClicked')
+    expect(imageClicked).toBe(true)
   }
 
-  if (isAndroid && !isAppWebView) {
-    it("test attr mode", async () => {
+  async function setPageData(newData) {
+    return await page.setData({
+      data: newData
+    });
+  }
+
+  /**
+   * 1. mode=web 截图，点击事件
+   * 2. mode=native 截图，点击事件
+   * 3. 安卓或鸿蒙(vapor) mode=native 切换回 mode=web 截图
+   */
+
+  it("rich-text-web-snapshot", async () => {
+    await page.waitFor(1000);
+    await screenshot('rich-text-mode-web')
+  });
+
+  it('itemclick-event-web', async () => {
+    await testItemClickEvent()
+  })
+
+  if ((isAndroid || (isHarmony && isDom2)) && !isAppWebView) {
+    it("rich-text-native", async () => {
       await setPageData({
         mode: 'native'
       });
       await page.waitFor(1000);
-      const image = await program.screenshot({ fullPage: true });
-      expect(image).toSaveImageSnapshot();
+      await screenshot('rich-text-mode-native')
     });
-    return;
-  }
 
-  it('itemclick-event', async () => {
-    const rect = await page.callMethod("getBoundingClientRectForRichtext")
-    const windowInfo = await program.callUniMethod('getWindowInfo');
-    await program.tap({
-      x: Math.ceil(rect.left + 30),
-      y: Math.ceil(windowInfo.statusBarHeight + 44 + rect.top + 60),
-      duration: 100
+    it('itemclick-event-native', async () => {
+      await testItemClickEvent()
     })
 
-    await page.waitFor(500);
-
-    // 关闭弹窗逻辑各平台需要适配不同机型
-
-    if (isIOS) {
-        // 关闭弹窗 iPhone Pro 机型
-        await program.tap({
-          x: 200,
-          y: 433,
-          duration: 100
-        })
-
-        // 关闭弹窗 iPhone ProMax 机型
-        await program.tap({
-          x: 220,
-          y: 476,
-          duration: 100
-        })
-
-        // 关闭弹窗 iPhone plus 机型
-        await program.tap({
-          x: 220,
-          y: 526,
-          duration: 100
-        })
-
-        // 关闭弹窗 iPhone mini 机型
-        await program.tap({
-          x: 186,
-          y: 400,
-          duration: 100
-        })
-    }
-
-    const imageClicked = await page.data('data.imageClicked')
-    expect(imageClicked).toBe(true)
-  })
+    it("rich-text-native-change-web", async () => {
+      await setPageData({
+        mode: 'web'
+      });
+      await page.waitFor(1000);
+      await screenshot('rich-text-mode-native-change-web')
+    });
+  }
 
   // TODO: dom1 仅iOS支持rich-text组件响应自身click和父链的click事件，dom2 目前通道有问题，暂时屏蔽
   if (isDom2) {
@@ -123,7 +110,7 @@ describe('rich-text-test', () => {
     const rect = await page.callMethod("getBoundingClientRectForRichtext")
     const windowInfo = await program.callUniMethod('getWindowInfo');
     await program.tap({
-      x: Math.ceil(rect.left + rect.width *0.7),
+      x: Math.ceil(rect.left + rect.width * 0.7),
       y: Math.ceil(windowInfo.statusBarHeight + 44 + rect.top + 100),
       duration: 100
     })
