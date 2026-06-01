@@ -1,15 +1,6 @@
-const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
-const isMP = platformInfo.startsWith('mp')
 const PAGE_PATH = '/pages/component/picker/picker'
 
 describe('Picker.uvue', () => {
-  if (isMP) {
-    it('skip', () => {
-      expect(1).toBe(1)
-    })
-    return
-  }
-
   beforeAll(async () => {
     page = await program.reLaunch(PAGE_PATH)
     await page.waitFor('view');
