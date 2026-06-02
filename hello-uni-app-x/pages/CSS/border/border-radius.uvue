@@ -101,6 +101,14 @@
       </view>
 
       <view>
+        <text>border-radius: 999px（border-radius超出边界形成正圆）</text>
+        <view class="demo-box">
+          <view class="square" style="border-radius: 999px; border: 1px solid green; border-top-color: red;"></view>
+          <view class="square" style="border-radius: 999px; border: 1px solid green; border-top-color: red;" flatten></view>
+        </view>
+      </view>
+
+      <view>
         <text>border-radius: 10px（包含子视图）</text>
         <view class="demo-box">
           <view class="common" style="margin-left: 5px;border-radius: 10px">
@@ -338,6 +346,11 @@
     width: 150px;
     height: 150px;
     background-color: gray;
+  }
+
+  .square {
+    width: 150px;
+    height: 150px;
   }
 
   .text-radius {
