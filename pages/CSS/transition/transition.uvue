@@ -494,7 +494,7 @@
   const changeTransform = () => {
     styleTransform?.style?.setProperty("transform", isTransitionStyleTransform
       ? 'rotate(0deg)'
-      : 'rotate(135deg)'
+      : 'rotate(370deg)'
     )
     isTransitionStyleTransform = !isTransitionStyleTransform
   }
