@@ -215,6 +215,8 @@
     data.transitionDurationActualImageFlat = imageRefDynamicFlat.value?.style.getPropertyValue('transition-duration') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeTransitionDurationDynamic = (value: string) => {
     data.transitionDurationDynamic = value
     viewRefDynamic.value?.style.setProperty('transition-duration', value)
@@ -227,7 +229,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeTransitionDuration = (index: number) => {

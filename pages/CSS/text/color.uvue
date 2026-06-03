@@ -84,6 +84,8 @@
     data.colorActualFlat = textRefFlat.value?.style.getPropertyValue('color') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeColor = (value: string) => {
     data.color = value
     textRef.value?.style.setProperty('color', value)
@@ -91,7 +93,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeColor = (index: number) => {

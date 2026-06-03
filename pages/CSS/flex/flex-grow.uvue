@@ -212,6 +212,8 @@
     data.flexGrowActualImageFlat = imageRefFlat.value?.style.getPropertyValue('flex-grow') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeFlexGrow = (value: string) => {
     data.flexGrow = value
     viewRef.value?.style.setProperty('flex-grow', value)
@@ -223,7 +225,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeFlexGrow = (index: number) => {

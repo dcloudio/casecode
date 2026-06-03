@@ -99,6 +99,8 @@
     data.lineHeightActualFlat = textRefFlat.value?.style.getPropertyValue('line-height') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeLineHeight = (value: string) => {
     data.lineHeight = value
     textRef.value?.style.setProperty('line-height', value)
@@ -106,7 +108,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeLineHeight = (index: number) => {

@@ -201,6 +201,8 @@
     data.opacityActualImageFlat = imageRefFlat.value?.style.getPropertyValue('opacity') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeOpacity = (value: string) => {
     data.opacity = value
     viewRef.value?.style.setProperty('opacity', value)
@@ -212,7 +214,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeOpacity = (index: number) => {

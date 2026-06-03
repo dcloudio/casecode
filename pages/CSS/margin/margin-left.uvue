@@ -198,6 +198,8 @@
     data.marginLeftActualImageFlat = imageRefFlat.value?.style.getPropertyValue('margin-left') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeMarginLeft = (value: string) => {
     data.marginLeft = value
     viewRef.value?.style.setProperty('margin-left', value)
@@ -209,7 +211,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeMarginLeft = (index: number) => {

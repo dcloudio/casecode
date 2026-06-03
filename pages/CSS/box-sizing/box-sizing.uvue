@@ -204,6 +204,7 @@
     data.boxSizingActualImageFlat = imageRefFlat.value?.style.getPropertyValue('box-sizing') ?? ''
   }
 
+  const ins = getCurrentInstance()
   const changeBoxSizing = (value: string) => {
     data.boxSizing = value
     viewRef.value?.style.setProperty('box-sizing', value)
@@ -215,7 +216,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeBoxSizing = (index: number) => {

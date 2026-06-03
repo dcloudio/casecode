@@ -89,6 +89,8 @@
     data.fontFamilyActualFlat = textRefFlat.value?.style.getPropertyValue('font-family') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeFontFamily = (value: string) => {
     data.fontFamily = value
     textRef.value?.style.setProperty('font-family', value)
@@ -96,7 +98,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeFontFamily = (index: number) => {

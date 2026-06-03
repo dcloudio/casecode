@@ -382,6 +382,8 @@
     elChangeBorderAndBackgroundColor = uni.getElementById("borderAndBackgroundColor")
   })
 
+  const ins = getCurrentInstance()
+
   const changeWidthOrHeight = () => {
     widthOrHeight?.style?.setProperty("width", isTranstionWidthOrHeight
       ? '200px'
@@ -745,7 +747,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeTransition = (index: number) => {

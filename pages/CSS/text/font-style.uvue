@@ -74,6 +74,8 @@
     data.fontStyleActualFlat = textRefFlat.value?.style.getPropertyValue('font-style') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeFontStyle = (value: string) => {
     data.fontStyle = value
     textRef.value?.style.setProperty('font-style', value)
@@ -81,7 +83,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeFontStyle = (index: number) => {

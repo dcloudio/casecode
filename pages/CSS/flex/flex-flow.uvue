@@ -193,6 +193,8 @@
     data.flexFlowActualFlat = viewRefFlat.value?.style.getPropertyValue('flex-flow') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeFlexFlow = (value : string) => {
     data.flexFlow = value
     viewRef.value?.style.setProperty('flex-flow', value)
@@ -200,7 +202,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeFlexFlow = (index: number) => {

@@ -193,6 +193,8 @@
     data.topActualImageFlat = imageRefFlat.value?.style.getPropertyValue('top') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeTop = (value: string) => {
     data.top = value
     viewRef.value?.style.setProperty('top', value)
@@ -204,7 +206,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeTop = (index: number) => {

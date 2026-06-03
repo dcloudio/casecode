@@ -199,6 +199,8 @@
     data.marginTopActualImageFlat = imageRefFlat.value?.style.getPropertyValue('margin-top') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeMarginTop = (value: string) => {
     data.marginTop = value
     viewRef.value?.style.setProperty('margin-top', value)
@@ -210,7 +212,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeMarginTop = (index: number) => {

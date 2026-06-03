@@ -101,6 +101,8 @@
 		data.fontWeightActualFlat = textRefFlat.value?.style.getPropertyValue('font-weight') ?? ''
 	}
 
+	const ins = getCurrentInstance()
+
 	const changeFontWeight = (value: string) => {
 		data.fontWeight = value
 		textRef.value?.style.setProperty('font-weight', value)
@@ -108,7 +110,7 @@
 		// 使用 nextTick 确保样式已应用后再获取值
 		nextTick(() => {
 			getPropertyValues()
-		})
+		}, ins)
 	}
 
 	const radioChangeFontWeight = (index: number) => {

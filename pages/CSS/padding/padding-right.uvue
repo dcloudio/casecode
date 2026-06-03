@@ -173,6 +173,8 @@
     data.paddingRightActualImageFlat = imageRefFlat.value?.style.getPropertyValue('padding-right') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changePaddingRight = (value: string) => {
     data.paddingRight = value
     viewRef.value?.style.setProperty('padding-right', value)
@@ -184,7 +186,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangePaddingRight = (index: number) => {

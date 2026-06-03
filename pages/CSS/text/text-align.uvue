@@ -71,6 +71,8 @@
 		data.textAlignActualFlat = textRefFlat.value?.style.getPropertyValue('text-align') ?? ''
 	}
 
+	const ins = getCurrentInstance()
+
 	const changeTextAlign = (value: string) => {
 		data.textAlign = value
 		textRef.value?.style.setProperty('text-align', value)
@@ -78,7 +80,7 @@
 		// 使用 nextTick 确保样式已应用后再获取值
 		nextTick(() => {
 			getPropertyValues()
-		})
+		}, ins)
 	}
 
 	const radioChangeTextAlign = (index: number) => {

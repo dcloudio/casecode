@@ -91,6 +91,8 @@
 		data.letterSpacingActualFlat = textRefFlat.value?.style.getPropertyValue('letter-spacing') ?? ''
 	}
 
+	const ins = getCurrentInstance()
+
 	const changeLetterSpacing = (value: string) => {
 		data.letterSpacing = value
 		textRef.value?.style.setProperty('letter-spacing', value)
@@ -98,7 +100,7 @@
 		// 使用 nextTick 确保样式已应用后再获取值
 		nextTick(() => {
 			getPropertyValues()
-		})
+		}, ins)
 	}
 
 	const radioChangeLetterSpacing = (index: number) => {

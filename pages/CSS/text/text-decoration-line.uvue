@@ -82,6 +82,8 @@
 		data.textDecorationLineActualFlat = textRefFlat.value?.style.getPropertyValue('text-decoration-line') ?? ''
 	}
 
+	const ins = getCurrentInstance()
+
 	const changeTextDecorationLine = (value: string) => {
 		data.textDecorationLine = value
 		textRef.value?.style.setProperty('text-decoration-line', value)
@@ -89,7 +91,7 @@
 		// 使用 nextTick 确保样式已应用后再获取值
 		nextTick(() => {
 			getPropertyValues()
-		})
+		}, ins)
 	}
 
 	const radioChangeTextDecorationLine = (index: number) => {

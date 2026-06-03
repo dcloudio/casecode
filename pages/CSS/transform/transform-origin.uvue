@@ -127,6 +127,8 @@
   const scrollViewCount = ref(0)
   const nativeViewCount = ref(0)
 
+  const ins = getCurrentInstance()
+
   const changetransform = () => {
     const element = transformView.value
 
@@ -339,7 +341,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeTransformOrigin = (index: number) => {

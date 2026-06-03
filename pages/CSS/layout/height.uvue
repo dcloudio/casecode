@@ -159,6 +159,8 @@
     data.heightActualImageFlat = imageRefFlat.value?.style.getPropertyValue('height') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeHeight = (value: string) => {
     data.height = value
     viewRef.value?.style.setProperty('height', value)
@@ -170,7 +172,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeHeight = (index: number) => {

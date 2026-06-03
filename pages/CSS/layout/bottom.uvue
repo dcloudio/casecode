@@ -194,6 +194,8 @@
     data.bottomActualImageFlat = imageRefFlat.value?.style.getPropertyValue('bottom') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeBottom = (value: string) => {
     data.bottom = value
     viewRef.value?.style.setProperty('bottom', value)
@@ -205,7 +207,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeBottom = (index: number) => {
