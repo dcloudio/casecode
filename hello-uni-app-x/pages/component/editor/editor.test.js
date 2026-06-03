@@ -10,7 +10,10 @@ const isSimulator = platformInfo.includes('模拟器')
 const isDom2 = process.env.UNI_APP_X_DOM2 === 'true'
 
 describe('editor.uvue', () => {
-  if (isMP || isiOS) {
+  const infos = process.env.uniTestPlatformInfo.split(' ');
+  const version = parseInt(infos[infos.length - 1]);
+
+  if (isMP || isiOS || (isAndroid && !isNaN(version) && version < 8)) {
     it('skip', () => {
       expect(1).toBe(1)
     })

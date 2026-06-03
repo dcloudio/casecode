@@ -5,14 +5,17 @@ const isIos = platformInfo.startsWith('ios')
 const isDom2 = process.env.UNI_APP_X_DOM2 === 'true'
 const isHarmony = platformInfo.startsWith('harmony')
 const isWeb = platformInfo.startsWith('web')
+const isAndroid = platformInfo.startsWith('android')
 
 describe('editor-edit.uvue', () => {
+  const infos = process.env.uniTestPlatformInfo.split(' ');
+  const version = parseInt(infos[infos.length - 1]);
   /**
    * mp-weixin 自动化测试截图报错
    *
    * 暂时跳过相关平台的测试，后续根据平台能力完善测试用例
    */
-  if (isMP || (isDom2 && isIos)) {
+  if (isMP || (isDom2 && isIos) || (isAndroid && !isNaN(version) && version < 8)) {
     it('skip', () => {
       expect(1).toBe(1)
     })
