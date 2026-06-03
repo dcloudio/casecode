@@ -239,6 +239,8 @@
     data.positionActualImage = imageRef.value?.style.getPropertyValue('position') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changePosition = (value: string) => {
     data.position = value
     viewRef.value?.style.setProperty('position', value)
@@ -247,7 +249,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangePosition = (index: number) => {

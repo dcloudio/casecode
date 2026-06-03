@@ -208,6 +208,7 @@
     data.alignSelfActualImageFlat = imageRefFlat.value?.style.getPropertyValue('align-self') ?? ''
   }
 
+  const ins = getCurrentInstance()
   const changeAlignSelf = (value: string) => {
     data.alignSelf = value
     viewRef.value?.style.setProperty('align-self', value)
@@ -219,7 +220,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeAlignSelf = (index: number) => {

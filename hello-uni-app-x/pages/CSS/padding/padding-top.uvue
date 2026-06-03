@@ -174,6 +174,8 @@
     data.paddingTopActualImageFlat = imageRefFlat.value?.style.getPropertyValue('padding-top') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changePaddingTop = (value: string) => {
     data.paddingTop = value
     viewRef.value?.style.setProperty('padding-top', value)
@@ -185,7 +187,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangePaddingTop = (index: number) => {

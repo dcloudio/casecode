@@ -294,6 +294,7 @@
     data.borderRadiusActualImageFlat = imageRefFlat.value?.style.getPropertyValue('border-radius') ?? ''
   }
 
+  const ins = getCurrentInstance()
   const changeBorderRadius = (value: string) => {
     data.borderRadius = value
     viewRef.value?.style.setProperty('border-radius', value)
@@ -305,7 +306,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeBorderRadius = (index: number) => {

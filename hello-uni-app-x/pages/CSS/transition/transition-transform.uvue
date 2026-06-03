@@ -179,6 +179,8 @@
 		data.transitionTransformActualImageFlat = imageRefDynamicFlat.value?.style.getPropertyValue('transition-property') ?? ''
 	}
 
+	const ins = getCurrentInstance()
+
 	const changeTransitionTransform = (value: string) => {
 		data.transitionTransform = value
 		viewRefDynamic.value?.style.setProperty('transition-property', value)
@@ -204,7 +206,7 @@
 		// 使用 nextTick 确保样式已应用后再获取值
 		nextTick(() => {
 			getPropertyValues()
-		})
+		}, ins)
 	}
 
 	const resetAllStates = () => {

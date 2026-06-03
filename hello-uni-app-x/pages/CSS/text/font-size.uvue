@@ -84,6 +84,8 @@
     data.fontSizeActualFlat = textRefFlat.value?.style.getPropertyValue('font-size') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeFontSize = (value: string) => {
     data.fontSizeProp = value
     textRef.value?.style.setProperty('font-size', value)
@@ -91,7 +93,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeFontSize = (index: number) => {

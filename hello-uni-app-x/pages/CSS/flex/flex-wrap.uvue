@@ -169,6 +169,8 @@
     data.flexWrapActualFlat = viewRefFlat.value?.style.getPropertyValue('flex-wrap') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeFlexWrap = (value : string) => {
     data.flexWrap = value
     viewRef.value?.style.setProperty('flex-wrap', value)
@@ -176,7 +178,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeFlexWrap = (index : number) => {

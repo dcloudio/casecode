@@ -195,6 +195,8 @@
     data.leftActualImageFlat = imageRefFlat.value?.style.getPropertyValue('left') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeLeft = (value: string) => {
     data.left = value
     viewRef.value?.style.setProperty('left', value)
@@ -206,7 +208,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeLeft = (index: number) => {

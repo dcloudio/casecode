@@ -272,6 +272,8 @@
     data.widthActualImageFlat = imageRefFlat.value?.style.getPropertyValue('width') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeWidth = (value: string) => {
     data.width = value
     viewRef.value?.style.setProperty('width', value)
@@ -283,7 +285,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeWidth = (index: number) => {

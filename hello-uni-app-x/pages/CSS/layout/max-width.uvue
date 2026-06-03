@@ -153,6 +153,8 @@
     data.maxWidthActualImageFlat = imageRefFlat.value?.style.getPropertyValue('max-width') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeMaxWidth = (value: string) => {
     data.maxWidth = value
     viewRef.value?.style.setProperty('max-width', value)
@@ -164,7 +166,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeMaxWidth = (index: number) => {

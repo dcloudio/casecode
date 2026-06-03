@@ -342,6 +342,8 @@
 		data.transformActualImageFlat = imageRefDynamicFlat.value?.style.getPropertyValue('transform') ?? ''
 	}
 
+	const ins = getCurrentInstance()
+
 	const changeTransformDynamic = (value : string) => {
 		data.transformValueDynamic = value
 		viewRefDynamic.value?.style.setProperty('transform', value)
@@ -353,7 +355,7 @@
 		// 使用 nextTick 确保样式已应用后再获取值
 		nextTick(() => {
 			getPropertyValues()
-		})
+		}, ins)
 	}
 
 	const radioChangeTransform = (index : number) => {

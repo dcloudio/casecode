@@ -103,6 +103,7 @@
     data.displayActualImage = imageRef.value?.style.getPropertyValue('display') ?? ''
   }
 
+  const ins = getCurrentInstance()
   const changeDisplay = (value: string) => {
     data.displayProp = value
     viewRef.value?.style.setProperty('display', value)
@@ -111,7 +112,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeDisplay = (index: number) => {

@@ -255,6 +255,8 @@
     data.flexActualImageFlat = imageRefFlat.value?.style.getPropertyValue('flex') ?? ''
   }
 
+  const ins = getCurrentInstance()
+
   const changeFlex = (value: string) => {
     data.flexProp = value
     viewRef.value?.style.setProperty('flex', value)
@@ -266,7 +268,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    })
+    }, ins)
   }
 
   const radioChangeFlex = (index: number) => {
