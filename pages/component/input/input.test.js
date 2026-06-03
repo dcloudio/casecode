@@ -106,10 +106,12 @@ describe('component-native-input', () => {
   it("type", async () => {
     const text = await page.$('#uni-input-type-text');
     const number = await page.$('#uni-input-type-number');
+    const numberPasswordFalse = await page.$('#uni-input-type-number-password-false');
     const digit = await page.$('#uni-input-type-digit');
     const tel = await page.$('#uni-input-type-tel');
     expect(await text.attribute('type')).toEqual("text")
     expect(await number.attribute('type')).toEqual("number")
+    expect(await numberPasswordFalse.attribute('type')).toEqual("number")
     expect(await digit.attribute('type')).toEqual("digit")
     expect(await tel.attribute('type')).toEqual("tel")
   })
@@ -340,6 +342,44 @@ describe('component-native-input', () => {
     expect(image).toSaveImageSnapshot()
   })
   if (isAPP) {
+    it("type number password false focus with soft keyboard screenshot", async () => {
+      await setPageData({
+        focus: false,
+        cursorInputFocus: false,
+        cursorColorInputFocus: false,
+        selectionInputFocus: false,
+        inputMaxLengthFocus: false,
+        firstInputFocus: false,
+        typeNoneFocus: false,
+        focusedForKeyboardHeightChangeTest: false,
+        numberPasswordFalseFocus: false,
+      })
+      await program.tap({ x: 100, y: 50 })
+      await page.waitFor(1000)
+      await program.pageScrollTo(0)
+      await page.waitFor(1000)
+      await setPageData({
+        numberPasswordFalseFocus: true,
+      })
+      await page.waitFor(1500)
+      const windowInfo = await program.callUniMethod('getWindowInfo');
+      const image = await program.screenshot({
+        deviceShot: true,
+        area: {
+          x: 0,
+          y: windowInfo.safeAreaInsets.top + 44,
+        }
+      })
+      expect(image).toSaveImageSnapshot()
+      await setPageData({
+        numberPasswordFalseFocus: false,
+      })
+      if (isHarmony) {
+        await program.tap({ x: 100, y: 50 })
+        await page.waitFor(1000);
+      }
+    })
+
     it("type none focus should not show keyboard", async () => {
       // 确保其他 input 失焦
       await setPageData({
@@ -349,6 +389,7 @@ describe('component-native-input', () => {
         selectionInputFocus: false,
         inputMaxLengthFocus: false,
         firstInputFocus: false,
+        numberPasswordFalseFocus: false,
       })
       await program.tap({ x: 100, y: 50 })
       // type none input 获取焦点后不应该弹出键盘，等待一段时间截图确认
