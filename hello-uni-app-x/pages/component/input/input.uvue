@@ -24,6 +24,10 @@
           <input id="uni-input-type-number" class="uni-input" type="number" placeholder="数字输入键盘" />
         </view>
         <view class="input-wrapper">
+          <input id="uni-input-type-number-password-false" class="uni-input" type="number" :password="false"
+            :focus="data.numberPasswordFalseFocus" placeholder="type=number password=false" />
+        </view>
+        <view class="input-wrapper">
           <input id="uni-input-type-digit" class="uni-input" type="digit" placeholder="带小数点的数字输入键盘" />
         </view>
         <view class="input-wrapper">
@@ -465,6 +469,7 @@
     triggerBlur: boolean;
     showTypeNoneAndFocusCase: boolean;
     typeNoneFocus: boolean;
+    numberPasswordFalseFocus: boolean;
   }
 
   // 使用reactive避免ref数据在自动化测试中无法访问
@@ -507,7 +512,8 @@
     triggerFocus: false,
     triggerBlur: false,
     showTypeNoneAndFocusCase: false,
-    typeNoneFocus: false
+    typeNoneFocus: false,
+    numberPasswordFalseFocus: false
   } as DataType)
 
   const togglePlaceholderClass = () => {
