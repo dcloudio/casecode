@@ -335,6 +335,15 @@
       <view class="textarea-wrap">
         <textarea class="textarea-instance" style="height: 60px;font-size:20px" placeholder-class="placeholder-class" placeholder-style="font-size:40px" placeholder="placeholder" />
       </view>
+      <view class="textarea-wrap">
+        <textarea class="textarea-instance" style="font-size: 20px;padding-top: 5px;" :auto-height="true" value="font-size: 20px;padding-top: 5px;" />
+      </view>
+      <view class="textarea-wrap">
+        <textarea class="textarea-instance" style="font-size: 20px;padding-bottom: 5px;" :auto-height="true" value="font-size: 20px;padding-bottom: 5px;" />
+      </view>
+      <view class="textarea-wrap">
+        <textarea class="textarea-instance" style="font-size: 20px;padding: 5px;" :auto-height="true" value="font-size: 20px;padding: 5px;" />
+      </view>
 
       <text class="uni-title-text">textarea样式大合集</text>
       <view class="textarea-wrap">
