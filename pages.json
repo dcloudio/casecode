@@ -114,58 +114,67 @@
 			"path": "pages/component/list-view/list-view",
 			"group": "0,1,7",
 			"style": {
-				"navigationBarTitleText": "list-view | 列表容器"
+				"navigationBarTitleText": "list-view | 列表容器",
+        "disableScroll": true
 			}
 		},
 		{
 			"path": "pages/component/list-view/list-view-refresh",
 			"style": {
 				"navigationBarTitleText": "list-view-refresh",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+        "disableScroll": true
 			}
 		},
 		{
 			"path": "pages/component/list-view/list-view-multiplex",
 			"style": {
-				"navigationBarTitleText": "list-view-multiplex"
+				"navigationBarTitleText": "list-view-multiplex",
+        "disableScroll": true
 			}
 		},
 		{
 			"path": "pages/component/list-view/list-view-multiplex-input",
 			"style": {
 				"navigationBarTitleText": "list-view复用input",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+        "disableScroll": true
 			}
 		},
 		{
 			"path": "pages/component/list-view/list-view-form-item",
 			"style": {
 				"navigationBarTitleText": "list-view长按事件",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+        "disableScroll": true
 			}
 		},
 		{
 			"path": "pages/component/list-view/list-view-multiplex-video",
 			"style": {
-				"navigationBarTitleText": "list-view-multiplex-video"
+				"navigationBarTitleText": "list-view-multiplex-video",
+        "disableScroll": true
 			}
 		},
 		{
 			"path": "pages/component/list-view/list-view-children-in-slot",
 			"style": {
-				"navigationBarTitleText": "list-view-children-in-slot"
+				"navigationBarTitleText": "list-view-children-in-slot",
+        "disableScroll": true
 			}
 		},
 		{
 			"path": "pages/component/list-view/list-view-children-if-show",
 			"style": {
-				"navigationBarTitleText": "list-item v-if & v-show"
+				"navigationBarTitleText": "list-item v-if & v-show",
+        "disableScroll": true
 			}
 		},
 		{
 			"path": "pages/component/list-view/list-view-with-type",
 			"style": {
-				"navigationBarTitleText": "带有type的list-item"
+				"navigationBarTitleText": "带有type的list-item",
+        "disableScroll": true
 			}
 		},
 		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
@@ -173,7 +182,8 @@
 			"path": "pages/component/sticky-section/sticky-section",
 			"group": "0,1,9,1",
 			"style": {
-				"navigationBarTitleText": "sticky-section | 吸顶布局容器"
+				"navigationBarTitleText": "sticky-section | 吸顶布局容器",
+        "disableScroll": true
 			}
 		},
 		// #endif
@@ -183,7 +193,8 @@
 			"group": "0,1,9,0",
 			"style": {
 				"navigationBarTitleText": "sticky-header | 吸顶布局容器",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+        "disableScroll": true
 			}
 		},
 		// #endif
@@ -703,7 +714,8 @@
 			"path": "pages/component/ad/list-view-ad",
 			"style": {
 				"navigationBarTitleText": "ad | 信息流广告",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+        "disableScroll": true
 			}
 		},
 		// #endif
@@ -2290,7 +2302,8 @@
 				{
 					"path": "scroll-view-sticky-section/scroll-view-sticky-section",
 					"style": {
-						"navigationBarTitleText": "自定义吸顶"
+						"navigationBarTitleText": "自定义吸顶",
+            "disableScroll": true
 					}
 				},
 				// #endif
@@ -2319,20 +2332,23 @@
 				{
 					"path": "search-header-long-list/search-header-long-list",
 					"style": {
-						"navigationBarTitleText": "带搜索框的分栏长列表"
+						"navigationBarTitleText": "带搜索框的分栏长列表",
+            "disableScroll": true
 					}
 				},
 				{
 					"path": "banner-tabs-feed-nested-scroll/banner-tabs-feed-nested-scroll",
 					"style": {
-						"navigationBarTitleText": "顶部 Banner 分栏信息流嵌套滚动"
+						"navigationBarTitleText": "顶部 Banner 分栏信息流嵌套滚动",
+            "disableScroll": true
 					}
 				},
 				// #ifdef APP || WEB
 				{
 					"path": "list-delete-swipe-batch/list-delete-swipe-batch",
 					"style": {
-						"navigationBarTitleText": "可侧滑删除和多选删除的列表"
+						"navigationBarTitleText": "可侧滑删除和多选删除的列表",
+            "disableScroll": true
 					}
 				},
 				// #endif
@@ -2340,13 +2356,15 @@
 				{
 					"path": "long-list-perf/long-list-perf",
 					"style": {
-						"navigationBarTitleText": "死亡列表性能测试"
+						"navigationBarTitleText": "死亡列表性能测试",
+            "disableScroll": true
 					}
 				},
 				{
 					"path": "waterflow-perf/waterflow-perf",
 					"style": {
-						"navigationBarTitleText": "waterflow滚动加载长列表"
+						"navigationBarTitleText": "waterflow滚动加载长列表",
+            "disableScroll": true
 					}
 				},
 				// #endif
@@ -2354,7 +2372,8 @@
 				{
 					"path": "banner-tabs-long-list-nested-scroll/banner-tabs-long-list-nested-scroll",
 					"style": {
-						"navigationBarTitleText": "顶部 Banner 分栏长列表嵌套滚动"
+						"navigationBarTitleText": "顶部 Banner 分栏长列表嵌套滚动",
+            "disableScroll": true
 					}
 				},
 				{
@@ -2368,7 +2387,8 @@
 				{
 					"path": "banner-waterfall-nested-scroll/banner-waterfall-nested-scroll",
 					"style": {
-						"navigationBarTitleText": "顶部 Banner 瀑布流嵌套滚动"
+						"navigationBarTitleText": "顶部 Banner 瀑布流嵌套滚动",
+            "disableScroll": true
 					}
 				},
 				// #endif
@@ -2410,13 +2430,15 @@
 					"path": "recycle-long-list/recycle-long-list",
 					"style": {
 						"navigationBarTitleText": "可回收复用长列表",
-						"enablePullDownRefresh": false
+						"enablePullDownRefresh": false,
+            "disableScroll": true
 					}
 				},
 				{
 					"path": "batch-load-long-list/batch-load-long-list",
 					"style": {
-						"navigationBarTitleText": "分批加载长列表"
+						"navigationBarTitleText": "分批加载长列表",
+            "disableScroll": true
 					}
 				},
 				// #endif
