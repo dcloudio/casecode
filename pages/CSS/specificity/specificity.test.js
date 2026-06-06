@@ -27,6 +27,12 @@ describe('CSS Specificity', () => {
     return await element.style('border-top-color');
   }
 
+  async function getStyleBySelector(selector, styleName, parent = null) {
+    const scope = parent ?? page
+    const element = await scope.$(selector)
+    return await element.style(styleName)
+  }
+
   it('should verify class chaining specificity', async () => {
     // .s1 (blue)
     const s1 = await getBorderColor('spec-multi-1');
@@ -69,4 +75,14 @@ describe('CSS Specificity', () => {
     // Both should be the same color (Green) if correct
     expect(inverse).toBe(normal);
   });
+
+  it('should verify .a.b on custom component tag', async () => {
+    const baseBg = await getStyleBySelector('.spec-component-box-base', 'background-color')
+    const darkBg = await getStyleBySelector('.spec-component-box-dark', 'background-color')
+    const baseBorder = await getStyleBySelector('.spec-component-box-base', 'border-top-color')
+    const darkBorder = await getStyleBySelector('.spec-component-box-dark', 'border-top-color')
+
+    expect(baseBg).not.toBe(darkBg)
+    expect(baseBorder).not.toBe(darkBorder)
+  })
 });
