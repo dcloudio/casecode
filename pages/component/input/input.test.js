@@ -212,9 +212,41 @@ describe('component-native-input', () => {
       await setPageData({cursor_color: "red"})
       await page.waitFor(500)
       expect(await (await page.$('#uni-input-cursor-color')).attribute("cursor-color")).toBe("red")
+      await setPageData({
+        focus: false,
+        cursorInputFocus: false,
+        cursorColorInputFocus: true,
+        selectionInputFocus: false,
+        inputMaxLengthFocus: false,
+        firstInputFocus: false,
+        numberPasswordFalseFocus: false,
+      })
+      // 等待键盘上推
+      await page.waitFor(1000)
+      const windowInfo = await program.callUniMethod('getWindowInfo');
+      const image1 = await program.screenshot({
+        deviceShot: true,
+        area: {
+          x: 70,
+          y: windowInfo.safeAreaInsets.top + 44 + 100,
+          width: 30,
+          height: 40,
+        },
+      })
+      expect(image1).toSaveImageSnapshot()
+      // 两张截图，避免光标闪烁截不到
+      const image2 = await program.screenshot({
+        deviceShot: true,
+        area: {
+          x: 70,
+          y: windowInfo.safeAreaInsets.top + 44 + 100,
+          width: 30,
+          height: 40,
+        },
+      })
+      expect(image2).toSaveImageSnapshot()
     })
   }
-
 
   // it("maxlength", async () => {
   //   const input = await page.$('.uni-input-maxlength');
@@ -297,8 +329,10 @@ describe('component-native-input', () => {
     const image1 = await program.screenshot({
       deviceShot: true,
       area: {
-        x: 0,
-        y: windowInfo.safeAreaInsets.top + 44,
+        x: 120,
+        y: windowInfo.safeAreaInsets.top + 44 + 150,
+        width: 20,
+        height: 25,
       },
     })
     expect(image1).toSaveImageSnapshot()
@@ -306,8 +340,10 @@ describe('component-native-input', () => {
     const image2 = await program.screenshot({
       deviceShot: true,
       area: {
-        x: 0,
-        y: windowInfo.safeAreaInsets.top + 44,
+        x: 120,
+        y: windowInfo.safeAreaInsets.top + 44 + 150,
+        width: 20,
+        height: 25,
       },
     })
     expect(image2).toSaveImageSnapshot()
