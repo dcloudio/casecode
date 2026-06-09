@@ -64,6 +64,7 @@
       <!-- #ifndef WEB -->
       <button @click="scrollTo">scrollTo设置left滚动200px</button>
       <!-- #endif -->
+      <button style="margin-top: 8px" @click="getUniElementScrollOffset">打印 scroll-view 滚动属性</button>
 
       <view id="scaledView" style="transform: scale(2);background-color: green;width: 50px;height: 50px;margin-top: 45px;margin-left: 25px;"></view>
 
@@ -168,6 +169,16 @@
       // #ifndef MP-WEIXIN
       scrollViewRef.value!.scrollTo(200,0)
       // #endif
+    }
+  }
+
+  function getUniElementScrollOffset() {
+    if (scrollViewRef.value != null) {
+      const scrollView = scrollViewRef.value!
+      console.log("scrollTop: ", scrollView.scrollTop)
+      console.log("scrollHeight: ", scrollView.scrollHeight)
+      console.log("scrollWidth: ", scrollView.scrollWidth)
+      console.log("scrollLeft: ", scrollView.scrollLeft)
     }
   }
 
