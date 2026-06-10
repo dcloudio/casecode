@@ -1,5 +1,5 @@
 <template>
-  <!-- #ifdef APP-ANDROID || (APP-HARMONY && VUE3-VAPOR) -->
+  <!-- #ifdef APP-ANDROID || (APP-HARMONY && VUE3-VAPOR) || (APP-IOS && VUE3-VAPOR) -->
   <!-- <enum-data title="设置mode（仅Android和harmony平台支持，默认值为web）" :items="modeItemTypes" @change="onModeChange"></enum-data> -->
   <!-- #endif -->
   <!-- #ifndef MP -->
