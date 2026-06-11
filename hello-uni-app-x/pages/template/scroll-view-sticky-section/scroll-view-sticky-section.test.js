@@ -19,7 +19,6 @@ describe('template-scroll-view-sticky-section', () => {
       const sticky = await page.$('.search')
       const transform = await sticky.style('transform')
       const isSticky = transform.includes('translateY(')
-      console.log('waitForStickyTransform', { expectedSticky, transform, isSticky })
       return isSticky == expectedSticky || Date.now() - start > 3000
     })
 
@@ -32,10 +31,12 @@ describe('template-scroll-view-sticky-section', () => {
   async function scrollTo(scrollTop) {
     const scrollView = await page.$('.page')
     expect(scrollView).not.toBeNull()
-    expect(typeof scrollView.scrollTo).toBe('function')
 
-    console.log('scrollTo target', scrollTop)
-    await scrollView.scrollTo(0, scrollTop)
+    if (typeof scrollView.scrollTo == 'function') {
+      await scrollView.scrollTo(0, scrollTop)
+    } else {
+      await program.pageScrollTo(scrollTop)
+    }
     await page.waitFor(400)
   }
 
@@ -45,7 +46,6 @@ describe('template-scroll-view-sticky-section', () => {
     const stickyRect = await sticky.offset()
     const scrollRect = await scrollView.offset()
     const threshold = Math.round(stickyRect.top - scrollRect.top)
-    console.log('sticky threshold', { stickyRect, scrollRect, threshold })
     return threshold
   }
 

@@ -1,16 +1,5 @@
 const PAGE_PATH = '/pages/template/scroll-fade-navbar/scroll-fade-navbar'
 
-function createMockList() {
-  return Array.from({ length: 20 }, (_, i) => ({
-    author_name: 'DCloud',
-    cover: '/static/logo.png',
-    id: i,
-    post_id: `mock-${i}`,
-    published_at: '2026-06-02',
-    title: `mock news ${i}`
-  }))
-}
-
 function getAlpha(color) {
   if (!color || color === 'transparent') {
     return 0
@@ -54,15 +43,7 @@ describe('scroll-fade-navbar', () => {
   beforeAll(async () => {
     page = await program.reLaunch(PAGE_PATH)
     await page.waitFor('view')
-    await page.setData({
-      banner: {
-        cover: '/static/logo.png',
-        title: 'mock banner',
-        post_id: 'mock-banner'
-      },
-      listData: createMockList()
-    })
-    await page.waitFor(500)
+    await page.waitFor(800)
   })
 
   async function scrollTo(scrollTop) {

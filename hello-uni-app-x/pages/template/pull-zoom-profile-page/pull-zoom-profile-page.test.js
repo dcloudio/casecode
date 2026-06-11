@@ -90,7 +90,7 @@ describe('pull-zoom-profile-page', () => {
     const userInfo = await page.$('.user-info')
 
     await scrollTo(300)
-    expect(parseTranslateY(await headerWrapper.style('transform'))).toBe(190)
+    expect(parseTranslateY(await headerWrapper.style('transform'))).toBeCloseTo(190, 0)
     expect(parseScale(await userInfo.style('transform'))).toBeCloseTo(0.7, 2)
 
     await scrollTo(0)

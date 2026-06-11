@@ -73,6 +73,18 @@
     published_at : string,
     title : string
   }
+
+  type JestNewsFeedState = {
+    bannerTitle : string,
+    listCount : number,
+    currentIndex : number,
+    postId : string,
+    title : string,
+    cover : string,
+    isWideScreen : boolean,
+    currentDetailContentLength : number,
+  }
+
   const th_item = ref(["排序", "筛选"])
   const refresherTriggered = ref(false)
   let banner = ref({} as UTSJSONObject)
@@ -84,6 +96,7 @@
   const cover = ref('')
   const title = ref('')
   const firstDetailContent = ref('') // 并行预加载的第一个详情内容
+  const jestMocked = ref(false)//自动化测试
 
   function checkScreenWidth() {
     const { windowWidth } = uni.getWindowInfo()
@@ -107,6 +120,9 @@
       data: data,
       success: data => {
         refresherTriggered.value = false
+        if (jestMocked.value) {
+          return
+        }
         if (data.statusCode == 200) {
           banner.value = data.data as UTSJSONObject
           // banner = data.data as UTSJSONObject
@@ -148,6 +164,10 @@
       url: url,
       method: "GET",
       success: (res) => {
+        if (jestMocked.value) {
+          refresherTriggered.value = false
+          return
+        }
         if (res.statusCode == 200) {
           const result = res.data
           //因本接口没有更多分页数据，所以重新赋值。正常有分页的列表应该如下面push方式增加数组项
@@ -221,6 +241,64 @@
   })
 
   const isDarkMode = computed(() => state.isDarkMode)
+  // 自动化测试
+  function jest_applyMockData() {
+    jestMocked.value = true
+    currentIndex.value = 0
+    post_id.value = ''
+    cover.value = ''
+    title.value = ''
+    firstDetailContent.value = '<p>预加载正文</p>'
+    banner.value = {
+      post_id: 'banner-post-1',
+      title: '焦点新闻',
+      cover: '/static/logo.png'
+    } as UTSJSONObject
+    listData.value = [
+      {
+        author_name: 'uni-agent',
+        cover: '/static/logo.png',
+        id: 1,
+        post_id: 'post-1',
+        published_at: '2026-06-09',
+        title: '列表新闻一'
+      },
+      {
+        author_name: 'uni-agent',
+        cover: '/static/shuijiao.jpg',
+        id: 2,
+        post_id: 'post-2',
+        published_at: '2026-06-10',
+        title: '列表新闻二'
+      }
+    ]
+  }
+
+  function jest_setWideScreen(value : boolean) {
+    isWideScreen.value = value
+  }
+
+  function jest_openDetail(index : number) : boolean {
+    if (index < 0 || index >= listData.value.length) {
+      return false
+    }
+    goDetail(listData.value[index], index)
+    return true
+  }
+
+  function jest_getState() : JestNewsFeedState {
+    const bannerTitle = banner.value['title'] as string | null
+    return {
+      bannerTitle: bannerTitle != null ? bannerTitle : '',
+      listCount: listData.value.length,
+      currentIndex: currentIndex.value,
+      postId: post_id.value,
+      title: title.value,
+      cover: cover.value,
+      isWideScreen: isWideScreen.value,
+      currentDetailContentLength: currentDetailContent.value.length,
+    } as JestNewsFeedState
+  }
 
   onLoad(() => {
     checkScreenWidth()
@@ -230,6 +308,13 @@
 
   onResize(() => {
     checkScreenWidth()
+  })
+
+  defineExpose({
+    jest_applyMockData,
+    jest_setWideScreen,
+    jest_openDetail,
+    jest_getState,
   })
 </script>
 
