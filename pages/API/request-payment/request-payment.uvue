@@ -191,6 +191,16 @@
   const requestPayment = (e: PayItem) => {
     // #ifdef APP
     const provider = e.id;
+    if (provider == 'wxpay') {
+      const wxProvider = e.provider as UniPaymentWxpayProvider;
+      if (wxProvider != null && wxProvider.isWeChatInstalled != null && wxProvider.isWeChatInstalled == false) {
+        uni.showToast({
+          title: '微信没有安装',
+          icon: 'error',
+        });
+        return;
+      }
+    }
     appPay(provider);
     // #endif
 
