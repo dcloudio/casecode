@@ -98,6 +98,14 @@
     scaledViewHeight: number
   }
 
+  type ScrollOffset = {
+    scrollTop: number,
+    scrollHeight: number,
+    scrollWidth: number,
+    scrollLeft: number,
+    width: number
+  }
+
   const boxRef = ref<UniElement | null>(null)
   const scrollViewRef = ref<UniScrollViewElement | null>(null)
   const data = reactive({
@@ -117,6 +125,13 @@
     scaledViewWidth: 0,
     scaledViewHeight: 0
   } as DataType)
+  const scrollOffset = reactive<ScrollOffset>({
+    scrollTop: 0,
+    scrollHeight: 0,
+    scrollWidth: 0,
+    scrollLeft: 0,
+    width: 0
+  })
 
   function getBoundingClientRectAsyncChild(){
     const childEl = uni.getElementById('child')!
@@ -179,6 +194,12 @@
       console.log("scrollHeight: ", scrollView.scrollHeight)
       console.log("scrollWidth: ", scrollView.scrollWidth)
       console.log("scrollLeft: ", scrollView.scrollLeft)
+      const screenWidth = uni.getWindowInfo().screenWidth
+      scrollOffset.width = (screenWidth - 30) * 3
+      scrollOffset.scrollTop = scrollView.scrollTop
+      scrollOffset.scrollHeight = scrollView.scrollHeight
+      scrollOffset.scrollWidth = scrollView.scrollWidth
+      scrollOffset.scrollLeft = scrollView.scrollLeft
     }
   }
 
@@ -206,6 +227,7 @@
 
   defineExpose({
     data,
+    scrollOffset,
     getAttributeId,
     setStyle,
     getAttributeStyle,
