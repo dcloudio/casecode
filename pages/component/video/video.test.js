@@ -173,6 +173,44 @@ describe('component-native-video', () => {
     }
   });
 
+  it('test video parent touch events', async () => {
+    await setPageData({
+      autoTest: true,
+      eventParentTouchstart: null,
+      eventParentTouchmove: null,
+      eventParentTouchend: null
+    });
+    const videoRect = await page.callMethod('getVideoRect');
+    expect(videoRect).not.toBeNull();
+    let x = Math.ceil(videoRect.x + videoRect.width / 2);
+    let y = Math.ceil(videoRect.y + videoRect.height / 2);
+    if (isIOS || isHarmony) {
+      const windowInfo = await page.callMethod('getWindowInfo');
+      y += windowInfo.safeArea.top + 44;
+    }
+    await program.swipe({
+      startPoint: { x, y },
+      endPoint: { x: x + 10, y: y + 10 },
+      duration: 200
+    });
+    await page.waitFor(500);
+    expect(await page.data('data.eventParentTouchstart')).toEqual({
+      tagName: 'VIEW',
+      currentTargetTagName: 'VIEW',
+      type: 'touchstart'
+    });
+    expect(await page.data('data.eventParentTouchmove')).toEqual({
+      tagName: 'VIEW',
+      currentTargetTagName: 'VIEW',
+      type: 'touchmove'
+    });
+    expect(await page.data('data.eventParentTouchend')).toEqual({
+      tagName: 'VIEW',
+      currentTargetTagName: 'VIEW',
+      type: 'touchend'
+    });
+  });
+
 
   if (isAndroid || isHarmony) {
     if (isAndroid) {

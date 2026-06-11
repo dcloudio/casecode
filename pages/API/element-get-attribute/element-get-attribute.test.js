@@ -81,4 +81,12 @@ describe('test element-get-attribute', () => {
       expect(scaledViewHeight).toBeGreaterThan(99.5);
     })
   }
+
+  it('scroll offset', async () => {
+    const scrollOffset = await page.data("scrollOffset")
+    expect(scrollOffset.scrollTop).toBe(0)
+    // expect(scrollOffset.scrollHeight).toBe(150)
+    expect(scrollOffset.scrollWidth).toBe(scrollOffset.width)
+    expect(scrollOffset.scrollLeft).toBe(0)
+  })
 });
