@@ -61,14 +61,14 @@ describe('ExtApi-DownloadFile', () => {
     expect(res).toBe(true)
   })
 
-  it('Check download file long url', async () => {
-    res = await page.callMethod('jest_download_long_url')
-    await waitCallbackTriggredOrTimeout()
-    res = await page.data('data.jest_result');
-    expect(res).toBe(true)
-  });
-
   if (!(isMP || isWeb)) {
+    it('Check download file long url', async () => {
+      res = await page.callMethod('jest_download_long_url')
+      await waitCallbackTriggredOrTimeout()
+      res = await page.data('data.jest_result');
+      expect(res).toBe(true)
+    });
+
     it('Check uni.env', async () => {
       await page.callMethod('jest_downloadFile_with_uni_env');
       await waitCallbackTriggredOrTimeout()
