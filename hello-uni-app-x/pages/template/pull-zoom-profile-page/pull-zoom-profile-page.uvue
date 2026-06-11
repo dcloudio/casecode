@@ -44,6 +44,21 @@
   const userInfo = ref<UniElement | null>(null)
   const headerWrapper = ref<UniElement | null>(null)
 
+  // 自动化测试
+  type PullZoomTestData = {
+    headerPullImgTransform: string
+    headerImgTransform: string
+    userInfoTransform: string
+    headerWrapperTransform: string
+  }
+
+  const data = reactive<PullZoomTestData>({
+    headerPullImgTransform: '',
+    headerImgTransform: '',
+    userInfoTransform: '',
+    headerWrapperTransform: ''
+  })
+
   const $elementMap = new Map<string, UniElement>()
 
   // 工具方法，用于快速设置 Element 的 style
@@ -71,6 +86,18 @@
     }
   }
 
+  function updateTestTransform(refName : string, propertyStyle : string) : void {
+    if (refName == 'header-pull-img') {
+      data.headerPullImgTransform = propertyStyle
+    } else if (refName == 'header-img') {
+      data.headerImgTransform = propertyStyle
+    } else if (refName == 'user-info') {
+      data.userInfoTransform = propertyStyle
+    } else if (refName == 'header-wrapper') {
+      data.headerWrapperTransform = propertyStyle
+    }
+  }
+
   function onScroll(e : ScrollEvent) {
     const {scrollTop} = e.detail
     let y : number = scrollTop - 110
@@ -92,6 +119,34 @@
     setElementStyle("header-pull-img", 'transform', `scale(${pullingDistance / 200 + 1})`)
     setElementStyle("header-img", 'transform', `scale(${pullingDistance / 200 + 1})`)
   }
+
+  // 供自动化测试直接验证滚动联动后的 transform 计算结果。
+  function jest_applyScroll(scrollTop : number) : void {
+    let y : number = scrollTop - 110
+    let s : number = (100 - scrollTop/3)/100
+    if(y < 0){
+      y = 0
+    }
+    if(s < 0.7){
+      s = 0.7
+    }
+    let x : number = (1 - s) * -100
+    updateTestTransform("user-info", `translate(${x}px, ${y + (s-1)* -50}px) scale(${s})`)
+    updateTestTransform("header-wrapper", `translateY(${y}px)`)
+  }
+
+  // 供自动化测试直接验证下拉缩放时两张头图的缩放结果。
+  function jest_applyPulling(pullingDistance : number) : void {
+    const scaleValue = `scale(${pullingDistance / 200 + 1})`
+    updateTestTransform("header-pull-img", scaleValue)
+    updateTestTransform("header-img", scaleValue)
+  }
+
+  defineExpose({
+    data,
+    jest_applyScroll,
+    jest_applyPulling
+  })
 
 </script>
 

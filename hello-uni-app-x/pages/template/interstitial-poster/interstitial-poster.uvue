@@ -10,6 +10,9 @@
       </view>
 
       <page-container
+        <!-- #ifdef MP -->
+        v-if="showPoster"
+        <!-- #endif -->
         :show="showPoster"
         position="center"
         :overlay="true"
