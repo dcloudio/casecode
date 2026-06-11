@@ -83,6 +83,11 @@ function setSwiperIndex(index : number, updateIndicator : boolean) {
     updateTabIndicator(index, index, 1)
   }
 }
+// 自动化测试
+function jest_setSwiperCurrent(index : number) {
+  setSwiperIndex(index, true)
+  animationFinishIndex = index
+}
 
 function onTabClick(index : number) {
   setSwiperIndex(index, false)
@@ -123,6 +128,10 @@ onReady(() => {
     swiperWidth = res.width
     updateTabIndicator(swiperIndex.value, swiperIndex.value, 1)
   });
+})
+
+defineExpose({
+  jest_setSwiperCurrent
 })
 
 </script>
