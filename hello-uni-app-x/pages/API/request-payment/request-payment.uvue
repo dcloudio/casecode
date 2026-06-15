@@ -91,9 +91,6 @@
       // 微信小程序支持...结构语法
       ...JSON.parse(options.orderInfo),
       // #endif
-      // #ifdef APP-HARMONY
-      dataType: 'text',
-      // #endif
       success: (res: RequestPaymentSuccess) => {
         console.log(JSON.stringify(res));
         uni.showToast({ duration, icon: 'success', title: '支付成功' });
@@ -111,9 +108,11 @@
   const appPay = (provider: string) => {
     uni.showLoading({ title: '请求中...' });
     const isWxpay = provider == 'wxpay';
+    const isAlipay = provider == 'alipay';
     uni.request({
       url: isWxpay ? getWxpayOrderUrl() : ALIPAY_ORDER_URL,
       method: 'GET',
+      dataType: isAlipay ? 'text' : 'json',
       timeout: 6000,
       success: (res) => {
         console.log(res.data);
@@ -195,7 +194,7 @@
       const wxProvider = e.provider as UniPaymentWxpayProvider;
       if (wxProvider != null && wxProvider.isWeChatInstalled != null && wxProvider.isWeChatInstalled == false) {
         uni.showToast({
-          title: '微信没有安装',
+          title: '本设备中未找到微信',
           icon: 'error',
         });
         return;
