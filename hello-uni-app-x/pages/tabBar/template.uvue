@@ -16,7 +16,7 @@
       </view>
       <uni-collapse>
         <template v-for="(item, index) in list" :key="item.id">
-          <uni-collapse-item v-if="item.pages.length > 0" class="uni-panel pl-4 pr-4" :open="item.open" :title="item.name"
+          <uni-collapse-item v-if="item.pages.length > 0" class="uni-panel" :open="item.open" :title="item.name"
             title-wrap-class="component-collapse-title-wrap" title-class="component-collapse-title"
             content-wrap-class="component-collapse-content-wrap" arrow-class="component-collapse-arrow"
             @change="syncCollapseState(index, $event as boolean)">
