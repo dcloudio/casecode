@@ -35,6 +35,8 @@
         </view>
       </view>
     </view>
+
+    <button class="clear" @click="clearCache">清空缓存</button>
 <!-- #endif -->
     <text class="version">当前版本：{{version}}</text>
   </scroll-view>
@@ -72,6 +74,35 @@ function openUrl(url:string) {
   })
   // #endif
 }
+
+// #ifdef APP
+function clearCache() {
+  const fileManager = uni.getFileSystemManager()
+  // TODO 3个App平台表现不一致 @颜伊林
+  fileManager.rmdir({
+    "dirPath":uni.env.CACHE_PATH,
+    "recursive":true,
+    success: (res : FileManagerSuccessResult) => {
+      console.log("rmdir success", res)
+      uni.showToast({
+        title:"清空缓存目录成功",
+        icon:"success"
+      })
+    },
+    fail: (res : IFileSystemManagerFail) => {
+      console.error('清空缓存目录失败', res)
+      uni.showModal({
+      	title: '清空缓存目录失败',
+      	content: res.errMsg,
+      	showCancel: false
+      })
+    },
+    complete: (res : any) => {
+      console.log("rmdir complete", res)
+    }
+  })
+}
+// #endif
 
 onLoad(() => {
   version.value = uni.getAppBaseInfo().appVersion??''
@@ -139,5 +170,9 @@ onLoad(() => {
 }
 .item {
   border-radius: 6px;
+}
+.clear {
+  margin-left: 18px;
+  margin-right: 18px;
 }
 </style>
