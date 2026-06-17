@@ -1,16 +1,14 @@
 {
-  "id": "uni-starter",
-  "displayName": "uni-starter",
-  "version": "2.2.14",
-  "description": "云端一体应用快速开发基本项目模版",
+  "id": "share-fission-client",
+  "displayName": "基于uni-ad的社交裂变项目模板（client端）",
+  "description": "看广告或分享好友看广告赚积分，积分兑换奖励或提现，此项目必须绑定admin端运行",
+  "version": "1.0.0",
   "keywords": [
-    "login",
-    "登录",
-    "搜索",
-    "uni-id实例",
-    "留言板"
-  ],
-  "repository": "https://gitcode.net/dcloud/uni-starter",
+    "uni-ad",
+    "看广告赚佣金",
+    "社交裂变"
+],
+  "repository": "",
   "engines": {
     "HBuilderX": "^3.2.6",
     "uni-app": "^4.07",
@@ -30,13 +28,14 @@
     },
     "declaration": {
       "ads": "无",
-      "data": "无",
+      "data": "插件不采集任何数据",
       "permissions": "无"
     },
     "npmurl": "",
     "type": "unicloud-template-project",
     "darkmode": "x",
-    "widescreen": "x"
+    "widescreen": "x",
+    "i18n": "x"
   },
   "uni_modules": {
     "dependencies": [
@@ -52,7 +51,7 @@
       "client": {
         "uni-app": {
           "vue": {
-            "vue2": "√",
+            "vue2": "x",
             "vue3": "√"
           },
           "web": {
@@ -61,28 +60,26 @@
           },
           "app": {
             "vue": "√",
-            "nvue": "√",
+            "nvue": "x",
             "android": "√",
             "ios": "√",
             "harmony": {
-              "extVersion": "2.2.1",
-              "minVersion": ""
             }
           },
           "mp": {
-            "weixin": "√",
-            "alipay": "-",
-            "toutiao": "-",
-            "baidu": "-",
-            "kuaishou": "-",
-            "jd": "-",
-            "harmony": "-",
-            "qq": "-",
-            "lark": "-"
+            "weixin": "x",
+            "alipay": "x",
+            "toutiao": "x",
+            "baidu": "x",
+            "kuaishou": "x",
+            "jd": "x",
+            "harmony": "x",
+            "qq": "x",
+            "lark": "x"
           },
           "quickapp": {
-            "huawei": "-",
-            "union": "-"
+            "huawei": "x",
+            "union": "x"
           }
         },
         "uni-app-x": {
