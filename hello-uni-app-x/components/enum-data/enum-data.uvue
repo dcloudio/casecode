@@ -19,6 +19,10 @@ const props = defineProps({
   compact: {
     type: Boolean,
     default: false
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -47,7 +51,7 @@ function _change(e : RadioGroupChangeEvent) {
   </view>
   <view class="uni-list uni-common-pl" :class="darkModeClass">
     <radio-group @change="_change" :class="[{'compact-container': compact}]">
-      <radio class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in items" :key="item.name"
+      <radio :disabled="props.disabled" class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in items" :key="item.name"
         :class="[{'compact-item': compact, 'uni-list-cell-line': !compact && index < items.length - 1}]"
          :value="item.value + ''" :checked="item.checked" :color="isDarkMode ? '#a8a8b7' : '#007AFF'">
         <text class="radio-text">{{ item.name }}</text>
