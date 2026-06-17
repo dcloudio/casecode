@@ -73,18 +73,10 @@
 	},
 	"app-harmony": {
 		"distribute": {
-			"bundleName": "io.dcloud.dev.app.h",
-			"signingConfigs": {
-				"default": {
-					"certpath": "/Users/dcloud_linju/Library/Application Support/HBuilder X/extensions/launcher/agc-certs/1766396894129.cer",
-					"keyAlias": "debugKey",
-					"keyPassword": "0000001A0746EF37E5F90305A6E3DD0DEC487A1946159FB88FA5738698C687BA5FF4D66548BE6EDC9369",
-					"profile": "/Users/dcloud_linju/Library/Application Support/HBuilder X/extensions/launcher/agc-certs/1769692996083.p7b",
-					"signAlg": "SHA256withECDSA",
-					"storeFile": "/Users/dcloud_linju/Library/Application Support/HBuilder X/extensions/launcher/agc-certs/1746792900627.p12",
-					"storePassword": "0000001A0746EF37E5F90305A6E3DD0DEC487A1946159FB88FA5738698C687BA5FF4D66548BE6EDC9369"
-				}
-			}
+			"bundleName": "",
+			"deviceTypes": [
+				"phone"
+			]
 		}
 	}
 }

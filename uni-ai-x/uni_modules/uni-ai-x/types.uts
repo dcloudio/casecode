@@ -162,3 +162,24 @@ export type ImgItem = {
 	type: string
 	uploadPercent: number
 }
+
+// 自定义提供商适配器回调
+export type CustomProviderCallbacks = {
+	onChunk ?: (chunkObj : Chunk) => void,
+	onError ?: (err : UTSJSONObject) => void,
+	onDone ?: (data : UTSJSONObject) => void
+}
+
+// 自定义提供商适配器基类
+// 继承此类并通过 registerCustomProvider 注册，即可接入自定义 AI 提供商
+export class CustomProviderAdapter {
+	constructor() {}
+	// 初始化（可选，模块加载时调用）
+	init() : void {}
+	// 发起请求（子类必须重写）
+	async request(messages : RequestAiCoMessage[], model : string, chat_id : string, callbacks : CustomProviderCallbacks) : Promise<boolean> {
+		return false
+	}
+	// 是否支持会话标题更新（不支持则跳过）
+	supportsTitleUpdate : boolean = false
+}

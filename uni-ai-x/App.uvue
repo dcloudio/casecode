@@ -1,8 +1,10 @@
 <script lang="uts">
+	import { installOpenClaw } from '@/uni_modules/uni-ai-x-openClaw/install.uts'
 	let firstBackTime = 0
 	export default {
 		onLaunch: function () {
 			console.log('App Launch')
+			installOpenClaw()
 		},
 		onShow: function () {
 			console.log('App Show')

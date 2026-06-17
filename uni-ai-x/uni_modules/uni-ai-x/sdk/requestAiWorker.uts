@@ -1,18 +1,11 @@
 import testMarkdownText from './testMarkdownText.uts';
 import { llmModelMap } from '@/uni_modules/uni-ai-x/config.uts';
-import { Chunk, Provider, RequestAiCoMessage, MarkdownElItem, Llm } from '@/uni_modules/uni-ai-x/types.uts';
+import { Chunk, Provider, RequestAiCoMessage, MarkdownElItem, Llm, CustomProviderCallbacks } from '@/uni_modules/uni-ai-x/types.uts';
 import {MarkdownToken} from '@/uni_modules/uni-cmark'
 import ParseMarkdown from '@/uni_modules/uni-ai-x/sdk/parseMarkdown';
 import treeToListSdk from '@/uni_modules/uni-ai-x/sdk/treeToList';
 import utils from '@/uni_modules/uni-ai-x/sdk/utils.uts'
-import WebSocketManager, { WebSocketCallbacks } from './websocket-manager.uts'
-
-// 全局 WebSocketManager 实例引用（由 index.uts 设置）
-let globalWebSocketManager: WebSocketManager | null = null
-
-export function setGlobalWebSocketManager(manager: WebSocketManager) {
-	globalWebSocketManager = manager
-}
+import { getCustomProvider } from '@/uni_modules/uni-ai-x/sdk/provider-registry.uts'
 
 export type OnMessageOptions = {
 	type: string,
@@ -307,37 +300,33 @@ class RequestAiWorker {
 			this.requestTask = null
 		})
 	}
-	// WebSocket 通信实现
-	async requestViaWebSocket(options : BailianOptions, resolveFn : (data : UTSJSONObject) => void, rejectFn : (data : UTSJSONObject) => void) : Promise<UTSJSONObject> {
-		try {
-			// 检查 WebSocketManager 是否已初始化
-			const wsManager = globalWebSocketManager
-			if (wsManager == null) {
-				const errInfo: UTSJSONObject = {
-					errCode: -200,
-					errMsg: 'WebSocket 管理器未初始化'
-				}
-				options.onError?.(errInfo)
-				return new Promise<UTSJSONObject>((resolve, reject) => {
-					reject(errInfo)
-				})
+	// 通过自定义提供商适配器发起请求
+	async requestViaCustomProvider(options : BailianOptions, resolveFn : (data : UTSJSONObject) => void, rejectFn : (data : UTSJSONObject) => void) : Promise<UTSJSONObject> {
+		const adapter = getCustomProvider(options.llm.provider)
+		if (adapter == null) {
+			const errInfo: UTSJSONObject = {
+				errCode: -200,
+				errMsg: '自定义提供商适配器未注册: ' + options.llm.provider
 			}
+			options.onError?.(errInfo)
+			return new Promise<UTSJSONObject>((resolve, reject) => {
+				reject(errInfo)
+			})
+		}
 
-			// 构建 WebSocket 回调
-			const callbacks: WebSocketCallbacks = {
+		try {
+			const callbacks: CustomProviderCallbacks = {
 				onChunk: options.onChunk,
 				onError: options.onError,
 				onDone: options.onDone
 			}
-
-			// 使用 WebSocketManager 发送消息（内部会自动检查连接并重连）
 			const chat_id = options.chat_id ?? ''
-			const success = await wsManager.send(options.messages, options.llm.model, chat_id, callbacks)
+			const success = await adapter.request(options.messages, options.llm.model, chat_id, callbacks)
 
 			if (!success) {
 				const errInfo: UTSJSONObject = {
 					errCode: -201,
-					errMsg: '发送消息失败'
+					errMsg: '自定义提供商发送消息失败'
 				}
 				options.onError?.(errInfo)
 				return new Promise<UTSJSONObject>((resolve, reject) => {
@@ -350,10 +339,10 @@ class RequestAiWorker {
 				rejectFn = reject
 			})
 		} catch (e) {
-			console.error('WebSocket 请求异常', e)
+			console.error('自定义提供商请求异常', e)
 			const errInfo: UTSJSONObject = {
 				errCode: -204,
-				errMsg: 'WebSocket 请求异常'
+				errMsg: '自定义提供商请求异常'
 			}
 			options.onError?.(errInfo)
 			return new Promise<UTSJSONObject>((resolve, reject) => {
@@ -365,9 +354,9 @@ class RequestAiWorker {
 		let resolveFn = (_ : UTSJSONObject) : void => { }, rejectFn = resolveFn;
 		const config : Provider = llmModelMap.get(options.llm.provider)!
 
-		// 如果是 openClaw provider,使用 WebSocket 通信
-		if (options.llm.provider == 'openClaw') {
-			return this.requestViaWebSocket(options, resolveFn, rejectFn)
+		// 如果是已注册的自定义提供商，委托给对应的适配器处理
+		if (getCustomProvider(options.llm.provider) != null) {
+			return this.requestViaCustomProvider(options, resolveFn, rejectFn)
 		}
 
 		// 请求的token
@@ -464,8 +453,9 @@ class RequestAiWorker {
 	}
 	// 让阿里百联总结更新
 	updateChatTitle(messages: RequestAiCoMessage[], llm: Llm){
-		// 如果是 openClaw 服务商，不启动总结功能
-		if (llm.provider == 'openClaw') return;
+		// 如果该提供商不支持标题更新，则跳过
+		const customAdapter = getCustomProvider(llm.provider)
+		if (customAdapter != null && customAdapter.supportsTitleUpdate != true) return;
 		messages = messages.slice(0)
 		messages.push({
 			role: 'user',

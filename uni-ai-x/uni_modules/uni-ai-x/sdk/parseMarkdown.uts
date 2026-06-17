@@ -185,8 +185,12 @@ export default class ParseMarkdown {
 		// console.error('JSON.parseArray 耗时', Date.now() - start2)
 		// #endif
 		// #ifndef APP-IOS
-		const parseMdRes = md2json(markdownText) as ParseMdRes
-		let newJsonList = parseMdRes.data
+		const parseMdRes = md2json(markdownText)
+		if (parseMdRes.errorMsg.length > 0) {
+			md2JsonCallBack([])
+			return
+		}
+		let newJsonList : MarkdownToken[] = parseMdRes.data
 		// #endif
 		// console.error('md2json 耗时', Date.now() - start)
 		if (newJsonList.length == 0) {

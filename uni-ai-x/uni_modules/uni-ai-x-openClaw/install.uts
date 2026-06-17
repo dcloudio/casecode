@@ -1,0 +1,69 @@
+import { registerCustomProvider } from '@/uni_modules/uni-ai-x/sdk/provider-registry.uts';
+import { llmModelMap, providerNameList } from '@/uni_modules/uni-ai-x/config.uts';
+import { CustomProviderAdapter, CustomProviderCallbacks, RequestAiCoMessage, Provider } from '@/uni_modules/uni-ai-x/types.uts';
+import WebSocketManager from '@/uni_modules/uni-ai-x-openClaw/websocket-manager.uts';
+
+type ProviderEntry = {
+	key: string,
+	value: Provider
+}
+
+// openClaw 适配器实现
+class OpenClawAdapter extends CustomProviderAdapter {
+	private wsManager: WebSocketManager = new WebSocketManager()
+
+	constructor() {
+		super()
+	}
+
+	override init() : void {
+		this.wsManager.init()
+	}
+
+	override async request(messages: RequestAiCoMessage[], model: string, chat_id: string, callbacks: CustomProviderCallbacks): Promise<boolean> {
+		return await this.wsManager.send(messages, model, chat_id, callbacks)
+	}
+
+	override supportsTitleUpdate: boolean = false
+}
+
+/**
+ * 安装 openClaw 提供商
+ * 在应用入口处调用此函数，完成以下工作：
+ * 1. 将 openClaw Provider 注册到 llmModelMap（供 UI 展示用）
+ * 2. 初始化 WebSocket 连接
+ * 3. 注册请求适配器（供 requestAiWorker 调度）
+ *
+ * 使用方式（在 App.uvue 或页面 onLoad 中调用）：
+ * ```
+ * import { installOpenClaw } from '@/uni_modules/uni-ai-x-openClaw/install.uts'
+ * installOpenClaw()
+ * ```
+ */
+export function installOpenClaw() {
+	// 1. 将 openClaw 注册到 llmModelMap 头部（UI 层展示用）
+	if (!llmModelMap.has('openClaw')) {
+		// Map 无法原生插入头部，需重建：先保存旧条目，清空，再插入 openClaw，最后恢复旧条目
+		const entries: ProviderEntry[] = []
+		llmModelMap.forEach((v, k) => {
+			entries.push({ key: k, value: v })
+		})
+		llmModelMap.clear()
+		llmModelMap.set('openClaw', {
+			models: [
+				{ name: 'auto', image: true }
+			],
+			description: 'OpenClaw - WebSocket 实时通信',
+			baseURL: ""
+		})
+		entries.forEach((entry) => {
+			llmModelMap.set(entry.key, entry.value)
+		})
+		providerNameList.unshift('openClaw')
+	}
+
+	// 2. 创建适配器、初始化 WebSocket、注册到请求调度器
+	const adapter = new OpenClawAdapter()
+	adapter.init()
+	registerCustomProvider('openClaw', adapter)
+}

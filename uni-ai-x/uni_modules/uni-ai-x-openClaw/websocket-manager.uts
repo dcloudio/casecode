@@ -1,14 +1,6 @@
-import { Chunk, ChunkChoice, ChunkChoiceDelta, RequestAiCoMessage } from '@/uni_modules/uni-ai-x/types.uts';
+import { Chunk, ChunkChoice, ChunkChoiceDelta, RequestAiCoMessage, CustomProviderCallbacks } from '@/uni_modules/uni-ai-x/types.uts';
 
-type BailianOptionsOnChunkFn = (chunkObj : Chunk) => void
-type BailianOptionsOnErrorFn = (err : UTSJSONObject) => void
-type BailianOptionsOnDoneFn = (data : UTSJSONObject) => void
-
-export type WebSocketCallbacks = {
-	onChunk ?: BailianOptionsOnChunkFn,
-	onError ?: BailianOptionsOnErrorFn,
-	onDone ?: BailianOptionsOnDoneFn
-}
+export type WebSocketCallbacks = CustomProviderCallbacks
 
 class WebSocketManager {
 	private socketTask: SocketTask | null = null

@@ -33,16 +33,6 @@ export const userCenterPage = '/uni_modules/uni-id-pages-x/pages/userinfo/userin
 const bailianTokenInfo: LLmTokenInfo = {token: '', expireTime: 0}
 const qiniuTokenInfo: LLmTokenInfo = {token: '', expireTime: 0}
 const llmModelMap = new Map<string, Provider>([
-	// OpenClaw - WebSocket 通信
-	[
-		'openClaw', {
-			models: [
-				{ name: 'auto', image: true}
-			],
-			description: 'OpenClaw - WebSocket 实时通信',
-			baseURL: ""
-		}
-	],
 	// 七牛
 	[
 		'qiniu', {

@@ -72,7 +72,7 @@
 </template>
 
 <script lang="uts" setup>
-	import {uniAi, MsgItem, uiTheme, testMarkdownText} from '@/uni_modules/uni-ai-x/sdk/'
+	import {uniAi, MsgItem, uiTheme, testMarkdownText, isCustomProvider} from '@/uni_modules/uni-ai-x/sdk/'
 	import addChat from '@/uni_modules/uni-ai-x/components/add-chat.uvue'
 	import addChatBtn from '@/uni_modules/uni-ai-x/components/add-chat-btn.uvue'
 	import inputToolBar from '@/uni_modules/uni-ai-x/components/input-tool-bar.uvue'
@@ -136,8 +136,8 @@
 	})
 	
 	const chatTitle = computed<string>(() => {
-		if (uniAi.llm.provider == 'openClaw') {
-			return '与 openClaw 对话'
+		if (isCustomProvider(uniAi.llm.provider)) {
+			return '与 ' + uniAi.llm.provider + ' 对话'
 		}
 		const title = uniAi.currentChat?.title ?? ''
 		if (title.length > 0) {

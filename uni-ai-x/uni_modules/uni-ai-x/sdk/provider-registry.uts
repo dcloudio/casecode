@@ -1,0 +1,36 @@
+import { CustomProviderAdapter } from '@/uni_modules/uni-ai-x/types.uts';
+
+// 自定义提供商注册表
+const customProviderMap = new Map<string, CustomProviderAdapter>()
+
+/**
+ * 注册自定义 AI 提供商适配器
+ * @param name 提供商名称，需与 config.uts 中 llmModelMap 的 key 一致
+ * @param adapter 实现了 CustomProviderAdapter 接口的适配器
+ */
+export function registerCustomProvider(name: string, adapter: CustomProviderAdapter) {
+	customProviderMap.set(name, adapter)
+}
+
+/**
+ * 获取已注册的自定义提供商适配器，未注册返回 null
+ */
+export function getCustomProvider(name: string): CustomProviderAdapter | null {
+	return customProviderMap.get(name) ?? null
+}
+
+/**
+ * 判断指定 provider 是否为自定义提供商（已通过 registerCustomProvider 注册）
+ */
+export function isCustomProvider(name: string): boolean {
+	return customProviderMap.has(name)
+}
+
+/**
+ * 判断指定 provider 是否支持会话标题自动更新
+ */
+export function providerSupportsTitleUpdate(name: string): boolean {
+	const adapter = customProviderMap.get(name)
+	if (adapter == null) return true  // 内置提供商默认支持
+	return adapter.supportsTitleUpdate == true
+}

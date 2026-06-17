@@ -2,21 +2,19 @@ import { reactive, watch, nextTick } from 'vue';
 import { defaultLLM, currentUser } from '../config';
 import { Llm,ChatItem,Chat, MsgItem, RequestAiCoMessage, Userinfo, BaseMsgItem, Setting, MarkdownElItem, ImgItem, MultiModalContent, ImgParse } from '@/uni_modules/uni-ai-x/types.uts';
 export { MsgItem, ChatItem, BaseMsgItem, Userinfo, MarkdownElItem }
-import {default as RequestAiWorker, RequestAiOptions, OnMessageOptions, setGlobalWebSocketManager} from '@/uni_modules/uni-ai-x/sdk/requestAiWorker.uts';
+import {default as RequestAiWorker, RequestAiOptions, OnMessageOptions} from '@/uni_modules/uni-ai-x/sdk/requestAiWorker.uts';
 import utils from '@/uni_modules/uni-ai-x/sdk/utils.uts'
 import proxyWeb from '@/uni_modules/uni-ai-x/sdk/proxy-web.uts'
 import { StorageManager, AiChat } from './storage-manager.uts'
 import testMarkdownText from './testMarkdownText.uts';
-import WebSocketManager from './websocket-manager.uts';
 export {testMarkdownText}
+export { registerCustomProvider, isCustomProvider, providerSupportsTitleUpdate } from '@/uni_modules/uni-ai-x/sdk/provider-registry.uts'
 let requestAiWorker: RequestAiWorker | null = null
 type BeforeRequestAiFn = () => void
 type MessageHandlerMapFn = () => void
 class UniAi {
 	// 存储管理器
 	private storageManager: StorageManager = new StorageManager()
-	// WebSocket 管理器
-	webSocketManager: WebSocketManager = new WebSocketManager()
 	canRenderVue: boolean = true
 	get canRender(): boolean {
 		return this.canRenderVue
@@ -126,11 +124,6 @@ class UniAi {
 	}
 	
 	constructor() {
-		// 初始化 WebSocket 连接
-		this.webSocketManager.init()
-		// 设置全局 WebSocketManager 引用
-		setGlobalWebSocketManager(this.webSocketManager)
-
 		// 从新的存储结构中获取数据
 		this.loadDataFromNewStorage()
 
