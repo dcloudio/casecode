@@ -1,51 +1,171 @@
-# 分销裂变系统模板
+# 基于uni-ad的社交裂变项目模板（admin端）
 
 ## 介绍
 
-### 什么是分销裂变系统模板？
-
-分销裂变系统模板是一套基于 **uni-app** 和 **uniCloud** 构建的通用分销裂变模板，包含客户端（client）和管理后台（admin）两个端。
+本项目是基于uni-ad的社交裂变项目模板（admin端），使用 **uni-app** 和 **uniCloud** 开发，包含客户端（client）和管理后台（admin）两个端。
 
 该模板实现了"看广告赚收益 + 二级分销（分享用户看广告，自己也有收益） + 积分商城"的完整业务闭环，帮助开发者快速搭建自己的分销裂变平台。
 
-### 核心特性
+## 主要功能
 
-**技术架构**
-- 基于 **uni-app** 跨平台框架，一套代码多端运行（H5、小程序、App）
-- 采用 **uniCloud** Serverless 架构，无需购买服务器，开箱即用
-- 管理后台基于 **uni-admin** ，支持 PC 和 移动H5端自适应
-- 使用 **MongoDB** 云数据库，灵活的文档型数据存储
-- 基于 **uni-ad** 广告联盟，帮助开发者快速变现
-
-**业务功能**
 - **广告变现**：用户通过观看广告获得积分和收益
 - **二级分销体系**：支持个人收益、一级上线分成、二级上线分成
 - **积分商城**：积分可兑换虚拟商品（自动发卡）或提现
 - **用户管理**：用户层级关系、团队成员查看
-- **财务管理**：资金池管理、提现审核、收益结算
+- **财务管理**：资金管理、提现审核、收益结算
 - **数据统计**：每日数据趋势、多维度分析报表
 
-### 适用场景
+## 适用场景
 
-理论上支持任何场景，以下是个别场景举例
+包括但不限于：
 
 - **内容平台**：通过广告分成激励用户分享传播
 - **游戏推广**：游戏试玩、广告观看奖励系统
 - **知识付费**：课程分销、会员推广
 - **营销活动**：裂变拉新、用户增长活动
 
-### 为什么选择这个模板？
 
-- ✅ **开箱即用**：完整的前后端代码，快速部署上线
-- ✅ **零服务器成本**：基于 uniCloud，按量计费，初期成本极低
-- ✅ **跨平台支持**：一套代码适配 H5、微信小程序、支付宝小程序、App
-- ✅ **AI 辅助开发**：配置了 Claude Code 技能，快速生成 CRUD 页面
+## 安装步骤
 
-## client 端
+### 安装admin端
 
-### 核心功能
+#### 导入admin端项目
 
-#### 1. 猜谜游戏
+[admin端下载地址](https://ext.dcloud.net.cn/plugin?name=share-fission-admin)
+
+#### 安装依赖
+
+导入成功后安装npm依赖，执行下方命令
+
+```bash
+npm install --registry https://registry.npmmirror.com
+```
+
+#### 配置 uniCloud
+
+1. **使用 HBuilderX**，打开项目
+2. **右键点击 `uniCloud` 目录** → 选择"关联云服务空间或项目"
+3. **创建或选择云服务空间**（支付宝云/阿里云/腾讯云）
+4. **上传云函数**：
+   - 右键 `uniCloud/cloudfunctions` 目录
+   - 选择"上传所有云函数、公共模块及actions"
+5. **初始化数据库**：
+   - 右键 `uniCloud/database` 目录
+   - 选择"初始化云数据库"
+
+#### 运行项目
+
+```bash
+# 在 HBuilderX 中点击"运行" → "运行到浏览器" → "Chrome"
+```
+
+#### 登录系统
+
+1. 访问 `http://localhost:5678/admin/`
+2. 首次进入页面会有管理员注册按钮
+---
+
+
+### 安装client端
+
+#### 导入client端项目
+
+[client端下载地址](https://ext.dcloud.net.cn/plugin?name=share-fission-client)
+
+client端必须绑定admin端项目运行，导入成功后按下图所示操作
+
+![](https://web-ext-storage.dcloud.net.cn/doc/share-fission/ce54b0e8-83ad-44a5-bc9b-71d1bc4a28ba.png)
+
+#### 配置 uni-starter.config.js 文件
+
+配置文件路径: `uni-starter.config.js`
+
+该配置文件会在 `App.vue` 中挂载到 `getApp().globalData.config`,用于全局应用配置。
+
+**主要配置项:**
+
+1. **h5 配置**
+   - `url`: 前端网页托管的域名
+   - `openApp`: H5端全局悬浮引导用户下载app的功能(可选)
+     - `openUrl`: 点击悬浮下载栏后打开的网页链接
+     - `appname`: 左侧显示的应用名称
+     - `logo`: 应用的图标
+
+2. **mp 小程序配置**
+   - `weixin.id`: 微信小程序原始id(用于小程序分享)
+
+3. **about 关于应用**
+   - `appName`: 应用名称
+   - `logo`: 应用logo路径
+   - `company`: 公司名称
+   - `slogan`: 应用口号
+   - `download`: 应用下载链接(用于分享和生成二维码)
+   - `version`: 版本号(非app端显示,app端自动获取)
+
+4. **download 下载配置**
+   - `ios`: iOS应用下载链接
+   - `android`: Android应用下载链接
+
+5. **marketId 应用市场**
+   - `ios`: iOS应用市场ID
+   - `android`: Android应用市场ID
+
+6. **ad 广告配置**
+   - `rewardedVideo`: 激励视频广告位ID
+   - 需要在 [uni-ad 后台](https://uniad.dcloud.net.cn/) 创建广告位后获取
+   - 示例: `"rewardedVideo": "1234567890"`
+
+#### 配置广告
+
+**重要提示**: 本项目核心变现方式为激励视频广告,必须正确配置才能正常运行。
+
+**配置步骤:**
+
+1. **在 uni-ad 后台创建广告位**
+   - 访问 [uni-ad 后台](https://uniad.dcloud.net.cn/)
+   - 选择广告类型: **激励视频广告**
+   - 创建后获取广告位ID (adpid)
+
+2. **配置广告位ID（重要）**
+
+   **配置文件**: `uni-starter.config.js`（项目根目录）
+
+   找到或添加 `ad` 配置节点，将你的广告位ID填入 `rewardedVideo` 字段：
+
+   ```javascript
+   export default {
+     // ...其他配置
+     "ad": {
+       // 将下面的广告位ID替换为你在uni-ad后台创建的实际广告位ID
+       "rewardedVideo": "你的广告位ID"
+     }
+   }
+   ```
+
+3. **技术说明**
+   - 广告工具类: `utils/ad.js`
+   - 自动从 `uni-starter.config.js` 读取广告位ID
+   - 支持通过参数自定义广告位ID
+
+**详细文档**: [uni-ad 广告联盟](https://uniapp.dcloud.net.cn/uni-ad.html)
+
+#### 运行项目
+
+因项目依赖看广告赚佣金，故只支持发布App（小程序此类应用可能无法上架）
+
+```bash
+# 在 HBuilderX 中点击"运行" → "运行到手机或模拟器"
+```
+
+[自定义基座运行教程](https://uniapp.dcloud.net.cn/tutorial/run/run-app.html#customplayground)
+
+---
+
+## client 端介绍
+
+### 主要功能
+
+#### 猜谜游戏
 - **谜语题库**: 内置谜语数据集，支持难度分类(简单、中等、困难)和类型分类(自然、物品、水果、植物、身体、字谜等)
 - **答题流程**: 用户查看谜面 → 输入答案 → 验证正确性 → 答对进入下一题
 - **广告解锁**: 答不出时可观看激励视频广告解锁答案
@@ -53,7 +173,9 @@
 - **页面路径**: `pages/index/index.vue`
 - **数据源**: `data/riddles.js` (200条谜语数据)
 
-#### 2. 积分系统
+**注意：猜谜游戏非本项目核心功能，可自行替换为其他载体**
+
+#### 积分系统
 - **积分获取**:
   - 观看广告获得积分(主要来源)
   - 每日签到奖励
@@ -67,7 +189,7 @@
   - 显示积分来源、变化金额、余额
 - **页面路径**: `pages/ucenter/points-record/points-record.vue`
 
-#### 3. 二级分销系统
+#### 二级分销系统
 - **分销推荐**:
   - 生成专属推广二维码和邀请码
   - 支持保存二维码到相册
@@ -87,7 +209,7 @@
   - 页面路径: `pages/ucenter/my-team/my-team.vue`
 - **数据结构**: 用户表中 `inviter_uid` 字段存储上级关系数组 `[一级上级uid, 二级上级uid]`
 
-#### 4. 积分商城
+#### 积分商城
 - **商品展示**:
   - 顶部显示当前积分余额
   - 一级分类和二级分类筛选
@@ -103,7 +225,7 @@
   - 商品详情: `pages/ucenter/product-detail/product-detail.vue`
   - 兑换记录: `pages/ucenter/exchange-order/exchange-order.vue`
 
-#### 5. 提现管理
+#### 提现管理
 - **提现申请**:
   - 显示可提现积分余额
   - 提现规则展示(兑换比例、手续费、最低额度、到账时间)
@@ -117,7 +239,7 @@
   - 申请时间、审核时间
   - 页面路径: `pages/ucenter/withdraw-record/withdraw-record.vue`
 
-#### 6. 用户中心
+#### 用户中心
 - **用户信息**: 头像、昵称、登录状态展示
 - **常用功能**:
   - 我的积分
@@ -166,108 +288,18 @@ share-fission/
 └── package.json               # 项目依赖配置
 ```
 
-### 配置说明
+## admin 端介绍
 
-#### uni-starter.config.js 应用配置
-
-配置文件路径: `uni-starter.config.js`
-
-该配置文件会在 `App.vue` 中挂载到 `getApp().globalData.config`,用于全局应用配置。
-
-**主要配置项:**
-
-1. **h5 配置**
-   - `url`: 前端网页托管的域名
-   - `openApp`: H5端全局悬浮引导用户下载app的功能(可选)
-     - `openUrl`: 点击悬浮下载栏后打开的网页链接
-     - `appname`: 左侧显示的应用名称
-     - `logo`: 应用的图标
-
-2. **mp 小程序配置**
-   - `weixin.id`: 微信小程序原始id(用于小程序分享)
-
-3. **about 关于应用**
-   - `appName`: 应用名称
-   - `logo`: 应用logo路径
-   - `company`: 公司名称
-   - `slogan`: 应用口号
-   - `download`: 应用下载链接(用于分享和生成二维码)
-   - `version`: 版本号(非app端显示,app端自动获取)
-
-4. **download 下载配置**
-   - `ios`: iOS应用下载链接
-   - `android`: Android应用下载链接
-
-5. **marketId 应用市场**
-   - `ios`: iOS应用市场ID
-   - `android`: Android应用市场ID
-
-6. **ad 广告配置**
-   - `rewardedVideo`: 激励视频广告位ID
-   - 需要在 [uni-ad 后台](https://uniad.dcloud.net.cn/) 创建广告位后获取
-   - 示例: `"rewardedVideo": "1234567890"`
-
-#### uniCloud 配置
-
-1. 使用 HBuilderX 打开项目
-2. 右键点击 `uniCloud` 目录 → 选择"关联云服务空间或项目"
-3. 选择与 admin 端相同的云服务空间(确保共享同一数据库)
-4. 如果 admin 端已上传云函数和初始化数据库,可跳过上传步骤
-
-#### 广告配置
-
-**重要提示**: 本项目核心变现方式为激励视频广告,必须正确配置才能正常运行。
-
-**配置步骤:**
-
-1. **在 uni-ad 后台创建广告位**
-   - 访问 [uni-ad 后台](https://uniad.dcloud.net.cn/)
-   - 选择广告类型: **激励视频广告**
-   - 创建后获取广告位ID (adpid)
-
-2. **配置广告位ID（重要）**
-
-   **配置文件**: `uni-starter.config.js`（项目根目录）
-
-   找到或添加 `ad` 配置节点，将你的广告位ID填入 `rewardedVideo` 字段：
-
-   ```javascript
-   export default {
-     // ...其他配置
-     "ad": {
-       // 将下面的广告位ID替换为你在uni-ad后台创建的实际广告位ID
-       "rewardedVideo": "你的广告位ID"
-     }
-   }
-   ```
-
-3. **技术说明**
-   - 广告工具类: `utils/ad.js`
-   - 自动从 `uni-starter.config.js` 读取广告位ID
-   - 支持通过参数自定义广告位ID
-
-**详细文档**: [uni-ad 广告联盟](https://uniapp.dcloud.net.cn/uni-ad.html)
-
----
-
-## admin 端
-
-### 1. 系统介绍
-
-#### 1.1 项目概述
-
-share-fission-admin 是一个基于 uni-app 和 uniCloud 构建的分销裂变管理后台系统。提供分销用户管理、分销系统设置、财务管理、广告管理、积分商城管理和每日统计等功能。
-
-#### 1.2 核心功能
+### 主要功能
 
 - **用户管理**：用户层级关系、团队成员查看
 - **商品管理**：商品上下架、分类管理、销量统计
 - **订单管理**：订单查看、卡密查看、退款处理、卡密导入
-- **财务管理**：资金池日志、积分记录、提现管理
+- **财务管理**：资金日志、积分记录、提现管理
 - **广告管理**：广告观看记录
 - **数据统计**：每日数据趋势、多维度分析报表
 
-#### 1.3 演示地址
+### 演示地址
 
 [admin端演示地址](https://env-00jy5svvsbp1-static.normal.cloudstatic.cn/admin/index.html#/)
 
@@ -276,47 +308,7 @@ share-fission-admin 是一个基于 uni-app 和 uniCloud 构建的分销裂变�
 
 ---
 
-### 2. 快速开始
-
-#### 2.1 获取项目
-
-```bash
-# 克隆项目（如果使用 Git）
-git clone <repository-url>
-
-# 或直接下载项目压缩包解压
-```
-
-#### 2.2 安装依赖
-
-```bash
-npm install --registry https://registry.npmmirror.com
-```
-
-#### 2.3 配置 uniCloud
-
-1. **使用 HBuilderX**，打开项目
-2. **右键点击 `uniCloud` 目录** → 选择"关联云服务空间或项目"
-3. **创建或选择云服务空间**（支付宝云/阿里云/腾讯云）
-4. **上传云函数**：
-   - 右键 `uniCloud/cloudfunctions` 目录
-   - 选择"上传所有云函数、公共模块及actions"
-5. **初始化数据库**：
-   - 右键 `uniCloud/database` 目录
-   - 选择"初始化云数据库"
-
-#### 2.4 运行项目
-
-```bash
-# 在 HBuilderX 中点击"运行" → "运行到浏览器" → "Chrome"
-```
-#### 2.5 登录系统
-
-1. 访问 `http://localhost:5678/admin/`
-2. 首次进入页面会有管理员注册按钮
----
-
-### 3. 项目结构
+### 项目结构
 
 ```
 share-fission-admin/
@@ -332,7 +324,7 @@ share-fission-admin/
 │   │   ├── withdrawal-logs/    # 提现日志
 │   │   ├── ad-watch-logs/      # 广告观看日志
 │   │   ├── scores/             # 积分记录
-│   │   └── fund-pool-logs/     # 资金池日志
+│   │   └── fund-pool-logs/     # 资金日志
 │   ├── system/                 # 系统管理模块
 │   │   ├── menu/               # 菜单管理
 │   │   ├── permission/         # 权限管理
@@ -361,21 +353,9 @@ share-fission-admin/
 └── package.json                # 项目依赖配置
 ```
 
-#### 3.1 核心目录说明
+### 部署指南
 
-**pages/** - 页面文件目录（前端页面）
-- 所有页面按功能模块组织
-- 每个页面包含 `.vue` 文件
-
-**uniCloud/** - 云服务相关（后端API）
-- 云函数、云对象、数据库初始化脚本
-
----
-
-### 4. 部署指南
-
-#### 4.1 部署到线上环境
-
+#### 部署到线上环境
 
 **一键部署**
 
@@ -385,9 +365,9 @@ share-fission-admin/
 
 ---
 
-### 5. 开发指南
+### 开发指南
 
-#### 5.1 添加新页面
+#### 添加新页面
 
 **步骤 1：创建页面文件**
 
@@ -440,7 +420,7 @@ export default {
 
 在系统管理 → 菜单管理中添加菜单项。
 
-#### 5.2 扩展后端接口
+#### 扩展后端接口
 
 本项目使用 **云对象** 架构，所有业务接口都通过 `share-fission-co` 云对象统一管理。
 
@@ -525,7 +505,7 @@ const res = await shareFissionCo.action({
 
 右键 `share-fission-co` 目录 → 上传部署
 
-#### 5.3 使用 Claude Code 的 skills 快速开发
+#### 使用 Claude Code 的 skills 快速开发
 
 本项目配置了多个 Claude 技能（位于 `.claude/skills/` 目录），可以通过 Claude Code CLI 快速完成常见开发任务。
 
@@ -575,10 +555,10 @@ const res = await shareFissionCo.action({
 
 ## 附录
 
-### 仓库地址
+### 插件市场地址
 
-- [share-fission-client 仓库地址](https://github.com/dcloudio/share-fission-client)
-- [share-fission-admin 仓库地址](https://github.com/dcloudio/share-fission-admin)
+- [share-fission-client](https://ext.dcloud.net.cn/plugin?name=share-fission-client)
+- [share-fission-admin](https://ext.dcloud.net.cn/plugin?name=share-fission-admin)
 
 ### 相关文档
 

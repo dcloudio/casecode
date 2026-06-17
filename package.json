@@ -1,21 +1,18 @@
 {
-  "name": "uni-admin 基础框架（原名 uniCloud admin）",
-  "id": "uni-template-admin",
-  "displayName": "uni-admin 基础框架",
-  "version": "2.5.13",
-  "description": "基于uni-app & uniCloud的后台管理项目模板（管理后台开发必备神器）",
+  "id": "share-fission-admin",
+  "displayName": "基于uni-ad的社交裂变项目模板（admin端）",
+  "description": "看广告或分享好友看广告赚积分，积分兑换奖励或提现",
+  "version": "1.0.0",
+  "keywords": [
+    "uni-ad",
+    "看广告赚佣金",
+    "社交裂变"
+],
   "main": "main.js",
   "scripts": {
     "init": "npm install --registry https://registry.npmmirror.com"
   },
-  "repository": "https://github.com/dcloudio/uni-admin.git",
-  "keywords": [
-    "admin",
-    "uniCloud",
-    "管理后台",
-    "云后台",
-    "uni-admin"
-  ],
+  "repository": "",
   "engines": {
     "HBuilderX": "^3.6.0",
     "uni-app": "^4.36",
@@ -41,13 +38,13 @@
     },
     "declaration": {
       "ads": "无",
-      "data": "无",
+      "data": "插件不采集任何数据",
       "permissions": "无"
     },
     "npmurl": "",
     "type": "unicloud-template-project",
     "darkmode": "x",
-    "i18n": "√",
+    "i18n": "x",
     "widescreen": "√"
   },
   "uni_modules": {
@@ -62,7 +59,7 @@
       "client": {
         "uni-app": {
           "vue": {
-            "vue2": "√",
+            "vue2": "x",
             "vue3": "√"
           },
           "web": {
@@ -72,24 +69,24 @@
           "app": {
             "vue": "√",
             "nvue": "x",
-            "android": "√",
-            "ios": "√",
-            "harmony": "√"
+            "android": "x",
+            "ios": "x",
+            "harmony": "x"
           },
           "mp": {
-            "weixin": "√",
-            "alipay": "√",
-            "toutiao": "-",
-            "baidu": "-",
-            "kuaishou": "-",
-            "jd": "-",
-            "harmony": "-",
-            "qq": "-",
-            "lark": "-"
+            "weixin": "x",
+            "alipay": "x",
+            "toutiao": "x",
+            "baidu": "x",
+            "kuaishou": "x",
+            "jd": "x",
+            "harmony": "x",
+            "qq": "x",
+            "lark": "x"
           },
           "quickapp": {
-            "huawei": "-",
-            "union": "-"
+            "huawei": "x",
+            "union": "x"
           }
         },
         "uni-app-x": {
