@@ -1,3 +1,5 @@
+## 2.1.3（2026-03-06）
+- 更新 抽离 openClaw 相关逻辑为独立的插件[uni-ai-x-openClaw](https://ext.dcloud.net.cn/plugin?name=uni-ai-x-openClaw) 实现与主体解耦
 ## 2.1.2（2026-02-11）
 - 【重要】uni-ai-x & openClaw 专题文档发布[详情点此](https://doc.dcloud.net.cn/uniCloud/uni-ai-x-openClaw.html)
 - 修复 vapor模式下鸿蒙端，因为页面为多根节点 uni.createSelectorQuery() api 不能正常使用的问题

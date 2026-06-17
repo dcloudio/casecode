@@ -3,12 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- 预加载常用 KaTeX 字体（必须加 crossorigin 以匹配 CSS @font-face 的匿名跨域模式） -->
-    <link rel="preload" href="./libs/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="preload" href="./libs/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="preload" href="./libs/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="stylesheet" href="./libs/katex.min.css">
     <title></title>
+    <!-- KaTeX 全量字体 base64 内联，消除 WebView 慢速网络/CORS 警告 -->
+    <script src="./libs/katex-fonts-inline.js"></script>
   </head>
   <body>
     <div id="markImgContainer"></div>
@@ -21,14 +19,11 @@
 
     <script type="text/javascript" src="./libs/html2canvas1.4.1.js"></script>
     <script type="text/javascript" src="./libs/mermaid.min.js"></script>
-		
+
     <script type="text/javascript">
-        let parentIsAppAndroid = false;
         let parentIsWeb = false;
         let setting = null;
         uni.getEnv(envObj=>{
-          // 判断是不是 app 且是 android 平台
-          parentIsAppAndroid = (envObj.uvue == true && window.navigator.userAgent.indexOf('Android') > -1)
           parentIsWeb = envObj.h5
         })
 
@@ -89,7 +84,8 @@
               // 修改不规范的 svg ，把 svg 中的 <br/> 替换为 <br/>
               svg = svg.replace(/<br>/g, '<br/>')
               // 加个白色背景
-              svg = svg.replace(`<style>#fixed-mermaid{font-family:`, `<style>#fixed-mermaid{background-color: #FFFFFF;font-family:`)
+              svg = svg.replace(`<style>
+#fixed-mermaid{font-family:`, `<style>#fixed-mermaid{background-color: #FFFFFF;font-family:`)
               imageDataURL = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
             } else {
               imageDataURL = await this.html2Base64(svg);
@@ -117,12 +113,10 @@
 
           onMessage(param) {
             // console.log('web.onMessage收到', param);
-            if (!parentIsAppAndroid) {
-              try {
-                param = JSON.parse(decodeURIComponent(param));
-              } catch (error) {
-                console.log('error', error,decodeURIComponent(param));
-              }
+            try {
+              param = JSON.parse(decodeURIComponent(param));
+            } catch (error) {
+              console.log('error', error, decodeURIComponent(param));
             }
             // console.log('web 内部执行了 onMessage', param);
             const { action } = param;

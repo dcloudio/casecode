@@ -23,7 +23,7 @@
     </view>
 </template>
 <script lang="uts" setup>
-import uniAi, { uiTheme, MsgItem } from '@/uni_modules/uni-ai-x/sdk';
+import uniAi, { uiTheme, MsgItem, isCustomProvider } from '@/uni_modules/uni-ai-x/sdk';
 import {llmModelMap, providerNameList, type LLMModel} from '../config';
 import { ImgItem } from '@/uni_modules/uni-ai-x/types.uts';
 const canWebSearchLLmList: string[] = [];
@@ -48,7 +48,7 @@ llmModelMap.forEach((provider,providerName) => {
 });
 
 const isOpenClaw = computed<boolean>(() => {
-    return uniAi.llm.provider == 'openClaw';
+    return isCustomProvider(uniAi.llm.provider);
 });
 
 
@@ -86,7 +86,15 @@ const llmModel = computed<string>(() => {
 const currentLLMModel = computed<LLMModel>(() => {
     const provider = uniAi.llm.provider
     const model = uniAi.llm.model
-    const currentLLMModel = llmModelMap.get(provider)!.models.find(m => m.name == model) as LLMModel;
+		const currentProviderInfo = llmModelMap.get(provider)
+		if (currentProviderInfo == null) {
+			uni.showModal({
+				content: 'provider：' + provider + ' 不可用，请到系统设置中切换为其他 provider',
+				showCancel: false
+			});
+			console.error('provider：' + provider + ' 不可用，请到系统设置中切换为其他 provider')
+		}
+    const currentLLMModel = currentProviderInfo!.models.find(m => m.name == model) as LLMModel;
     return currentLLMModel
 });
 
@@ -134,7 +142,7 @@ const canThinking = computed<boolean>(() => {
 const setThinking = () => {
     if (isOpenClaw.value) {
         uni.showToast({
-            title: 'openClaw不支持深度思考',
+            title: uniAi.llm.provider + '不支持深度思考',
             icon: 'none'
         });
         return

@@ -1,0 +1,13 @@
+<template>
+	<view>
+		本插件为 uni-ai-x 的子插件，请按文档安装[详情点此](https://doc.dcloud.net.cn/uniCloud/uni-ai-x-openClaw.html)
+	</view>
+</template>
+
+<script setup>
+		
+</script>
+
+<style>
+		
+</style>

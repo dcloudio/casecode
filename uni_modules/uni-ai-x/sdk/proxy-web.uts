@@ -28,19 +28,16 @@ class ProxyWeb {
 		const key = (param['action'] as string) + '_callback_' + requestId
 		this.callbackMap.set(key, callback)
 
-		// #ifdef APP-ANDROID
-		const code = `onMessage(${encodeURIComponent(JSON.stringify(param))})`;
-		// #endif
-		// #ifndef APP-ANDROID
 		const code = `onMessage("${encodeURIComponent(JSON.stringify(param))}")`;
-		// #endif
 		// console.log('code', code)
-		/* #ifdef APP */
-		this.webviewContext?.evalJS(code)
-			/* #endif */
-			/* #ifdef WEB */
+		// #ifdef APP
+		utils.uniGetDispatcher('main', () => {
+			this.webviewContext?.evalJS(code)
+		})
+		// #endif
+		// #ifdef WEB
 			(this.webviewContext as any)?.contentWindow.eval(code)
-		/* #endif */
+		// #endif
 	}
 	init(webviewContext : WebviewContext) {
 		this.webviewContext = webviewContext
