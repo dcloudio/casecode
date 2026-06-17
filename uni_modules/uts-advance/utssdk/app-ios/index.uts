@@ -50,6 +50,7 @@ export function doTimerTask(opts:TimerOptions): TimerResult {
 /**
  * 执行周期任务
  */
+@UTSJS.keepAlive
 export function doIntervalTask(opts:TimerOptions): TimerResult {
 	
 	let taskRet = setInterval(function() {
