@@ -1,5 +1,5 @@
 <template>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   <scroll-view style="flex: 1;">
   <!-- #endif -->
     <view>
@@ -10,7 +10,7 @@
         <rich-text id="richtext" :nodes="htmlString" :selectable="true" @itemclick="itemClick" @click="selfClick('触发 richtext click 事件')" :mode="data.mode"/>
       </view>
     </view>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>

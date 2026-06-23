@@ -1,9 +1,9 @@
 <template>
-	<!-- #ifdef APP -->
+	<!-- #ifdef APP && !VUE3-VAPOR -->
 	<scroll-view style="flex: 1;">
 	<!-- #endif -->
   <image style="width: 100%;" src="/static/test-image/longPath.jpg" mode="widthFix" @load="load"></image>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>

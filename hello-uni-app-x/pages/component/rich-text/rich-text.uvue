@@ -1,5 +1,5 @@
 <template>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   <scroll-view style="flex: 1;">
   <!-- #endif -->
 		<view class="uni-padding-wrap uni-common-mt">
@@ -39,8 +39,8 @@
 				<rich-text style="height: 80px;" :selectable="true" :nodes="data.text"></rich-text>
 			</view>
 		</view>
-  <!-- #ifdef APP -->
-  </scroll-view style="flex: 1;">
+  <!-- #ifdef APP && !VUE3-VAPOR -->
+  </scroll-view>
   <!-- #endif -->
 </template>
 
