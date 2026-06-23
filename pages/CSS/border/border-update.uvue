@@ -1,5 +1,5 @@
 <template>
-	<!-- #ifdef APP -->
+	<!-- #ifdef APP && !VUE3-VAPOR -->
 	<scroll-view style="flex:1">
 	<!-- #endif -->
 		<view>
@@ -8,7 +8,7 @@
       <text>拍平版本</text>
       <view class="border-view" :style="borderStyle" flatten></view>
 		</view>
-	<!-- #ifdef APP -->
+	<!-- #ifdef APP && !VUE3-VAPOR -->
 	</scroll-view>
 	<!-- #endif -->
 </template>

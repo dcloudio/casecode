@@ -23,7 +23,7 @@ const DEFAULT_TAB_BAR_ITEM = {
 }
 
 describe('tab bar api screenshot', () => {
-  if (!isApp || (isDom2 && !isHarmony)) {
+  if (!isApp || (isDom2 && !isHarmony && !isIos)) {
     it('not support', () => {
       expect(1).toBe(1)
     })

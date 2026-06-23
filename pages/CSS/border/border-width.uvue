@@ -1,5 +1,5 @@
 <template>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   <scroll-view style="flex: 1">
   <!-- #endif -->
     <text class="uni-tips">说明：左边是正常版本，右边是拍平版本</text>
@@ -290,7 +290,7 @@
         <native-view class="common" style="border-width: 10px; border-style: solid;"></native-view>
       </view>
     </view>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>

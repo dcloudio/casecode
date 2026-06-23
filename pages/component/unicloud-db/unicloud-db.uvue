@@ -55,6 +55,14 @@ function get() {
   })
 }
 
+function showError(err : any | null) {
+  const error = err as UniCloudError
+  uni.showModal({
+    content: error.errMsg,
+    showCancel: false
+  })
+}
+
 function add() {
   const value = {
     title: "title-" + Date.now(),
@@ -116,14 +124,6 @@ function onQueryLoad(data : Array<UTSJSONObject>, ended : boolean, pagination : 
   console.log(data, ended, pagination)
 }
 
-function showError(err : any | null) {
-  const error = err as UniCloudError
-  uni.showModal({
-    content: error.errMsg,
-    showCancel: false
-  })
-}
-
 // Lifecycle
 onReady(() => {
   get()
@@ -137,6 +137,33 @@ onPullDownRefresh(() => {
     }
   })
 })
+
+// #ifdef VUE3-VAPOR
+let checkMethods = false
+
+function checkUdbRefMethods() : boolean {
+  const udb = udbRef.value
+  if (udb == null) {
+    checkMethods = false
+    return checkMethods
+  }
+
+  const hasLoadData = udb.loadData != null
+  const hasLoadMore = udb.loadMore != null
+  const hasAdd = udb.add != null
+  const hasRemove = udb.remove != null
+  const hasUpdate = udb.update != null
+
+  checkMethods = hasLoadData && hasLoadMore && hasAdd && hasRemove && hasUpdate
+  return checkMethods
+}
+
+defineExpose({
+  checkUdbRefMethods
+})
+
+// #endif
+
 </script>
 
 <style>

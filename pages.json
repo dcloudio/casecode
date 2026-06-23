@@ -12,7 +12,7 @@
 		}
 	},
 	"pages": [
-		// #ifdef VUE3-VAPOR && !APP-HARMONY
+		// #ifdef VUE3-VAPOR && !APP-HARMONY && !APP-IOS
 		{
 			"path": "pages/tabBar/tab-bar",
 			"style": {
@@ -20,7 +20,7 @@
 			}
 		},
 		// #endif
-		// #ifdef !VUE3-VAPOR || APP-HARMONY
+		// #ifdef !VUE3-VAPOR || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/tabBar/component",
 			"style": {
@@ -455,6 +455,12 @@
 		},
 		// #endif
 		{
+			"path": "pages/component/unicloud-db/unicloud-db",
+			"style": {
+				"navigationBarTitleText": "unicloud-db"
+			}
+		},
+		{
 			"path": "pages/component/unicloud-db/unicloud-db/contacts/list",
 			"group": "0,11",
 			"style": {
@@ -779,7 +785,7 @@
 			}
 		},
 		// #endif
-		// #ifdef !VUE3-VAPOR || APP-HARMONY
+		// #ifdef !VUE3-VAPOR || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/tabBar/API",
 			"style": {
@@ -1861,7 +1867,7 @@
 				"navigationBarTitleText": "uni.createWorker | UTS插件示例"
 			}
 		},
-		// #ifdef !VUE3-VAPOR || APP-HARMONY
+		// #ifdef !VUE3-VAPOR || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/tabBar/CSS",
 			"style": {
@@ -1870,7 +1876,7 @@
 			}
 		},
 		// #endif
-		// #ifdef !VUE3-VAPOR || APP-HARMONY
+		// #ifdef !VUE3-VAPOR || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/tabBar/template",
 			"style": {
@@ -1879,7 +1885,7 @@
 			}
 		},
 		// #endif
-		// #ifdef !VUE3-VAPOR || APP-HARMONY
+		// #ifdef !VUE3-VAPOR || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/tabBar/uni-ui",
 			"style": {
@@ -3240,6 +3246,16 @@
 						"navigationBarTitleText": "specificity | 优先级"
 					}
 				}
+				// #ifdef VUE3-VAPOR
+				,
+				{
+					"path": "selector/selector",
+					"group": "2,22",
+					"style": {
+						"navigationBarTitleText": "selector | 选择器"
+					}
+				}
+				// #endif
 			]
 		}
 	],
@@ -4481,6 +4497,13 @@
 					"id": "css.style.isolation",
 					"name": "样式隔离 style-isolation"
 				}
+				// #ifdef VUE3-VAPOR
+				,
+				{
+					"id": "css.selector",
+					"name": "选择器 selector"
+				}
+				// #endif
 			]
 		}
 	]
