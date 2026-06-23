@@ -36,6 +36,7 @@
         plain-false
       </button>
 
+      <button id="test-button-hover-class" class="margin-10" :disabled="disabled_boolean" hover-class="button-hover" :hover-stay-time="5000">hover-class button-hover</button>
       <button class="margin-10 btn custom-btn" :disabled="disabled_boolean" hover-class="is-hover">
         custom-btn
       </button>
@@ -88,6 +89,65 @@
   function change_disabled_boolean() {
     disabled_boolean.value = !disabled_boolean.value
   }
+
+  function set_disabled_false() {
+    disabled_boolean.value = false
+  }
+
+  // #ifndef APP
+  defineExpose({
+    set_disabled_false,
+  })
+  // #endif
+
+  // #ifdef APP
+  type DomRectType = {
+    x : number,
+    y : number,
+    left : number,
+    top : number,
+    right : number,
+    bottom : number,
+    width : number,
+    height : number,
+  }
+
+  type Data = {
+    rect: DomRectType | null,
+  }
+  const data = reactive<Data>({
+    rect: null,
+  })
+
+  function getHoverButtonRect() : DomRectType | null {
+    const el = uni.getElementById('test-button-hover-class')
+    const rect = el?.getBoundingClientRect() ?? null
+    if (rect == null) {
+      return null
+    }
+    const offsetY = uni.getSystemInfoSync().safeArea.top + 44
+    return {
+      x: rect.x,
+      y: rect.y + offsetY,
+      left: rect.left,
+      top: rect.top + offsetY,
+      right: rect.right,
+      bottom: rect.bottom + offsetY,
+      width: rect.width,
+      height: rect.height,
+    }
+  }
+
+  onReady(() => {
+    data.rect = getHoverButtonRect()
+  })
+
+  defineExpose({
+    data,
+    getHoverButtonRect,
+    set_disabled_false,
+  })
+  // #endif
 </script>
 
 <style>
