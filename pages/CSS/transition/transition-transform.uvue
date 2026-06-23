@@ -1,5 +1,5 @@
 <template>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   <scroll-view style="flex: 1;">
   <!-- #endif -->
     <view>
@@ -96,7 +96,7 @@
       <native-view ref="nativeViewRefDynamic" class="common-image" style="margin: 30px;" @click="triggerTransitionNativeViewDynamic"></native-view>
 
     </view>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>

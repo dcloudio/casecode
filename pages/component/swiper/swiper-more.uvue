@@ -1,5 +1,5 @@
 <template>
-	<!-- #ifdef APP -->
+	<!-- #ifdef APP && !VUE3-VAPOR -->
 	<scroll-view style="flex: 1;">
 	<!-- #endif -->
 	<view style="padding: 10px;">
@@ -389,7 +389,7 @@
 			</swiper>
 		</view>
 	</view>
-	<!-- #ifdef APP -->
+	<!-- #ifdef APP && !VUE3-VAPOR -->
 	</scroll-view>
 	<!-- #endif -->
 </template>

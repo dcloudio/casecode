@@ -68,6 +68,51 @@ const isEnded = ref(false)
 const loadingError = ref('')
 const currentPage = ref(1)
 
+// 自动化测试辅助
+const mockEnabled = ref(false)
+
+function createMockItems(page : number) : ListItem[] {
+  if (page > 2) {
+    return []
+  }
+
+  const items : ListItem[] = []
+  const baseIndex = (page - 1) * PAGE_SIZE
+  for (let i = 0; i < PAGE_SIZE; i++) {
+    const itemIndex = baseIndex + i + 1
+    items.push({
+      plugin_id: itemIndex,
+      plugin_img_link: '/static/logo.png',
+      plugin_name: `${props.type} mock ${itemIndex}`,
+      plugin_intro: `${props.type} mock intro ${itemIndex}`,
+      score: 90,
+      tags: ['mock', props.type],
+      update_date: `2026-06-${(itemIndex < 10 ? '0' : '') + itemIndex}`,
+      author_name: 'uni-agent'
+    } as ListItem)
+  }
+  return items
+}
+
+function loadMockData(loadComplete : (() => void) | null) {
+  if (loadingRef.value || isEnded.value) {
+    return
+  }
+
+  loadingRef.value = true
+  const items = createMockItems(currentPage.value)
+  dataList.value.push(...items)
+  if (items.length == 0) {
+    isEnded.value = true
+  } else {
+    currentPage.value++
+  }
+  loadingRef.value = false
+  if (loadComplete != null) {
+    loadComplete()
+  }
+}
+
 /* const loadingText = computed((): string => {
   if (loadingRef.value) {
     return "加载中..."
@@ -84,6 +129,12 @@ function loadData(loadComplete : (() => void) | null) {
   if (loadingRef.value || isEnded.value) {
     return
   }
+
+  if (mockEnabled.value) {
+    loadMockData(loadComplete)
+    return
+  }
+
   loadingRef.value = true
 
   uni.request<ResponseDataType>({
@@ -121,6 +172,8 @@ function loadData(loadComplete : (() => void) | null) {
 function refreshData(loadComplete : (() => void) | null) {
   dataList.value.length = 0
   currentPage.value = 1
+  isEnded.value = false
+  loadingError.value = ''
   loadData(loadComplete)
 }
 
@@ -130,9 +183,37 @@ onMounted(() => {
   }
 })
 
+// 自动化测试辅助
+function jest_useMockData(reload : boolean) {
+  mockEnabled.value = true
+  dataList.value.length = 0
+  currentPage.value = 1
+  isEnded.value = false
+  loadingError.value = ''
+  loadingRef.value = false
+  if (reload) {
+    loadData(null)
+  }
+}
+
+function jest_getState() : UTSJSONObject {
+  const firstItem = dataList.value.length > 0 ? dataList.value[0] : null
+  return {
+    type: props.type,
+    renderedCount: dataList.value.length,
+    currentPage: currentPage.value,
+    loading: loadingRef.value,
+    isEnded: isEnded.value,
+    firstTitle: firstItem != null ? firstItem.plugin_name : '',
+    mockEnabled: mockEnabled.value,
+  } as UTSJSONObject
+}
+
 defineExpose({
   loadData,
-  refreshData
+  refreshData,
+  jest_useMockData,
+  jest_getState
 })
 </script>
 

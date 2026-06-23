@@ -158,9 +158,6 @@
   onLoad(() => {
     if (!props.isWideScreen) {
       btCover.value = props.cover
-      // #ifdef APP-ANDROID
-      btCover.value = atob(btCover.value)
-      // #endif
     }
   })
 </script>

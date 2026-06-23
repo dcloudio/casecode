@@ -45,6 +45,15 @@ type SwiperViewItem = {
   preload : boolean,
 }
 
+type JestTabsPageState = {
+  swiperIndex : number,
+  animationFinishIndex : number,
+  tabCount : number,
+  currentType : string,
+  currentName : string,
+  currentPreload : boolean,
+}
+
 /**
  * 根据权重在两个值之间执行线性插值.
  * @constructor
@@ -263,6 +272,55 @@ function onRefresherrefresh(e : UniRefresherEvent) {
     refresherTriggered.value = false;
   })
 }
+
+// 自动化测试辅助
+function jest_prepareMockData() : boolean {
+  const pageRefs = longPageRef.value
+  if (pageRefs == null || pageRefs.length == 0) {
+    return false
+  }
+
+  for (let i = 0; i < pageRefs.length; i++) {
+    pageRefs[i].$callMethod('jest_useMockData', i == swiperIndex.value)
+    swiperList.value[i].preload = i == swiperIndex.value
+  }
+  return true
+}
+
+function jest_setSwiperCurrent(index : number) : boolean {
+  if (index < 0 || index >= swiperList.value.length) {
+    return false
+  }
+  setSwiperIndex(index, true)
+  animationFinishIndex = index
+  return true
+}
+
+function jest_getState() : JestTabsPageState {
+  const currentItem = swiperList.value[swiperIndex.value]
+  return {
+    swiperIndex: swiperIndex.value,
+    animationFinishIndex: animationFinishIndex,
+    tabCount: swiperList.value.length,
+    currentType: currentItem.type,
+    currentName: currentItem.name,
+    currentPreload: currentItem.preload,
+  } as JestTabsPageState
+}
+
+function jest_getListState(index : number) : UTSJSONObject | null {
+  if (index < 0 || index >= swiperList.value.length || longPageRef.value == null) {
+    return null
+  }
+  return longPageRef.value[index].$callMethod('jest_getState', null) as UTSJSONObject | null
+}
+
+defineExpose({
+  jest_prepareMockData,
+  jest_setSwiperCurrent,
+  jest_getState,
+  jest_getListState,
+})
 
 </script>
 
