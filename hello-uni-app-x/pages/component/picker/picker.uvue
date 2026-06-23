@@ -91,7 +91,7 @@
     <view class="uni-list" style="margin-bottom: 15px;">
       <view class="uni-list-cell">
         <text class="uni-list-cell-left">当前选择</text>
-        <view class="uni-list-cell-db">
+        <view class="uni-list-cell-db" @click="initCityData">
           <!-- #ifndef MP-WEIXIN -->
           <picker class="picker-city--test" mode="multiSelector" @columnchange="bindCityPickerColumnChange"
             :value="data.cityIndex" :range="data.cityArray">
@@ -257,10 +257,6 @@
       data.cityArray[2] = []
     }
   }
-
-  onLoad(() => {
-    initCityData()
-  })
   // #endif
 
   // #ifdef MP-WEIXIN

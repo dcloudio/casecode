@@ -198,6 +198,10 @@
   }
   /* #endif */
 
+  page {
+    --page-padding: 16px;
+  }
+
   /* 全局样式测试 - 验证是否会影响所有页面和组件 */
   .global-text {
   	color: #007AFF;

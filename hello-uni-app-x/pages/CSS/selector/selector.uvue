@@ -14,7 +14,6 @@ const setPagePadding = () => {
 
 <style>
   page {
-    --page-padding: 16px;
     --page-padding-change: 20px;
     padding: var(--page-padding);
   }
