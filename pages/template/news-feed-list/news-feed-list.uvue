@@ -143,9 +143,6 @@
     title.value = detail.title;
     // 窄屏时跳转到详情页，宽屏时右侧直接展示
     if (!isWideScreen.value) {
-      // #ifdef APP-ANDROID
-      cover.value = btoa(cover.value);
-      // #endif
       uni.navigateTo({
         url: '/pages/template/news-feed-list/detail/detail?post_id=' + post_id.value + "&cover=" + cover.value + "&title=" + title.value + "&shareKey=image_" + key
       });

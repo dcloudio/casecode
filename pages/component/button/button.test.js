@@ -3,6 +3,9 @@ const isWeb = platformInfo.startsWith('web')
 const isMP = platformInfo.startsWith('mp')
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 const isAndroid = platformInfo.startsWith('android')
+const isIos = platformInfo.startsWith('ios')
+const isHarmony = platformInfo.startsWith('harmony')
+const isApp = isAndroid || isIos || isHarmony
 
 const PAGE_PATH = '/pages/component/button/button'
 
@@ -169,17 +172,6 @@ describe('Buttonstatus.uvue', () => {
     await page.waitFor('button')
   })
 
-  test('button-hover', async () => {
-    const btn = await page.$('#test-button-hover-class')
-    await btn.longpress()
-    const image = await program.screenshot({
-      fullPage: true,
-    });
-    expect(image).toSaveImageSnapshot({customSnapshotIdentifier() {
-      return 'buttonstatus-button-hover-class-default-value'
-    }});
-  })
-
   test('newline', async () => {
     const image = await program.screenshot({
       fullPage: true,
@@ -210,6 +202,35 @@ describe('Buttonstatus.uvue', () => {
     });
     expect(image).toSaveImageSnapshot({customSnapshotIdentifier() {
       return 'buttonstatus-disabled'
+    }});
+  })
+
+  test('button-hover', async () => {
+    await page.callMethod('set_disabled_false')
+    await page.waitFor(100)
+    const btn = await page.$('#test-button-hover-class')
+    if (isApp) {
+      const rect = await page.callMethod('getHoverButtonRect')
+      const tapPoint = {
+        x: Math.round(rect.left + rect.width / 2.0),
+        y: Math.round(rect.y + rect.height - (isDom2 ? 20 : 10))
+      }
+      console.log('button rect', rect)
+      console.log('button tap point', tapPoint)
+      await program.tap({
+        x: tapPoint.x,
+        y: tapPoint.y,
+        duration: 300
+      })
+    } else {
+      await btn.longpress()
+    }
+    await page.waitFor(400)
+    const image = await program.screenshot({
+      fullPage: true,
+    });
+    expect(image).toSaveImageSnapshot({customSnapshotIdentifier() {
+      return 'buttonstatus-button-hover-class-default-value'
     }});
   })
 })
