@@ -1,0 +1,21 @@
+<template>
+  <view>
+    默认通过page选择器设置padding: 16px
+    <button id="setPagePaddingButton" @tap="setPagePadding">切换page padding为20px</button>
+  </view>
+</template>
+
+<script setup lang="uts">
+const setPagePadding = () => {
+  const pages = getCurrentPages()
+  pages[pages.length - 1].querySelector('page')?.style.setProperty('padding', 'var(--page-padding-change)')
+}
+</script>
+
+<style>
+  page {
+    --page-padding: 16px;
+    --page-padding-change: 20px;
+    padding: var(--page-padding);
+  }
+</style>

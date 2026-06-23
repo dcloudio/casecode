@@ -1,5 +1,5 @@
 <template>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   <scroll-view style="flex: 1">
   <!-- #endif -->
 		<!-- #ifndef APP-ANDROID -->
@@ -270,7 +270,7 @@
       <native-view ref="nativeView2" class="base-style" style="transition: width 2s ease-in-out;" @click="changeNativeViewWidth2"></native-view>
     </view>
 
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>

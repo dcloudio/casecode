@@ -10,7 +10,7 @@ const isMP = platformInfo.startsWith('mp')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
-const HOME_PAGE_PATH = isDom2 && !isHarmony ? '/pages/tabBar/tab-bar' : '/pages/tabBar/component'
+const HOME_PAGE_PATH = isDom2 && !isHarmony && !isIos ? '/pages/tabBar/tab-bar' : '/pages/tabBar/component'
 const PAGE_PATH = '/pages/API/get-current-pages/get-current-pages?test=123'
 
 describe('getCurrentPages', () => {
@@ -41,7 +41,7 @@ describe('getCurrentPages', () => {
         }, waitTime)
       })
     }
-    page = isDom2 && !isHarmony ? await program.reLaunch(HOME_PAGE_PATH) : await program.switchTab(HOME_PAGE_PATH)
+    page = isDom2 && !isHarmony && !isIos ? await program.reLaunch(HOME_PAGE_PATH) : await program.switchTab(HOME_PAGE_PATH)
     await page.waitFor(1000)
     page = await program.navigateTo(PAGE_PATH)
     await page.waitFor(1000)

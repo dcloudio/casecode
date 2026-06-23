@@ -61,7 +61,7 @@ describe('showActionSheet', () => {
       }
     }
 
-		page = await program.reLaunch(isDom2 && !isHarmony ? '/pages/tabBar/tab-bar' : '/pages/tabBar/API');
+		page = await program.reLaunch(isDom2 && !isHarmony && !isIos ? '/pages/tabBar/tab-bar' : '/pages/tabBar/API');
     await page.waitFor('view');
 
     page = await program.navigateTo(PAGE_PATH)

@@ -1,5 +1,5 @@
 <template>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   <scroll-view style="flex: 1">
   <!-- #endif -->
     <view style="flex-grow: 1">
@@ -144,7 +144,7 @@
           <enum-data :items="alignItemsEnum" title="align-items 枚举值" @change="radioChangeAlignItems" :compact="true"></enum-data>
           <input-data :defaultValue="data.alignItems" title="align-items 自定义值" type="text" @confirm="inputChangeAlignItems"></input-data>
       </view>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>

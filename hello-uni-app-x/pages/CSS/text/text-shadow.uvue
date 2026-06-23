@@ -1,5 +1,5 @@
 <template>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   <scroll-view style="flex: 1">
   <!-- #endif -->
     <view class="container">
@@ -52,7 +52,7 @@
         <input-data :defaultValue="data.textShadow" title="text-shadow 自定义值" type="text" @confirm="inputChangeTextShadow"></input-data>
       </view>
     </view>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>

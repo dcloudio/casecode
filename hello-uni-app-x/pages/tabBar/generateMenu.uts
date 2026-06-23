@@ -151,7 +151,7 @@ function fillMenuArrayWithEmptyMenuItem(arr : MenuItem[], index : number) : void
 function removeEmptyItem(arr : MenuItem[]) : MenuItem[] {
   const res = arr.filter((item : MenuItem) : boolean => item.name !== 'empty')
   res.forEach(menuItem => {
-    // #ifdef !VUE3-VAPOR || APP-HARMONY
+    // #ifdef !VUE3-VAPOR || APP-HARMONY || APP-IOS
     addSetTabBarPage(menuItem)
     // #endif
     // #ifdef APP-ANDROID
