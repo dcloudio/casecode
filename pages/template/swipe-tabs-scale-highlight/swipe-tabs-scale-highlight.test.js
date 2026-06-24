@@ -20,14 +20,11 @@ describe('template-swipe-tabs-scale-highlight', () => {
   }
 
   async function waitForSwiperCurrent(target) {
-    for (let index = 0; index < 15; index++) {
+    const start = Date.now()
+    await page.waitFor(async () => {
       const swiper = await page.$('.swiper-view')
-      if (await swiper.property('current') == target) {
-        return
-      }
-      await page.waitFor(200)
-    }
-
+      return await swiper.property('current') == target || Date.now() - start > 8000
+    })
     const swiper = await page.$('.swiper-view')
     expect(await swiper.property('current')).toBe(target)
   }

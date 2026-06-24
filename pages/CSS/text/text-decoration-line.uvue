@@ -15,12 +15,6 @@
         <text class="common" style="text-decoration-line: underline;color: blue;" flatten>text-decoration-line: underline 自适应宽高且拍平</text>
         <text class="common" style="text-decoration-line: line-through;color: blue;" flatten>text-decoration-line: line-through 自适应宽高且拍平</text>
       </view>
-      <!-- #ifndef APP-ANDROID || (APP-HARMONY && !VUE3-VAPOR) || (APP-IOS && !VUE3-VAPOR) -->
-      <view class="content">
-        <text class="common" style="text-decoration-line: underline;color: blue; text-decoration-color: red; text-overflow: ellipsis;width: 200px;white-space: nowrap;">下划线颜色和ellipsis组合</text>
-        <text class="common" style="text-decoration-line: line-through;color: blue; text-decoration-color: blue; text-overflow: ellipsis;width: 200px;white-space: nowrap;">删除线颜色和ellipsis组合</text>
-      </view>
-      <!-- #endif -->
 
       <view class="uni-common-mt">
         <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 text-decoration-line </text>
@@ -54,6 +48,15 @@
           <input-data :defaultValue="data.textDecorationLine" title="text-decoration-line 自定义值" type="text" @confirm="inputChangeTextDecorationLine"></input-data>
       </view>
     </view>
+
+		<!-- #ifndef APP-ANDROID || (APP-HARMONY && !VUE3-VAPOR) || (APP-IOS && !VUE3-VAPOR) -->
+    <!-- 临时注释，后续App支持再放开 -->
+		<!-- <view class="content">
+		  <text class="common" style="text-decoration-line: underline;color: blue; text-decoration-color: red; text-overflow: ellipsis;width: 200px;white-space: nowrap;">下划线颜色和ellipsis组合</text>
+		  <text class="common" style="text-decoration-line: line-through;color: blue; text-decoration-color: blue; text-overflow: ellipsis;width: 200px;white-space: nowrap;">删除线颜色和ellipsis组合</text>
+		</view> -->
+		<!-- #endif -->
+
   <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->

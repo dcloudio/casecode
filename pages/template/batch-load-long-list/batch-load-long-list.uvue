@@ -4,11 +4,13 @@
     本示例有2000条数据，通过分批创建列表项，减少初始化卡顿。并通过闲时创建机制避免影响列表滚动等UI操作</view>
     <list-view style="flex: 1" :refresher-enabled="true" :refresher-triggered="refresherTriggered" @scroll="onScroll"
       @scrolltolower="onScrollToLower" @refresherrefresh="onRefresh" @refresherpulling="onRefresherPulling" @refresherrestore="onRefresherRestore">
-      <list-item class="item" v-for="(item, index) in list" :key="index + '_' + item.id">
-        <view><text>{{ item.name }}</text></view>
-        <view><text style="font-size: 12px; color: #999999">{{
-            item.info
-          }}</text></view>
+      <list-item v-for="(item, index) in list" :key="index + '_' + item.id">
+        <view class="item">
+          <view><text>{{ item.name }}</text></view>
+          <view><text style="font-size: 12px; color: #999999">{{
+              item.info
+            }}</text></view>
+        </view>
       </list-item>
     </list-view>
   </view>

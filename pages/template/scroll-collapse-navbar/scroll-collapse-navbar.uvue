@@ -1,5 +1,5 @@
 <template>
-  <scroll-view @scroll="onScroll" class="page" show-scrollbar="false">
+  <scroll-view :scroll-top="testState.scrollTop" @scroll="onScroll" class="page" show-scrollbar="false">
     <view ref="seatbarRef" class="seatbar"></view>
     <view class="content">
       <view class="content-item">
@@ -47,7 +47,18 @@ const searchbarRef = ref<UniElement | null>(null)
 const titleRef = ref<UniElement | null>(null)
 const seatbarRef = ref<UniElement | null>(null)
 
+type ScrollCollapseNavbarTestState = {
+  scrollTop: number;
+  currentScrollTop: number;
+}
+
+const testState = reactive({
+  scrollTop: 0,
+  currentScrollTop: 0,
+} as ScrollCollapseNavbarTestState)
+
 function onScroll(e : ScrollEvent) {
+  testState.currentScrollTop = e.detail.scrollTop
   let offset = e.detail.scrollTop>SEARCHBARHEIGHT?SEARCHBARHEIGHT:e.detail.scrollTop;//(e.detail.scrollTop<0?0:e.detail.scrollTop)
   navigatorbarRef.value?.style?.setProperty('height', (nviBarHeight -offset)+'px');
   titleRef.value?.style?.setProperty('opacity', (1-offset/SEARCHBARHEIGHT).toString());
@@ -86,6 +97,20 @@ onResize((event : OnResizeOptions) => {
   nviBarHeight = NAVIBARHEIGHT + statusBarHeight;
   setStyle();
   // #endif
+})
+
+function jest_scrollTo(scrollTop : number) : boolean {
+  testState.scrollTop = scrollTop
+  return true
+}
+
+function jest_getScrollTop() : number {
+  return testState.currentScrollTop
+}
+
+defineExpose({
+  jest_scrollTo,
+  jest_getScrollTop,
 })
 </script>
 

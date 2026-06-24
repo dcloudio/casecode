@@ -47,8 +47,11 @@ describe('scroll-collapse-navbar', () => {
     expect(image).toSaveImageSnapshot();
   });
   it('screenshot after scroll', async () => {
-    await program.pageScrollTo(400)
+    await page.callMethod('jest_scrollTo', 400)
     await page.waitFor(1000)
+    const currentScrollTop = await page.callMethod('jest_getScrollTop')
+    expect(currentScrollTop).toBeGreaterThan(399)
+
     const image = await program.screenshot(deviceShotOptions);
     expect(image).toSaveImageSnapshot();
   });

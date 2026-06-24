@@ -144,7 +144,7 @@
     // 窄屏时通过路由参数跳转，宽屏时直接更新右侧详情组件
     if (!isWideScreen.value) {
       uni.navigateTo({
-        url: '/pages/template/news-feed-list/detail/detail?post_id=' + post_id.value + "&cover=" + coverValue + "&title=" + title.value + "&shareKey=image_" + key
+        url: '/pages/template/news-feed-list/detail/detail?post_id=' + encodeURIComponent(post_id.value) + "&cover=" + encodeURIComponent(coverValue) + "&title=" + encodeURIComponent(title.value) + "&shareKey=" + encodeURIComponent('image_' + key)
       });
     } else {
       cover.value = coverValue;
@@ -204,9 +204,9 @@
     // const detail = e;
     const post_id_val = e.post_id as string;
     const cover_val = e.cover as string;
-    const title_val = e.title;
+    const title_val = e.title as string;
     uni.navigateTo({
-      url: '/pages/template/news-feed-list/detail/detail?post_id=' + post_id_val + "&cover=" + cover_val + "&title=" + title_val
+      url: '/pages/template/news-feed-list/detail/detail?post_id=' + encodeURIComponent(post_id_val) + "&cover=" + encodeURIComponent(cover_val) + "&title=" + encodeURIComponent(title_val)
     });
   }
 
