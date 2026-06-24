@@ -48,6 +48,8 @@ const swiper = ref<UniSwiperElement | null>(null)
 let animationFinishIndex = 0
 // 记录当前切页目标，避免过期的 animationfinish 回写旧索引。
 let swiperTargetIndex = -1
+// 仅在测试辅助切页时启用旧 finish 事件保护，避免影响真实手势滑动。
+let isTestFinishGuardEnabled = false
 let swiperWidth = 0
 
 function updateTabIndicator(current_index : number, move_to_index : number, percentage : number) {
@@ -87,6 +89,7 @@ function setSwiperIndex(index : number, updateIndicator : boolean) {
 }
 // 自动化测试
 function jest_setSwiperCurrent(index : number) {
+  isTestFinishGuardEnabled = true
   swiperTargetIndex = index
   setSwiperIndex(index, true)
   animationFinishIndex = index
@@ -111,7 +114,7 @@ function onSwiperTransition(e : SwiperTransitionEvent) {
   }
   const percentage = Math.abs(current_offset_x) / swiperWidth
   if (current_index != move_to_index) {
-    // transition 会覆盖点击或手势产生的最新目标页，避免残留目标误伤后续完成事件。
+    // 用 transition 推导出的当前滑动目标，同步替换旧目标值
     swiperTargetIndex = move_to_index
     updateTabIndicator(current_index, move_to_index, percentage)
   }
@@ -119,9 +122,10 @@ function onSwiperTransition(e : SwiperTransitionEvent) {
 
 function onSwiperAnimationfinish(e : SwiperAnimationFinishEvent) {
   // 忽略晚到的旧完成事件，防止把当前页回写成上一次目标页。
-  if (swiperTargetIndex >= 0 && e.detail.current != swiperTargetIndex) {
+  if (isTestFinishGuardEnabled && swiperTargetIndex >= 0 && e.detail.current != swiperTargetIndex) {
     return
   }
+  isTestFinishGuardEnabled = false
   swiperTargetIndex = -1
   setSwiperIndex(e.detail.current, true)
   animationFinishIndex = e.detail.current

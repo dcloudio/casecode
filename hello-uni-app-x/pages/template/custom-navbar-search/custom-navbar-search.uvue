@@ -144,15 +144,15 @@
   }
 
   .content-item {
-    padding: 15px;
-    margin: 5px 10px;
-    background-color: #fff;
-    border-radius: 5px;
   }
 
   .cell-item {
     display: flex;
     flex-direction: column;
+    padding: 15px;
+    margin: 5px 10px;
+    background-color: #fff;
+    border-radius: 5px;
   }
 
   .text {

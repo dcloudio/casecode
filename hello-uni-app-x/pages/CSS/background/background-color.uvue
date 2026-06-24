@@ -119,7 +119,7 @@
       </view>
 
       <view>
-        <text>background-color: rgba(0, 0, 255, 0.5) (无src时显示背景色)</text>
+        <text>background-color: rgba(0, 0, 255, 0.5) \n (无src时显示背景色)</text>
         <view class="demo-box">
           <image class="common-image" style="background-color: rgba(0, 0, 255, 0.5)"></image>
           <image class="common-image" style="background-color: rgba(0, 0, 255, 0.5)" flatten></image>
@@ -143,7 +143,7 @@
       </view>
 
       <view>
-        <text>background-color: yellow (有src时，背景色在图片加载失败或透明区域显示)</text>
+        <text>background-color: yellow \n (有src时，背景色在图片加载失败或透明区域显示)</text>
         <view class="demo-box">
           <image class="common-image" style="background-color: yellow" src="/static/test-image/logo.png"></image>
           <image class="common-image" style="background-color: yellow" src="/static/test-image/logo.png" flatten></image>
@@ -242,7 +242,7 @@
       </view>
 
       <view class="uni-common-mb">
-        <text>native-view组件: background-color: blue 和 #0000ff80 </text>
+        <text>native-view组件: \n background-color: blue 和 #0000ff80 </text>
         <view class="demo-box">
           <native-view class="common" style="background-color: blue"></native-view>
           <native-view class="common" style="background-color: #0000ff80;"></native-view>

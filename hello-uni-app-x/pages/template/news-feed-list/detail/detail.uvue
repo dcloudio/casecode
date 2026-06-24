@@ -53,6 +53,10 @@
   // 标记是否已经用过firstDetailContent
   const usedContent = ref(false)
   const btCover = ref("")
+  // 部分平台 navigateTo 不会自动解码 query 参数，统一解码
+  const title = computed(() : string => decodeURIComponent(props.title ?? '')!)
+  const cover = computed(() : string => decodeURIComponent(props.cover ?? '')!)
+  const shareKey = computed(() : string => decodeURIComponent(props.shareKey ?? '')!)
 
   // #ifdef APP
   function processHtmlContent(content: string, color: string): string {
@@ -157,7 +161,7 @@
 
   onLoad(() => {
     if (!props.isWideScreen) {
-      btCover.value = props.cover
+      btCover.value = cover.value
     }
   })
 </script>

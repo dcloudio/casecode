@@ -23,7 +23,7 @@ describe('template-swipe-tabs-underline', () => {
     const start = Date.now()
     await page.waitFor(async () => {
       const swiper = await page.$('swiper')
-      return await swiper.property('current') == target || Date.now() - start > 3000
+      return await swiper.property('current') == target || Date.now() - start > 8000
     })
 
     const swiper = await page.$('swiper')

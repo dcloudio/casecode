@@ -1,5 +1,9 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isWeb = platformInfo.startsWith('web')
+const isTablet =
+  platformInfo.includes('平板') ||
+  platformInfo.includes('matepad') ||
+  platformInfo.includes('ipad')
 
 const PAGE_PATH = '/pages/template/news-feed-list/news-feed-list'
 const DETAIL_PAGE_PATH = 'pages/template/news-feed-list/detail/detail'
@@ -61,6 +65,10 @@ describe('template-news-feed-list', () => {
     await openListPage()
 
     const state = await waitForListData()
+    if (isTablet) {
+      expect(true).toBe(true)
+      return
+    }
     expect(state.isWideScreen).toBe(false)
     expect(state.bannerTitle.length).toBeGreaterThan(0)
     expect(state.listCount).toBeGreaterThan(0)
@@ -73,7 +81,12 @@ describe('template-news-feed-list', () => {
     await openListPage()
 
     const listState = await waitForListData()
+    if (isTablet) {
+      expect(true).toBe(true)
+      return
+    }
     expect(listState.listCount).toBeGreaterThan(0)
+    expect(listState.isWideScreen).toBe(false)
 
     const titles = await waitForElements('.uni-media-list-text-top')
     expect(titles.length).toBeGreaterThan(0)
@@ -97,6 +110,41 @@ describe('template-news-feed-list', () => {
     const backState = await waitForListData()
     expect(backState.isWideScreen).toBe(false)
     expect(backState.listCount).toBeGreaterThan(0)
+  })
+
+  it('shows detail in split view on tablet layout', async () => {
+    await openListPage()
+
+    const listState = await waitForListData()
+    if (isTablet) {
+      expect(listState.listCount).toBeGreaterThan(0)
+      expect(listState.isWideScreen).toBe(true)
+
+      const titles = await waitForElements('.uni-media-list-text-top')
+      expect(titles.length).toBeGreaterThan(0)
+      const firstTitleText = await titles[0].text()
+      expect(firstTitleText.length).toBeGreaterThan(0)
+
+      const items = await waitForElements('.uni-list-cell')
+      expect(items.length).toBeGreaterThan(0)
+      await items[0].tap()
+
+      await waitForElements('.detail-container')
+      await waitForElements('.detail-container .banner-title')
+
+      const currentPage = await program.currentPage()
+      expect(currentPage.path).toBe('pages/template/news-feed-list/news-feed-list')
+
+      const wideState = await getState()
+      expect(wideState.isWideScreen).toBe(true)
+      expect(wideState.currentIndex).toBe(0)
+
+      const detailTitle = await page.$('.detail-container .banner-title')
+      expect(await detailTitle.text()).toBe(firstTitleText)
+      return
+    }
+
+    expect(true).toBe(true)
   })
 
   it('shows the first detail in web split view', async () => {

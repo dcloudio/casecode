@@ -13,7 +13,7 @@
         </view>
       </sticky-header>
       <list-item v-for="i in 20" :key="i" class="content-item">
-        <text class="text">item-{{i}}</text>
+        <text class="content-item-text">item-{{i}}</text>
       </list-item>
       <refresh-box slot="refresher" :state="state" :pullingDistance="pullingDistance"></refresh-box>
     </list-view>
@@ -83,12 +83,12 @@ function onRefreshrestore() {
   }
 
   .content-item {
-    padding: 15px;
-    margin: 5px 0;
-    background-color: #fff;
   }
 
-  .text {
+  .content-item-text {
+    margin: 5px 0;
+    padding: 15px;
+    background-color: #fff;
     font-size: 14px;
     color: #666;
     line-height: 20px;
