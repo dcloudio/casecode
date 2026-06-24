@@ -31,7 +31,11 @@
         </view>
         <view class="uni-list-cell uni-list-cell-padding">
           <view class="uni-list-cell-db">定制指示器颜色</view>
-          <switch :checked="data.indicatorColorSelect" @change="indicatorColorChange" />
+          <switch :checked="data.indicatorColorSelect"
+            <!-- #ifndef (APP && VUE3-VAPOR) -->
+            :disabled="true"
+            <!-- #endif -->
+            @change="indicatorColorChange" />
         </view>
         <view class="uni-list-cell uni-list-cell-padding">
           <view class="uni-list-cell-db">禁止 touch 操作</view>
