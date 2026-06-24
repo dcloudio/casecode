@@ -8,9 +8,9 @@
       <view class="uni-list-cell">
         <view class="uni-list-cell-left">当前选择</view>
         <view class="uni-list-cell-db">
-          <picker class="picker-selector--test" @change="bindPickerChange" :value="data.index"
+          <picker class="picker-selector--test uni-picker-container-wrap" @change="bindPickerChange" :value="data.index"
             :range="data.selectorArray" range-key="name">
-            <text class="uni-input picker-selector--value">{{data.selectorArray[data.index].name}}</text>
+            <text class="uni-input picker-selector--value uni-picker-text">{{data.selectorArray[data.index].name}}</text>
           </picker>
         </view>
       </view>
@@ -21,9 +21,9 @@
       <view class="uni-list-cell">
         <text class="uni-list-cell-left">当前选择</text>
         <view class="uni-list-cell-db">
-          <picker class="picker-multi--test" mode="multiSelector" @columnchange="bindMultiPickerColumnChange"
+          <picker class="picker-multi--test uni-picker-container-wrap"  mode="multiSelector" @columnchange="bindMultiPickerColumnChange"
             :value="data.multiIndex" :range="data.multiArray">
-            <text class="uni-input picker-multi--value">
+            <text class="uni-input picker-multi--value uni-picker-text">
               {{data.multiArray[0][data.multiIndex[0]]}}，{{data.multiArray[1][data.multiIndex[1]]}}，{{data.multiArray[2][data.multiIndex[2]]}}
             </text>
           </picker>
@@ -36,9 +36,9 @@
       <view class="uni-list-cell">
         <view class="uni-list-cell-left">当前选择</view>
         <view class="uni-list-cell-db">
-          <picker class="picker-time--test" mode="time" :value="data.time" start="09:01" end="21:01"
+          <picker class="picker-time--test uni-picker-container-wrap" mode="time" :value="data.time" start="09:01" end="21:01"
             @change="bindTimeChange">
-            <text class="uni-input">{{data.time}}</text>
+            <text class="uni-input uni-picker-text">{{data.time}}</text>
           </picker>
         </view>
       </view>
@@ -50,9 +50,9 @@
       <view class="uni-list-cell">
         <text class="uni-list-cell-left">当前选择 </text>
         <view class="uni-list-cell-db">
-          <picker class="picker-date-day--test" mode="date" :value="data.dayDate" :start="data.startDate"
+          <picker class="picker-date-day--test uni-picker-container-wrap" mode="date" :value="data.dayDate" :start="data.startDate"
             :end="data.endDate" @change="bindDayDateChange">
-            <text class="uni-input">{{data.dayDate}}</text>
+            <text class="uni-input uni-picker-text">{{data.dayDate}}</text>
           </picker>
         </view>
       </view>
@@ -64,9 +64,9 @@
       <view class="uni-list-cell">
         <text class="uni-list-cell-left">当前选择 </text>
         <view class="uni-list-cell-db">
-          <picker class="picker-date-month--test" mode="date" fields="month" :value="data.monthDate"
+          <picker class="picker-date-month--test uni-picker-container-wrap" mode="date" fields="month" :value="data.monthDate"
             :start="data.startDate" :end="data.endDate" @change="bindMonthDateChange">
-            <text class="uni-input">{{data.monthDate}}</text>
+            <text class="uni-input uni-picker-text">{{data.monthDate}}</text>
           </picker>
         </view>
       </view>
@@ -78,9 +78,9 @@
       <view class="uni-list-cell">
         <text class="uni-list-cell-left">当前选择 </text>
         <view class="uni-list-cell-db">
-          <picker class="picker-date-year--test" mode="date" fields="year" :value="data.yearDate"
+          <picker class="picker-date-year--test uni-picker-container-wrap" mode="date" fields="year" :value="data.yearDate"
             :start="data.startDate" :end="data.endDate" @change="bindYearDateChange">
-            <text class="uni-input">{{data.yearDate}}</text>
+            <text class="uni-input uni-picker-text">{{data.yearDate}}</text>
           </picker>
         </view>
       </view>
@@ -93,16 +93,16 @@
         <text class="uni-list-cell-left">当前选择</text>
         <view class="uni-list-cell-db" @click="initCityData">
           <!-- #ifndef MP-WEIXIN -->
-          <picker class="picker-city--test" mode="multiSelector" @columnchange="bindCityPickerColumnChange"
+          <picker class="picker-city--test uni-picker-container-wrap" mode="multiSelector" @columnchange="bindCityPickerColumnChange"
             :value="data.cityIndex" :range="data.cityArray">
-            <text class="uni-input picker-city--value">
+            <text class="uni-input picker-city--value uni-picker-text">
               {{getCityDisplayText()}}
             </text>
           </picker>
           <!-- #endif -->
           <!-- #ifdef MP-WEIXIN -->
-          <picker class="picker-city--test" mode="region" @change="bindRegionChange" :value="data.region">
-            <text class="uni-input picker-city--value">
+          <picker class="picker-city--test uni-picker-container-wrap" mode="region" @change="bindRegionChange" :value="data.region">
+            <text class="uni-input picker-city--value uni-picker-text">
               {{data.region[0]}}{{data.region[1] ? '，' : ''}}{{data.region[1]}}{{data.region[2] ? '，' : ''}}{{data.region[2]}}
             </text>
           </picker>
@@ -117,9 +117,9 @@
       <view class="uni-list-cell">
         <view class="uni-list-cell-left">当前选择</view>
         <view class="uni-list-cell-db">
-          <picker class="picker-disabled--test" @change="bindPickerChange" disabled :value="data.index"
+          <picker class="picker-disabled--test uni-picker-container-wrap" @change="bindPickerChange" disabled :value="data.index"
             :range="data.selectorArray" range-key="name">
-            <text class="uni-input picker-disabled--value">{{data.selectorArray[data.index].name}}</text>
+            <text class="uni-input picker-disabled--value uni-picker-text">{{data.selectorArray[data.index].name}}</text>
           </picker>
         </view>
       </view>
@@ -390,6 +390,20 @@
     margin-top: 5px;
     margin-bottom: 15px;
     padding: 0 15px;
+  }
+
+  .uni-picker-container-wrap {
+    height: 41px;
+    line-height: 41px;
+  }
+
+  .uni-picker-text {
+    line-height: 25px;
+    height: 25px;
+    padding: 8px 13px;
+    font-size: 14px;
+    flex: 1;
+    box-sizing: content-box;
   }
 
   /* #ifdef WEB */
