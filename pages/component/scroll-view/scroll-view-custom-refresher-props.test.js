@@ -3,7 +3,8 @@ const PAGE_PATH = '/pages/component/scroll-view/scroll-view-custom-refresher-pro
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isWeb = platformInfo.startsWith('web')
 const isMP = platformInfo.startsWith('mp')
-const isiOS = platformInfo.startsWith('ios')
+const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
+const isIos = platformInfo.startsWith('ios')
 const isAndroid = platformInfo.startsWith('android')
 const isHarmony = platformInfo.startsWith('harmony')
 
@@ -114,29 +115,39 @@ describe('scroll-view-custom-refresher-props-test', () => {
   }
 
   async function screenshot() {
-    await page.waitFor(500)
     const windowInfo = await program.callUniMethod('getWindowInfo')
+    let topSafeArea = windowInfo.safeAreaInsets.top;
+    if (isAppWebView) {
+      if (isIos) {
+        topSafeArea = 59
+      } else if (isAndroid) {
+        topSafeArea = 24
+        if (platformInfo.startsWith('android 5')) {
+          topSafeArea = 25
+        } else if (platformInfo.startsWith('android 11')) {
+          topSafeArea = 52
+        } else if (platformInfo.startsWith('android 13') || platformInfo.startsWith('android 15')) {
+          topSafeArea = 49
+        }
+      } else if (isHarmony) {
+        // mate 60
+        // topSafeArea = 33
+        // mate 60 pro
+        topSafeArea = 38
+      }
+    }
     const image = await program.screenshot({
       deviceShot: true,
       area: {
         x: 0,
-        y: windowInfo.safeAreaInsets.top + 44
+        y: topSafeArea + 44
       }
     })
     expect(image).toSaveImageSnapshot()
   }
 
   it('test-initial-screenshot', async () => {
-    await page.waitFor(500)
-    const windowInfo = await program.callUniMethod('getWindowInfo')
-    const image = await program.screenshot({
-      deviceShot: true,
-      area: {
-        x: 0,
-        y: windowInfo.safeAreaInsets.top + 44
-      }
-    })
-    expect(image).toSaveImageSnapshot()
+    await screenshot()
   })
 
   // ==================== 第1个下拉刷新功能测试 ====================
