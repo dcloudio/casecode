@@ -1,5 +1,5 @@
 <template>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   <scroll-view style="flex: 1">
   <!-- #endif -->
     <template v-if="autoTestData.begin">
@@ -61,7 +61,7 @@
         <enum-data :items="lineHeightEnum" title="line-height 枚举值" @change="radioChangeLineHeight" :compact="true"></enum-data>
         <input-data :defaultValue="data.lineHeight" title="line-height 自定义值" type="text" @confirm="inputChangeLineHeight"></input-data>
     </view>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>

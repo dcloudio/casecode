@@ -333,6 +333,7 @@
     position: relative;
     width: 200px;
     height: 180px;
+    margin: 10px;
     border:#ddd solid 1px;
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   <scroll-view style="flex: 1">
   <!-- #endif -->
     <template v-if="autoTestData.begin">
@@ -59,7 +59,7 @@
           <input-data :defaultValue="data.letterSpacing" title="letter-spacing 自定义值" type="text" @confirm="inputChangeLetterSpacing"></input-data>
       </view>
     </view>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>

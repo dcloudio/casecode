@@ -91,10 +91,10 @@
     <view class="uni-list" style="margin-bottom: 15px;">
       <view class="uni-list-cell">
         <text class="uni-list-cell-left">当前选择</text>
-        <view class="uni-list-cell-db" @click="initCityData">
+        <view class="uni-list-cell-db">
           <!-- #ifndef MP-WEIXIN -->
-          <picker class="picker-city--test uni-picker-container-wrap" mode="multiSelector" @columnchange="bindCityPickerColumnChange"
-            :value="data.cityIndex" :range="data.cityArray">
+          <picker class="picker-city--test uni-picker-container-wrap" mode="multiSelector" @change="bindCityPickerChange"
+            @cancel="resetCityPicker" @columnchange="bindCityPickerColumnChange" :value="data.cityIndex" :range="data.cityArray">
             <text class="uni-input picker-city--value uni-picker-text">
               {{getCityDisplayText()}}
             </text>
@@ -155,6 +155,8 @@
     cityArray : Array<string[]>;
     allCityData : CityItemData[];
     cityIndex : number[];
+    selectedCityIndex : number[];
+    isCitySelected : boolean;
     region : string[];
     dayDate : string;
     monthDate : string;
@@ -201,6 +203,8 @@
     allCityData: [],
     region: [],
     cityIndex: [0, 0, 0],
+    selectedCityIndex: [0, 0, 0],
+    isCitySelected: false,
     dayDate: getDate('day', ''),
     monthDate: getDate('month', ''),
     yearDate: getDate('year', ''),
@@ -222,33 +226,39 @@
   }
 
   function getCityDisplayText() : string {
-    const province = getSafeCityValue(0, data.cityIndex[0])
-    const city = getSafeCityValue(1, data.cityIndex[1])
-    const district = getSafeCityValue(2, data.cityIndex[2])
-    let text = province
-    if (city != '') {
-      text += '，' + city
+    if (!data.isCitySelected) {
+      return ''
     }
-    if (district != '') {
-      text += '，' + district
+    const provinceIndex = data.selectedCityIndex[0]
+    if (provinceIndex < 0 || provinceIndex >= data.allCityData.length) {
+      return ''
+    }
+    const province = data.allCityData[provinceIndex]
+    let text = province.title
+    const cityIndex = data.selectedCityIndex[1]
+    if (cityIndex >= 0 && cityIndex < province.children.length) {
+      const city = province.children[cityIndex]
+      text += '，' + city.title
+      const districtIndex = data.selectedCityIndex[2]
+      if (districtIndex >= 0 && districtIndex < city.children.length) {
+        text += '，' + city.children[districtIndex].title
+      }
     }
     return text
   }
 
-  function initCityData() {
-    const cityDataList = JSON.parse<CityItemData[]>(cityData)
-    if (cityDataList == null) {
+  function updateCityArray() {
+    if (data.allCityData.length == 0) {
       return
     }
-    data.allCityData = cityDataList
-    data.cityArray[0] = cityDataList.map(item => item.title)
+    data.cityArray[0] = data.allCityData.map(item => item.title)
     // 使用当前选择的省份索引来初始化城市数据
     const provinceIndex = data.cityIndex[0]
-    if (cityDataList[provinceIndex] && cityDataList[provinceIndex].children) {
-      data.cityArray[1] = cityDataList[provinceIndex].children.map(item => item.title)
+    if (data.allCityData[provinceIndex] && data.allCityData[provinceIndex].children) {
+      data.cityArray[1] = data.allCityData[provinceIndex].children.map(item => item.title)
       const cityIndex = data.cityIndex[1]
-      if (cityDataList[provinceIndex].children[cityIndex] && cityDataList[provinceIndex].children[cityIndex].children) {
-        data.cityArray[2] = cityDataList[provinceIndex].children[cityIndex].children.map(item => item.title)
+      if (data.allCityData[provinceIndex].children[cityIndex] && data.allCityData[provinceIndex].children[cityIndex].children) {
+        data.cityArray[2] = data.allCityData[provinceIndex].children[cityIndex].children.map(item => item.title)
       } else {
         data.cityArray[2] = []
       }
@@ -257,6 +267,26 @@
       data.cityArray[2] = []
     }
   }
+
+  function resetCityPicker() {
+    if (data.isCitySelected) {
+      data.cityIndex = [data.selectedCityIndex[0], data.selectedCityIndex[1], data.selectedCityIndex[2]]
+    } else {
+      data.cityIndex = [0, 0, 0]
+    }
+    updateCityArray()
+  }
+
+  function initCityData() {
+    const cityDataList = JSON.parse<CityItemData[]>(cityData)
+    if (cityDataList == null) {
+      return
+    }
+    data.allCityData = cityDataList
+    resetCityPicker()
+  }
+
+  initCityData()
   // #endif
 
   // #ifdef MP-WEIXIN
@@ -321,6 +351,13 @@
   }
 
   // #ifndef MP-WEIXIN
+  const bindCityPickerChange = (e : UniPickerChangeEvent) => {
+    console.log('picker发送选择改变，携带值为：' + e.detail.value)
+    const cityIndex = e.detail.value as number[]
+    data.selectedCityIndex = [cityIndex[0], cityIndex[1], cityIndex[2]]
+    data.isCitySelected = true
+  }
+
   const bindCityPickerColumnChange = (e : UniPickerColumnChangeEvent) => {
     console.log('修改的列为：' + e.detail.column + '，值为：' + e.detail.value)
     data.cityIndex[e.detail.column] = e.detail.value
