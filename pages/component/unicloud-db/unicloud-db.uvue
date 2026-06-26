@@ -4,7 +4,7 @@
     <unicloud-db ref="udbRef" v-slot:default="{data, pagination, loading, error}" :collection="collection" :getcount="true"
       loadtime="manual">
       <list-view v-if="data.length>0" ref="listViewRef" class="list" :scroll-y="true" @scrolltolower="loadMore()">
-        <list-item class="list-item" v-for="(item, _) in data">
+        <list-item class="list-item" v-for="(item, _) in data" :key="item.getString('_id')">
           <view class="list-item-fill">
             <text>{{item}}</text>
           </view>
