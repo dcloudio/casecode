@@ -15657,7 +15657,7 @@ export const cityData = `[
                 "disabled": false
             },
             {
-                "title": "海南省-自治区直辖县级行政区划",
+                "title": "省直辖县级行政区划",
                 "id": "469000",
                 "children": [
                     {
