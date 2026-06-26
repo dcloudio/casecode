@@ -1,15 +1,20 @@
 <template>
   <view>
     默认通过page选择器设置padding: 16px
+    <!-- WEB 和 MP-WEIXIN 暂不支持动态修改 page 的 style，因此不展示切换按钮 -->
+    <!-- #ifndef WEB || MP-WEIXIN -->
     <button id="setPagePaddingButton" @tap="setPagePadding">切换page padding为20px</button>
+    <!-- #endif -->
   </view>
 </template>
 
 <script setup lang="uts">
+// #ifndef WEB || MP-WEIXIN
 const setPagePadding = () => {
   const pages = getCurrentPages()
   pages[pages.length - 1].querySelector('page')?.style.setProperty('padding', 'var(--page-padding-change)')
 }
+// #endif
 </script>
 
 <style>

@@ -76,6 +76,20 @@
 		month: number
 		days: DayInfo[]
 	}
+  // 自动化测试
+	type CalendarVaporState = {
+		currentYear: number
+		currentMonth: number
+		selectedDate: string | null
+		selectedYear: number
+		selectedMonth: number
+		selectedDay: number
+		selectedWeekday: string
+		swiperCurrent: number
+		swiperItemCount: number
+		visibleDayCount: number
+		selectedDayCount: number
+	}
 
 	const weekdays = ['一', '二', '三', '四', '五', '六', '日']
 
@@ -440,6 +454,71 @@
 	// 初始化
 	selectedDate.value = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`
 	initSwiperItems()
+
+  // 自动化测试
+	function jest_getState() : CalendarVaporState {
+		const currentItem = swiperItems.value[lastItemIndex]
+		let visibleDayCount = 0
+		let selectedDayCount = 0
+
+		for (let i = 0; i < swiperItems.value.length; i++) {
+			const item = swiperItems.value[i]
+			for (let j = 0; j < item.days.length; j++) {
+				const day = item.days[j]
+				if (i == lastItemIndex && day.day > 0) {
+					visibleDayCount++
+				}
+				if (day.isSelected) {
+					selectedDayCount++
+				}
+			}
+		}
+
+		return {
+			currentYear: currentYear.value,
+			currentMonth: currentMonth.value,
+			selectedDate: selectedDate.value,
+			selectedYear: selectedYear.value,
+			selectedMonth: selectedMonth.value,
+			selectedDay: selectedDay.value,
+			selectedWeekday: selectedWeekday.value,
+			swiperCurrent: swiperCurrent.value,
+			swiperItemCount: swiperItems.value.length,
+			visibleDayCount: visibleDayCount,
+			selectedDayCount: selectedDayCount
+		}
+	}
+
+	function jest_pickMonth(value : string) : void {
+		swiperCurrent.value = 1
+		onPickerChange({
+			detail: {
+				value: value
+			}
+		} as UniPickerChangeEvent)
+	}
+
+	function jest_selectDay(day : number) : boolean {
+		const currentItem = swiperItems.value[lastItemIndex]
+		for (let i = 0; i < currentItem.days.length; i++) {
+			const dayInfo = currentItem.days[i]
+			if (dayInfo.day == day) {
+				const oldDate = selectedDate.value
+				selectedDate.value = dayInfo.date
+				updateSelectedStateOptimized(oldDate, dayInfo.date)
+				return true
+			}
+		}
+		return false
+	}
+
+	defineExpose({
+		prevMonth,
+		nextMonth,
+		jest_getState,
+		jest_pickMonth,
+		jest_selectDay
+	})
 </script>
 
 <style>
