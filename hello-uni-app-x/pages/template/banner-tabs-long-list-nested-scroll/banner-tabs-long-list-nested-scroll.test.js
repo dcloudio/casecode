@@ -23,11 +23,12 @@ describe('template-banner-tabs-long-list-nested-scroll', () => {
     const start = Date.now()
     await page.waitFor(async () => {
       const state = await page.callMethod('jest_getState')
-      return state != null && state.swiperIndex == target || Date.now() - start > timeout
+      return state != null && state.swiperIndex == target && state.animationFinishIndex == target || Date.now() - start > timeout
     })
 
     const state = await page.callMethod('jest_getState')
     expect(state.swiperIndex).toBe(target)
+    expect(state.animationFinishIndex).toBe(target)
   }
 
   async function waitForListState(index, matcher, timeout = 5000) {
@@ -38,6 +39,19 @@ describe('template-banner-tabs-long-list-nested-scroll', () => {
     })
 
     return await page.callMethod('jest_getListState', index)
+  }
+
+  async function waitForIndicatorChange(indicator, beforeTransform, beforeWidth, timeout = 4000) {
+    const start = Date.now()
+    await page.waitFor(async () => {
+      const transform = await indicator.style('transform')
+      const width = (await indicator.size()).width
+      return transform !== beforeTransform || width !== beforeWidth || Date.now() - start > timeout
+    })
+
+    const transform = await indicator.style('transform')
+    const width = (await indicator.size()).width
+    expect(transform !== beforeTransform || width !== beforeWidth).toBe(true)
   }
 
   beforeAll(async () => {
@@ -92,9 +106,7 @@ describe('template-banner-tabs-long-list-nested-scroll', () => {
     expect(ACTIVE_COLORS).toContain(await tabs[1].style('color'))
     expect(INACTIVE_COLORS).toContain(await tabs[0].style('color'))
 
-    const afterTransform = await indicator.style('transform')
-    const afterWidth = (await indicator.size()).width
-    expect(afterTransform !== beforeTransform || afterWidth !== beforeWidth).toBe(true)
+    await waitForIndicatorChange(indicator, beforeTransform, beforeWidth)
   })
 
   it('supports programmatic switch to the last list tab', async () => {

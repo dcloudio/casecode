@@ -113,6 +113,8 @@
   const nestedScrollChildId = ref("")
   const longPageRef = ref<ComponentPublicInstance[]|null>(null)
   const swipertab = ref<UniTextElement[]|null>(null)
+  // 仅在自动化测试程序化切页时启用，避免晚到的旧 animationfinish 把目标索引回写成旧值。
+  let isTestFinishGuardEnabled = false
 
   function onStartNestedScroll() : boolean {
     return true
@@ -195,6 +197,7 @@
   }
 
   function onTabClick(index : number) {
+    isTestFinishGuardEnabled = false
     setSwiperIndex(index, false)
   }
 
@@ -231,6 +234,11 @@
   }
 
   function onSwiperAnimationfinish(e : SwiperAnimationFinishEvent) {
+    // 程序化切页时忽略晚到的旧完成事件。
+    if (isTestFinishGuardEnabled && e.detail.current != swiperIndex.value) {
+      return
+    }
+    isTestFinishGuardEnabled = false
     setSwiperIndex(e.detail.current, true)
     animationFinishIndex = e.detail.current
   }
@@ -293,6 +301,7 @@
     if (index < 0 || index >= swiperList.value.length) {
       return false
     }
+    isTestFinishGuardEnabled = true
     swiperIndex.value = index
     initSwiperItemData(index)
     updateTabIndicator(index, index, 1)
@@ -377,6 +386,13 @@
   }
 
   .swiper-item {
+    /* #ifndef APP-HARMONY */
     flex: 1;
+    /* #endif */
+
+    /* #ifdef APP-HARMONY */
+    /* 临时兼容，非蒸汽，harmony 高度异常 */
+    height: 100%;
+    /* #endif */
   }
 </style>

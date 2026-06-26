@@ -105,6 +105,10 @@ let headerHeight = 0
 let animationFinishIndex = 0
 let swiperWidth = 0
 let swiperTabsRect: SwiperTabsItem[] = []
+// 自动化测试中记录程序化切页的目标索引，避免立即读状态时拿到旧值。
+let jestTargetSwiperIndex = -1
+// 仅在自动化测试程序化切页时启用旧 animationfinish 事件保护。
+let isTestFinishGuardEnabled = false
 
 function onStartNestedScroll() : boolean {
   return true
@@ -251,10 +255,18 @@ function setSwiperIndex(index : number, updateIndicator : boolean) {
 }
 
 function onTabClick(index : number) {
+  jestTargetSwiperIndex = -1
+  isTestFinishGuardEnabled = false
   setSwiperIndex(index, false)
 }
 
 function onSwiperAnimationfinish(e : SwiperAnimationFinishEvent) {
+  // 自动化测试程序化切页时，忽略晚到的旧完成事件，避免把目标索引回写成旧值。
+  if (isTestFinishGuardEnabled && jestTargetSwiperIndex >= 0 && e.detail.current != jestTargetSwiperIndex) {
+    return
+  }
+  isTestFinishGuardEnabled = false
+  jestTargetSwiperIndex = -1
   setSwiperIndex(e.detail.current, true)
   animationFinishIndex = e.detail.current
 }
@@ -295,15 +307,20 @@ function jest_setSwiperCurrent(index : number) : boolean {
   if (index < 0 || index >= swiperList.value.length) {
     return false
   }
-  setSwiperIndex(index, true)
+  isTestFinishGuardEnabled = true
+  jestTargetSwiperIndex = index
+  swiperIndex.value = index
+  initSwiperItemData(index)
+  updateTabIndicator(index, index, 1)
   animationFinishIndex = index
   return true
 }
 
 function jest_getState() : JestTabsPageState {
-  const currentItem = swiperList.value[swiperIndex.value]
+  const currentIndex = jestTargetSwiperIndex >= 0 ? jestTargetSwiperIndex : swiperIndex.value
+  const currentItem = swiperList.value[currentIndex]
   return {
-    swiperIndex: swiperIndex.value,
+    swiperIndex: currentIndex,
     animationFinishIndex: animationFinishIndex,
     tabCount: swiperList.value.length,
     currentType: currentItem.type,

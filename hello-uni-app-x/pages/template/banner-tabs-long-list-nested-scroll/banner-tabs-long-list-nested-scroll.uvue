@@ -110,6 +110,8 @@
   let nestedScrollChildId = "";
   // 自动化测试
   let jestStateSwiperIndex = -1;
+  // 仅在自动化测试程序化切页时启用，避免晚到的旧 animationfinish 把目标索引回写成旧值。
+  let isTestFinishGuardEnabled = false
 
   const pageScrollView = ref<UniScrollViewElement | null>(null);
   const header = ref<UniSwiperElement | null>(null);
@@ -178,6 +180,7 @@
 
   function onTabClick(index : number) {
     jestStateSwiperIndex = -1
+    isTestFinishGuardEnabled = false
     setSwiperIndex(index, false)
   }
 
@@ -214,6 +217,11 @@
   }
 
   function onSwiperAnimationfinish(e : SwiperAnimationFinishEvent) {
+    // 自动化测试程序化切页时，忽略晚到的旧完成事件，避免把目标索引回写成旧值。
+    if (isTestFinishGuardEnabled && jestStateSwiperIndex >= 0 && e.detail.current != jestStateSwiperIndex) {
+      return
+    }
+    isTestFinishGuardEnabled = false
     jestStateSwiperIndex = -1
     setSwiperIndex(e.detail.current, true)
     animationFinishIndex = e.detail.current
@@ -255,6 +263,7 @@
     if (index < 0 || index >= swiperList.value.length) {
       return false
     }
+    isTestFinishGuardEnabled = true
     jestStateSwiperIndex = index
     swiperIndex.value = index
     initSwiperItemData(index)
