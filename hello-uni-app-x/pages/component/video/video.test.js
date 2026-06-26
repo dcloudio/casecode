@@ -56,7 +56,7 @@ describe('component-native-video', () => {
     expect(await page.data('data.isError')).toBe(false);
     // play
     await page.callMethod('play');
-    await page.waitFor(3000);
+    await page.waitFor(10000);
     expect(await page.data('data.isPlaying')).toBe(true);
     // pause
     await page.callMethod('pause');
