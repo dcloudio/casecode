@@ -172,6 +172,10 @@ function updateTabIndicator(current_index : number, move_to_index : number, perc
 }
 
 function initSwiperItemData(index : number) {
+  if (index < 0 || index >= swiperList.value.length) {
+    return
+  }
+
   if (!swiperList.value[index].preload) {
     swiperList.value[index].preload = true;
     (longPageRef.value as ComponentPublicInstance[])[index].$callMethod('loadData', null)
