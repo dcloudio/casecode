@@ -59,8 +59,9 @@
       <text style="font-size: 15px;">overflow=hidden效果 子元素是text</text>
       <view class="backgroundview">
         <view class="box-hidden-border-radius">
+          <!-- 微信小程序 webview 模式使用 line-clamp 会截断文本显示省略号，skyline 模式正常 -->
           <text
-            <!-- #ifdef VUE3-VAPOR-->
+            <!-- #ifdef VUE3-VAPOR && !MP -->
               max-lines=1
             <!-- #endif-->
             class="text1">ABCDEFG</text>
@@ -70,7 +71,7 @@
       <view class="backgroundview">
         <view class="box-hidden-border-radius" flatten>
           <text
-          <!-- #ifdef VUE3-VAPOR-->
+          <!-- #ifdef VUE3-VAPOR && !MP -->
             max-lines=1
           <!-- #endif-->
           class="text1" flatten>ABCDEFG</text>
@@ -81,7 +82,7 @@
       <view class="backgroundview">
         <view class="box-visible-border-radius">
           <text
-          <!-- #ifdef VUE3-VAPOR-->
+          <!-- #ifdef VUE3-VAPOR && !MP -->
             max-lines=1
           <!-- #endif-->
           class="text1">ABCDEFG</text>
@@ -91,7 +92,7 @@
       <view class="backgroundview">
         <view class="box-visible-border-radius" flatten>
           <text
-          <!-- #ifdef VUE3-VAPOR-->
+          <!-- #ifdef VUE3-VAPOR && !MP -->
             max-lines=1
           <!-- #endif-->
            class="text1" flatten >ABCDEFG</text>

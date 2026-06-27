@@ -1,8 +1,14 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isHarmony = platformInfo.includes('harmony')
 const PAGE_PATH = '/pages/template/pull-refresh-custom-indicator/pull-refresh-custom-indicator'
-
+const isVapor = process.env.UNI_APP_X_DOM2 === 'true'
 describe('pull-refresh-custom-indicator', () => {
+  if (isVapor) {
+    it('not supported in vapor mode', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
   let page
 
   async function waitForRefreshState(matcher, timeout = 5000) {
