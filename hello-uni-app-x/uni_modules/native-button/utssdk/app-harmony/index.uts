@@ -33,6 +33,10 @@ export class NativeButton {
         // 调用 builder update 函数来更新 UI
         this.builder?.update(this.params)
     }
+
+    destroy() {
+     //数据回收
+    }
 }
 
 
