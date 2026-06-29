@@ -2248,9 +2248,9 @@
 					}
 				},
 				{
-					"path": "custom-navbar-search/custom-navbar-search",
+					"path": "keyboard-adjust/keyboard-adjust",
 					"style": {
-						"navigationBarTitleText": "带搜索框的自定义导航栏",
+						"navigationBarTitleText": "输入框上推示例",
 						"navigationBarTextStyle": "black",
 						"navigationStyle": "custom",
 						"disableScroll": true

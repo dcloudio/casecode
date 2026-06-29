@@ -210,13 +210,13 @@
       pages: [] as Page[],
     },
     // #endif
-    {
-      id: 'custom-navbar-search',
-      url: 'custom-navbar-search',
-      name: '自定义导航栏输入框上推示例',
-      open: false,
-      pages: [] as Page[],
-    },
+	    {
+	      id: 'keyboard-adjust',
+	      url: 'keyboard-adjust',
+	      name: '输入框上推示例',
+	      open: false,
+	      pages: [] as Page[],
+	    },
     {
       id: 'scroll-fade-navbar',
       url: 'scroll-fade-navbar',
