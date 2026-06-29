@@ -93,9 +93,9 @@
         <text class="uni-list-cell-left">当前选择</text>
         <view class="uni-list-cell-db">
           <!-- #ifndef MP-WEIXIN -->
-          <picker class="picker-city--test uni-picker-container-wrap" mode="multiSelector" @change="bindCityPickerChange"
+          <picker class="picker-city--test uni-picker-container-wrap picker-city-wrap" mode="multiSelector" @change="bindCityPickerChange"
             @cancel="resetCityPicker" @columnchange="bindCityPickerColumnChange" :value="data.cityIndex" :range="data.cityArray">
-            <text class="uni-input picker-city--value uni-picker-text">
+            <text class="uni-input picker-city--value uni-picker-text picker-city-text">
               {{getCityDisplayText()}}
             </text>
           </picker>
@@ -441,6 +441,17 @@
     font-size: 14px;
     flex: 1;
     box-sizing: content-box;
+  }
+
+  .picker-city-wrap {
+    min-height: 41px;
+    height: auto;
+    line-height: 25px;
+  }
+
+  .picker-city-text {
+    min-height: 25px;
+    height: auto;
   }
 
   /* #ifdef WEB */
