@@ -361,11 +361,6 @@
           list-item 上使用 type 属性测试
         </button>
       </navigator>
-      <navigator url="/pages/component/list-view/list-view-issue-17610">
-        <button type="primary" class="button">
-          list-view 子节点为多根节点组件
-        </button>
-      </navigator>
     </view>
   </scroll-view>
 </template>
