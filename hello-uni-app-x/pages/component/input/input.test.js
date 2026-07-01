@@ -35,6 +35,21 @@ describe('component-native-input', () => {
     return await page.setData({ data: newData });
   }
 
+  it('default focus', async () => {
+    // 等待input获取焦点 & 键盘上推
+    await page.waitFor(1000);
+    const windowInfo = await program.callUniMethod('getWindowInfo');
+    const screenShotOptions = {
+      deviceShot: true,
+      area: {
+        x: 0,
+        y: windowInfo.safeAreaInsets.top + 44,
+      },
+    }
+    const image = await program.screenshot(screenShotOptions)
+    expect(image).toSaveImageSnapshot()
+  });
+
   // 测试焦点及键盘弹起
   if(!isMP) {
     it('focus', async () => {
@@ -326,7 +341,7 @@ describe('component-native-input', () => {
     await page.waitFor(1000)
 
     const windowInfo = await program.callUniMethod('getWindowInfo');
-    const image1 = await program.screenshot({
+    const screenShotOptions = {
       deviceShot: true,
       area: {
         x: 120,
@@ -334,18 +349,13 @@ describe('component-native-input', () => {
         width: 20,
         height: 25,
       },
-    })
+    }
+    const image1 = await program.screenshot(screenShotOptions)
     expect(image1).toSaveImageSnapshot()
     // 两张截图，避免光标闪烁截不到
-    const image2 = await program.screenshot({
-      deviceShot: true,
-      area: {
-        x: 120,
-        y: windowInfo.safeAreaInsets.top + 44 + 150,
-        width: 20,
-        height: 25,
-      },
-    })
+    const image2 = await program.screenshot(screenShotOptions)
+    expect(image2).toSaveImageSnapshot()
+
     expect(image2).toSaveImageSnapshot()
     await setPageData({
       firstInputFocus: false,
