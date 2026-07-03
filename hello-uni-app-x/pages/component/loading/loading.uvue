@@ -15,12 +15,14 @@
           <text class="label">bold为true</text>
           <loading bold/>
         </view>
+        <!-- #ifndef APP-HARMONY -->
         <view class="item">
           <text class="label">背景圈黑色，前景白色</text>
           <view style="width: 17px;height: 17px;border-radius: 8.5px;border: black 2px solid;align-items: center;justify-content: center;overflow: visible;">
             <loading style="border-color: white;" bold />
           </view>
         </view>
+        <!-- #endif -->
       </view>
     </view>
 
