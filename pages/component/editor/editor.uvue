@@ -538,6 +538,7 @@ defineExpose({
 
 .preview-editor {
   height: 150px;
+  min-height: 0px;
   padding: 10px;
 }
 
