@@ -30,7 +30,7 @@
     testFrameCount: 0
   }
 
-  const data = reactive(initialData)
+  const data = reactive<DataType>(initialData)
 
   const updateFPS = (timestamp : number) => {
     data.frameCount++
@@ -42,7 +42,9 @@
     }
   }
 
-  const runAnimationFrame = (timestamp : number) => {
+  type RunAnimationFrameType = (timestamp : number) => void
+  let runAnimationFrame: RunAnimationFrameType = (timestamp : number) => {}
+  runAnimationFrame = (timestamp : number) => {
     if (!data.isRunning) {
       return
     }
@@ -51,7 +53,9 @@
     data.taskId = requestAnimationFrame(runAnimationFrame)
   }
 
-  const startRequestAnimationFrame = () => {
+  type StartRequestAnimationFrameType = () => void
+  let startRequestAnimationFrame: StartRequestAnimationFrameType = () => {}
+  startRequestAnimationFrame = () => {
     if (data.isRunning) {
       return
     }
