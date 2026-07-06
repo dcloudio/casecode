@@ -22,20 +22,22 @@
 
   // #ifdef APP-ANDROID || APP-IOS
   import {
+    // #ifdef APP-ANDROID
+    getMetaConfig,
+    quitApp,
+    // #endif
     doTimerTask,
     doIntervalTask,
     clearIntervalTask,
     playAssetAudio,
-    getMetaConfig,
-    quitApp,
     TimerOptions
-  } from "../../uni_modules/uts-advance"
+  } from "@/uni_modules/uts-advance"
   // #endif
 
   type Page = {
     name : string,
-    url ?: string
-    function ?: string
+    url ?: string,
+    function ?: string,
   }
 
   type ListItem = {
@@ -211,16 +213,20 @@
   }
 
   function testQuitApp() {
+    // #ifdef APP-ANDROID
     quitApp()
+    // #endif
   }
 
   function testMetaRead() {
+    // #ifdef APP-ANDROID
     const ret = getMetaConfig()
     uni.showToast({
       icon: "none",
       title: '读取成功,注意查看控制台输出'
     })
     console.log(ret)
+    // #endif
   }
   
   // #endif

@@ -242,7 +242,11 @@ export function testJSON(): Result {
       const json3 = `{
 			    "name": "John"
 			  }`;
-      let obj4 = JSON.parseObject<UserJSON>(json3);
+      let obj4 = JSON.parseObject<UserJSON>(json3
+      // #ifdef APP-ANDROID
+      , true
+      // #endif
+      );
       expect(obj4).toEqual(null);
       // #endif
     })

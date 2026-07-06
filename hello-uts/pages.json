@@ -5,7 +5,8 @@
       "path": "pages/tabbar/tab-bar",
       "style": {
         "navigationBarTitleText": "",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": false,
+        "disableScroll": true
       }
     },
     // #endif 
@@ -89,6 +90,7 @@
       }
     }
     // #endif 
+    // #ifdef APP-ANDROID
     ,{
       "path": "pages/lifecycle/lifecycle",
       "style": {
@@ -96,6 +98,7 @@
         "enablePullDownRefresh": false
       }
     }
+    // #endif 
     ,{
       "path": "pages/resource/resource",
       "style": {
@@ -103,6 +106,7 @@
         "enablePullDownRefresh": false
       }
     }
+    // #ifdef APP-ANDROID
     ,{
       "path": "pages/advance/android/decorview",
       "style": {
@@ -110,6 +114,8 @@
         "enablePullDownRefresh": false
       }
     }
+    // #endif 
+
     ,{
       "path": "pages/advance/iOS/getResourcePath",
       "style": {
@@ -117,6 +123,7 @@
         "enablePullDownRefresh": false
       }
     }
+    // #ifdef APP-ANDROID
     ,{
       "path": "pages/advance/android/assetaudio",
       "style": {
@@ -124,6 +131,7 @@
         "enablePullDownRefresh": false
       }
     }
+    // #endif 
     ,{
       "path": "pages/SystemAPI/ScreenListen/screenlisten",
       "style": {

@@ -26,7 +26,7 @@
         </view>
       </view>
       <view class="uni-padding-wrap uni-common-mt">
-        <view class="text-box" scroll-y="true">
+        <view class="text-box">
           <text>{{ text }}</text>
         </view>
       </view>
@@ -40,7 +40,9 @@
         <view class="uni-hello-text"> 获取设备信息，观察是否符合预期 </view>
       </view>
       <button @tap="getDeviceInfoClick">获取设备基础信息</button>
+      <!-- #ifndef VUE3-VAPOR -->
       <button @tap="getFileProviderUriClick">使用外部应用访问私有文件</button>
+      <!-- #endif -->
     </view>
   </scroll-view>
   <!-- #endif -->
@@ -65,8 +67,10 @@ import {
   getDeviceInfoTest,
   privacyStateTest
 } from '@/uni_modules/uts-platform-api'
+// #ifndef VUE3-VAPOR
 import File from 'java.io.File'
 import Intent from 'android.content.Intent'
+// #endif
 // #endif
 
 /**
@@ -78,7 +82,7 @@ const selectImage = ref('')
 onLoad(() => {
   // #ifdef APP-ANDROID
   initAppLifecycle(function(eventLog) {
-    // 展示捕捉到的声明周期日志
+    // 展示捕捉到的生命周期日志
     let nextLine = text.value + eventLog
     text.value = nextLine
     const nextLineFlag = text.value + '\n'
@@ -206,6 +210,7 @@ function pathTestClick() {
   }
 }
 
+// #ifndef VUE3-VAPOR
 function getFileProviderUriClick() {
   const file = new File(UTSAndroid.getResourcePath("static/logo.png"))
   const uri = UTSAndroid.getFileProviderUri(file)
@@ -215,6 +220,7 @@ function getFileProviderUriClick() {
   const context = UTSAndroid.getUniActivity()!
   context.startActivity(intent)
 }
+// #endif
 
 function getAppTempPathClick() {
   if (getAppTempPathTest()) {
