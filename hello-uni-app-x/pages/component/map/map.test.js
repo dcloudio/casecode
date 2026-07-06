@@ -1,5 +1,3 @@
-jest.setTimeout(50000);
-
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
@@ -33,7 +31,7 @@ describe('web-map', () => {
   if (isApp) {
     it('handleMoveToLocation', async () => {
       await page.callMethod('handleMoveToLocation',false)
-      await page.waitFor(500);
+      await page.waitFor(1000);
       const moveToLocationRes = await page.data('jestResult')
       expect(moveToLocationRes.moveToLocationMsg).toBe("moveToLocation:ok");
     });

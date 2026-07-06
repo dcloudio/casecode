@@ -15,7 +15,7 @@
 		</view>
 
 		<view class="uni-common-mt">
-			<text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 text-align </text>
+			<text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
 		</view>
 
 		<view class="common-box">
@@ -71,7 +71,6 @@
 		data.textAlignActualFlat = textRefFlat.value?.style.getPropertyValue('text-align') ?? ''
 	}
 
-	const ins = getCurrentInstance()
 
 	const changeTextAlign = (value: string) => {
 		data.textAlign = value

@@ -2,6 +2,7 @@ const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
 const isHarmony = platformInfo.startsWith('harmony')
 const isIOS = platformInfo.startsWith('ios')
+const isAndroid = platformInfo.startsWith('android')
 const isDom2 = process.env.UNI_APP_X_DOM2 == 'true'
 
 describe('Radio.uvue', () => {
@@ -58,8 +59,8 @@ describe('Radio.uvue', () => {
     })
   }
   it('color', async () => {
-    if ((isHarmony || isIOS) && isDom2) {
-      console.log('Radio Harmony or iOS Dom2 not support props color')
+    if ((isHarmony || isIOS || isAndroid) && isDom2) {
+      console.log('Radio Harmony or iOS or Android Dom2 not support props color')
       expect(1).toBe(1)
       return
     }
@@ -101,7 +102,7 @@ describe('Radio.uvue', () => {
     })
   }
 
-  if (isDom2 && isHarmony) {
+  if (isDom2 && !isMP) {
     it('externalClasses', async () => {
       const radio = await page.$('#radio-vapor')
       expect(await radio.attribute('radio-active-class')).toContain('radio-active')

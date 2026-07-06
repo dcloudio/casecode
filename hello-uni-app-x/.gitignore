@@ -3,6 +3,7 @@ unpackage/
 .DS_Store
 .hbuilderx/
 __image_snapshots__/
+__image_snapshots_for_match__
 __snapshot__
 /code-review/node_modules
 /nul

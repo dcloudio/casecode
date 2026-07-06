@@ -20,47 +20,49 @@
         :custom-style="alignContainerStyle"
         @clickoverlay="closePoster"
         @afterleave="onPosterAfterLeave">
-        <view class="poster-dialog">
-          <view class="poster-card">
-            <view class="poster-top-strip"></view>
+        <scroll-view class="poster-scroll" :style="posterScrollStyle">
+          <view class="poster-dialog" :style="posterDialogStyle">
+            <view class="poster-card">
+              <view class="poster-top-strip"></view>
 
-            <view class="poster-head">
-              <text class="poster-badge">活动海报</text>
-              <text class="poster-tag">INTERSTITIAL</text>
-            </view>
-
-            <view class="poster-body">
-              <text class="poster-title">插屏海报</text>
-              <text class="poster-subtitle">海报主体和底部关闭按钮都由多个 view 组合而成，其中关闭按钮的 X 使用两条旋转的 view 实现。</text>
-
-              <view class="poster-highlight">
-                <text class="poster-highlight-label">示例内容</text>
-                <text class="poster-highlight-main">新人立减 X 元</text>
-                <text class="poster-highlight-note">支持标题、说明、主按钮与关闭交互组合展示</text>
+              <view class="poster-head">
+                <text class="poster-badge">活动海报</text>
+                <text class="poster-tag">INTERSTITIAL</text>
               </view>
 
-              <view class="poster-mock-art">
-                <view class="mock-card mock-card-main">
-                  <text class="mock-card-title">POSTER</text>
+              <view class="poster-body">
+                <text class="poster-title">插屏海报</text>
+                <text class="poster-subtitle">海报主体和底部关闭按钮都由多个 view 组合而成，其中关闭按钮的 X 使用两条旋转的 view 实现。</text>
+
+                <view class="poster-highlight">
+                  <text class="poster-highlight-label">示例内容</text>
+                  <text class="poster-highlight-main">新人立减 X 元</text>
+                  <text class="poster-highlight-note">支持标题、说明、主按钮与关闭交互组合展示</text>
                 </view>
-                <view class="mock-card mock-card-side"></view>
-                <view class="mock-line"></view>
-              </view>
 
-              <view class="poster-footer">
-                <button class="poster-action" type="primary" @click="closePoster">立即查看</button>
-                <text class="poster-footnote">活动说明：示例仅用于演示插屏布局与关闭交互</text>
+                <view class="poster-mock-art">
+                  <view class="mock-card mock-card-main">
+                    <text class="mock-card-title">POSTER</text>
+                  </view>
+                  <view class="mock-card mock-card-side"></view>
+                  <view class="mock-line"></view>
+                </view>
+
+                <view class="poster-footer">
+                  <button class="poster-action" type="primary" @click="closePoster">立即查看</button>
+                  <text class="poster-footnote">活动说明：示例仅用于演示插屏布局与关闭交互</text>
+                </view>
+              </view>
+            </view>
+
+            <view class="poster-close-wrap" @click="closePoster">
+              <view class="poster-close-circle">
+                <view class="poster-close-line poster-close-line-a"></view>
+                <view class="poster-close-line poster-close-line-b"></view>
               </view>
             </view>
           </view>
-
-          <view class="poster-close-wrap" @click="closePoster">
-            <view class="poster-close-circle">
-              <view class="poster-close-line poster-close-line-a"></view>
-              <view class="poster-close-line poster-close-line-b"></view>
-            </view>
-          </view>
-        </view>
+        </scroll-view>
       </page-container>
     </view>
   <!-- #ifdef APP -->
@@ -77,8 +79,17 @@
   const showPoster = ref<boolean>(false)
   // 居中布局样式，为避免微信小程序端弹框不居中
   const alignContainerStyle = ref('display: flex; justify-content: center; background-color: transparent;')
+  const posterScrollStyle = ref('')
+  const posterDialogStyle = ref('')
+
+  function updatePosterViewportStyle() {
+    const height = Math.max(0, uni.getWindowInfo().windowHeight - 24)
+    posterScrollStyle.value = `height: ${height}px;`
+    posterDialogStyle.value = `min-height: ${height}px;`
+  }
 
   function openPoster() {
+    updatePosterViewportStyle()
     showPoster.value = true
   }
 
@@ -89,6 +100,14 @@
   function onPosterAfterLeave() {
     showPoster.value = false
   }
+
+  onReady(() => {
+    updatePosterViewportStyle()
+  })
+
+  onResize(() => {
+    updatePosterViewportStyle()
+  })
 </script>
 
 <style>
@@ -126,11 +145,17 @@
     margin-top: 20px;
   }
 
+  .poster-scroll {
+    width: 100%;
+  }
+
   .poster-dialog {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   .poster-card {

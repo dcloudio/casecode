@@ -18,7 +18,9 @@ export class NativeButton {
 		this.button?.setAllCaps(false)
 		//监听原生Button点击事件
 		this.button?.setOnClickListener(_ => {
-			const detail = {}
+			const detail = {
+        value: "CustomValue"
+      }
 			//构建自定义UniNativeViewEvent返回对象
 			const event = new UniNativeViewEvent("customClick", detail)
 			//触发原生Button的点击事件
@@ -41,13 +43,16 @@ export class NativeButton {
 
 
 class NativeButtonContext implements INativeButtonContext {
+  private element : UniElement | null = null
 
-	private button : Button | null = null
-	constructor(button : Button) {
-		this.button = button
+	constructor(element : UniElement) {
+		this.element = element
 	}
 	updateText(text : string) {
-		this.button?.setText(text)
+    let button = this.element?.getAndroidView()
+    if(null != button){
+      (button as Button).setText(text)
+    }
 	}
 }
 /**
@@ -81,7 +86,7 @@ export function createNativeButtonContext(id : string, ins : ComponentPublicInst
 				 */
 				const nativeViewElement = iterateElement(rootViewElement)
 				if (nativeViewElement != null) {
-					return new NativeButtonContext(nativeViewElement.getAndroidView()! as Button)
+					return new NativeButtonContext(nativeViewElement)
 				}
 			}
 		}
@@ -92,7 +97,7 @@ export function createNativeButtonContext(id : string, ins : ComponentPublicInst
 		if (ins.$el != null) {
 			const nativeViewElement = iterateElement(ins.$el as UniElement)
 			if (nativeViewElement != null) {
-				return new NativeButtonContext(nativeViewElement.getAndroidView()! as Button)
+				return new NativeButtonContext(nativeViewElement)
 			}
 		}
 	}

@@ -17,7 +17,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 text-decoration-line </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <view class="common-box">
@@ -85,7 +85,6 @@
 		data.textDecorationLineActualFlat = textRefFlat.value?.style.getPropertyValue('text-decoration-line') ?? ''
 	}
 
-	const ins = getCurrentInstance()
 
 	const changeTextDecorationLine = (value: string) => {
 		data.textDecorationLine = value

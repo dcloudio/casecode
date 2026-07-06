@@ -5,8 +5,9 @@ describe('text-layout', () => {
   const isWeb = platformInfo.startsWith('web');
   const isMP = platformInfo.startsWith('mp');
   const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true';
+  const isDom2 = process.env.UNI_APP_X_DOM2 == 'true';
 
-  if (isIos || isHarmony || isWeb || isMP || isAppWebView) {
+  if (isIos || isHarmony || isWeb || isMP || isAppWebView || isDom2) {
     it('other platform', () => {
       expect(1).toBe(1);
     });

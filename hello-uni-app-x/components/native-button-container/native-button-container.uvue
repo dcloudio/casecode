@@ -1,5 +1,6 @@
 <template>
 	<view>
+    <text>在uts组件中使用 native-button</text>
 		<button type="primary" @tap="testCallMethod">调用组件方法</button>
 		<native-button id="helloView1" class="native-button" text="自定义组件"></native-button>
 	</view>

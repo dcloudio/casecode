@@ -8,8 +8,6 @@ const isTablet =
 const PAGE_PATH = '/pages/template/news-feed-list/news-feed-list'
 const DETAIL_PAGE_PATH = 'pages/template/news-feed-list/detail/detail'
 
-jest.setTimeout(30000)
-
 describe('template-news-feed-list', () => {
   let page
 

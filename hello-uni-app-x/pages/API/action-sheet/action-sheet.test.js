@@ -33,9 +33,15 @@ describe('showActionSheet', () => {
     await page.waitFor(1000);
   }
 
-  async function screenshot() {
-    const image = await program.screenshot(screenShotOptions);
-    expect(image).toSaveImageSnapshot();
+  async function screenshot(fileName) {
+    const image = isWeb ? await program.screenshot(screenShotOptions) : await program.device.screenshot(screenShotOptions);
+    const options = fileName ? {
+      customSnapshotIdentifier() {
+        return fileName
+      }
+    } : {}
+    expect(image).toMatchImageSnapshot(options);
+    expect(image).toSaveImageSnapshot(options);
   }
 
   beforeAll(async () => {
@@ -72,15 +78,12 @@ describe('showActionSheet', () => {
       }
 
       screenShotOptions = {
-        deviceShot: true,
         area: {
           x: 0,
-          y: topSafeArea + 44
+          y: topSafeArea + 44,
+          // 规避底部手势导航栏的影响
+          height: windowInfo.safeArea.height-30
         },
-      }
-    } else if (isWeb){
-      screenShotOptions = {
-        fullPage: true
       }
     }
   });
@@ -168,17 +171,14 @@ describe('showActionSheet', () => {
   it("showActionSheet 并在回调中再次 showActionSheet", async () => {
     await page.callMethod('showActionSheetAndShowAgainInCallback')
     await page.waitFor(1000);
-    await screenshot();
+    await screenshot('showActionSheetAndShowAgainInCallback1');
     if (isApp) {
-      await program.tap({
-        x: 200,
-        y: 700,
-      })
+      await program.device.tap(200, 700,)
     } else if (isWeb) {
       await page.callMethod('closeWebActionSheet')
     }
     await page.waitFor(1000);
-    await screenshot();
+    await screenshot('showActionSheetAndShowAgainInCallback2');
   })
   if (!isMP) {
     it("hideActionSheet", async () => {
@@ -194,10 +194,7 @@ describe('showActionSheet', () => {
       const originLifeCycleNum = await page.callMethod('getLifeCycleNum');
       await page.callMethod('showActionSheetAndNavigateBackInSuccessCallback');
       await page.waitFor(1000);
-      await program.tap({
-        x: 100,
-        y: 700 + topSafeArea,
-      });
+      await program.device.tap(100, 700 + topSafeArea);
       // success callback + 1
       // 等待 back 完成
       await page.waitFor(1000);

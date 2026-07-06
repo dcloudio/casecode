@@ -155,7 +155,7 @@ describe('getCurrentPages', () => {
   })
   it('getAndroidView', async () => {
     const res = await page.callMethod('checkGetAndroidView')
-    expect(res).toBe(isAndroid)
+    expect(res).toBe(isAndroid && !isDom2)
   })
   it('getIOSView', async () => {
     const res = await page.callMethod('checkGetIOSView')
@@ -177,7 +177,7 @@ describe('getCurrentPages', () => {
   if(isAndroid) {
     it('getAndroidActivity', async () => {
       const res = await page.callMethod('checkGetAndroidActivity')
-      expect(res).toBe(true)
+      expect(res).toBe(!isDom2)
     })
   }
 

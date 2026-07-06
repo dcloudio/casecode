@@ -1,4 +1,3 @@
-jest.setTimeout(20000);
 const PAGE_PATH = "/pages/API/navigator/new-page/onLoad";
 const INTERMEDIATE_PAGE_PATH = "/pages/API/navigator/new-page/new-page-1";
 const TARGET_PAGE_PATH = "/pages/API/navigator/new-page/new-page-3";
@@ -83,16 +82,16 @@ describe("onLoad", () => {
     page = await program.currentPage();
     expect(page.path).toBe(TARGET_PAGE_PATH.substring(1));
   });
-  it("navigateBack", async () => {
-    if (isAndroid && !isAppWebView) {
-      page = await program.reLaunch(INTERMEDIATE_PAGE_PATH);
-      await page.waitFor('view');
-      await page.callMethod("navigateToOnLoadWithType", "navigateBack");
-      await page.waitFor('view');
-      page = await program.currentPage();
-      expect(page.path).toBe(INTERMEDIATE_PAGE_PATH.substring(1));
-    }
-  });
+  if (!isAppWebView) {
+    it("navigateBack", async () => {
+        page = await program.reLaunch(INTERMEDIATE_PAGE_PATH);
+        await page.waitFor('view');
+        await page.callMethod("navigateToOnLoadWithType", "navigateBack");
+        await page.waitFor(1000);
+        page = await program.currentPage();
+        expect(page.path).toBe(INTERMEDIATE_PAGE_PATH.substring(1));
+    });
+  }
   it("redirectTo", async () => {
     page = await program.reLaunch(INTERMEDIATE_PAGE_PATH);
     await page.waitFor('view');

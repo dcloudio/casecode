@@ -104,7 +104,7 @@
             description: "base64-svg",
           },
           {
-            src: 'https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/w3c.svg',
+            src: 'https://web-ext-storage.dcloud.net.cn/hello-uni-app-x/image/logo.svg',
             description: '正确的svg网络路径'
           },
           // #ifdef APP-ANDROID || APP-IOS || APP-HARMONY || MP-WEIXIN

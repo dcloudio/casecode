@@ -53,10 +53,17 @@
   // 标记是否已经用过firstDetailContent
   const usedContent = ref(false)
   const btCover = ref("")
+  function safeDecodeURIComponent(value: string): string {
+    try {
+      return decodeURIComponent(value)!
+    } catch (e) {
+      return value
+    }
+  }
   // 部分平台 navigateTo 不会自动解码 query 参数，统一解码
-  const title = computed(() : string => decodeURIComponent(props.title ?? '')!)
-  const cover = computed(() : string => decodeURIComponent(props.cover ?? '')!)
-  const shareKey = computed(() : string => decodeURIComponent(props.shareKey ?? '')!)
+  const title = computed(() : string => safeDecodeURIComponent(props.title ?? ''))
+  const cover = computed(() : string => safeDecodeURIComponent(props.cover ?? ''))
+  const shareKey = computed(() : string => safeDecodeURIComponent(props.shareKey ?? ''))
 
   // #ifdef APP
   function processHtmlContent(content: string, color: string): string {

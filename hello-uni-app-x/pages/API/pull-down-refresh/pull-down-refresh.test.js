@@ -7,7 +7,7 @@ const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe("payment", () => {
-  if (isWeb || isAppWebView || isMP || isDom2) {
+  if (isAppWebView || isMP) {
     it('not support', () => {
       expect(1).toBe(1)
     })
@@ -30,8 +30,6 @@ describe("payment", () => {
   beforeAll(async () => {
     page = await program.reLaunch(PAGE_PATH)
   });
-
-  // 因页面进入后就开始下拉刷新，无法保证每次截图位置相同，所以移除截图
 
   it("trigger pulldown refresh by swipe", async () => {
     await page.waitFor('view')
@@ -62,7 +60,5 @@ describe("payment", () => {
     })
     await page.waitFor(1500)
     expect(await page.data('data.pulldownRefreshTriggered')).toBe(true)
-    // 目前 stopPullDownRefreshStatus  是空方法无需测试
-    // expect(await page.data('data.stopPullDownRefreshStatus')).toBe(true)
   });
 });

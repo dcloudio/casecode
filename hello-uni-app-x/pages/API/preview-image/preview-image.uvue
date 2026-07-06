@@ -178,6 +178,7 @@
 
   const closePreviewImage = ()=>{
     uni.closePreviewImage({})
+    uni.hideActionSheet()
   }
 
   const testSetCurrentIndicator = (value:string) =>{

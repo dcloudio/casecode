@@ -46,7 +46,7 @@
     inputmode_enum: [{ "value": 1, "name": "text" }, { "value": 2, "name": "decimal" }, { "value": 3, "name": "numeric" }, { "value": 4, "name": "tel" }, { "value": 5, "name": "search" }, { "value": 6, "name": "email" }, { "value": 7, "name": "url" }, { "value": 0, "name": "none" }],
     confirm_type_list: [{ "value": 0, "name": "return" }, { "value": 1, "name": "done" }, { "value": 2, "name": "send" }, { "value": 3, "name": "search" }, { "value": 4, "name": "next" }, { "value": 5, "name": "go" }],
     cursor_color: "#3393E2",
-    cursor: 0,
+    cursor: "1\n2\n3\n4\n5\n6".length,
     inputmode_enum_current: 0,
     confirm_type_current: 0,
     placeholder_value: "请输入",

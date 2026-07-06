@@ -1,12 +1,11 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isIOS = platformInfo.startsWith('ios')
 const isMP = platformInfo.startsWith('mp')
-const isWeb = platformInfo.startsWith('web')
 const isAndroid = platformInfo.startsWith('android')
-const isHarmony = platformInfo.startsWith('harmony')
+const isDom2 = process.env.UNI_APP_X_DOM2 === 'true'
 
 describe('Api-createWorker', () => {
-  if(isIOS || isMP) {
+  if(isIOS || isMP || (isAndroid && isDom2)) {
     it('skip Api-createWorker', async () => {
       expect(1).toBe(1)
     })

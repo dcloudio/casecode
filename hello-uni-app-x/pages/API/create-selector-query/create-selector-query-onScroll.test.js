@@ -25,11 +25,7 @@ describe('create-selector-query-onScroll', () => {
     let x = 100
     let y = 250
     // 滑动事件
-    await program.swipe({
-      startPoint: {x: x, y: y},
-      endPoint: {x: x,y: y-100},
-      duration: 300
-    })
+    await program.device.swipe( x, y, x, y-100, 300)
 
     await page.waitFor(600);
     const ret = await page.data('data.ret')

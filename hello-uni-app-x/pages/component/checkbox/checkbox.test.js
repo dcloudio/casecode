@@ -2,6 +2,7 @@ const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
 const isHarmony = platformInfo.startsWith('harmony')
 const isIOS = platformInfo.startsWith('ios')
+const isAndroid = platformInfo.startsWith('android')
 const isDom2 = process.env.UNI_APP_X_DOM2 == 'true'
 
 describe('Checkbox.uvue', () => {
@@ -36,7 +37,7 @@ describe('Checkbox.uvue', () => {
   })
   it('length', async () => {
     const checkboxGroupElements = await page.$$('.checkbox-group')
-    if ((isHarmony || isIOS) && isDom2) {
+    if ((isHarmony || isIOS || isAndroid) && isDom2) {
       expect(checkboxGroupElements.length).toBe(5)
     } else {
       expect(checkboxGroupElements.length).toBe(4)
@@ -84,8 +85,8 @@ describe('Checkbox.uvue', () => {
   }
   if(!isMP) {
     it('color', async () => {
-      if ((isHarmony || isIOS) && isDom2) {
-        console.log('Checkbox Harmony or iOS Dom2 not support props color、iconColor、foreColor')
+      if ((isHarmony || isIOS || isAndroid) && isDom2) {
+        console.log('Checkbox Harmony or iOS or Android Dom2 not support props color、iconColor、foreColor')
         expect(1).toBe(1)
         return
       }
@@ -96,8 +97,8 @@ describe('Checkbox.uvue', () => {
     })
 
     it('icon color', async () => {
-      if ((isHarmony || isIOS) && isDom2) {
-        console.log('Checkbox Harmony or iOS Dom2 not support props color、iconColor、foreColor')
+      if ((isHarmony || isIOS || isAndroid) && isDom2) {
+        console.log('Checkbox Harmony or iOS || Android Dom2 not support props color、iconColor、foreColor')
         expect(1).toBe(1)
         return
       }
@@ -107,8 +108,8 @@ describe('Checkbox.uvue', () => {
       expect(await cb.attribute('iconColor')).toBe('#63acfc')
     })
     it('foreColor', async () => {
-      if ((isHarmony || isIOS) && isDom2) {
-        console.log('Checkbox Harmony or iOS Dom2 not support props color、iconColor、foreColor')
+      if ((isHarmony || isIOS || isAndroid) && isDom2) {
+        console.log('Checkbox Harmony or iOS || Android Dom2 not support props color、iconColor、foreColor')
         expect(1).toBe(1)
         return
       }
@@ -127,7 +128,7 @@ describe('Checkbox.uvue', () => {
     })
   }
 
-  if (isDom2 && isHarmony) {
+  if (isDom2 && !isMP) {
     it('externalClasses', async () => {
       const checkbox = await page.$('#checkbox-vapor')
       expect(await checkbox.attribute('checkbox-class')).toContain('custom-checkbox')

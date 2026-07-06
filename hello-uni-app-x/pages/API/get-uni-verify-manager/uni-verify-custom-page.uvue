@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <view class="container" :class="state.isDarkMode ? 'theme-dark' : 'theme-light'">
     <view class="safe_content">
       <text class="close_icon" @click="closePage">{{closeIcon}}</text>
       <text class="title">这是一键登录自定义 uvue 页面</text>
@@ -19,6 +19,8 @@
 </template>
 
 <script setup lang="uts">
+  import { state } from '@/store/index.uts'
+
   const instance = getCurrentInstance()!.proxy!
 
   const uniVerifyManager = ref(null as UniVerifyManager | null)
@@ -166,7 +168,7 @@
 
 <style>
   .container {
-    background-color: white;
+    background-color: var(--background-color);
     flex: 1;
     width: 100%;
   }
@@ -183,11 +185,13 @@
     font-family: uni-icon;
     font-size: 24px;
     /* font-weight: bold; */
+    color: var(--text-color);
   }
 
   .title {
     align-self: center;
     top: 20px;
+    color: var(--text-color);
   }
 
   .number {
@@ -204,6 +208,7 @@
     font-weight: bold;
     align-self: center;
     height: 30px;
+    color: var(--text-color);
   }
 
   .slogan-text {
@@ -259,5 +264,6 @@
     position: absolute;
     align-self: center;
     font-size: 14px;
+    color: var(--text-color);
   }
 </style>

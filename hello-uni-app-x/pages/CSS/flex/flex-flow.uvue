@@ -117,7 +117,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 flex-flow </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <view class="common-box">
@@ -193,7 +193,6 @@
     data.flexFlowActualFlat = viewRefFlat.value?.style.getPropertyValue('flex-flow') ?? ''
   }
 
-  const ins = getCurrentInstance()
 
   const changeFlexFlow = (value : string) => {
     data.flexFlow = value

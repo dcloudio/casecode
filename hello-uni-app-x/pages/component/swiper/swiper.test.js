@@ -1,11 +1,10 @@
-// @Author-APP-ANDROID:DCloud_Android_DQQ
-jest.setTimeout(30000);
 describe('test swiper', () => {
   const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
   const isMP = platformInfo.startsWith('mp')
   const isWeb = platformInfo.startsWith('web')
   const isHarmony = platformInfo.startsWith('harmony')
   const isiOS = platformInfo.startsWith('ios')
+  const isAndroid = platformInfo.startsWith('android')
   const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
   let page;
@@ -115,7 +114,7 @@ describe('test swiper', () => {
 
   it('Event change', async () => {
     const changeDetailInfo = await page.data('data.changeDetailTest')
-    if(isWeb || isMP || isHarmony || (isiOS && isDom2)){
+    if(isWeb || isMP || isHarmony || (isiOS && isDom2) || (isAndroid && isDom2)){
       expect(changeDetailInfo).toEqual(detailResWithCurrentItemId)
     }else{
       expect(changeDetailInfo).toEqual(detailRes)
@@ -127,7 +126,7 @@ describe('test swiper', () => {
     // 等待最后一个动画结束animationfinish
     await page.waitFor(2000)
     const animationfinishDetailInfo = await page.data('data.animationfinishDetailTest')
-    if(isWeb || isMP || isHarmony || (isiOS && isDom2)){
+    if(isWeb || isMP || isHarmony || (isiOS && isDom2) || (isAndroid && isDom2)){
       expect(animationfinishDetailInfo).toEqual(detailResWithCurrentItemId)
     }else{
       expect(animationfinishDetailInfo).toEqual(detailRes)

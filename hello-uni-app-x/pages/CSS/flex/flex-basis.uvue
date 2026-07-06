@@ -46,7 +46,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 flex-basis </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <!-- 普通版本 -->
@@ -152,12 +152,12 @@
       <text class="uni-title-text">native-view 组件：flex-basis: 50px 和 100px</text>
       <view class="demo-box uni-common-mb">
         <view class="flex-container">
-          <native-view class="common-view" style="flex-basis: 50px;"></native-view>
+          <test-native-view class="common-view" style="flex-basis: 50px;"></test-native-view>
           <view class="flex-item green"></view>
           <view class="flex-item blue"></view>
         </view>
         <view class="flex-container">
-          <native-view class="common-view" style="flex-basis: 100px;"></native-view>
+          <test-native-view class="common-view" style="flex-basis: 100px;"></test-native-view>
           <view class="flex-item green"></view>
           <view class="flex-item blue"></view>
         </view>

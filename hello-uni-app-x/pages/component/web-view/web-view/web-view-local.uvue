@@ -84,11 +84,11 @@
 
   // 自动化测试
   function testEventDownload() {
-    uni.createWebviewContext('web-view')?.evalJS("document.getElementsByTagName('a')[0].click()");
+    uni.createWebViewContext('web-view')?.evalJS("document.getElementsByTagName('a')[0].click()");
   }
 
   function testEventMessage() {
-    uni.createWebviewContext('web-view')?.evalJS("document.getElementById('postMessage').click()");
+    uni.createWebViewContext('web-view')?.evalJS("document.getElementById('postMessage').click()");
   }
 
   defineExpose({

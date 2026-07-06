@@ -22,6 +22,12 @@ describe('component-native-waterflow', () => {
     await page.waitFor(600)
   })
 
+  async function isNonVaporHarmonyOSLowerThanApi20() {
+    // 非蒸汽模式鸿蒙平台api 20支持waterflow滚动相关事件
+    const osHarmonySDKAPIVersion = await page.data('data.osHarmonySDKAPIVersion')
+    return !isDom2 && isHarmony && osHarmonySDKAPIVersion < 20
+  }
+
   //检测竖向scrolltop属性赋值
   it('check_scroll_top', async () => {
     await page.callMethod('confirm_scroll_top_input', 600)
@@ -33,6 +39,10 @@ describe('component-native-waterflow', () => {
   })
 
   it('Event check_scroll', async () => {
+    if (await isNonVaporHarmonyOSLowerThanApi20()) {
+      expect(1).toBe(1)
+      return
+    }
     await page.callMethod('confirm_scroll_top_input', 300)
     await page.waitFor(600)
     const scrollDetail = await page.data('data.scrollDetailTest')
@@ -51,6 +61,10 @@ describe('component-native-waterflow', () => {
   })
 
   it('Event scrolltolower-滚动到底部/右边',async()=>{
+    if (await isNonVaporHarmonyOSLowerThanApi20()) {
+      expect(1).toBe(1)
+      return
+    }
     //隐藏加载更多元素
     await page.callMethod('change_load_more_boolean', false)
     await page.waitFor(600)
@@ -64,6 +78,10 @@ describe('component-native-waterflow', () => {
   })
 
   it('Event scrolltoupper-滚动到顶部/左边',async()=>{
+    if (await isNonVaporHarmonyOSLowerThanApi20()) {
+      expect(1).toBe(1)
+      return
+    }
     // 滚动到顶部50,是否触发scrolltoupper事件
     await page.callMethod('confirm_scroll_top_input', 50)
     await page.waitFor(1000)
@@ -71,6 +89,10 @@ describe('component-native-waterflow', () => {
   })
 
   it('Event scrollend-滚动结束时触发',async()=>{
+    if (await isNonVaporHarmonyOSLowerThanApi20()) {
+      expect(1).toBe(1)
+      return
+    }
     // 仅App端支持,向上滑动页面
     await program.swipe({
       startPoint: { x: 100, y: 300 },
@@ -88,12 +110,19 @@ describe('component-native-waterflow', () => {
     expect(endDetail.scrollWidth).toBeGreaterThan(0)
   })
 
-  //检测竖向可滚动区域
-  it('check_scroll_height', async () => {
-    await page.waitFor(600)
-    const value = await page.callMethod('check_scroll_height')
-    expect(value).toBe(true)
-  })
+  // 蒸汽模式不会对所有item排版并渲染，无法计算准确scrollHeight，屏蔽此测试
+  if(!isDom2) {
+    //检测竖向可滚动区域
+    it('check_scroll_height', async () => {
+      if (await isNonVaporHarmonyOSLowerThanApi20()) {
+        expect(1).toBe(1)
+        return
+      }
+      await page.waitFor(600)
+      const value = await page.callMethod('check_scroll_height')
+      expect(value).toBe(true)
+    })
+  }
 
   //检测下拉刷新
   it('check_refresher', async () => {

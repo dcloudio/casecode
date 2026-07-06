@@ -1,5 +1,3 @@
-jest.setTimeout(20000)
-
 const PAGE_PATH = '/pages/component/editor/editor'
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isWeb = platformInfo.startsWith('web') || platformInfo.startsWith('h5')

@@ -19,7 +19,7 @@
         </view>
         <view class="form-item">
           <text class="form-item-label">备注</text>
-          <textarea class="form-item-input-comment" placeholder="备注" name="comment" maxlength="-1"
+          <textarea class="form-item-input-comment" placeholder="备注" name="comment" :maxlength="-1"
             :value="data[0].getString('comment')" />
         </view>
         <view class="form-item">

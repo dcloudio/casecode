@@ -16,7 +16,10 @@ export class NativeButton {
     private params : NativeButtonOptions = {
         text: '',
         onClick: () => {
-            this.$element.dispatchEvent(new UniNativeViewEvent("customClick", {}))
+          const detail = {
+            value: "CustomValue"
+          }
+          this.$element.dispatchEvent(new UniNativeViewEvent("customClick", detail))
         }
     }
 

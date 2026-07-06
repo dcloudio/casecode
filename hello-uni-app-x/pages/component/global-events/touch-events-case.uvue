@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<swiper ref="header" class="h-300" indicator-dots="true" circular="true" @change="swiperChange" @touchstart="swiperTouchStart" @touchmove="swiperTouchMove" @touchend="swiperTouchEnd">
-			<swiper-item v-for="i in 3" :item-id="i" @touchstart="swiperItemTouchStart" @touchmove="swiperItemTouchMove" @touchend="swiperItemTouchEnd">
+			<swiper-item v-for="i in 3" :item-id="i + ''" @touchstart="swiperItemTouchStart" @touchmove="swiperItemTouchMove" @touchend="swiperItemTouchEnd">
 				<view class="h-300 header-tiem" @touchstart="viewTouchStart" @touchmove="viewTouchMove" @touchend="viewTouchEnd">
 					<text>{{ i }}</text>
 				</view>
@@ -140,7 +140,7 @@ defineExpose({
   .h-300{
     height: 300px;
   }
-  
+
 	.header-tiem {
 		background-color: #89ff8d;
 		align-items: center;

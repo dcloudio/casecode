@@ -56,7 +56,7 @@ describe('style-isolation', () => {
     const levelEl = await page.$('.level-child-class')
 		const levelElStyle = await levelEl.style('background-color')
     if(isApp){
-      expect(levelElStyle).toBe(isDom2? '#00AAFFFF' : '#00aaff')
+      expect(levelElStyle).toBe(isDom2? 'rgb(0, 170, 255)' : '#00aaff')
     }else{
       expect(levelElStyle).toBe('rgb(0, 170, 255)')
     }
@@ -68,7 +68,7 @@ describe('style-isolation', () => {
     const comBoxEl = await compIsolatedEl.$('.com-box')
     const comBoxStyle = await comBoxEl.style('background-color')
     if(isApp){
-      expect(comBoxStyle).toBe(isDom2? '#D9D1FFFF' : '#d9d1ff')
+      expect(comBoxStyle).toBe(isDom2? 'rgb(217, 209, 255)' : '#d9d1ff')
     }else{
       expect(comBoxStyle).toBe('rgb(217, 209, 255)')
     }
@@ -88,7 +88,7 @@ describe('style-isolation', () => {
     const comBoxEl = await compAppEl.$('.com-box')
     const comBoxStyle = await comBoxEl.style('background-color')
     if(isApp){
-      expect(comBoxStyle).toBe(isDom2? '#D9D1FFFF' : '#d9d1ff')
+      expect(comBoxStyle).toBe(isDom2? 'rgb(217, 209, 255)' : '#d9d1ff')
     }else{
       expect(comBoxStyle).toBe('rgb(217, 209, 255)')
     }
@@ -116,9 +116,9 @@ describe('style-isolation', () => {
     // 优先级：全局样式 < 组件自身样式 < 页面样式，预期组件应用页面样式（绿色）优先级最高
     const comBoxEl = await compAppAndPageEl.$('.com-box')
     const comBoxStyle = await comBoxEl.style('background-color')
-    // app dom2  #E8F5E9FF
+    // app dom2  rgb(232, 245, 233)
     if(isApp){
-      expect(comBoxStyle).toBe(isDom2? '#E8F5E9FF' : '#e8f5e9')
+      expect(comBoxStyle).toBe(isDom2? 'rgb(232, 245, 233)' : '#e8f5e9')
     }else{
       expect(comBoxStyle).toBe('rgb(232, 245, 233)')
     }
@@ -138,7 +138,5 @@ describe('style-isolation', () => {
       expect([14,'14','14px']).toContain(pageTestSize)
     }
   })
-
-
 
 });

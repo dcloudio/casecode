@@ -2,6 +2,7 @@ const PAGE_PATH = '/pages/API/get-app/get-app'
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isAndroid = platformInfo.startsWith('android')
 const isMP = platformInfo.startsWith('mp')
+const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe('getApp', () => {
   let page = null
@@ -50,7 +51,7 @@ describe('getApp', () => {
     expect(newLifeCycleNum - oldLifeCycleNum).toBe(100)
     await page.callMethod('setLifeCycleNumFunc', oldLifeCycleNum)
   })
-  if (isAndroid) {
+  if (isAndroid && !isDom2) {
     it('getAndroidApplication', async () => {
       const res = await page.callMethod('getAndroidApplication')
       expect(res).toBe(isAndroid)

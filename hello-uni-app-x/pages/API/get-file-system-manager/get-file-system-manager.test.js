@@ -1,5 +1,3 @@
-jest.setTimeout(50000);
-
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isIOS = platformInfo.startsWith('ios')
 const isAndroid = platformInfo.startsWith('android')
@@ -1497,7 +1495,7 @@ describe('ExtApi-FileManagerTest', () => {
         basePath: 'file:///android_asset/uni-app-x',
         logAble: false,
         readFileRet: "",
-        readFile: '/version.json'
+        readFile: '/hxversion.data'
       })
       let btnReadFileButton = await page.$('#btn-read-file-sync')
       await btnReadFileButton.tap()

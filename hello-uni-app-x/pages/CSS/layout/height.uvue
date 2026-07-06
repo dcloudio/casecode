@@ -34,7 +34,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 height </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <!-- 普通版本 -->
@@ -109,9 +109,13 @@
 
       <view class="uni-common-mb">
         <text>native-view组件: height: 80px 和 height: 120px</text>
-        <view class="demo-box">
-          <native-view style="width: 100px; height: 80px; background-color: cyan;"></native-view>
-          <native-view style="width: 100px; height: 120px; background-color: cyan;"></native-view>
+        <view class="demo-box-native">
+          <view class="container-native">
+            <native-view style="width: 100px;height: 80px;"></native-view>
+          </view>
+          <view class="container-native">
+            <native-view style="width: 100px;height: 120px;"></native-view>
+          </view>
         </view>
       </view>
     </view>
@@ -159,7 +163,6 @@
     data.heightActualImageFlat = imageRefFlat.value?.style.getPropertyValue('height') ?? ''
   }
 
-  const ins = getCurrentInstance()
 
   const changeHeight = (value: string) => {
     data.height = value
@@ -235,4 +238,14 @@
     text-align: center;
   }
 
+  .demo-box-native {
+    flex-direction: row;
+    margin-top: 10px;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .container-native {
+    background-color: cyan;
+  }
 </style>

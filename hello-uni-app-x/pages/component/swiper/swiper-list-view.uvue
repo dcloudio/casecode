@@ -7,14 +7,14 @@
       <swiper-item v-for="index in 3">
         <list-view :id="'list'+index" style="flex: 1;  border: 3px solid lime;" refresher-enabled="true" @refresherrefresh="onRefresherrefresh"
           :refresher-triggered="data.refresherTriggeredArray[index-1]" :scroll-top="data.scrollTop">
-          <!-- #ifndef VUE3-VAPOR -->
-          <sticky-header>
-            <text class="header">上下滑动体验吸顶效果 swiper-item{{index}}</text>
-          </sticky-header>
-          <!-- #endif -->
-          <list-item v-for="itemIndex in 40" :key="itemIndex" class="item">
-            <text>item----------{{itemIndex}}</text>
-          </list-item>
+          <sticky-section>
+            <sticky-header>
+              <text class="header">上下滑动体验吸顶效果 swiper-item{{index}}</text>
+            </sticky-header>
+            <list-item v-for="itemIndex in 40" :key="itemIndex" class="item">
+              <text>item----------{{itemIndex}}</text>
+            </list-item>
+          </sticky-section>
         </list-view>
       </swiper-item>
     </swiper>

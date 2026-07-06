@@ -22,7 +22,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 color 测试</text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <view class="common-box">
@@ -84,7 +84,6 @@
     data.colorActualFlat = textRefFlat.value?.style.getPropertyValue('color') ?? ''
   }
 
-  const ins = getCurrentInstance()
 
   const changeColor = (value: string) => {
     data.color = value

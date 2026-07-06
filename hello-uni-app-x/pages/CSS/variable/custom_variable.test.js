@@ -1,9 +1,5 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
-const isAndroid = platformInfo.startsWith("android")
-const isIos = platformInfo.startsWith("ios")
-const isWeb = platformInfo.startsWith("web")
 const isMP = platformInfo.startsWith('mp')
-const isDom2 = process.env.UNI_APP_X_DOM2 === 'true'
 
 let page
 

@@ -5,7 +5,6 @@ const isAndroid = platformInfo.startsWith('android')
 const isIos = platformInfo.startsWith('ios')
 const isHarmony = platformInfo.startsWith('harmony')
 const isApp = isAndroid || isIos || isHarmony
-jest.setTimeout(30000);
 describe('chat-stream-reply', () => {
   let page;
 

@@ -20,6 +20,13 @@ describe('component-native-sticky-section', () => {
     await page.waitFor(2000); // 等待页面加载完成
   })
 
+  if (!isWeb && isDom2) {
+    it('check_preload', async () => {
+      const isPreloaded = await page.callMethod('jest_checkPreload');
+      expect(isPreloaded).toBe(true);
+    });
+  }
+
   it('check_delete_and_refresher', async () => {
     await page.callMethod('deleteSection')
     await page.waitFor(400)
@@ -42,6 +49,7 @@ describe('component-native-sticky-section', () => {
     });
     page.waitFor(600)
     await page.callMethod('listViewScrollByY', 1000)
+    await page.waitFor(1000)
     const image = await program.screenshot({fullPage: true});
     expect(image).toSaveImageSnapshot();
   })

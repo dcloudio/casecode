@@ -82,15 +82,12 @@ describe('nodes-info', () => {
     })
   }
 
-  // x dom2 暂时不支持组件多根节点查询
-  if (!isDom2) {
-    it('multi-child', async () => {
-      const pageData = await page.data('data')
-      console.log('multi-child.pageData', pageData)
-      expect(pageData.selectCount).toBe(1)
-      expect(pageData.selectAllCount).toBe(2)
-    })
-  }
+  it('multi-child', async () => {
+    const pageData = await page.data('data')
+    console.log('multi-child.pageData', pageData)
+    expect(pageData.selectCount).toBe(1)
+    expect(pageData.selectAllCount).toBe(2)
+  })
 
   // #ifdef APP
   //检测onResize获取BoundingClientRect信息是否有效

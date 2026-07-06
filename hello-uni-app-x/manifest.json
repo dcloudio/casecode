@@ -116,17 +116,34 @@
 	"app-android": {
 		"distribute": {
 			"modules": {
-				"uni-payment": {
-					"alipay": {},
-					"wxpay": {}
-				},
+				"uni-barcode-scanning": {},
 				"uni-location": {
 					"system": {},
-					"tencent": {}
+					"tencent": {
+						"key": ""
+					}
+				},
+				"uni-map": {
+					"tencent": {
+						"key": ""
+					}
+				},
+				"uni-oauth": {
+					"weixin": {
+						"appid": ""
+					}
+				},
+				"uni-payment": {
+					"alipay": {},
+					"wxpay": {
+						"appid": ""
+					}
 				},
 				"uni-push": {},
-				"uni-map": {
-					"tencent": {}
+				"uni-share": {
+					"weixin": {
+						"appid": ""
+					}
 				}
 			},
 			"icons": {
@@ -135,12 +152,34 @@
 			},
 			"splashScreens": {
 				"default": {}
-			}
+			},
+			"abiFilters": [
+				"arm64-v8a"
+			],
+			"disableLegacyPackaging": true
 		}
 	},
 	"app-ios": {
 		"distribute": {
 			"modules": {
+				"uni-barcode-scanning": {},
+				"uni-location": {
+					"system": {},
+					"tencent": {
+						"key": ""
+					}
+				},
+				"uni-map": {
+					"tencent": {
+						"key": ""
+					}
+				},
+				"uni-oauth": {
+					"weixin": {
+						"appid": "",
+						"universalLink": ""
+					}
+				},
 				"uni-payment": {
 					"alipay": {},
 					"wxpay": {
@@ -148,13 +187,12 @@
 						"universalLink": ""
 					}
 				},
-				"uni-location": {
-					"system": {},
-					"tencent": {}
-				},
 				"uni-push": {},
-				"uni-map": {
-					"tencent": {}
+				"uni-share": {
+					"weixin": {
+						"appid": "",
+						"universalLink": ""
+					}
 				}
 			},
 			"icons": {

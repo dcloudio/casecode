@@ -1,3 +1,6 @@
+const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
+
 const PAGE_PATH = '/pages/template/scroll-fade-navbar/scroll-fade-navbar'
 
 describe('scroll-fade-navbar', () => {
@@ -11,6 +14,13 @@ describe('scroll-fade-navbar', () => {
   }
 
   beforeAll(async () => {
+    if (isAppWebView) {
+      it('该示例因 app 与 webview 时顶部状态栏存在差异，暂不做截图对比', () => {
+        expect(1).toBe(1)
+      })
+      return
+    }
+
     page = await program.reLaunch(PAGE_PATH)
     await page.waitFor('view')
     await page.waitFor(800)

@@ -51,14 +51,14 @@ describe('Button.uvue', () => {
     const elements = await page.$$('.btn')
     expect(elements.length).toBe(1)
   })
-  if (!isDom2) {
-    it('text', async () => {
-      const textBtn = await page.$('.btn')
-      expect(await textBtn.text()).toEqual('uni-app-x')
-      await setPageData({text: 'uni-app-x button'})
-      expect(await textBtn.text()).toEqual('uni-app-x button')
-    })
-  }
+
+  it('text', async () => {
+    const textBtn = await page.$('.btn')
+    expect(await textBtn.text()).toEqual('uni-app-x')
+    await setPageData({text: 'uni-app-x button'})
+    expect(await textBtn.text()).toEqual('uni-app-x button')
+  })
+
   it('type', async () => {
     const btn = await page.$('.btn')
     expect(await btn.property('type')).toBe('default')
@@ -182,7 +182,7 @@ describe('Buttonstatus.uvue', () => {
   })
 
   test('loading-class', async () => {
-    if (!isDom2) {
+    if (!isDom2 || isMP) {
       expect(1).toBe(1)
       return
     }

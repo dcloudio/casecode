@@ -20,11 +20,7 @@ describe('test longPress', () => {
     let eventDomRect = await page.data("data.eventDomRect")
     let x = eventDomRect.x + eventDomRect.width / 2.0
     let y = eventDomRect.y + eventDomRect.height / 2.0
-    await program.tap({
-      x: x,
-      y: y+100,
-      duration: 1000
-    })
+    await program.device.tap(x, y+100, {duration: 1000})
     let isLongPressTrigger = await page.data("data.isLongPressTrigger")
     expect(isLongPressTrigger).toEqual(true);
   });

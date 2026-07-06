@@ -13,7 +13,7 @@
           <text class="common-text" style="height: 20px;">scroll-view</text>
         </scroll-view>
         <text class="common-text" style="height: 20px;">下方有个native-view</text>
-        <native-view style="width: 20px;height: 20px;background-color: cyan;"></native-view>
+        <test-native-view style="width: 20px;height: 20px;background-color: cyan;"></test-native-view>
       </view>
       <button @tap="switchDisplay" class="uni-common-mb">切换display属性</button>
 
@@ -29,7 +29,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 display </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <view class="test-container">
@@ -76,8 +76,8 @@
       <view class="uni-common-mb">
         <text>native-view组件: display: flex 和 display: none</text>
         <view class="demo-box">
-          <native-view class="common-view" style="display: flex;width:100px;"></native-view>
-          <native-view class="common-view" style="display: none;width:100px;"></native-view>
+          <test-native-view class="common-view" style="display: flex;width:100px;"></test-native-view>
+          <test-native-view class="common-view" style="display: none;width:100px;"></test-native-view>
         </view>
       </view>
     </view>

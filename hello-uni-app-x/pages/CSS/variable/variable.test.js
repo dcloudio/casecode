@@ -24,23 +24,15 @@ describe('css-variable', () => {
     return
   }
 
-  it('css test', async () => {
-    const page = await program.reLaunch('/pages/CSS/variable/variable');
-    await page.waitFor('view');
-
-    if (!isApp) {
-      expect(1).toBe(1)
-      return
-    }
-
-    const element = await page.$('.status-bar-height')
-    const size1 = await element.size()
-    console.log(size1.height);
-    expect(size1.height > 0).toBe(true)
-
-    // 其他变量在不同机型表现不同，多设备测试无意义
-
-  })
+  if (!isApp) {
+    it('css test', async () => {
+      const page = await program.reLaunch('/pages/CSS/variable/variable');
+      await page.waitFor('view');
+      const element = await page.$('.status-bar-height')
+      const size1 = await element.size()
+      expect(size1.height > 0).toBe(true)
+    })
+  }
 
   it('screenshot', async () => {
     const page = await program.reLaunch('/pages/CSS/variable/variable');

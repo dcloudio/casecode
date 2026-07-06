@@ -28,6 +28,10 @@
             :focus="data.numberPasswordFalseFocus" placeholder="type=number password=false" />
         </view>
         <view class="input-wrapper">
+          <input id="uni-input-type-number-password-false" class="uni-input" type="number" :password="false"
+            :focus="data.numberPasswordFalseFocus" placeholder="type=number password=false" />
+        </view>
+        <view class="input-wrapper">
           <input id="uni-input-type-digit" class="uni-input" type="digit" placeholder="带小数点的数字输入键盘" />
         </view>
         <view class="input-wrapper">
@@ -130,7 +134,7 @@
           <text class="uni-title-text">自动获取焦点</text>
         </view>
         <view class="input-wrapper">
-          <input id="uni-input-focus" class="uni-input" :focus="data.focus"
+          <input id="uni-input-focus" class="uni-input" :focus="data.focus" value="焦点应在文本末尾"
             @keyboardheightchange="inputFocusKeyBoardChange" />
         </view>
       </view>
@@ -529,7 +533,6 @@
   }
 
   const setCursor = (cursor : number) => {
-    // (this.$refs['input'] as UniInputElement).focus();
     data.cursorInputFocus = true
     data.cursor = cursor;
   }
@@ -540,7 +543,6 @@
   }
 
   const setSelection = (selectionStart : number, selectionEnd : number) => {
-    // (this.$refs['input2'] as UniInputElement).focus();
     data.selectionInputFocus = true
     data.selectionStart = selectionStart;
     data.selectionEnd = selectionEnd;
@@ -613,8 +615,6 @@
     } else {
       data.cursor_color = "#3393E2"
     }
-    // const input = uni.getElementById<UniInputElement>("uni-input-cursor-color")
-    // input?.focus()
     data.cursorColorInputFocus = true
   }
 
@@ -659,8 +659,6 @@
     display: flex;
     padding: 8px 13px;
     margin: 5px 0;
-    flex-direction: row;
-    flex-wrap: nowrap;
     background-color: #ffffff;
   }
 

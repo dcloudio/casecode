@@ -1,6 +1,5 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
-const isAndroid = platformInfo.startsWith('android')
 
 describe('/pages/CSS/transition/transition-duration.uvue', () => {
   if (isMP) {

@@ -94,7 +94,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 flex-wrap </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <view class="common-box">
@@ -169,7 +169,6 @@
     data.flexWrapActualFlat = viewRefFlat.value?.style.getPropertyValue('flex-wrap') ?? ''
   }
 
-  const ins = getCurrentInstance()
 
   const changeFlexWrap = (value : string) => {
     data.flexWrap = value

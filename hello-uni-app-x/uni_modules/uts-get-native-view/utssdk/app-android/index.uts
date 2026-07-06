@@ -1,6 +1,5 @@
 import { CanWebViewGoBack, CanWebViewGoForward, HasNativeView, CheckWebViewNativeView, CheckInputNativeView, CheckTextareaNativeView, CheckViewNativeView} from "../interface";
 import WebView from 'android.webkit.WebView';
-import AppCompatEditText from "androidx.appcompat.widget.AppCompatEditText"
 import ViewGroup from "android.view.ViewGroup"
 
 export const canWebViewGoBack : CanWebViewGoBack = function (elementId : string) : boolean {
@@ -29,14 +28,14 @@ export const checkWebViewNativeView: CheckWebViewNativeView = function (elementI
 }
 
 export const checkInputNativeView: CheckInputNativeView = function (elementId : string) : boolean {
-  //通过getAndroidView设置泛型直接获取AppCompatEditText 如果获取失败则返回null
-  const view = uni.getElementById(elementId)?.getAndroidView<AppCompatEditText>();
+  // 使用android.widget.EditText基类获取，如果获取失败则返回null
+  const view = uni.getElementById(elementId)?.getAndroidView<android.widget.EditText>();
   return view != null;
 }
 
 export const checkTextareaNativeView: CheckViewNativeView = function (elementId : string) : boolean {
-  //通过getAndroidView设置泛型直接获取AppCompatEditText 如果获取失败则返回null
-  const view = uni.getElementById(elementId)?.getAndroidView<AppCompatEditText>();
+  // 使用android.widget.EditText基类获取，如果获取失败则返回null
+  const view = uni.getElementById(elementId)?.getAndroidView<android.widget.EditText>();
   return view != null;
 }
 
