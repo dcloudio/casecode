@@ -4,7 +4,7 @@
       <button class="button_item" @click="delayShow">测试延时显示</button>
       <button class="button_item" @click="switchItemContent">修改item子元素</button>
     </scroll-view>
-    <list-view v-show="data.list_show" id="listview" style="flex: 1;" show-scrollbar=false @scrolltolower="onScrollTolower">
+    <list-view v-show="data.list_show" id="listview" :scroll-top="data.scrollTop" style="flex: 1;" show-scrollbar=false @scrolltolower="onScrollTolower">
       <list-item v-for="(item,index) in list" :key="item.id" :id="'item_'+item.id" class="item" @click="itemClick(item.id)">
         <view style="flex-direction: row;">
           <text>item-------<text>{{item.id}}</text></text>
@@ -34,11 +34,13 @@ const listViewElement = ref(null as UniListViewElement | null)
 type DataType = {
   list_show: boolean,
   displayArrow: boolean,
+  scrollTop: number
 }
 
 const data = reactive({
   list_show: true,
   displayArrow: false,
+  scrollTop: 0
 } as DataType)
 
 function generateItems(count: number) {
@@ -96,11 +98,19 @@ onReady(() => {
   listViewElement.value = uni.getElementById<UniListViewElement>('listview')
 })
 
+function jest_testReusedItemSize() {
+  generateItems(100)
+  nextTick(() => {
+    data.scrollTop = 10000
+  })
+}
+
 defineExpose({
   data,
   listViewScrollByY,
   delayShow,
-  switchItemContent
+  switchItemContent,
+  jest_testReusedItemSize
 })
 </script>
 
