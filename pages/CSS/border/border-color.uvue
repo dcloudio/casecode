@@ -80,7 +80,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 border-color </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <!-- 普通版本 -->
@@ -153,13 +153,6 @@
         <input-data :defaultValue="data.borderColor" title="border-color 自定义值" type="text" @confirm="inputChangeBorderColor"></input-data>
       </view>
 
-      <view class="uni-common-mb">
-        <text>native-view组件: border-color: cyan 和 #00FF00</text>
-        <view class="demo-box">
-          <native-view class="common" style="border-width: 5px; border-style: solid; border-color: cyan;"></native-view>
-          <native-view class="common" style="border-width: 5px; border-style: solid; border-color: #00FF00;"></native-view>
-        </view>
-      </view>
     </view>
   <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>

@@ -6,6 +6,9 @@
     <view class="uni-margin-wrap">
       <scroll-view direction="vertical" :refresher-enabled="refresherEnabled" :refresher-threshold="refresherThreshold"
         :refresher-default-style="refresherDefaultStyle" :refresher-background="refresherBackground"
+        <!-- #ifdef APP-ANDROID && VUE3-VAPOR -->
+        :android-overscroll="androidOverscroll"
+        <!-- #endif -->
         :refresher-triggered="refresherTriggered" @refresherpulling="refresherpulling"
         @refresherrefresh="refresherrefresh" @refresherrestore="refresherrestore" @refresherabort="refresherabort"
         style="width: 100%;height: 100%;">
@@ -29,28 +32,35 @@
           @change="refresherTriggered=!refresherTriggered"></switch>
       </view>
 
+      <!-- #ifdef APP-ANDROID && VUE3-VAPOR -->
+      <view class="uni-list-cell uni-list-cell-padding">
+        <text>是否开启下拉刷新回弹效果</text>
+        <switch :checked="androidOverscroll" @change="handleAndroidOverscrollChange"></switch>
+      </view>
+      <!-- #endif -->
+
       <view class="uni-list-cell uni-list-cell-padding">
         <text>设置下拉刷新阈值</text>
         <input class="uni-list-cell-input" :disabled="!refresherEnabled" :value="refresherThreshold" type="number"
           @input="handleRefresherThresholdInput" />
       </view>
 
-      <view class="uni-list-cell uni-list-cell-padding">
+      <view class="uni-list-cell-padding">
         <text>设置下拉刷新区域背景颜色</text>
-        <input class="uni-list-cell-input" :disabled="!refresherEnabled" :value="refresherBackground"
-          @input="handleRefresherBackground" />
+        <text class="refresher-background-value">当前值：{{ refresherBackground }}</text>
+        <radio-group class="refresher-background-group" @change="handleRefresherBackgroundChange">
+          <radio v-for="(option, _) in refresherBackgroundOptions" class="refresher-background-radio"
+            :value="option.value" :checked="refresherBackground == option.value" :disabled="!refresherEnabled">{{ option.label }}</radio>
+        </radio-group>
       </view>
 
       <view class="uni-list-cell-padding">
         <text>设置下拉刷新默认样式</text>
-        <view class="switch-refresher-group">
-          <button class="switch-refresher-style" type="primary" size="mini"
-            @click="refresherDefaultStyle = `none`">none</button>
-          <button class="switch-refresher-style" type="primary" size="mini"
-            @click="refresherDefaultStyle = `black`">black</button>
-          <button class="switch-refresher-style" type="primary" size="mini"
-            @click="refresherDefaultStyle = `white`">white</button>
-        </view>
+        <text class="refresher-background-value">当前值：{{ refresherDefaultStyle }}</text>
+        <radio-group class="refresher-background-group" @change="handleRefresherDefaultStyleChange">
+          <radio v-for="(option, _) in refresherStyleOptions" class="refresher-background-radio"
+            :value="option.value" :checked="refresherDefaultStyle == option.value" :disabled="!refresherEnabled">{{ option.label }}</radio>
+        </radio-group>
       </view>
     </scroll-view>
   <!-- #ifdef APP -->
@@ -66,19 +76,62 @@
     label : string,
   }
 
+  type RefresherBackgroundOption = {
+    label : string,
+    value : string,
+  }
+
+  type RefresherStyleOption = {
+    label : string,
+    value : string,
+  }
+
   const items = ref<Item[]>([])
   const refresherEnabled = ref(true)
   const refresherTriggered = ref(false)
+  const androidOverscroll = ref(false)
   const refresherThreshold = ref(45)
   const refresherDefaultStyle = ref("black")
   const refresherBackground = ref("transparent")
+  const refresherBackgroundOptions : RefresherBackgroundOption[] = [
+    {
+      label: "透明",
+      value: "transparent"
+    },
+    {
+      label: "白色",
+      value: "#ffffff"
+    },
+    {
+      label: "灰色",
+      value: "#8f8f8f"
+    },
+    {
+      label: "蓝色",
+      value: "#0000ff"
+    }
+  ]
+  const refresherStyleOptions : RefresherStyleOption[] = [
+    {
+      label: "none",
+      value: "none"
+    },
+    {
+      label: "black",
+      value: "black"
+    },
+    {
+      label: "white",
+      value: "white"
+    }
+  ]
 
   onLoad(() => {
     for (let i = 0; i < 10; i++) {
-      const item = {
+      const item : Item = {
         id: "item" + i,
         label: "item" + i,
-      } as Item;
+      }
       items.value.push(item);
     }
   })
@@ -100,9 +153,16 @@
     }
   }
 
-  function handleRefresherBackground(e : InputEvent) {
-    const value = e.detail.value;
-    refresherBackground.value = value;
+  function handleAndroidOverscrollChange() {
+    androidOverscroll.value = !androidOverscroll.value;
+  }
+
+  function handleRefresherBackgroundChange(event : UniRadioGroupChangeEvent) {
+    refresherBackground.value = event.detail.value;
+  }
+
+  function handleRefresherDefaultStyleChange(event : UniRadioGroupChangeEvent) {
+    refresherDefaultStyle.value = event.detail.value;
   }
 
   //响应事件
@@ -151,6 +211,12 @@
     color: red;
   }
 
+  .refresher-background-value {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666666;
+  }
+
   .uni-text {
     color: black;
     font-size: 50px;
@@ -166,12 +232,15 @@
     text-align: center;
   }
 
-  .switch-refresher-group {
+  .refresher-background-group {
     flex-direction: row;
+    flex-wrap: wrap;
     margin-top: 5px;
   }
 
-  .switch-refresher-style {
-    margin-right: 5px;
+  .refresher-background-radio {
+    margin-right: 12px;
+    margin-bottom: 8px;
   }
+
 </style>

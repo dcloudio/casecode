@@ -94,7 +94,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 flex </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <!-- 普通版本 -->
@@ -202,12 +202,12 @@
       <view class="demo-box uni-common-mb">
         <view class="flex-container">
           <view class="flex-item red"></view>
-          <native-view class="flex-item green" style="flex: 1;"></native-view>
+          <test-native-view class="flex-item green" style="flex: 1;"></test-native-view>
           <view class="flex-item blue"></view>
         </view>
         <view class="flex-container">
           <view class="flex-item red"></view>
-          <native-view class="flex-item green" style="flex: auto;"></native-view>
+          <test-native-view class="flex-item green" style="flex: auto;"></test-native-view>
           <view class="flex-item blue"></view>
         </view>
       </view>
@@ -255,7 +255,6 @@
     data.flexActualImageFlat = imageRefFlat.value?.style.getPropertyValue('flex') ?? ''
   }
 
-  const ins = getCurrentInstance()
 
   const changeFlex = (value: string) => {
     data.flexProp = value

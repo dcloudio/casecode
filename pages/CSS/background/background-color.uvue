@@ -161,7 +161,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 background-color </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <!-- 普通版本 -->
@@ -240,15 +240,6 @@
         <enum-data :compact="true" :items="backgroundColorEnum" title="background-color 枚举值" @change="radioChangeBackgroundColor"></enum-data>
         <input-data :defaultValue="data.backgroundColor" title="background-color 自定义值" type="text" @confirm="inputChangeBackgroundColor"></input-data>
       </view>
-
-      <view class="uni-common-mb">
-        <text>native-view组件: \n background-color: blue 和 #0000ff80 </text>
-        <view class="demo-box">
-          <native-view class="common" style="background-color: blue"></native-view>
-          <native-view class="common" style="background-color: #0000ff80;"></native-view>
-        </view>
-      </view>
-
     </view>
   <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>

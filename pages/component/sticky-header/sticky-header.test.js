@@ -1,9 +1,6 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
-const isHarmony = platformInfo.startsWith('harmony')
-const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isWeb = platformInfo.startsWith('web')
-const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe('component-native-sticky-header', () => {
   if (isMP) {
@@ -17,10 +14,6 @@ describe('component-native-sticky-header', () => {
   const screenshotParams = { fullPage: true }
 
   beforeAll(async () => {
-    if (!isAppWebView) {
-      const windowInfo = await program.callUniMethod('getWindowInfo');
-      screenshotParams.offsetY = `${windowInfo.safeAreaInsets.top + 44}`
-    }
     page = await program.reLaunch('/pages/component/sticky-header/sticky-header')
     await page.waitFor('sticky-header')
     await page.waitFor(isWeb ? 5000 : 2000); // 等待页面加载完成

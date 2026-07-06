@@ -1,7 +1,6 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isWeb = platformInfo.startsWith('web')
 const isMP = platformInfo.startsWith('mp')
-const isAndroid = platformInfo.startsWith('android')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 
 describe('/pages/template/list-delete-swipe-batch/list-delete-swipe-batch.uvue', () => {
@@ -47,4 +46,10 @@ describe('/pages/template/list-delete-swipe-batch/list-delete-swipe-batch.uvue',
     expect(image2).toSaveImageSnapshot();
   });
 
+  it('batch delete item', async () => {
+    await page.callMethod('jest_batchDeleteItem')
+    await page.waitFor(1000)
+    const image = await program.screenshot({ fullPage: true });
+    expect(image).toSaveImageSnapshot();
+  })
 });

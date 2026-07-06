@@ -61,7 +61,7 @@
           打字机效果示例
         </button>
         <!-- #endif -->
-        <!-- #ifdef APP-ANDROID -->
+        <!-- #ifdef APP-ANDROID && !VUE3-VAPOR -->
         <button class="uni-btn" type="primary" @click="textLayout">
           文本测量
         </button>

@@ -187,6 +187,15 @@
 			}
 		},
 		// #endif
+		// #ifdef APP-ANDROID || APP-HARMONY && VUE3-VAPOR || APP-IOS
+		{
+			"path": "pages/component/sticky-section/sticky-section-push-pinned-header",
+			"style": {
+				"navigationBarTitleText": "push-pinned-header属性测试",
+        "disableScroll": true
+			}
+		},
+		// #endif
 		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
 			"path": "pages/component/sticky-header/sticky-header",
@@ -217,12 +226,14 @@
 				"navigationBarTitleText": "text-writer"
 			}
 		},
+		// #ifdef APP-ANDROID && !VUE3-VAPOR
 		{
 			"path": "pages/component/text/text-layout",
 			"style": {
 				"navigationBarTitleText": "text-layout"
 			}
 		},
+		// #endif
 		{
 			"path": "pages/component/rich-text/rich-text",
 			"group": "0,2,2",
@@ -240,6 +251,12 @@
 			"path": "pages/component/rich-text/rich-text-complex",
 			"style": {
 				"navigationBarTitleText": "rich-text-complex"
+			}
+		},
+		{
+			"path": "pages/component/rich-text/rich-text-highlight",
+			"style": {
+				"navigationBarTitleText": "rich-text-highlight"
 			}
 		},
 		{
@@ -672,7 +689,7 @@
 				"navigationBarTitleText": "涂鸦"
 			}
 		},
-		// #ifdef (APP-ANDROID && !VUE3-VAPOR) || APP-HARMONY || APP-IOS
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/component/native-view/native-view",
 			"group": "0,2,5",
@@ -725,7 +742,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS
+		// #ifdef (APP-ANDROID || APP-IOS) && !VUE3-VAPOR
 		{
 			"path": "pages/component/share-element/share-element",
 			"group": "0,1,11",
@@ -734,7 +751,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS
+		// #ifdef (APP-ANDROID || APP-IOS) && !VUE3-VAPOR
 		{
 			"path": "pages/component/share-element/share-element-with-swiper",
 			"style": {
@@ -742,7 +759,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-IOS
+		// #ifdef (APP-ANDROID || APP-IOS) && !VUE3-VAPOR
 		{
 			"path": "pages/component/share-element/share-element-to",
 			"style": {
@@ -914,7 +931,6 @@
 				"navigationBarTitleText": "onLoad 生命周期测试"
 			}
 		},
-		// #ifdef APP-ANDROID || (!VUE3-VAPOR && APP-IOS) || (!VUE3-VAPOR && APP-HARMONY) || WEB || MP-WEIXIN
 		{
 			"path": "pages/API/pull-down-refresh/pull-down-refresh",
 			"group": "1,2,6",
@@ -923,7 +939,6 @@
 				"enablePullDownRefresh": true
 			}
 		},
-		// #endif
 		{
 			"path": "pages/API/storage/storage",
 			"group": "1,9",
@@ -1142,6 +1157,15 @@
 				"navigationBarTitleText": "getAttribute | 获取元素的属性值"
 			}
 		},
+		// #ifdef VUE3-VAPOR && (APP-HARMONY || APP-IOS)
+		{
+			"path": "pages/API/element-event-listener/element-event-listener",
+			"group": "1,30",
+			"style": {
+				"navigationBarTitleText": "add/remove EventListener | 事件监听"
+			}
+		},
+		// #endif
 		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/API/element-takesnapshot/element-takesnapshot",
@@ -1302,7 +1326,7 @@
 				"navigationStyle": "custom"
 			}
 		},
-		// #ifdef APP && !VUE3-VAPOR
+		// #ifdef (APP-ANDROID || APP-HARMONY || APP-IOS) && !VUE3-VAPOR
 		{
 			"path": "pages/API/element-draw/element-draw",
 			"group": "1,30",
@@ -1851,7 +1875,7 @@
 			}
 		},
 		// #endif
-		// #ifdef APP-ANDROID || APP-HARMONY || WEB || MP-WEIXIN
+		// #ifdef (APP-ANDROID && !VUE3-VAPOR) || APP-HARMONY || WEB || MP-WEIXIN
 		{
 			"path": "pages/API/create-worker/create-worker",
 			"group": "1,19,0",
@@ -2000,7 +2024,7 @@
 			}
 		},
 		// #endif
-		// #ifdef (APP-ANDROID && !VUE3-VAPOR) || APP-IOS
+		// #ifdef APP-ANDROID || APP-IOS
 		{
 			"path": "pages/component/native-view/native-view-time-picker-dialog",
 			"style": {
@@ -2277,6 +2301,13 @@
 					}
 				},
 				{
+					"path": "shopping-cart-animation/shopping-cart-animation",
+					"style": {
+						"navigationBarTitleText": "购物车动画示例",
+						"disableScroll": true
+					}
+				},
+				{
 					"path": "swipe-card-stack/swipe-card-stack",
 					"style": {
 						"navigationBarTitleText": "左右划走的卡片堆叠"
@@ -2295,49 +2326,57 @@
 						"navigationBarTitleText": "关于"
 					}
 				},
-				// #ifdef MP-WEIXIN
-				{
-					"path": "mp-custom-components-vant/mp-custom-components-vant",
-					"style": {
-						"navigationBarTitleText": "微信小程序自定义组件接入（Vant）",
-						"usingComponents": {
-							"vant-button": "/wxcomponents/vant/button/index",
-							"vant-icon": "/wxcomponents/vant/icon/index",
-							"vant-info": "/wxcomponents/vant/info/index",
-							"vant-loading": "/wxcomponents/vant/loading/index"
-						}
-					}
-				},
-				{
-					"path": "wxs-drag-interaction/wxs-drag-interaction",
-					"style": {
-						"navigationBarTitleText": "WXS 交互与拖拽示例"
-					}
-				},
-				// #endif
-				// #ifdef WEB
-				{
-					"path": "browser-built-in-elements/browser-built-in-elements",
-					"style": {
-						"navigationBarTitleText": "浏览器内置元素示例"
-					}
-				},
-				// #endif
+        // #ifdef MP-WEIXIN
+        {
+        	"path": "mp-custom-components-vant/mp-custom-components-vant",
+        	"style": {
+        		"navigationBarTitleText": "微信小程序自定义组件接入（Vant）",
+        		"usingComponents": {
+        			"vant-button": "/wxcomponents/vant/button/index",
+        			"vant-icon": "/wxcomponents/vant/icon/index",
+        			"vant-info": "/wxcomponents/vant/info/index",
+        			"vant-loading": "/wxcomponents/vant/loading/index"
+        		}
+        	}
+        },
+        {
+        	"path": "wxs-drag-interaction/wxs-drag-interaction",
+        	"style": {
+        		"navigationBarTitleText": "WXS 交互与拖拽示例"
+        	}
+        },
+        // #endif
+        // #ifdef WEB
+        {
+        	"path": "browser-built-in-elements/browser-built-in-elements",
+        	"style": {
+        		"navigationBarTitleText": "浏览器内置元素示例"
+        	}
+        },
+        {
+        	"path": "chat-textarea/chat-textarea",
+        	"style": {
+        		"navigationBarTitleText": "@ 提及演示",
+        		"enablePullDownRefresh": false,
+        		"disableScroll": true
+        	}
+        },
+        // #endif
 				// #ifdef APP
 				{
 					"path": "banner-tabs-long-list-nested-scroll/banner-tabs-long-list-nested-scroll",
 					"style": {
 						"navigationBarTitleText": "顶部 Banner 分栏长列表嵌套滚动",
-            			"disableScroll": true
+            "disableScroll": true
 					}
 				},
-				{
-					"path": "banner-waterfall-nested-scroll/banner-waterfall-nested-scroll",
-					"style": {
-						"navigationBarTitleText": "顶部 Banner 瀑布流嵌套滚动",
-					"disableScroll": true
-					}
-				},
+        {
+        	"path": "banner-waterfall-nested-scroll/banner-waterfall-nested-scroll",
+        	"style": {
+        		"navigationBarTitleText": "顶部 Banner 瀑布流嵌套滚动",
+            "disableScroll": true
+        	}
+        },
 				{
 					"path": "pull-zoom-profile-page/pull-zoom-profile-page",
 					"style": {
@@ -2346,29 +2385,29 @@
 						"disableScroll": true
 					}
 				},
-				{
-					"path": "scroll-view-sticky-section/scroll-view-sticky-section",
-					"style": {
-						"navigationBarTitleText": "自定义吸顶",
-					"disableScroll": true
-					}
-				},
+        {
+        	"path": "scroll-view-sticky-section/scroll-view-sticky-section",
+        	"style": {
+        		"navigationBarTitleText": "自定义吸顶",
+            "disableScroll": true
+        	}
+        },
 				// #endif
-				// #ifdef APP || WEB
-				{
-					"path": "list-delete-swipe-batch/list-delete-swipe-batch",
-					"style": {
-						"navigationBarTitleText": "可侧滑删除和多选删除的列表",
-					"disableScroll": true
-					}
-				},
-				{
-					"path": "external-link-launch/external-link-launch",
-					"style": {
-						"navigationBarTitleText": "唤起外部应用与链接"
-					}
-				},
-				// #endif
+        // #ifdef APP || WEB
+        {
+        	"path": "list-delete-swipe-batch/list-delete-swipe-batch",
+        	"style": {
+        		"navigationBarTitleText": "可侧滑删除和多选删除的列表",
+            "disableScroll": true
+        	}
+        },
+        {
+        	"path": "external-link-launch/external-link-launch",
+        	"style": {
+        		"navigationBarTitleText": "唤起外部应用与链接"
+        	}
+        },
+        // #endif
 				// #ifdef MP || VUE3-VAPOR
 				{
 					"path": "calendar-vapor/calendar-vapor",
@@ -2383,26 +2422,26 @@
 					"style": {
 						"navigationBarTitleText": "可回收复用长列表",
 						"enablePullDownRefresh": false,
-            			"disableScroll": true
+            "disableScroll": true
 					}
 				},
-				{
-					"path": "recycle-long-list/detail",
-					"style": {
-						"navigationBarTitleText": "测试详情页"
-					}
-				},
-				{
-					"path": "pull-refresh-custom-indicator/pull-refresh-custom-indicator",
-					"style": {
-						"navigationBarTitleText": "自定义下拉刷新指示器"
-					}
-				},
+        {
+        	"path": "recycle-long-list/detail",
+        	"style": {
+        		"navigationBarTitleText": "测试详情页"
+        	}
+        },
+        {
+        	"path": "pull-refresh-custom-indicator/pull-refresh-custom-indicator",
+        	"style": {
+	        	"navigationBarTitleText": "自定义下拉刷新指示器"
+        	}
+        },
 				{
 					"path": "batch-load-long-list/batch-load-long-list",
 					"style": {
 						"navigationBarTitleText": "分批加载长列表",
-            			"disableScroll": true
+            "disableScroll": true
 					}
 				},
 				// #endif
@@ -2423,86 +2462,86 @@
 				},
 				// #endif
 				{
-					"path": "slider-100/slider-100",
-					"style": {
-						"navigationBarTitleText": "slider x 100"
-					}
-				},
-				// #ifdef APP && VUE3-VAPOR
-				{
-					"path": "4050/4050",
-					"style": {
-						"navigationBarTitleText": "4050"
-					}
-				},
-				{
-					"path": "2000-image/2000-image",
-					"style": {
-						"navigationBarTitleText": "2000-image"
-					}
-				},
-				{
-					"path": "2000-image/2000-image-svg",
-					"style": {
-						"navigationBarTitleText": "2000-image-svg"
-					}
-				},
-				{
-					"path": "long-list-perf/long-list-perf",
-					"style": {
-						"navigationBarTitleText": "死亡列表性能测试",
-					"disableScroll": true
-					}
-				},
-				{
-					"path": "waterflow-perf/waterflow-perf",
-					"style": {
-						"navigationBarTitleText": "waterflow滚动加载长列表",
-					"disableScroll": true
-					}
-				},
-				{
-					"path": "long-rich-text/long-rich-text",
-					"style": {
-						"navigationBarTitleText": "5万字rich-text性能测试"
-					}
-				},
-				{
-					"path": "checkbox-200/checkbox-200",
-					"style": {
-						"navigationBarTitleText": "checkbox x 200"
-					}
-				},
-				{
-					"path": "radio-200/radio-200",
-					"style": {
-						"navigationBarTitleText": "radio x 200"
-					}
-				},
-				{
-					"path": "switch-100/switch-100",
-					"style": {
-						"navigationBarTitleText": "switch x 100"
-					}
-				},
-				{
-					"path": "progress-100/progress-100",
-					"style": {
-						"navigationBarTitleText": "progress x 100"
-					}
-				},
-				{
-					"path": "label-100/label-100",
-					"style": {
-						"navigationBarTitleText": "label x 100"
-					}
-				},
-				{
-					"path": "button-100/button-100",
-					"style": {
-						"navigationBarTitleText": "button x 100"
-					}
-				},
+        	"path": "slider-100/slider-100",
+        	"style": {
+        		"navigationBarTitleText": "slider x 100"
+        	}
+        },
+        // #ifdef APP && VUE3-VAPOR
+        {
+        	"path": "4050/4050",
+        	"style": {
+        		"navigationBarTitleText": "4050"
+        	}
+        },
+        {
+        	"path": "2000-image/2000-image",
+        	"style": {
+        		"navigationBarTitleText": "2000-image"
+        	}
+        },
+        {
+        	"path": "2000-image/2000-image-svg",
+        	"style": {
+        		"navigationBarTitleText": "2000-image-svg"
+        	}
+        },
+        {
+        	"path": "long-list-perf/long-list-perf",
+        	"style": {
+        		"navigationBarTitleText": "死亡列表性能测试",
+            "disableScroll": true
+        	}
+        },
+        {
+        	"path": "waterflow-perf/waterflow-perf",
+        	"style": {
+        		"navigationBarTitleText": "waterflow滚动加载长列表",
+            "disableScroll": true
+        	}
+        },
+        {
+        	"path": "long-rich-text/long-rich-text",
+        	"style": {
+        		"navigationBarTitleText": "5万字rich-text性能测试"
+        	}
+        },
+        {
+        	"path": "checkbox-200/checkbox-200",
+        	"style": {
+        		"navigationBarTitleText": "checkbox x 200"
+        	}
+        },
+        {
+        	"path": "radio-200/radio-200",
+        	"style": {
+        		"navigationBarTitleText": "radio x 200"
+        	}
+        },
+        {
+        	"path": "switch-100/switch-100",
+        	"style": {
+        		"navigationBarTitleText": "switch x 100"
+        	}
+        },
+        {
+        	"path": "progress-100/progress-100",
+        	"style": {
+        		"navigationBarTitleText": "progress x 100"
+        	}
+        },
+        {
+        	"path": "label-100/label-100",
+        	"style": {
+        		"navigationBarTitleText": "label x 100"
+        	}
+        },
+        {
+        	"path": "button-100/button-100",
+        	"style": {
+        		"navigationBarTitleText": "button x 100"
+        	}
+        },
 				{
 					"path": "loading-100/loading-100",
 					"style": {
@@ -3140,14 +3179,12 @@
 						"navigationBarTitleText": "transition-delay"
 					}
 				},
-				// #ifdef APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
 				{
 					"path": "transition/transition-transform",
 					"style": {
 						"navigationBarTitleText": "transition-transform"
 					}
 				},
-				// #endif
 				{
 					"path": "pointer-events/pointer-events",
 					"group": "2,18",
@@ -3262,7 +3299,7 @@
 		}
 	],
 	"globalStyle": {
-		"pageOrientation": "portrait",
+		"pageOrientation": "auto",
 		"navigationBarTitleText": "Hello uniapp x",
 		"navigationBarTextStyle": "@navigationBarTextStyle",
 		"navigationBarBackgroundColor": "@navigationBarBackgroundColor",
@@ -3413,10 +3450,12 @@
 								}
 							]
 						},
+						// #ifndef VUE3-VAPOR
 						{
 							"id": "component.view-container.share-element",
 							"name": "share-element"
 						}
+						// #endif
 					]
 				},
 				{

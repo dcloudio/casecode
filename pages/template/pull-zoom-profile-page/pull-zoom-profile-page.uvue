@@ -158,15 +158,15 @@
     background: #5788cd;
     height: 300px;
   }
-  /* #ifdef APP-IOS || APP-HARMONY */
+  /* #ifdef APP-IOS || APP-HARMONY || (APP-ANDROID && VUE3-VAPOR) */
   /** * TODO: 临时方案。
-   * 兼容性问题：在 iOS 及鸿蒙端，当 slot="refresher" 的元素设置为 position: relative 时，
-   * 渲染引擎仍会保留其在文档流中的物理占位，导致 scroll-view 内容底部出现多余空白。
-   * 此处通过负 margin 抵消占位高度，以保证滚动区域计算正确。
+   * 兼容性问题：在 iOS、鸿蒙以及 Android 蒸汽模式下，当 slot="refresher" 的元素设置为
+   * position: relative 时，渲染引擎仍会保留其在文档流中的物理占位，导致 scroll-view
+   * 内容底部出现多余空白。此处通过负 margin 抵消占位高度，以保证滚动区域计算正确。
    */
   .header-pull-wrapper {
       margin-bottom: -300px;
-    }
+  }
   /* #endif */
 
   .header-pull-img,

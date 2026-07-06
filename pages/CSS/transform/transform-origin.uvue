@@ -28,7 +28,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 transform-origin </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <view class="test-container">
@@ -103,7 +103,7 @@
         <text class="uni-title-text">native-view 组件 transform-origin ：</text>
         <text class="uni-subtitle-text">点击下方 native-view 组件，不同 transform-origin 值（60px 60px、100% 0%、10px 10px）对 translate、scale、rotate 变换的影响</text>
         <view class="scroll-view-item">
-          <native-view ref="nativeViewTransformView" class="scroll-view-base transform" @click="changeNativeViewTransform"></native-view>
+          <test-native-view ref="nativeViewTransformView" class="scroll-view-base transform-native" @click="changeNativeViewTransform"></test-native-view>
         </view>
       </view>
 
@@ -120,14 +120,13 @@
   const textTransformView = ref(null as UniElement | null)
   const imageTransformView = ref(null as UniElement | null)
   const scrollViewTransformView = ref(null as UniElement | null)
-  const nativeViewTransformView = ref(null as UniElement | null)
+  const nativeViewTransformView = ref<ComponentPublicInstance|null>(null)
   const count = ref(0)
   const textCount = ref(0)
   const imageCount = ref(0)
   const scrollViewCount = ref(0)
   const nativeViewCount = ref(0)
 
-  const ins = getCurrentInstance()
 
   const changetransform = () => {
     const element = transformView.value
@@ -260,7 +259,7 @@
   }
 
   const changeNativeViewTransform = () => {
-    const element = nativeViewTransformView.value
+    const element = nativeViewTransformView.value?.$el
 
     if (nativeViewCount.value == 0) {
       element?.style.setProperty("transform-origin", "60px 60px")
@@ -479,6 +478,10 @@
     border-style: solid;
     text-align: center;
     position: relative;
+  }
+
+  .transform-native {
+    background-color: #00FFFF80;
   }
 
 </style>

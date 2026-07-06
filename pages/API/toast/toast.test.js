@@ -1,4 +1,3 @@
-jest.setTimeout(50000);
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isAndroid = platformInfo.startsWith('android')
 const isIos = platformInfo.startsWith('ios')
@@ -46,6 +45,8 @@ describe('API-toast', () => {
       area: {
         x: 0,
         y: topSafeArea + 44,
+        // 规避底部手势导航栏的影响
+        height: windowInfo.safeArea.height-50
       },
     };
 
@@ -53,26 +54,35 @@ describe('API-toast', () => {
     await page.waitFor("view");
   });
 
-  async function toScreenshot(imgName) {
+  const loadingSnapshotOptions = {
+    failureThresholdType: 'percent',
+    failureThreshold: 0.001,
+  }
+
+  async function screenShot(imgName, imageSnapshotOptions = {}) {
     const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot({customSnapshotIdentifier() {
+    const options = {customSnapshotIdentifier() {
       return imgName
-    }})
+    }, ...imageSnapshotOptions}
+    expect(image).toMatchImageSnapshot(options);
+    expect(image).toSaveImageSnapshot(options)
     await page.waitFor(500);
   }
 
   it("onload-toast-test", async () => {
-    await toScreenshot('toast-onload')
+    await screenShot('toast-onload')
   })
 
   it("icon-toast-test", async () => {
     const icons = await page.$$('.radio-icon')
     for (let i = 0; i < icons.length; i++) {
       await icons[i].tap()
-      const iconText = await icons[i].text()
       await page.callMethod('toast1Tap')
       await page.waitFor(100);
-      await toScreenshot(`${iconText}-toast`)
+      const iconText = await icons[i].text()
+      const iconValue = await icons[i].attribute('value')
+      const isLoadingIcon = iconValue == 'loading' || iconText.includes('加载')
+      await screenShot(`${iconText}-toast`, isLoadingIcon ? loadingSnapshotOptions : {})
     }
   })
 
@@ -80,7 +90,7 @@ describe('API-toast', () => {
     await page.setData({data:{maskSelect: true}})
     await page.callMethod('toast3Tap')
     await page.waitFor(300);
-    await toScreenshot('icon=none-mask=true-toast-image')
+    await screenShot('icon=none-mask=true-toast-image')
   })
 
   it("image-toast-test", async () => {
@@ -88,18 +98,18 @@ describe('API-toast', () => {
     await page.waitFor(300);
     await page.callMethod('toast1Tap')
     await page.waitFor(300);
-    await toScreenshot('toast-image')
+    await screenShot('toast-image')
   })
 
   it("duration-toast-test", async () => {
     await page.setData({data:{intervalSelect: 4000}})
     await page.callMethod('toast1Tap')
     await page.waitFor(2000);
-    await toScreenshot('toast-duration-2000')
+    await screenShot('toast-duration-2000')
     await page.waitFor(1000);
     await page.callMethod('hideToast')
     await page.waitFor(300);
-    await toScreenshot('toast-duration-end')
+    await screenShot('toast-duration-end')
   })
 
   if(isWeb){
@@ -127,7 +137,7 @@ describe('API-toast', () => {
       const positionsText = await positions[i].attribute('value')
       await page.callMethod('toast2Tap')
       await page.waitFor(500);
-      await toScreenshot(`toast-position-${positionsText}`)
+      await screenShot(`toast-position-${positionsText}`)
     }
   })
 

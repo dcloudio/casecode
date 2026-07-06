@@ -80,7 +80,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 border-style </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <!-- 普通版本 -->
@@ -153,13 +153,6 @@
         <input-data :defaultValue="data.borderStyleValue" title="border-style 自定义值" type="text" @confirm="inputChangeBorderStyle"></input-data>
       </view>
 
-      <view class="uni-common-mb">
-        <text>native-view组件: border-style: dashed 和 dotted</text>
-        <view class="demo-box">
-          <native-view class="common" style="border-width: 5px; border-style: dashed;"></native-view>
-          <native-view class="common" style="border-width: 5px; border-style: dotted;"></native-view>
-        </view>
-      </view>
     </view>
   <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>

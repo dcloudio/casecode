@@ -7,8 +7,6 @@ const isIos = platformInfo.startsWith('ios')
 const isHarmony = platformInfo.startsWith('harmony')
 const isApp = isAndroid || isIos || isHarmony
 
-jest.setTimeout(30000)
-
 describe('template-banner-tabs-long-list-nested-scroll', () => {
   if (!isApp) {
     it('skip non-app platform', () => {

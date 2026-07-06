@@ -8,7 +8,7 @@ const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 
 const PAGE_PATH = '/pages/API/modal/modal'
 
-describe('API-loading', () => {
+describe('modal', () => {
   if(isMP) {
     // 微信小程序截图无法截到弹框
     it('not support', () => {
@@ -41,10 +41,20 @@ describe('API-loading', () => {
     return await page.setData({ data: newData });
   }
 
+  async function screenshot(fileName, height) {
+    const image = await program.screenshot(height ? { ...deviceShotOptions, area: { ...deviceShotOptions.area, height } } : deviceShotOptions);
+    const options = fileName ? {
+      customSnapshotIdentifier() {
+        return fileName
+      }
+    } : {}
+    expect(image).toMatchImageSnapshot(options);
+    expect(image).toSaveImageSnapshot(options);
+  }
+
   beforeAll(async () => {
     const windowInfo = await program.callUniMethod('getWindowInfo');
     let topSafeArea = windowInfo.safeAreaInsets.top;
-    console.log('platformInfo', platformInfo)
     if (isAppWebView) {
       if (isIos) {
         topSafeArea = 59
@@ -72,6 +82,8 @@ describe('API-loading', () => {
       area: {
         x: 0,
         y: topSafeArea + 44,
+        // 规避底部手势导航栏的影响
+        height: windowInfo.safeArea.height-50
       },
     };
 
@@ -81,8 +93,7 @@ describe('API-loading', () => {
   });
 
   it("onload-modal-test", async () => {
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
   })
 
   it("modal-test-current-0", async () => {
@@ -107,10 +118,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
 
@@ -138,10 +148,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
     await page.waitFor(2000);
   })
 
@@ -167,10 +176,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -197,10 +205,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -227,10 +234,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -257,10 +263,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -287,10 +292,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -318,10 +322,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -348,10 +351,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -378,10 +380,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -408,10 +409,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -438,10 +438,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -470,8 +469,7 @@ describe('API-loading', () => {
     await btnModalButton.tap()
     await page.waitFor(500);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
 
@@ -499,10 +497,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -529,10 +526,9 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
     await page.waitFor(2000);
   })
@@ -559,12 +555,11 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot()
 
-     await page.waitFor(2000);
+    await page.waitFor(2000);
   })
 
   it("modal-test-current-2-showCancel-cancelText-confirmText-editable", async () => {
@@ -589,15 +584,14 @@ describe('API-loading', () => {
 
     const btnModalButton = await page.$('#btn-modal-show')
     await btnModalButton.tap()
-    await page.waitFor(500);
+    await page.waitFor(600);
 
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await screenshot();
 
     await page.waitFor(2000);
   })
 
-  it("modal-test-current-0-multi-time-show-hideall", async () => {
+  it("modal-test-current-0-multi-time-show-hide-all", async () => {
     page = await program.reLaunch(PAGE_PATH+ '?onLoadShowModal=false')
     await page.waitFor('view');
 
@@ -617,17 +611,15 @@ describe('API-loading', () => {
     await btnModalButtonMultiTime.tap()
     await page.waitFor(1000);
 
-    const image1 = await program.screenshot(deviceShotOptions);
-    expect(image1).toSaveImageSnapshot();
+    await screenshot('modal-test-current-0-multi-time-show');
     /**
      * 等待2s 全部关闭全部
      */
     await page.waitFor(2000);
-    const image2 = await program.screenshot(deviceShotOptions);
-    expect(image2).toSaveImageSnapshot();
+    await screenshot('modal-test-current-0-multi-time-show-hide-all');
   })
 
-  it("modal-test-current-1-multi-time-show-hidelast", async () => {
+  it("modal-test-current-1-multi-time-show-hide-last", async () => {
     page = await program.reLaunch(PAGE_PATH+ '?onLoadShowModal=false')
     await page.waitFor('view');
 
@@ -647,15 +639,13 @@ describe('API-loading', () => {
     await btnModalButtonMultiTime.tap()
     await page.waitFor(1000);
 
-    const image1 = await program.screenshot(deviceShotOptions);
-    expect(image1).toSaveImageSnapshot();
+    await screenshot('modal-test-current-1-multi-time-show');
     /**
      * 等待2s 还剩下两个
      */
     await page.waitFor(2000);
 
-    const image2 = await program.screenshot(deviceShotOptions);
-    expect(image2).toSaveImageSnapshot();
+    await screenshot('modal-test-current-1-multi-time-show-hide-last');
   })
   it("placeholderText-no_content-editable", async () => {
     page = await program.reLaunch(PAGE_PATH+ '?onLoadShowModal=false')
@@ -668,9 +658,8 @@ describe('API-loading', () => {
     await page.waitFor(1000);
 
     await page.callMethod('modalTap')
-    await page.waitFor(500);
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await page.waitFor(600);
+    await screenshot();
 
     await page.callMethod('closeAllModal')
     await page.waitFor(500);
@@ -683,9 +672,8 @@ describe('API-loading', () => {
     await page.waitFor(1000);
 
     await page.callMethod('modalTap')
-    await page.waitFor(500);
-    const image = await program.screenshot(deviceShotOptions);
-    expect(image).toSaveImageSnapshot();
+    await page.waitFor(600);
+    await screenshot();
 
     await page.callMethod('closeAllModal')
     await page.waitFor(500);

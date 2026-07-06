@@ -252,6 +252,29 @@ onBackPress((): boolean => {
 onUnload(() => {
   doPause(current.value)
 })
+
+function jest_getStateList() : string[] {
+  return stateList.value
+}
+
+function jest_getCurrent() : number {
+  return current.value
+}
+
+function jest_isCommentPanelShown() : boolean {
+  return showCommentPanel.value
+}
+
+function jest_switchTo(idx : number) {
+  current.value = idx
+}
+
+defineExpose({
+  jest_getStateList,
+  jest_getCurrent,
+  jest_isCommentPanelShown,
+  jest_switchTo
+})
 </script>
 
 <style>

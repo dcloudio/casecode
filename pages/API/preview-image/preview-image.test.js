@@ -60,5 +60,24 @@ describe('preview-image', () => {
       await page.callMethod('closePreviewImage')
       await page.waitFor(300)
     })
+    it('previewImage_longpress', async () => {
+      await page.callMethod('testSetCurrentIndicator','none')
+      await page.waitFor(300)
+      await page.callMethod('previewImage')
+      await page.waitFor(3000)
+      const systemInfo = await program.systemInfo()
+      await program.tap({
+        x: parseInt(systemInfo.screenWidth / 2),
+        y: parseInt(systemInfo.screenHeight / 2),
+        duration: 1000,
+      })
+      await page.waitFor(500)
+      const image = await program.screenshot({
+        deviceShot: true,
+      });
+      expect(image).toSaveImageSnapshot()
+      await page.callMethod('closePreviewImage')
+      await page.waitFor(300)
+    })
   }
 });

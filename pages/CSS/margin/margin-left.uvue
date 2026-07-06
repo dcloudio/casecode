@@ -56,7 +56,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 margin-left </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <view class="test-container">
@@ -143,12 +143,12 @@
         <view class="demo-box">
           <view class="demo-container">
             <view class="common red"></view>
-            <native-view class="common" style="margin-left: 25px;"></native-view>
+            <test-native-view class="common" style="margin-left: 25px;"></test-native-view>
             <view class="common blue"></view>
           </view>
           <view class="demo-container">
             <view class="common red"></view>
-            <native-view class="common" style="margin-left: 10%;"></native-view>
+            <test-native-view class="common" style="margin-left: 10%;"></test-native-view>
             <view class="common blue"></view>
           </view>
         </view>
@@ -198,7 +198,6 @@
     data.marginLeftActualImageFlat = imageRefFlat.value?.style.getPropertyValue('margin-left') ?? ''
   }
 
-  const ins = getCurrentInstance()
 
   const changeMarginLeft = (value: string) => {
     data.marginLeft = value

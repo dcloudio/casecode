@@ -231,7 +231,7 @@
       open: false,
       pages: [] as Page[],
     },
-    // #ifdef VUE3-VAPOR || APP-IOS || APP-ANDROID || WEB
+    // #ifndef MP
     {
       id: 'chat-stream-reply',
       url: 'chat-stream-reply',
@@ -262,17 +262,30 @@
       pages: [] as Page[],
     },
     {
-      id: 'calendar',
+      id: 'shopping-cart-animation',
+      url: 'shopping-cart-animation',
+      name: '购物车加购动画',
+      open: false,
+      pages: [] as Page[],
+    },
     // #ifdef APP && !VUE3-VAPOR
+    {
+      id: 'calendar',
       url: 'calendar',
-    // #endif
-    // #ifdef WEB || MP || VUE3-VAPOR
-      url: 'calendar-vapor',
-    // #endif
       name: '日历',
       open: false,
       pages: [] as Page[],
     },
+    // #endif
+    // #ifdef MP || VUE3-VAPOR
+    {
+      id: 'calendar',
+      url: 'calendar-vapor',
+      name: '日历',
+      open: false,
+      pages: [] as Page[],
+    },
+    // #endif
     // #ifdef APP || WEB
     {
       id: 'external-link-launch',

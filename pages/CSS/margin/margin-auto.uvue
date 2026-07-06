@@ -129,7 +129,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 margin </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <view class="test-container">
@@ -203,10 +203,10 @@
         <text>native-view组件: margin-left: auto 和 margin: auto</text>
         <view class="demo-box">
           <view class="demo-item">
-            <native-view class="common" style="width: 150px; margin-left: auto;"></native-view>
+            <test-native-view class="common" style="width: 150px; margin-left: auto;"></test-native-view>
           </view>
           <view class="demo-item">
-            <native-view class="common" style="width: 150px; margin: auto;"></native-view>
+            <test-native-view class="common" style="width: 150px; margin: auto;"></test-native-view>
           </view>
         </view>
       </view>
@@ -253,7 +253,6 @@
     data.marginActualImageFlat = imageRefFlat.value?.style.getPropertyValue('margin') ?? ''
   }
 
-  const ins = getCurrentInstance()
 
   const changeMargin = (value: string) => {
     data.margin = value

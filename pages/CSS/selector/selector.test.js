@@ -28,7 +28,7 @@ describe('/pages/CSS/selector/selector.uvue', () => {
   })
 
   const expectPagePadding = async (expectedPadding) => {
-    const pageElement = await page.$('.uni-non-public-page')
+    const pageElement = await page.$('page')
     expect(pageElement).toBeTruthy()
 
     const paddingTop = await pageElement.style('padding-top')

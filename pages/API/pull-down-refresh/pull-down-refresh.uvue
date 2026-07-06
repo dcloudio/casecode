@@ -16,8 +16,7 @@
 
   type DataType = {
     pulldownRefreshTriggered: boolean,
-    startPullDownRefreshStaus: boolean,
-    stopPullDownRefreshStatus: boolean,
+    startPullDownRefreshStaus: boolean
   }
 
   const listData = ref([] as Array<number>)
@@ -26,8 +25,7 @@
   const max = ref(0)
   const data = reactive({
     pulldownRefreshTriggered: false,
-    startPullDownRefreshStaus: false,
-    stopPullDownRefreshStatus: false,
+    startPullDownRefreshStaus: false
   } as DataType)
 
   function initData() {

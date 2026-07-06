@@ -170,7 +170,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 border-radius </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <!-- 普通版本 -->
@@ -241,14 +241,6 @@
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="borderRadiusEnum" title="border-radius 枚举值" @change="radioChangeBorderRadius" :compact="true"></enum-data>
         <input-data :defaultValue="data.borderRadius" title="border-radius 自定义值" type="text" @confirm="inputChangeBorderRadius"></input-data>
-      </view>
-
-      <view class="uni-common-mb">
-        <text>native-view组件: border-radius: 10px 和 border-top-left-radius: 10px</text>
-        <view class="demo-box">
-          <native-view class="common" style="border-radius: 10px"></native-view>
-          <native-view class="common" style="border-top-left-radius: 10px"></native-view>
-        </view>
       </view>
 
     </view>

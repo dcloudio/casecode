@@ -4,11 +4,12 @@ const isIOS = platformInfo.startsWith('ios')
 const isAndroid = platformInfo.startsWith('android')
 const isHarmony = platformInfo.startsWith('harmony')
 const isApp = isIOS || isAndroid || isHarmony
+const isMP = platformInfo.startsWith('mp')
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe('test title', () => {
-  if (!isApp) {
-    it('not app skip', async () => {
+  if (!(isApp || isMP)) {
+    it('not supported skip', async () => {
       expect(1).toBe(1)
     })
     return
@@ -19,51 +20,56 @@ describe('test title', () => {
     await page.waitFor(3000);
   });
 
-  it('run animate and take Snapshot', async () => {
-    var renameFile = await page.$('#widthProperty')
-    await renameFile.tap()
-    renameFile = await page.$('#height1')
-    await renameFile.tap()
-    renameFile = await page.$('#marginProperty')
-    await renameFile.tap()
-    renameFile = await page.$('#paddingProperty')
-    await renameFile.tap()
-    renameFile = await page.$('#borderProperty')
-    await renameFile.tap()
-    renameFile = await page.$('#transformProperty')
-    await renameFile.tap()
-    renameFile = await page.$('#positionProperty')
-    await renameFile.tap()
-    renameFile = await page.$('#backgroundAndWidthProperty')
-    await renameFile.tap()
-    renameFile = await page.$('#oneProperty1')
-    await renameFile.tap()
-    renameFile = await page.$('#oneProperty2')
-    await renameFile.tap()
-    renameFile = await page.$('#backgroundAndMarginLeftProperty')
-    await renameFile.tap()
-    renameFile = await page.$('#backgroundAndTransformProperty')
-    await renameFile.tap()
-    renameFile = await page.$('#backgroundProperty')
-    await renameFile.tap()
-    renameFile = await page.$('#opacityProperty')
-    await renameFile.tap()
-    renameFile = await page.$('#borderColorMarginLeftProperty')
-    await renameFile.tap()
-    await page.waitFor(3000);
-    const image = await program.screenshot({
-      fullPage: true
-    })
-    expect(image).toSaveImageSnapshot();
-  });
+  if (isApp) {
+    it('run animate and take Snapshot', async () => {
+      var renameFile = await page.$('#widthProperty')
+      await renameFile.tap()
+      renameFile = await page.$('#height1')
+      await renameFile.tap()
+      renameFile = await page.$('#marginProperty')
+      await renameFile.tap()
+      renameFile = await page.$('#paddingProperty')
+      await renameFile.tap()
+      renameFile = await page.$('#borderProperty')
+      await renameFile.tap()
+      renameFile = await page.$('#transformProperty')
+      await renameFile.tap()
+      renameFile = await page.$('#positionProperty')
+      await renameFile.tap()
+      renameFile = await page.$('#backgroundAndWidthProperty')
+      await renameFile.tap()
+      renameFile = await page.$('#oneProperty1')
+      await renameFile.tap()
+      renameFile = await page.$('#oneProperty2')
+      await renameFile.tap()
+      renameFile = await page.$('#backgroundAndMarginLeftProperty')
+      await renameFile.tap()
+      renameFile = await page.$('#backgroundAndTransformProperty')
+      await renameFile.tap()
+      renameFile = await page.$('#backgroundProperty')
+      await renameFile.tap()
+      renameFile = await page.$('#opacityProperty')
+      await renameFile.tap()
+      renameFile = await page.$('#borderColorMarginLeftProperty')
+      await renameFile.tap()
+      await page.waitFor(3000);
+      const image = await program.screenshot({
+        fullPage: true
+      })
+      expect(image).toSaveImageSnapshot();
+    });
+  }
 
-  if (!(isHarmony && !isDom2)) {
+  if (isApp && !(isHarmony && !isDom2)) {
     it('finish event', async () => {
       await page.callMethod('startAnimate');
       await page.waitFor(5100);
       var testTriggerFinishEvent = await page.data('data.testTriggerFinishEvent')
       expect(testTriggerFinishEvent).toEqual(true)
     });
+  }
+
+  if (!(isHarmony && !isDom2) || isMP) {
     it('cancel event', async () => {
       await page.callMethod('startAnimate');
       await page.waitFor(1100);

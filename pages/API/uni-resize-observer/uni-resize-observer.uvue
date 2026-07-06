@@ -1,8 +1,8 @@
 <template>
-  <!-- #ifdef APP -->
-  <scroll-view class="page-scroll-view" style="padding-bottom: var(--uni-safe-area-inset-bottom);">
+  <!-- #ifdef APP && !VUE3-VAPOR -->
+  <scroll-view class="page-scroll-view">
   <!-- #endif -->
-    <view>
+    <view style="padding-bottom: var(--uni-safe-area-inset-bottom);">
       <page-intro content="本页演示 uni.createResizeObserver：监听元素尺寸变化，回调中可获取 contentRect（x、y、width、height）。含 view 嵌套、text、image、scroll-view 等组件的监听示例；可点击方块改宽高、改变字体/图片/scroll-view 尺寸，支持停止/恢复监听、隐藏/显示元素。"></page-intro>
       <text>点击蓝色或红色方块区域会修改元素宽高</text>
       <view v-show="boxDisplay" style="align-items: center; justify-content: center; margin: 10px;">
@@ -63,7 +63,7 @@
         </view>
       </view>
     </view>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>

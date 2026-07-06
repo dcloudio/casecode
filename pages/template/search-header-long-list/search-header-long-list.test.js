@@ -4,8 +4,6 @@ const PAGE_PATH = '/pages/template/search-header-long-list/search-header-long-li
 const ACTIVE_COLORS = ['rgb(0, 122, 255)', '#007AFF', '#007AFFFF']
 const INACTIVE_COLORS = ['rgb(85, 85, 85)', '#555555', '#555555FF']
 
-jest.setTimeout(30000)
-
 describe('template-search-header-long-list', () => {
   let page
 

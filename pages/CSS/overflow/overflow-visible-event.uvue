@@ -1,6 +1,6 @@
 <template>
-  <!-- #ifdef APP -->
-  <scroll-view id="scroll-view" style="flex: 1;">
+  <!-- #ifdef APP && !VUE3-VAPOR -->
+  <scroll-view style="flex: 1;">
   <!-- #endif -->
     <view>
       <page-intro content="本页演示 overflow: visible 下的事件行为：子元素超出父区域时点击仍可触发 click/touch 事件；与 position:absolute 遮挡时的点击顺序、hover-class、多层级 overflow:visible、以及 overflow:visible 与 z-index 组合时的事件触发。"></page-intro>
@@ -52,7 +52,7 @@
         </view>
       </view>
     </view>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>
@@ -161,14 +161,16 @@
   }
 
   const jest_restScorllView = async () => {
-    const scrollView = uni.getElementById('scroll-view') as UniScrollViewElement
-    scrollView.scrollTo(0, 0)
+    uni.pageScrollTo({
+      scrollTop: 0
+    })
   }
 
   const jest_scrollToDeepOverflow = async () => {
-    const scrollView = uni.getElementById('scroll-view') as UniScrollViewElement
     const rect = await uni.getElementById('deep-overflow')!.getBoundingClientRectAsync()!
-    scrollView.scrollTo(0, rect.top)
+    uni.pageScrollTo({
+      scrollTop: rect.top
+    })
     setTimeout(() => {
       const systemInfo = uni.getSystemInfoSync()
       let ratio = 1
@@ -184,9 +186,10 @@
   }
 
   const jest_scrollToZIndexOverflow = async () => {
-    const scrollView = uni.getElementById('scroll-view') as UniScrollViewElement
     const rect = await uni.getElementById('zindex-overflow')!.getBoundingClientRectAsync()!
-    scrollView.scrollTo(0, rect.top)
+    uni.pageScrollTo({
+      scrollTop: rect.top
+    })
     setTimeout(() => {
       const systemInfo = uni.getSystemInfoSync()
       let ratio = 1
@@ -200,7 +203,7 @@
       })
     }, 200)
   }
-	
+
 	defineExpose({
 		data,
 	  jest_getRect,
@@ -210,7 +213,7 @@
 	  jest_scrollToZIndexOverflow,
 	  jest_restScorllView
 	})
-	
+
 </script>
 
 <style>

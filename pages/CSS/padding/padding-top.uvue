@@ -45,7 +45,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 padding-top </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <!-- 普通版本 -->
@@ -118,19 +118,6 @@
         <input-data :defaultValue="data.paddingTop" title="padding-top 自定义值" type="text" @confirm="inputChangePaddingTop"></input-data>
       </view>
 
-      <view class="uni-common-mb">
-        <text>native-view组件: padding-top: 30px 和 padding-top: 30%</text>
-        <text class="uni-tips">说明：cyan 背景色区域的高度即为 padding-top 的值，灰色区域为容器背景</text>
-        <view class="demo-box">
-          <view class="native-view-container-large">
-            <native-view class="native-view-padding-large" style="padding-top: 30px;"></native-view>
-          </view>
-          <view class="native-view-container-large">
-            <native-view class="native-view-padding-large" style="padding-top: 30%;"></native-view>
-          </view>
-        </view>
-      </view>
-
     </view>
   <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
@@ -174,7 +161,6 @@
     data.paddingTopActualImageFlat = imageRefFlat.value?.style.getPropertyValue('padding-top') ?? ''
   }
 
-  const ins = getCurrentInstance()
 
   const changePaddingTop = (value: string) => {
     data.paddingTop = value

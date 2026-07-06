@@ -151,36 +151,81 @@
 
       <view>
         <text>box-shadow: inset 5px 5px black（harmony暂不支持inset）</text>
-        <view class="backgroundview">
-          <view class="common" style="box-shadow: inset 5px 5px black"></view>
+        <view class="row-container">
+          <view class="row-item">
+            <view class="backgroundview">
+              <view class="common" style="box-shadow: inset 5px 5px black"></view>
+            </view>
+          </view>
+          <view class="row-item">
+            <view class="backgroundview">
+              <view class="common" style="box-shadow: inset 5px 5px black" flatten></view>
+            </view>
+          </view>
         </view>
       </view>
 
       <view>
         <text>box-shadow: inset 5px 5px 5px black（harmony暂不支持inset）</text>
-        <view class="backgroundview">
-          <view class="common" style="box-shadow: inset 5px 5px 5px black"></view>
+        <view class="row-container">
+          <view class="row-item">
+            <view class="backgroundview">
+              <view class="common" style="box-shadow: inset 5px 5px 5px black"></view>
+            </view>
+          </view>
+          <view class="row-item">
+            <view class="backgroundview">
+              <view class="common" style="box-shadow: inset 5px 5px 5px black" flatten></view>
+            </view>
+          </view>
         </view>
       </view>
 
       <view>
         <text>box-shadow: inset 5px 10px 5px black（harmony暂不支持inset）</text>
-        <view class="backgroundview">
-          <view class="common" style="box-shadow: inset 5px 10px 5px black"></view>
+        <view class="row-container">
+          <view class="row-item">
+            <view class="backgroundview">
+              <view class="common" style="box-shadow: inset 5px 10px 5px black"></view>
+            </view>
+          </view>
+          <view class="row-item">
+            <view class="backgroundview">
+              <view class="common" style="box-shadow: inset 5px 10px 5px black" flatten></view>
+            </view>
+          </view>
         </view>
       </view>
 
       <view>
         <text>box-shadow: inset 5px 5px 5px 5px black（harmony暂不支持inset）</text>
-        <view class="backgroundview">
-          <view class="common" style="box-shadow: inset 5px 5px 5px 5px black"></view>
+        <view class="row-container">
+          <view class="row-item">
+            <view class="backgroundview">
+              <view class="common" style="box-shadow: inset 5px 5px 5px 5px black"></view>
+            </view>
+          </view>
+          <view class="row-item">
+            <view class="backgroundview">
+              <view class="common" style="box-shadow: inset 5px 5px 5px 5px black" flatten></view>
+            </view>
+          </view>
         </view>
       </view>
 
       <view>
         <text>box-shadow: inset -5px -5px 5px black（harmony暂不支持inset）</text>
-        <view class="backgroundview">
-          <view class="common" style="box-shadow: inset -5px -5px 5px black"></view>
+        <view class="row-container">
+          <view class="row-item">
+            <view class="backgroundview">
+              <view class="common" style="box-shadow: inset -5px -5px 5px black"></view>
+            </view>
+          </view>
+          <view class="row-item">
+            <view class="backgroundview">
+              <view class="common" style="box-shadow: inset -5px -5px 5px black" flatten></view>
+            </view>
+          </view>
         </view>
       </view>
 
@@ -298,15 +343,33 @@
 
       <view>
         <text>点击动态切换 box-shadow: none</text>
-        <view class="backgroundview" @click="changed">
-          <view :class="['common', disabled ? 'disabledShadow' : 'shadow']"></view>
+        <view class="row-container">
+          <view class="row-item">
+            <view class="backgroundview" @click="changed">
+              <view :class="['common', disabled ? 'disabledShadow' : 'shadow']"></view>
+            </view>
+          </view>
+          <view class="row-item">
+            <view class="backgroundview" @click="changed">
+              <view :class="['common', disabled ? 'disabledShadow' : 'shadow']" flatten></view>
+            </view>
+          </view>
         </view>
       </view>
 
       <view>
         <text>点击动态切换 box-shadow: 非法值</text>
-        <view class="backgroundview" @click="changed">
-          <view :class="['common', disabled ? 'invalidShadow' : 'shadow']"></view>
+        <view class="row-container">
+          <view class="row-item">
+            <view class="backgroundview" @click="changed">
+              <view :class="['common', disabled ? 'invalidShadow' : 'shadow']"></view>
+            </view>
+          </view>
+          <view class="row-item">
+            <view class="backgroundview" @click="changed">
+              <view :class="['common', disabled ? 'invalidShadow' : 'shadow']" flatten></view>
+            </view>
+          </view>
         </view>
       </view>
 
@@ -478,7 +541,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 box-shadow </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <!-- 普通版本 -->
@@ -558,21 +621,6 @@
         <input-data :defaultValue="data.boxShadow" title="box-shadow 自定义值" type="text" @confirm="inputChangeBoxShadow"></input-data>
       </view>
 
-      <view class="uni-common-mb">
-        <text>native-view组件: box-shadow: 5px 5px black 和 box-shadow: 0 0 10px blue</text>
-        <view class="row-container">
-          <view class="row-item">
-            <view class="backgroundview">
-              <native-view class="common" style="box-shadow: 5px 5px black;"></native-view>
-            </view>
-          </view>
-          <view class="row-item">
-            <view class="backgroundview">
-              <native-view class="common" style="box-shadow: 0 0 10px blue;"></native-view>
-            </view>
-          </view>
-        </view>
-      </view>
     </view>
   <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>

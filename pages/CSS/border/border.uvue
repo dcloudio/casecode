@@ -75,7 +75,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 border </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <view class="test-container">
@@ -142,14 +142,6 @@
         <text class="uni-tips">第一个枚举值，'' (空字符串) - 空值情况</text>
         <enum-data :items="borderEnum" title="border 枚举值" @change="radioChangeBorder" :compact="true"></enum-data>
         <input-data :defaultValue="data.border" title="border 自定义值" type="text" @confirm="inputChangeBorder"></input-data>
-      </view>
-
-      <view class="uni-common-mb">
-        <text>native-view组件: border: 5px dotted blue 和 5px solid cyan;</text>
-        <view class="demo-box">
-          <native-view class="common" style="border: 5px dotted blue;"></native-view>
-          <native-view class="common" style="border: 5px solid cyan;"></native-view>
-        </view>
       </view>
 
     </view>

@@ -34,7 +34,7 @@
       </view>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 font-weight 测试</text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <view class="common-box">
@@ -101,7 +101,6 @@
 		data.fontWeightActualFlat = textRefFlat.value?.style.getPropertyValue('font-weight') ?? ''
 	}
 
-	const ins = getCurrentInstance()
 
 	const changeFontWeight = (value: string) => {
 		data.fontWeight = value

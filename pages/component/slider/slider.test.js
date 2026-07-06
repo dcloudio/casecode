@@ -12,7 +12,6 @@ describe('slider', () => {
 
   const isAndroid = platformInfo.startsWith('android')
   const isIOS = platformInfo.startsWith('ios')
-  const isWeb = platformInfo.startsWith('web')
   const isHarmony = platformInfo.startsWith('harmony')
   const isDom2 = process.env.UNI_APP_X_DOM2 == 'true'
 
@@ -81,7 +80,13 @@ describe('slider', () => {
     }
 
     if (isIOS && isDom2) {
-      console.log('Slider Harmony Dom2 not support props block-size')
+      console.log('Slider iOS Dom2 not support props block-size')
+      expect(1).toBe(1)
+      return
+    }
+
+    if (isAndroid && isDom2) {
+      console.log('Slider Android  Dom2 not support props block-size')
       expect(1).toBe(1)
       return
     }

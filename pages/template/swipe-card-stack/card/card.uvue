@@ -87,8 +87,9 @@ function setElementStyle(refName : string, propertyName : string, propertyStyle 
   }
 }
 
+let _index = 0
 function initCardStyle() {
-  let _index = (props.cardIndex + floatCount) % 3
+  _index = (props.cardIndex + floatCount) % 3
   // TODO 临时处理 setProperty设置z-index无效的问题
   setElementStyle('card', 'z-index', _index.toString())
   setElementStyle('card', 'margin-top', screenHeight * 0.15 - 30 * _index + 'px')
@@ -96,6 +97,10 @@ function initCardStyle() {
 }
 
 function moveCard() {
+	if (_index != 2){
+		// console.log('不是顶层卡片不允许移动')
+		return
+	}
   setElementStyle("card",
     'transform',
     `translate(${x.value}px,${y.value}px) rotate(${x.value / -30}deg) scale(1)`

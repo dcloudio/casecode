@@ -55,8 +55,8 @@ function onEnd() {
 }
 
 onReady(() => {
-  // onReady中动态修改isShow是为了验证在安卓手机上子线程中创建节点可能会崩溃的问题，不具备代码参考性。
-  // #ifdef APP-ANDROID
+  // onReady中动态修改isShow是为了验证非蒸气模式下在安卓手机上子线程中创建节点可能会崩溃的问题，不具备代码参考性。
+  // #ifdef APP-ANDROID && !VUE3-VAPOR
   class ThreadRunnable extends Runnable {
     override run() {
       isShow.value = true
@@ -64,7 +64,7 @@ onReady(() => {
   }
   new Thread(new ThreadRunnable()).start()
   // #endif
-  // #ifndef APP-ANDROID
+  // #ifndef APP-ANDROID && !VUE3-VAPOR
   isShow.value = true
   // #endif
 })
@@ -81,10 +81,10 @@ defineExpose({
   }
 
   .transition-transform {
-    width: 200px;
-    height: 200px;
-    margin: 25px auto;
-    border-radius: 100px;
+    width: 192px;
+    height: 192px;
+    margin: 16px auto;
+    /* border-radius: 50%; */
     transition-property: transform;
     transition-timing-function: linear;
     transform: rotate(0deg);

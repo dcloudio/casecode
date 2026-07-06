@@ -27,6 +27,7 @@ describe('touch-events-test', () => {
     expect(image).toSaveImageSnapshot();
   });
 
+  // iPad 没点到
   it('touchStart-tagName-touchCount', async () => {
     const pageData = await page.data('data')
     let iconRect = pageData.iconRect

@@ -736,12 +736,12 @@ describe('set css', () => {
       expectdom2: {
         expectedValue: {
           backgroundColor: "rgb(0, 255, 0)",
-          backgroundColorActual: "#00FF00FF",
-          backgroundColorActualText: "#00FF00FF",
-          backgroundColorActualImage: "#00FF00FF",
-          backgroundColorActualFlat: "#00FF00FF",
-          backgroundColorActualTextFlat: "#00FF00FF",
-          backgroundColorActualImageFlat: "#00FF00FF"
+          backgroundColorActual: "rgb(0, 255, 0)",
+          backgroundColorActualText: "rgb(0, 255, 0)",
+          backgroundColorActualImage: "rgb(0, 255, 0)",
+          backgroundColorActualFlat: "rgb(0, 255, 0)",
+          backgroundColorActualTextFlat: "rgb(0, 255, 0)",
+          backgroundColorActualImageFlat: "rgb(0, 255, 0)"
         }
       },
       expectdom1: {
@@ -766,12 +766,12 @@ describe('set css', () => {
       expectdom2: {
         expectedValue: {
           border: "2px dashed blue",
-          borderActual: "2px dashed #0000FFFF",
-          borderActualText: "2px dashed #0000FFFF",
-          borderActualImage: "2px dashed #0000FFFF",
-          borderActualFlat: "2px dashed #0000FFFF",
-          borderActualTextFlat: "2px dashed #0000FFFF",
-          borderActualImageFlat: "2px dashed #0000FFFF"
+          borderActual: "2px dashed rgb(0, 0, 255)",
+          borderActualText: "2px dashed rgb(0, 0, 255)",
+          borderActualImage: "2px dashed rgb(0, 0, 255)",
+          borderActualFlat: "2px dashed rgb(0, 0, 255)",
+          borderActualTextFlat: "2px dashed rgb(0, 0, 255)",
+          borderActualImageFlat: "2px dashed rgb(0, 0, 255)"
         }
       },
       expectdom1: {
@@ -830,12 +830,12 @@ describe('set css', () => {
       expectdom2: {
         expectedValue: {
           borderColor: "#0000ff",
-          borderColorActual: "#0000FFFF",
-          borderColorActualText: "#0000FFFF",
-          borderColorActualImage: "#0000FFFF",
-          borderColorActualFlat: "#0000FFFF",
-          borderColorActualTextFlat: "#0000FFFF",
-          borderColorActualImageFlat: "#0000FFFF"
+          borderColorActual: "rgb(0, 0, 255)",
+          borderColorActualText: "rgb(0, 0, 255)",
+          borderColorActualImage: "rgb(0, 0, 255)",
+          borderColorActualFlat: "rgb(0, 0, 255)",
+          borderColorActualTextFlat: "rgb(0, 0, 255)",
+          borderColorActualImageFlat: "rgb(0, 0, 255)"
         }
       },
       expectdom1: {
@@ -871,12 +871,12 @@ describe('set css', () => {
       expectdom2: {
         expectedValue: {
           borderTop: "2px dashed blue",
-          borderTopActual: "2px dashed #0000FFFF",
-          borderTopActualText: "2px dashed #0000FFFF",
-          borderTopActualImage: "2px dashed #0000FFFF",
-          borderTopActualFlat: "2px dashed #0000FFFF",
-          borderTopActualTextFlat: "2px dashed #0000FFFF",
-          borderTopActualImageFlat: "2px dashed #0000FFFF"
+          borderTopActual: "2px dashed rgb(0, 0, 255)",
+          borderTopActualText: "2px dashed rgb(0, 0, 255)",
+          borderTopActualImage: "2px dashed rgb(0, 0, 255)",
+          borderTopActualFlat: "2px dashed rgb(0, 0, 255)",
+          borderTopActualTextFlat: "2px dashed rgb(0, 0, 255)",
+          borderTopActualImageFlat: "2px dashed rgb(0, 0, 255)"
         }
       },
       expectdom1: {
@@ -904,12 +904,12 @@ describe('set css', () => {
       expectdom2: {
         expectedValue: {
           borderBottom: "2px dashed blue",
-          borderBottomActual: "2px dashed #0000FFFF",
-          borderBottomActualText: "2px dashed #0000FFFF",
-          borderBottomActualImage: "2px dashed #0000FFFF",
-          borderBottomActualFlat: "2px dashed #0000FFFF",
-          borderBottomActualTextFlat: "2px dashed #0000FFFF",
-          borderBottomActualImageFlat: "2px dashed #0000FFFF"
+          borderBottomActual: "2px dashed rgb(0, 0, 255)",
+          borderBottomActualText: "2px dashed rgb(0, 0, 255)",
+          borderBottomActualImage: "2px dashed rgb(0, 0, 255)",
+          borderBottomActualFlat: "2px dashed rgb(0, 0, 255)",
+          borderBottomActualTextFlat: "2px dashed rgb(0, 0, 255)",
+          borderBottomActualImageFlat: "2px dashed rgb(0, 0, 255)"
         }
       },
       expectdom1: {
@@ -937,12 +937,12 @@ describe('set css', () => {
       expectdom2: {
         expectedValue: {
           borderLeft: "2px dashed blue",
-          borderLeftActual: "2px dashed #0000FFFF",
-          borderLeftActualText: "2px dashed #0000FFFF",
-          borderLeftActualImage: "2px dashed #0000FFFF",
-          borderLeftActualFlat: "2px dashed #0000FFFF",
-          borderLeftActualTextFlat: "2px dashed #0000FFFF",
-          borderLeftActualImageFlat: "2px dashed #0000FFFF"
+          borderLeftActual: "2px dashed rgb(0, 0, 255)",
+          borderLeftActualText: "2px dashed rgb(0, 0, 255)",
+          borderLeftActualImage: "2px dashed rgb(0, 0, 255)",
+          borderLeftActualFlat: "2px dashed rgb(0, 0, 255)",
+          borderLeftActualTextFlat: "2px dashed rgb(0, 0, 255)",
+          borderLeftActualImageFlat: "2px dashed rgb(0, 0, 255)"
         }
       },
       expectdom1: {
@@ -970,12 +970,12 @@ describe('set css', () => {
       expectdom2: {
         expectedValue: {
           borderRight: "2px dashed blue",
-          borderRightActual: "2px dashed #0000FFFF",
-          borderRightActualText: "2px dashed #0000FFFF",
-          borderRightActualImage: "2px dashed #0000FFFF",
-          borderRightActualFlat: "2px dashed #0000FFFF",
-          borderRightActualTextFlat: "2px dashed #0000FFFF",
-          borderRightActualImageFlat: "2px dashed #0000FFFF"
+          borderRightActual: "2px dashed rgb(0, 0, 255)",
+          borderRightActualText: "2px dashed rgb(0, 0, 255)",
+          borderRightActualImage: "2px dashed rgb(0, 0, 255)",
+          borderRightActualFlat: "2px dashed rgb(0, 0, 255)",
+          borderRightActualTextFlat: "2px dashed rgb(0, 0, 255)",
+          borderRightActualImageFlat: "2px dashed rgb(0, 0, 255)"
         }
       },
       expectdom1: {
@@ -1003,12 +1003,12 @@ describe('set css', () => {
       expectdom2: {
         expectedValue: {
           boxShadow: "5px 5px 5px black",
-          boxShadowActual: "5px 5px 5px #000000FF",
-          boxShadowActualText: "5px 5px 5px #000000FF",
-          boxShadowActualImage: "5px 5px 5px #000000FF",
-          boxShadowActualFlat: "5px 5px 5px #000000FF",
-          boxShadowActualTextFlat: "5px 5px 5px #000000FF",
-          boxShadowActualImageFlat: "5px 5px 5px #000000FF"
+          boxShadowActual: "5px 5px 5px rgb(0, 0, 0)",
+          boxShadowActualText: "5px 5px 5px rgb(0, 0, 0)",
+          boxShadowActualImage: "5px 5px 5px rgb(0, 0, 0)",
+          boxShadowActualFlat: "5px 5px 5px rgb(0, 0, 0)",
+          boxShadowActualTextFlat: "5px 5px 5px rgb(0, 0, 0)",
+          boxShadowActualImageFlat: "5px 5px 5px rgb(0, 0, 0)"
         }
       },
       expectdom1: {
@@ -1213,8 +1213,8 @@ describe('set css', () => {
       expectdom2: {
         expectedValue: {
           color: "#942192",
-          colorActual: "#942192FF",
-          colorActualFlat: "#942192FF"
+          colorActual: "rgb(148, 33, 146)",
+          colorActualFlat: "rgb(148, 33, 146)"
         }
       },
       expectdom1: {
@@ -1242,8 +1242,8 @@ describe('set css', () => {
       expectdom2: {
         expectedValue: {
           textShadow: "5px 5px #558abb",
-          textShadowActual: "5px 5px 0px #558ABBFF",
-          textShadowActualFlat: "5px 5px 0px #558ABBFF"
+          textShadowActual: "5px 5px 0px rgb(85, 138, 187)",
+          textShadowActualFlat: "5px 5px 0px rgb(85, 138, 187)"
         }
       },
       expectdom1: {

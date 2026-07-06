@@ -21,7 +21,7 @@
       <text class="text" style="text-shadow: 2px 4px rgba(202, 207, 17, 0.5);" flatten>text-shadow: 2px 4px rgba(202, 207, 17, 0.5)</text>
 
       <view class="uni-common-mt">
-        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 text-shadow </text>
+        <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
       </view>
 
       <view class="common-box">
@@ -29,7 +29,7 @@
         <view class="uni-common-mt">
           <text class="uni-title-text">text-shadow</text>
           <text class="uni-info">设置值: {{data.textShadow}}</text>
-          <text class="uni-info">获取值: {{data.textShadowActual}}</text>
+          <text class="uni-info info-wrap">获取值: {{data.textShadowActual}}</text>
           <view class="test-box">
             <text ref="textRef" class="text test-text" :style="{ textShadow: data.textShadow }">当前 text-shadow: {{data.textShadow}}</text>
           </view>
@@ -39,7 +39,7 @@
         <view class="uni-common-mt">
           <text class="uni-title-text">拍平</text>
           <text class="uni-info">设置值: {{data.textShadow}}</text>
-          <text class="uni-info">获取值: {{data.textShadowActualFlat}}</text>
+          <text class="uni-info info-wrap">获取值: {{data.textShadowActualFlat}}</text>
           <view class="test-box">
             <text ref="textRefFlat" class="text test-text-flatten" :style="{ textShadow: data.textShadow }" flatten>当前 text-shadow: {{data.textShadow}}</text>
           </view>
@@ -84,7 +84,6 @@
     data.textShadowActualFlat = textRefFlat.value?.style.getPropertyValue('text-shadow') ?? ''
   }
 
-  const ins = getCurrentInstance()
 
   const changeTextShadow = (value: string) => {
     data.textShadow = value
@@ -141,5 +140,10 @@
     background-color: #cccccc;
     justify-content: center;
     align-items: center;
+  }
+
+  .info-wrap {
+    width: 200px;
+    white-space: normal;
   }
 </style>

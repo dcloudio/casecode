@@ -229,8 +229,4 @@
     background-color: #fff6c2 !important;
     border: #fcdf02 solid 3px !important;
   }
-
-  .issue-27180-box {
-    background-color: red;
-  }
 </style>

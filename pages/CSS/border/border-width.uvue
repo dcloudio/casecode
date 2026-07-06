@@ -203,7 +203,7 @@
 
     <!-- 动态设置 -->
     <view class="uni-common-mt">
-      <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取 border-width </text>
+      <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
     </view>
 
     <!-- 普通版本 -->
@@ -283,13 +283,6 @@
         @confirm="inputChangeBorderWidth"></input-data>
     </view>
 
-    <view class="uni-common-mb">
-      <text>native-view组件: border-width: 5px 和 10px</text>
-      <view class="demo-box">
-        <native-view class="common" style="border-width: 5px; border-style: solid;"></native-view>
-        <native-view class="common" style="border-width: 10px; border-style: solid;"></native-view>
-      </view>
-    </view>
   <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->

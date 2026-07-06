@@ -1,10 +1,8 @@
 <template>
-  <!-- #ifdef APP -->
-  <scroll-view style="flex:1;padding: 8px;">
+  <!-- #ifdef APP && !VUE3-VAPOR -->
+  <scroll-view style="flex:1;">
   <!-- #endif -->
-    <!-- #ifndef APP -->
     <view style="padding: 8px;">
-    <!-- #endif -->
       <!--type-->
       <button class="margin-10 btn" :disabled="disabled_boolean">
         type-default
@@ -48,8 +46,6 @@
       </button>
       <button class="margin-10" type="primary" :disabled="disabled_boolean" hover-class="none">hover-class none</button>
 
-      <button id="test-button-hover-class" class="margin-10" :disabled="disabled_boolean" hover-class="button-hover">hover-class button-hover</button>
-
       <button class="margin-10" type="primary" :disabled="disabled_boolean">uni-app x</button>
       <button id="changeDisabledButton" class="margin-10" type="primary" @click="change_disabled_boolean">修改disabled为{{!disabled_boolean}}</button>
       <!--disable-->
@@ -64,7 +60,7 @@
         uni-app x，是下一代 uni-app，是一个跨平台应用开发引擎。
       </button>
 
-      <!-- #ifdef VUE3-VAPOR -->
+      <!-- #ifdef VUE3-VAPOR && !MP -->
       <button class="margin-10 loading-class" :disabled="disabled_boolean" loading loading-class="custom-loading">
         自定义 loading 状态
       </button>
@@ -75,10 +71,8 @@
         iOS 雪花加载
       </button>
       <!-- #endif -->
-    <!-- #ifndef APP -->
     </view>
-    <!-- #endif -->
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>
@@ -151,11 +145,6 @@
 </script>
 
 <style>
-  .margin-10 {
-    margin: 10px;
-  }
-
-
   .custom-btn {
     color: #ffffff;
     background-color: #1AAD19;
@@ -175,7 +164,7 @@
     color: rgba(26, 173, 25, 0.7);
   }
 
-  /* #ifdef VUE3-VAPOR */
+  /* #ifdef VUE3-VAPOR && !MP */
   .loading-class {
     color: #28cc1c;
     font-size: 20px;
