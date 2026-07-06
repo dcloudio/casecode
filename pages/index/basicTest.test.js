@@ -4,6 +4,10 @@ const resultEmptyError = '获取到 result 是空的, 请运行项目进行排�
 
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isWeb = platformInfo.startsWith('web')
+const isX = process.env.UNI_PROJECT_TYPE === '2.0'
+const isDom2 = process.env.UNI_APP_X_DOM2 === 'true'
+const isAndroid = platformInfo.startsWith('android')
+const isIOS = platformInfo.startsWith('ios')
 
 beforeAll(async () => {
   if(isWeb) {
@@ -48,11 +52,20 @@ describes.forEach(d => {
   })
 })
 
-if (process.env.UNI_PROJECT_TYPE === '2.0' && process.env.uniTestPlatformInfo.toLocaleLowerCase().startsWith('ios')) {
+if (isX && isIOS) {
   describe('testTypeFromAppJs',  () => {
     it("jest_testTypeFromAppJs", async () => {
       const res = await page.callMethod('jest_testTypeFromAppJs')
       expect(res).toEqual(true)
+    })
+  })
+}
+
+if(isAndroid && isDom2 || (isX || isDom2) && isIOS) {
+  describe('testInterceptor',  () => {
+    it("jest_testInterceptor", async () => {
+      const res = await page.callMethod('jest_testInterceptor')
+      expect(res).toEqual("#_test;")
     })
   })
 }

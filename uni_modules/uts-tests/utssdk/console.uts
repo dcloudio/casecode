@@ -18,7 +18,7 @@ export function testConsole() : Result {
         
       // #endif
       
-      // #ifdef UNI-APP-X && APP-ANDROID
+      // #ifdef UNI-APP-X && APP-ANDROID && !VUE3-VAPOR
         let pageInstance = new io.dcloud.uniapp.vue.ComponentInternalInstance()
         expect(obtainInnerObject(pageInstance).get("className")).toEqual("io.dcloud.uniapp.vue.ComponentInternalInstance");
         expect(obtainInnerObject(pageInstance).get("type")).toEqual("object");

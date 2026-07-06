@@ -29,10 +29,12 @@
     UTSActivityComponentCallback,
     onCallbackChange
   } from '@/uni_modules/uts-syntaxcase'
+  // #ifndef VUE3-VAPOR
   import File from 'java.io.File'
   import Intent from 'android.content.Intent'
   import PictureInPictureParams from 'android.app.PictureInPictureParams'
   import Rational from 'android.util.Rational'
+  // #endif
   // #endif
 
   type Page = {
@@ -131,7 +133,7 @@
   }
 
 
-  // #ifdef APP-ANDROID
+  // #ifdef APP-ANDROID && !VUE3-VAPOR
   function testPictureInPicture() {
     /**
      * 画中画模式监听
@@ -253,7 +255,7 @@
         case 'testGetBatteryCapacity':
           testGetBatteryCapacity()
           break
-        // #ifdef APP-ANDROID
+        // #ifdef APP-ANDROID && !VUE3-VAPOR
         case 'testPictureInPicture':
           testPictureInPicture()
           break
