@@ -206,7 +206,6 @@
     data.flexBasisActualImageFlat = imageRefFlat.value?.style.getPropertyValue('flex-basis') ?? ''
   }
 
-  const ins = getCurrentInstance()
   const changeFlexBasis = (value: string) => {
     data.flexBasis = value
     viewRef.value?.style.setProperty('flex-basis', value)
@@ -218,7 +217,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    }, ins)
+    })
   }
 
   const radioChangeFlexBasis = (index: number) => {

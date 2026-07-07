@@ -96,7 +96,7 @@ HBuilderX，轻巧、极速，极客编辑器；uni-app x，终极跨平台方�
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    }, ins)
+    })
   }
 
   const radioChangeWhiteSpace = (index: number) => {

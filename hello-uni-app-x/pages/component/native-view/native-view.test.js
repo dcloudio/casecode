@@ -35,16 +35,15 @@ describe('native-view.uvue', () => {
     expect(isLoad).toBe(true)
   })
 
-  // TODO 暂不测试 多个平台都存在问题
-  // it('native-view点击事件透传自定义value', async () => {
-  //   page = await program.reLaunch('/pages/component/native-view/native-view')
-  //   await page.waitFor('view')
+  it('native-view点击事件透传自定义value', async () => {
+    page = await program.reLaunch('/pages/component/native-view/native-view')
+    await page.waitFor('view')
 
-  //   const nativeButton = await page.$('#helloView')
-  //   await nativeButton.tap()
-  //   await page.waitFor(100)
+    const nativeButton = await page.$('#helloView')
+    await nativeButton.tap()
+    await page.waitFor(100)
 
-  //   const buttonTapValue = await page.callMethod('getButtonTapValueTest')
-  //   expect(buttonTapValue).toBe('CustomValue')
-  // })
+    const buttonTapValue = await page.callMethod('getButtonTapValueTest')
+    expect(buttonTapValue).toBe('CustomValue')
+  })
 })

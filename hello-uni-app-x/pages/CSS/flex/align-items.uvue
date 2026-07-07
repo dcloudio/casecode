@@ -173,7 +173,6 @@
     data.alignItemsActualFlat = viewRefFlat.value?.style.getPropertyValue('align-items') ?? ''
   }
 
-  const ins = getCurrentInstance()
   const changeAlignItems = (value: string) => {
     data.alignItems = value
     viewRef.value?.style.setProperty('align-items', value)
@@ -181,7 +180,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    }, ins)
+    })
   }
 
   const radioChangeAlignItems = (index: number) => {

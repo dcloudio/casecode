@@ -41,8 +41,7 @@ function ontap(e : UniNativeViewEvent) {
   })
   clickCount ++
   buttonText.value = "native-button"+clickCount
-  // buttonTapValue = e.detail["value"] as string
-  // console.log('buttonTapValue', e.detail);
+  buttonTapValue = e.detail["value"] as string
 }
 
 function onload() {

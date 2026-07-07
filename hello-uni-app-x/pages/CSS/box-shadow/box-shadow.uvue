@@ -685,7 +685,6 @@
     }
   }
 
-  const ins = getCurrentInstance()
   const changeBoxShadow = (value: string) => {
     data.boxShadow = value
     viewRef.value?.style.setProperty('box-shadow', value)
@@ -703,7 +702,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues(value)
-    }, ins)
+    })
   }
 
   const radioChangeBoxShadow = (index: number) => {
