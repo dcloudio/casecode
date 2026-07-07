@@ -43,12 +43,16 @@
           <text style="color:#dbd9d9;">拍平版本</text>
           <text class="font-size-20" style="text-overflow: ellipsis;white-space: nowrap;width: 300px;" flatten>{{data.multiLineText}}</text>
         </view>
-         <!-- #ifdef !VUE3-VAPOR && (APP-IOS || APP-ANDROID || APP-HARMONY) -->
         <view class="margin-bottom-10">
-          <text class="font-weight-bold">lines:1 text-overflow:ellipsis</text>
-          <text class="font-size-20" style="text-overflow: ellipsis; lines: 1;">{{data.multiLineText}}</text>
+          <text class="font-weight-bold">2行 text-overflow:ellipsis</text>
+          <!-- #ifdef !VUE3-VAPOR && APP -->
+          <text class="font-size-20" style="text-overflow: ellipsis; lines: 2;width: 100px;">{{data.multiLineText}}</text>
+          <!-- #endif -->
+          <!-- #ifdef VUE3-VAPOR || WEB || MP -->
+          <text class="font-size-20" style="text-overflow: ellipsis; width: 100px;" :max-lines="2">{{data.multiLineText}}</text>
+          <!-- #endif -->
         </view>
-        <!-- #endif -->
+
 
         <view class="margin-bottom-10 uni-common-mt">
           <text class="uni-title-text">setProperty 设置与 getPropertyValue 获取</text>
@@ -121,7 +125,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    }, ins)
+    })
   }
 
   const radioChangeTextOverflow = (index: number) => {

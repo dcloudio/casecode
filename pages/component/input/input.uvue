@@ -28,10 +28,6 @@
             :focus="data.numberPasswordFalseFocus" placeholder="type=number password=false" />
         </view>
         <view class="input-wrapper">
-          <input id="uni-input-type-number-password-false" class="uni-input" type="number" :password="false"
-            :focus="data.numberPasswordFalseFocus" placeholder="type=number password=false" />
-        </view>
-        <view class="input-wrapper">
           <input id="uni-input-type-digit" class="uni-input" type="digit" placeholder="带小数点的数字输入键盘" />
         </view>
         <view class="input-wrapper">

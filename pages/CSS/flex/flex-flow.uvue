@@ -193,6 +193,7 @@
     data.flexFlowActualFlat = viewRefFlat.value?.style.getPropertyValue('flex-flow') ?? ''
   }
 
+
   const changeFlexFlow = (value : string) => {
     data.flexFlow = value
     viewRef.value?.style.setProperty('flex-flow', value)

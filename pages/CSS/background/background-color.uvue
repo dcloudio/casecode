@@ -284,7 +284,6 @@
     data.backgroundColorActualImageFlat = imageRefFlat.value?.style.getPropertyValue('background-color') ?? ''
   }
 
-  const ins = getCurrentInstance()
   const changeBackgroundColor = (color: string) => {
     data.backgroundColor = color
     viewRef.value?.style.setProperty('background-color', color)
@@ -296,7 +295,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    }, ins)
+    })
   }
 
   const radioChangeBackgroundColor = (index: number) => {

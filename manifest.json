@@ -5,7 +5,7 @@
 	"versionName": "2.1.5",
 	"versionCode": 20105,
 	"uni-app-x": {
-    "vapor": true,
+		"vapor": true,
 		"styleIsolationVersion": "2"
 	},
 	"vueVersion": "3",

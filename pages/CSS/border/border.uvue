@@ -192,7 +192,6 @@
     data.borderActualImageFlat = imageRefFlat.value?.style.getPropertyValue('border') ?? ''
   }
 
-  const ins = getCurrentInstance()
   const changeBorder = (value: string) => {
     data.border = value
     viewRef.value?.style.setProperty('border', value)
@@ -204,7 +203,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    }, ins)
+    })
   }
 
   const radioChangeBorder = (index: number) => {

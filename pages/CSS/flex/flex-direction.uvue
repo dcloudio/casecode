@@ -157,7 +157,6 @@
     data.flexDirectionActualFlat = viewRefFlat.value?.style.getPropertyValue('flex-direction') ?? ''
   }
 
-  const ins = getCurrentInstance()
   const changeFlexDirection = (value: string) => {
     data.flexDirection = value
     viewRef.value?.style.setProperty('flex-direction', value)
@@ -165,7 +164,7 @@
     // 使用 nextTick 确保样式已应用后再获取值
     nextTick(() => {
       getPropertyValues()
-    }, ins)
+    })
   }
 
   const radioChangeFlexDirection = (index: number) => {

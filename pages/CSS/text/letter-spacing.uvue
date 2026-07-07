@@ -99,7 +99,7 @@
 		// 使用 nextTick 确保样式已应用后再获取值
 		nextTick(() => {
 			getPropertyValues()
-		}, ins)
+		})
 	}
 
 	const radioChangeLetterSpacing = (index: number) => {
