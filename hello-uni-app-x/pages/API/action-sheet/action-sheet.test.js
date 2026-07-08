@@ -173,7 +173,7 @@ describe('showActionSheet', () => {
     await page.waitFor(1000);
     await screenshot('showActionSheetAndShowAgainInCallback1');
     if (isApp) {
-      await program.device.tap(200, 700,)
+      await program.device.tap(200, 700)
     } else if (isWeb) {
       await page.callMethod('closeWebActionSheet')
     }
