@@ -408,11 +408,19 @@ describe('component-native-video', () => {
       return
     }
     await page.callMethod('openDialogPageVideo')
-    // TODO 先测试 closeThisPage 一次
-    await program.tap({ x: 154, y: 577 }) // closeThisPage
+    await page.waitFor(500);
+    await page.callMethod('closeDialogPageVideo')
+    await page.waitFor(500);
     await page.callMethod('openDialogPageVideo')
-    await program.tap({ x: 154, y: 492 }) // requestFullScreen
-    await page.waitFor(2000);
+    const rect = await page.callMethod('getDialogPageVideoFullscreenBtnRect')
+    expect(rect).not.toBeNull();
+    /* const windowInfo = await program.callUniMethod('getWindowInfo');
+    expect(windowInfo).not.toBeNull(); */
+    await page.waitFor(3000);
+    const x = rect.left + rect.width / 2
+    // 加了 windowInfo.statusBarHeight + 44 反而点不到按钮
+    const y = rect.top + rect.height / 2
+    await program.tap({x, y, duration: 300});
     const image = await program.screenshot({ deviceShot: true });
     expect(image).toSaveImageSnapshot();
     await page.callMethod('closeDialogPageVideo')

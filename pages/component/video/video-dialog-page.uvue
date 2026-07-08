@@ -1,9 +1,9 @@
 <template>
   <view class="dialog-container">
-    <video id="myVideo" src="https://web-ext-storage.dcloud.net.cn/video/sample/2minute-demo.mp4"
+    <video id="myVideo" src="https://web-ext-storage.dcloud.net.cn/uni-app-x/video/uni-ai-5-16.mp4"
       title="这里是 dialogPage 中的 video"></video>
     <view class="dialog-content">
-      <button class="mt-10" @click="requestFullScreen">
+      <button id="fullscreen-btn" class="mt-10" @click="requestFullScreen">
         requestFullScreen
       </button>
       <button class="mt-10" @click="exitFullScreen">
