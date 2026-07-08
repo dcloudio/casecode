@@ -464,7 +464,8 @@
 			"path": "pages/component/web-view/web-view/web-view-local",
 			"group": "0,9",
 			"style": {
-				"navigationBarTitleText": "本地网页"
+				"navigationBarTitleText": "本地网页",
+        		"disableScroll": true
 			}
 		},
 		// #endif
