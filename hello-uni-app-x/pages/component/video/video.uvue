@@ -369,6 +369,10 @@
     })
   }
 
+  const getDialogPageVideoFullscreenBtnRect = () => {
+    return data.dialogPageVideo?.getElementById('fullscreen-btn')?.getBoundingClientRect()
+  }
+
   // API
   const play = () => {
     console.log("play");
@@ -874,7 +878,8 @@
     closeDialogPageVideo,
     getWindowInfo,
     getVideoRect,
-    continuousSendDanmu
+    continuousSendDanmu,
+    getDialogPageVideoFullscreenBtnRect
   })
 </script>
 
