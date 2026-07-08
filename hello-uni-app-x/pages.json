@@ -1881,6 +1881,14 @@
 			}
 		},
 		// #endif
+    // #ifdef APP-IOS
+    {
+    	"path": "pages/API/oauth/oauth-apple",
+    	"style": {
+    		"navigationBarTitleText": "oauth | Apple 登录"
+    	}
+    },
+    // #endif
 		// #ifdef (APP-ANDROID && !VUE3-VAPOR) || APP-HARMONY || WEB || MP-WEIXIN
 		{
 			"path": "pages/API/create-worker/create-worker",
