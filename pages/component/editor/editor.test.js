@@ -48,7 +48,6 @@ describe('editor.uvue', () => {
 
   async function tapEditor(offsetX = null, offsetY = null) {
     const point = await getEditorTapPoint(offsetX, offsetY)
-    console.log('=>>>>>>>>>>> point: ',point);
     await program.tap(point)
     if (isiOS) {
       // ios 模拟器卡
@@ -132,6 +131,12 @@ describe('editor.uvue', () => {
     await page.callMethod('insertMention')
     await page.waitFor(500)
     await screenshot('editor-event-invoke')
+  })
+
+  it('setContents html', async () => {
+    await page.callMethod('testSetContentsHtml')
+    await page.waitFor(500)
+    await screenshot('editor-setContents-html')
   })
 
   it('readOnly 修改后截图', async () => {

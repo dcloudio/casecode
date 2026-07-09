@@ -417,11 +417,6 @@ if (!isAppWebView) {
       '/pages/template/scroll-view-sticky-section/scroll-view-sticky-section',
     )
   }
-  if(isIos || isAndroid){
-    pages.push(
-      '/pages/component/loading/loading',
-    )
-  }
 }
 
 
