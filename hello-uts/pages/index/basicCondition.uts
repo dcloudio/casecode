@@ -355,6 +355,73 @@ function testConditionalUnaryLogical(): TestRes {
   }
 }
 
+function testUppercaseBasicTypesTruthiness(): TestRes {
+  const upperStr: String = ''
+  const upperNonEmptyStr: String = 'hello'
+  const upperNum: Number = 0
+  const upperNonZeroNum: Number = 123
+  const upperBool: Boolean = false
+  const upperTrueBool: Boolean = true
+
+  const logs: string[] = []
+  if (upperStr) {
+    logs.push('upperStr true')
+  } else {
+    logs.push('upperStr false')
+  }
+  if (upperNonEmptyStr) {
+    logs.push('upperNonEmptyStr true')
+  }
+  if (upperNum) {
+    logs.push('upperNum true')
+  } else {
+    logs.push('upperNum false')
+  }
+  if (upperNonZeroNum) {
+    logs.push('upperNonZeroNum true')
+  }
+  if (upperBool) {
+    logs.push('upperBool true')
+  } else {
+    logs.push('upperBool false')
+  }
+  if (upperTrueBool) {
+    logs.push('upperTrueBool true')
+  }
+
+  const ternaryStr = upperStr ? 'true' : 'false'
+  const ternaryNum = upperNum ? 'true' : 'false'
+  const ternaryBool = upperBool ? 'true' : 'false'
+
+  const upperStrOr = upperStr || upperNonEmptyStr
+  const upperNumOr = upperNum || upperNonZeroNum
+  const upperBoolOr = upperBool || upperTrueBool
+  const upperStrAnd = upperNonEmptyStr && upperStr
+  const upperNumAnd = upperNonZeroNum && upperNum
+  const upperBoolAnd = upperTrueBool && upperBool
+
+  return {
+    name: 'Uppercase String/Number/Boolean truthy/falsy tests',
+    pass: ternaryStr == 'false'
+      && ternaryNum == 'false'
+      && ternaryBool == 'false'
+      && upperStrOr == 'hello'
+      && upperNumOr == 123
+      && upperBoolOr == true
+      && upperStrAnd == ''
+      && upperNumAnd == 0
+      && upperBoolAnd == false
+      && equalStringArray(logs, [
+        'upperStr false',
+        'upperNonEmptyStr true',
+        'upperNum false',
+        'upperNonZeroNum true',
+        'upperBool false',
+        'upperTrueBool true'
+      ])
+  }
+}
+
 function testMixedBooleanAndNonBoolean(): TestRes {
   const str: string = 'hello'
   const num: number = 123
@@ -679,6 +746,7 @@ export function testCondition(): TestRes[] {
     testForStatement(),
     testArithmeticTruthiness(),
     testConditionalUnaryLogical(),
+    testUppercaseBasicTypesTruthiness(),
     testMixedBooleanAndNonBoolean(),
     testObjectBooleanFunctionRef(),
     testAnyTruthiness(),
