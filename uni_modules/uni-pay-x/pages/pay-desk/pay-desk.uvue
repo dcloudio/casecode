@@ -141,7 +141,7 @@
     console.log('myOptions: ', myOptions.value)
   })
 </script>
-<style lang="scss" scoped>
+<style>
   .uni-pay {
     flex: 1;
     display: flex;

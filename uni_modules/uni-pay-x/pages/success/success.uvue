@@ -88,18 +88,15 @@
     myOptions.value['return_url'] = options['return_url'];
   })
 </script>
-<style lang="scss" scoped>
-  /* uniappx不支持自定义var变量，故此处只能使用 scss 变量*/
-  $bgcolor: #f3f3f3;
-  $main: #007aff;
+<style>
 
   .app {
-    background-color: $bgcolor;
+    background-color: #f3f3f3;
     flex: 1;
   }
 
   .header {
-    background-color: $main;
+    background-color: #007aff;
     display: flex;
     align-items: center;
     padding: 40px 15px 25px 15px;
@@ -140,14 +137,14 @@
 
   .info-box-amount-text {
     line-height: 75px;
-    color: $main;
+    color: #007aff;
     font-weight: bold;
     font-size: 30px;
     text-align: center;
   }
 
   .info-box-left-circle {
-    background-color: $bgcolor;
+    background-color: #f3f3f3;
     position: absolute;
     width: 20px;
     height: 20px;
@@ -157,7 +154,7 @@
   }
 
   .info-box-right-circle {
-    background-color: $bgcolor;
+    background-color: #f3f3f3;
     position: absolute;
     width: 20px;
     height: 20px;
@@ -205,7 +202,7 @@
   }
 
   .button-query {
-    background-color: $main;
+    background-color: #007aff;
     margin: 25px 30px 0 30px;
     padding: 10px 15px;
     border-radius: 25px;

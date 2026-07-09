@@ -369,8 +369,8 @@
     })
   }
 
-  const getDialogPageVideoFullscreenBtnRect = () => {
-    return data.dialogPageVideo?.getElementById('fullscreen-btn')?.getBoundingClientRect()
+  const getDialogPageVideoFullscreenBtnRect = (): DOMRect | null => {
+    return data.dialogPageVideo?.getElementById('fullscreen-btn')?.getBoundingClientRect() ?? null;
   }
 
   // API

@@ -497,7 +497,7 @@
   })
 </script>
 
-<style lang="scss" scoped>
+<style>
   .app {
     padding: 15px;
   }
