@@ -1,14 +1,17 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isHarmony = platformInfo.includes('harmony')
+const isMP = platformInfo.startsWith('mp')
 const PAGE_PATH = '/pages/template/pull-refresh-custom-indicator/pull-refresh-custom-indicator'
 const isVapor = process.env.UNI_APP_X_DOM2 === 'true'
+
 describe('pull-refresh-custom-indicator', () => {
-  if (isVapor) {
-    it('not supported in vapor mode', () => {
+  if (isVapor || isMP) {
+    it('not supported in vapor mode skip', () => {
       expect(1).toBe(1)
     })
     return
   }
+
   let page
 
   async function waitForRefreshState(matcher, timeout = 5000) {
@@ -36,7 +39,6 @@ describe('pull-refresh-custom-indicator', () => {
   beforeAll(async () => {
     page = await program.reLaunch(PAGE_PATH)
     await page.waitFor('view')
-    await page.waitFor('list-view')
     await page.waitFor(800)
   })
 

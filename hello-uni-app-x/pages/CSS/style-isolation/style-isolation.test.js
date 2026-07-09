@@ -48,7 +48,7 @@ describe('style-isolation', () => {
     console.log('getHoverStyle', getHoverStyle)
     // TODO: Android/iOS/Web 平台，在 hover 激活期间 style.getPropertyValue 读取样式还是之前的样式
     if(isHarmony){
-        expect(getHoverStyle).toBe(isDom2? '#E8F5E9FF' : '#00aaff')
+        expect(getHoverStyle).toBe(isDom2 ? 'rgb(232, 245, 233)' : '#00aaff')
     }
   })
 
