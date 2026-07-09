@@ -894,8 +894,7 @@
 		emit("mounted", insideData)
 	})
 </script>
-<style lang="scss" scoped>
-	$bgcolor: #f3f3f3;
+<style>
 
 	.uni-pay {}
 
@@ -903,7 +902,7 @@
 	.mobile-pay-popup {
 		width: 100%;
 		min-height: 450px;
-		background-color: $bgcolor;
+		background-color: #f3f3f3;
 		border-radius: 15px 15px 0 0;
 		overflow: hidden;
 	}
@@ -962,7 +961,7 @@
 		cursor: pointer;
 		/* #endif */
 	}
-	
+
 	/* #ifndef VUE3-VAPOR */
 	.uni-list-item:hover {
 		background-color: #f1f1f1;
@@ -1028,7 +1027,7 @@
 	.pc-pay-popup {
 		width: 800px;
 		height: 600px;
-		background-color: $bgcolor;
+		background-color: #f3f3f3;
 		border-radius: 10px;
 		overflow: hidden;
 	}
@@ -1111,7 +1110,7 @@
 	.pc-pay-popup-provider-item-active {
 		background-color: #ffffff;
 	}
-	
+
 	/* #ifndef VUE3-VAPOR */
 	.pc-pay-popup-provider-item:hover {
 		background-color: #ffffff;
