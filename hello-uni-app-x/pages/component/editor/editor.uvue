@@ -435,6 +435,18 @@ function clearLogs() {
   data.logs.splice(0, data.logs.length)
 }
 
+function testSetContentsHtml() {
+  data.editorCtx?.setContents({
+    html: '<p style="text-align:center;"><strong>Hello,uni-app x</strong></p><p>editor的setContents接口示例</p>',
+    success: () => {
+      appendLog('action', '成功设置富文本内容')
+    },
+    fail: (error: any) => {
+      appendLog('error', `setContents fail: ${JSON.stringify(error)}`)
+    }
+  })
+}
+
 defineExpose({
   data,
   getTypeLabel,
@@ -454,7 +466,8 @@ defineExpose({
   clearEditor,
   blurEditor,
   hideKeyboardForTest,
-  updateEditorRect
+  updateEditorRect,
+  testSetContentsHtml
 })
 </script>
 
