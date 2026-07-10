@@ -182,6 +182,7 @@ describe('calendar-vapor', () => {
     const initialState = await page.callMethod('jest_getState')
     const targetYear = initialState.currentYear + 1
     const targetMonth = initialState.currentMonth == 12 ? 6 : initialState.currentMonth + 1
+    const targetDay = initialState.selectedDay == 10 ? 11 : 10
 
     let state = await switchToMonth(targetYear, targetMonth)
     let monthText = await page.$('.month-text')
@@ -193,9 +194,9 @@ describe('calendar-vapor', () => {
     expect(await monthText.text()).toBe(`${targetYear}年${targetMonth}月`)
     expect(state.visibleDayCount).toBeGreaterThanOrEqual(28)
     expect(await headerYear.text()).not.toContain(`${targetYear}年`)
-    expect(await headerDate.text()).not.toContain('10日')
+    expect(await headerDate.text()).not.toContain(`${targetDay}日`)
 
-    const changed = await page.callMethod('jest_selectDay', 10)
+    const changed = await page.callMethod('jest_selectDay', targetDay)
     await page.waitFor(100)
 
     state = await page.callMethod('jest_getState')
@@ -205,11 +206,11 @@ describe('calendar-vapor', () => {
     expect(changed).toBe(true)
     expect(state.selectedYear).toBe(targetYear)
     expect(state.selectedMonth).toBe(targetMonth)
-    expect(state.selectedDay).toBe(10)
+    expect(state.selectedDay).toBe(targetDay)
     expect(state.selectedDayCount).toBe(1)
-    expect(state.selectedDate).toBe(`${targetYear}-${targetMonth.toString().padStart(2, '0')}-10`)
+    expect(state.selectedDate).toBe(`${targetYear}-${targetMonth.toString().padStart(2, '0')}-${targetDay.toString().padStart(2, '0')}`)
     expect(await headerYear.text()).toContain(`${targetYear}年`)
-    expect(await headerDate.text()).toContain('10日')
+    expect(await headerDate.text()).toContain(`${targetDay}日`)
 
     state = await switchToMonth(initialState.currentYear - 1, targetMonth)
     monthText = await page.$('.month-text')
