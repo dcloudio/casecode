@@ -735,25 +735,25 @@ describe('set css', () => {
       styleName: "background-color",
       expectdom2: {
         expectedValue: {
-          backgroundColor: "rgb(0, 255, 0)",
-          backgroundColorActual: "rgb(0, 255, 0)",
-          backgroundColorActualText: "rgb(0, 255, 0)",
-          backgroundColorActualImage: "rgb(0, 255, 0)",
-          backgroundColorActualFlat: "rgb(0, 255, 0)",
-          backgroundColorActualTextFlat: "rgb(0, 255, 0)",
-          backgroundColorActualImageFlat: "rgb(0, 255, 0)"
+          backgroundColor: "#00f8",
+          backgroundColorActual: "rgba(0, 0, 255, 0.53)",
+          backgroundColorActualText: "rgba(0, 0, 255, 0.53)",
+          backgroundColorActualImage: "rgba(0, 0, 255, 0.53)",
+          backgroundColorActualFlat: "rgba(0, 0, 255, 0.53)",
+          backgroundColorActualTextFlat: "rgba(0, 0, 255, 0.53)",
+          backgroundColorActualImageFlat: "rgba(0, 0, 255, 0.53)"
         }
       },
       expectdom1: {
         base: {
           expectedValue: {
-            backgroundColor: "rgb(0, 255, 0)",
-            backgroundColorActual: "rgb(0, 255, 0)",
-            backgroundColorActualText: "rgb(0, 255, 0)",
-            backgroundColorActualImage: "rgb(0, 255, 0)",
-            backgroundColorActualFlat: "rgb(0, 255, 0)",
-            backgroundColorActualTextFlat: "rgb(0, 255, 0)",
-            backgroundColorActualImageFlat: "rgb(0, 255, 0)"
+              backgroundColor: "#00f8",
+              backgroundColorActual: "#00f8",
+              backgroundColorActualText: "#00f8",
+              backgroundColorActualImage: "#00f8",
+              backgroundColorActualFlat: "#00f8",
+              backgroundColorActualTextFlat: "#00f8",
+              backgroundColorActualImageFlat: "#00f8"
           }
         }
       }

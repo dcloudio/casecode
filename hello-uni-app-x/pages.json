@@ -2269,14 +2269,7 @@
 						"disableScroll": true
 					}
 				},
-				{
-					"path": "chat-stream-reply/chat-stream-reply",
-					"style": {
-						"navigationBarTitleText": "流式回复聊天示例",
-						"enablePullDownRefresh": false,
-						"disableScroll": true
-					}
-				},
+
 				{
 					"path": "scroll-collapse-navbar/scroll-collapse-navbar",
 					"style": {
@@ -2341,6 +2334,16 @@
 						"navigationBarTitleText": "关于"
 					}
 				},
+        // #ifndef MP-WEIXIN
+        {
+        	"path": "chat-stream-reply/chat-stream-reply",
+        	"style": {
+        		"navigationBarTitleText": "流式回复聊天示例",
+        		"enablePullDownRefresh": false,
+        		"disableScroll": true
+        	}
+        },
+        // #endif
         // #ifdef MP-WEIXIN
         {
         	"path": "mp-custom-components-vant/mp-custom-components-vant",

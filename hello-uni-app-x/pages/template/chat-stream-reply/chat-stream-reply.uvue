@@ -470,7 +470,7 @@
   defineExpose({autoTest})
 </script>
 
-<style scoped lang="scss">
+<style>
   .flex-row {
     display: flex;
     flex-direction: row;
