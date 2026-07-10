@@ -11,7 +11,7 @@ describe('editor.uvue', () => {
   const infos = process.env.uniTestPlatformInfo.split(' ');
   const version = parseInt(infos[infos.length - 1]);
 
-  if (isMP || (isAndroid && !isNaN(version) && version < 8)) {
+  if (isAndroid && !isNaN(version) && version < 8) {
     it('skip', () => {
       expect(1).toBe(1)
     })
@@ -22,7 +22,11 @@ describe('editor.uvue', () => {
 
   async function loadPage() {
     page = await program.reLaunch(PAGE_PATH)
-    await page.waitFor('view')
+    if (isMP) {
+      await page.waitFor(2000)
+    } else {
+      await page.waitFor('view')
+    }
     await waitForData('data.readyCount', value => value >= 1, 5000)
     await waitForData('data.editorWidth', value => value > 0, 3000)
   }
@@ -142,7 +146,9 @@ describe('editor.uvue', () => {
 
   it('方法调用截图', async () => {
     await page.callMethod('insertSampleText')
-    await page.callMethod('insertMention')
+    if (!isMP) {
+      await page.callMethod('insertMention')
+    }
     await page.waitFor(500)
     await screenshot('editor-event-invoke')
   })
@@ -153,75 +159,77 @@ describe('editor.uvue', () => {
     await screenshot('editor-setContents-html')
   })
 
-  it('readOnly 修改后截图', async () => {
-    expect(await page.data('data.readOnly')).toBe(false)
-    expect(await page.data('data.editorType')).toBeFalsy()
-    await assertKeyboardHeightChange()
-    await screenshot('editor-props-read-only-false', true)
+  if (!isMP) {
+    it('readOnly 修改后截图', async () => {
+      expect(await page.data('data.readOnly')).toBe(false)
+      expect(await page.data('data.editorType')).toBeFalsy()
+      await assertKeyboardHeightChange()
+      await screenshot('editor-props-read-only-false', true)
 
-    await hideKeyboard()
+      await hideKeyboard()
 
-    await page.callMethod('onReadOnlyChange', true)
-    await waitForData('data.readOnly', value => value === true, 3000)
-    expect(await page.data('data.readOnly')).toBe(true)
-    await screenshot('editor-props-read-only-true')
-    await page.callMethod('onReadOnlyChange', false)
-    await waitForData('data.readOnly', value => value === false, 3000)
-  })
+      await page.callMethod('onReadOnlyChange', true)
+      await waitForData('data.readOnly', value => value === true, 3000)
+      expect(await page.data('data.readOnly')).toBe(true)
+      await screenshot('editor-props-read-only-true')
+      await page.callMethod('onReadOnlyChange', false)
+      await waitForData('data.readOnly', value => value === false, 3000)
+    })
 
-  it('type 切换后截图', async () => {
-    expect(await page.data('data.editorType')).toBeFalsy()
-    expect(await page.callMethod('getTypeLabel')).toBe('null（聚焦弹键盘）')
-    await assertKeyboardHeightChange()
+    it('type 切换后截图', async () => {
+      expect(await page.data('data.editorType')).toBeFalsy()
+      expect(await page.callMethod('getTypeLabel')).toBe('null（聚焦弹键盘）')
+      await assertKeyboardHeightChange()
 
-    await screenshot('editor-props-type-null', true)
+      await screenshot('editor-props-type-null', true)
 
-    await hideKeyboard()
+      await hideKeyboard()
 
-    await page.callMethod('onTypeChange', 1)
-    await waitForData('data.editorType', value => value === 'none', 3000)
-    expect(await page.data('data.editorType')).toBe('none')
-    expect(await page.callMethod('getTypeLabel')).toBe('none（聚焦不弹键盘）')
+      await page.callMethod('onTypeChange', 1)
+      await waitForData('data.editorType', value => value === 'none', 3000)
+      expect(await page.data('data.editorType')).toBe('none')
+      expect(await page.callMethod('getTypeLabel')).toBe('none（聚焦不弹键盘）')
 
-    await screenshot('editor-props-type-none')
-  })
+      await screenshot('editor-props-type-none')
+    })
 
-  it('image 相关属性重建后点击 image 截图', async () => {
-    const previousReadyCount = await page.data('data.readyCount')
+    it('image 相关属性重建后点击 image 截图', async () => {
+      const previousReadyCount = await page.data('data.readyCount')
 
-    await page.callMethod('onDraftShowImgSizeChange', true)
-    await page.callMethod('onDraftShowImgToolbarChange', true)
-    await page.callMethod('onDraftShowImgResizeChange', true)
-    await page.callMethod('rebuildEditor')
-    await waitForData('data.readyCount', value => value >= previousReadyCount + 1, 8000)
+      await page.callMethod('onDraftShowImgSizeChange', true)
+      await page.callMethod('onDraftShowImgToolbarChange', true)
+      await page.callMethod('onDraftShowImgResizeChange', true)
+      await page.callMethod('rebuildEditor')
+      await waitForData('data.readyCount', value => value >= previousReadyCount + 1, 8000)
 
-    await page.callMethod('insertSampleImage')
-    let imageSize = await getInserImageSize()
-    await tapEditor(imageSize.width/2, imageSize.height/2)
+      await page.callMethod('insertSampleImage')
+      let imageSize = await getInserImageSize()
+      await tapEditor(imageSize.width/2, imageSize.height/2)
 
-    await screenshot('editor-props-image-controls-true')
+      await screenshot('editor-props-image-controls-true')
 
-    const nextReadyCount = await page.data('data.readyCount')
-    await page.callMethod('blurEditor')
-    await waitForData('data.blurCount', value => value > 0, 3000)
-    await page.callMethod('clearEditor')
-    await page.waitFor(500)
-    await page.callMethod('onDraftShowImgSizeChange', false)
-    await page.callMethod('onDraftShowImgToolbarChange', false)
-    await page.callMethod('onDraftShowImgResizeChange', false)
-    await page.callMethod('rebuildEditor')
-    await waitForData('data.readyCount', value => value >= nextReadyCount + 1, 8000)
+      const nextReadyCount = await page.data('data.readyCount')
+      await page.callMethod('blurEditor')
+      await waitForData('data.blurCount', value => value > 0, 3000)
+      await page.callMethod('clearEditor')
+      await page.waitFor(500)
+      await page.callMethod('onDraftShowImgSizeChange', false)
+      await page.callMethod('onDraftShowImgToolbarChange', false)
+      await page.callMethod('onDraftShowImgResizeChange', false)
+      await page.callMethod('rebuildEditor')
+      await waitForData('data.readyCount', value => value >= nextReadyCount + 1, 8000)
 
-    expect(await page.data('data.appliedShowImgSize')).toBe(false)
-    expect(await page.data('data.appliedShowImgToolbar')).toBe(false)
-    expect(await page.data('data.appliedShowImgResize')).toBe(false)
+      expect(await page.data('data.appliedShowImgSize')).toBe(false)
+      expect(await page.data('data.appliedShowImgToolbar')).toBe(false)
+      expect(await page.data('data.appliedShowImgResize')).toBe(false)
 
-    await page.callMethod('insertSampleImage')
-    imageSize = await getInserImageSize()
-    await tapEditor(imageSize.width/2, imageSize.height/2)
+      await page.callMethod('insertSampleImage')
+      imageSize = await getInserImageSize()
+      await tapEditor(imageSize.width/2, imageSize.height/2)
 
-    await screenshot('editor-props-image-controls-false')
-  })
+      await screenshot('editor-props-image-controls-false')
+    })
+  }
 
   it('事件只校验触发次数', async () => {
     await resetEditorProps()

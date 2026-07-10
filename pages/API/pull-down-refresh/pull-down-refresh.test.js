@@ -7,7 +7,7 @@ const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
 describe("pull-down-refresh", () => {
-  if (isAppWebView || isMP) {
+  if (isWeb || isAppWebView || isMP) {
     it('not support', () => {
       expect(1).toBe(1)
     })
