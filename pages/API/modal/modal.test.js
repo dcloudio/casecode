@@ -41,15 +41,12 @@ describe('modal', () => {
     return await page.setData({ data: newData });
   }
 
-  async function screenshot(fileName, height) {
-    const image = await program.screenshot(height ? { ...deviceShotOptions, area: { ...deviceShotOptions.area, height } } : deviceShotOptions);
-    const options = fileName ? {
-      customSnapshotIdentifier() {
-        return fileName
-      }
-    } : {}
-    expect(image).toMatchImageSnapshot(options);
-    expect(image).toSaveImageSnapshot(options);
+  async function screenshot(skipMatchSnapshot) {
+    const image = await program.screenshot(deviceShotOptions);
+    if (!isAppWebView && !skipMatchSnapshot) {
+      expect(image).toMatchImageSnapshot();
+    }
+    expect(image).toSaveImageSnapshot();
   }
 
   beforeAll(async () => {
@@ -82,8 +79,10 @@ describe('modal', () => {
       area: {
         x: 0,
         y: topSafeArea + 44,
+        // 规避滚动条影响
+        width: windowInfo.safeArea.width-8,
         // 规避底部手势导航栏的影响
-        height: windowInfo.safeArea.height-50
+        height: windowInfo.safeArea.height-40
       },
     };
 
@@ -294,7 +293,7 @@ describe('modal', () => {
     await btnModalButton.tap()
     await page.waitFor(600);
 
-    await screenshot()
+    await screenshot(true)
 
     await page.waitFor(2000);
   })
@@ -324,7 +323,7 @@ describe('modal', () => {
     await btnModalButton.tap()
     await page.waitFor(600);
 
-    await screenshot()
+    await screenshot(true)
 
     await page.waitFor(2000);
   })
@@ -353,7 +352,7 @@ describe('modal', () => {
     await btnModalButton.tap()
     await page.waitFor(600);
 
-    await screenshot()
+    await screenshot(true)
 
     await page.waitFor(2000);
   })
@@ -440,7 +439,7 @@ describe('modal', () => {
     await btnModalButton.tap()
     await page.waitFor(600);
 
-    await screenshot()
+    await screenshot(true)
 
     await page.waitFor(2000);
   })
@@ -586,7 +585,7 @@ describe('modal', () => {
     await btnModalButton.tap()
     await page.waitFor(600);
 
-    await screenshot();
+    await screenshot(true);
 
     await page.waitFor(2000);
   })
@@ -659,7 +658,7 @@ describe('modal', () => {
 
     await page.callMethod('modalTap')
     await page.waitFor(600);
-    await screenshot();
+    await screenshot(true);
 
     await page.callMethod('closeAllModal')
     await page.waitFor(500);

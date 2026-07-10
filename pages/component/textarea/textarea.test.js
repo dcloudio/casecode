@@ -41,7 +41,11 @@ describe('component-native-textarea', () => {
         options.x = textareaRect.x + textareaRect.width / 2.0;
         options.y = textareaRect.y + textareaRect.height - (isDom2 ? 20 : 10);
       }
-      await program.device.keyboard.input('1', options)
+      if (isWeb) {
+        await program.keyboardInput({text: '1', ...options})
+      } else {
+        await program.device.keyboard.input('1', options)
+      }
       await page.waitFor(2000)
       expect(await page.data('data.jest_result')).toBe(true)
       const image = await program.screenshot({ fullPage: true });

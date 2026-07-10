@@ -161,6 +161,23 @@
   }, { immediate: true })
   // #endif
 
+
+  function openPreviewImageTest() {
+    uni.previewImage({
+      urls: ['/static/test-image/logo.jpg'],
+      current: 0
+    })
+  }
+
+  function closePreviewImageTest() {
+    uni.closePreviewImage({})
+  }
+
+  defineExpose({
+    openPreviewImageTest,
+    closePreviewImageTest
+  })
+
 </script>
 
 <style>

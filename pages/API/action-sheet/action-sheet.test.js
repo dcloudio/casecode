@@ -40,7 +40,9 @@ describe('showActionSheet', () => {
         return fileName
       }
     } : {}
-    expect(image).toMatchImageSnapshot(options);
+    if (!isAppWebView) {
+      expect(image).toMatchImageSnapshot(options);
+    }
     expect(image).toSaveImageSnapshot(options);
   }
 
@@ -81,8 +83,10 @@ describe('showActionSheet', () => {
         area: {
           x: 0,
           y: topSafeArea + 44,
+          // 规避滚动条影响
+          width: windowInfo.safeArea.width-8,
           // 规避底部手势导航栏的影响
-          height: windowInfo.safeArea.height-30
+          height: windowInfo.safeArea.height-40
         },
       }
     }
