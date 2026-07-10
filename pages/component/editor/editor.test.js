@@ -11,7 +11,7 @@ describe('editor.uvue', () => {
   const infos = process.env.uniTestPlatformInfo.split(' ');
   const version = parseInt(infos[infos.length - 1]);
 
-  if (isMP || isiOS || (isAndroid && !isNaN(version) && version < 8)) {
+  if (isMP || (isAndroid && !isNaN(version) && version < 8)) {
     it('skip', () => {
       expect(1).toBe(1)
     })

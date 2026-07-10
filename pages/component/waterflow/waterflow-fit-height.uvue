@@ -76,7 +76,7 @@
 
 </script>
 
-<style lang="scss">
+<style>
   .item {
     width: 100%;
     border-radius: 8px;

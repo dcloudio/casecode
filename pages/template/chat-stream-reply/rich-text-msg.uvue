@@ -238,7 +238,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   /* 鸿蒙等端：max-width 仅支持 number|rpx；限制宽度防溢出 */
   .rich-text-msg-root {
     flex-direction: row;

@@ -1,3 +1,6 @@
+// 多次截图 增加超时时间
+jest.setTimeout(60000)
+
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isWeb = platformInfo.startsWith('web')
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
@@ -5,7 +8,16 @@ const isAndroid = platformInfo.startsWith('android')
 const isIos = platformInfo.startsWith('ios')
 const isHarmony = platformInfo.startsWith('harmony')
 const isApp = isAndroid || isIos || isHarmony
+const isMP = platformInfo.startsWith('mp')
+
 describe('chat-stream-reply', () => {
+  if (isMP) {
+    it('not supported in mp', () => {
+      expect(1).toBe(1)
+    })
+    return
+  }
+
   let page;
 
   beforeAll(async () => {

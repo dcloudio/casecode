@@ -3,6 +3,7 @@ const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
 const isHarmony = platformInfo.startsWith('harmony')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
+const isIOS = platformInfo.startsWith('ios')
 
 const PAGE_PATH = "/pages/API/provider/provider";
 
@@ -29,7 +30,13 @@ describe("provider", () => {
     } else {
       expect(providerIds).toEqual(expect.arrayContaining(['huawei']))
     }
-    expect(providerIds).toHaveLength(6)
+
+    if (isIOS) {
+      expect(providerIds).toEqual(expect.arrayContaining(['apple']))
+      expect(providerIds).toHaveLength(7)
+    } else {
+      expect(providerIds).toHaveLength(6)
+    }
 
     let providerObjects = await page.data('data.providerObjects')
 
@@ -39,6 +46,12 @@ describe("provider", () => {
     } else {
       expect(providerObjects).toEqual(expect.arrayContaining(['华为登录']))
     }
-    expect(providerObjects).toHaveLength(6)
+
+    if (isIOS) {
+      expect(providerObjects).toEqual(expect.arrayContaining(['苹果登录']))
+      expect(providerObjects).toHaveLength(7)
+    } else {
+      expect(providerObjects).toHaveLength(6)
+    }
   });
 });
