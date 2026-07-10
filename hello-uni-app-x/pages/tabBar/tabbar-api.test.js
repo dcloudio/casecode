@@ -7,6 +7,7 @@ const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === 'true'
 
 const PAGE_PATH = '/pages/tabBar/API'
+const COMPONENT_PAGE_PATH = '/pages/tabBar/component'
 const TAB_BAR_INDEX = 1
 const DEFAULT_TAB_BAR_STYLE = {
   color: '#7A7E83',
@@ -133,5 +134,14 @@ describe('tab bar api screenshot', () => {
   it('hide tab bar screenshot', async () => {
     await callUniMethod('hideTabBar')
     await screenshot()
+  })
+
+  it('preview image dialogPage cover tab bar screenshot', async () => {
+    await openPage(COMPONENT_PAGE_PATH)
+    await screenshot()
+    await page.callMethod('openPreviewImageTest')
+    await screenshot()
+    await page.callMethod('closePreviewImageTest')
+    await page.waitFor(500)
   })
 })

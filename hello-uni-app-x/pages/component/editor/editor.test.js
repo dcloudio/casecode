@@ -22,11 +22,7 @@ describe('editor.uvue', () => {
 
   async function loadPage() {
     page = await program.reLaunch(PAGE_PATH)
-    if (isMP) {
-      await page.waitFor(2000)
-    } else {
-      await page.waitFor('view')
-    }
+    await page.waitFor('view')
     await waitForData('data.readyCount', value => value >= 1, 5000)
     await waitForData('data.editorWidth', value => value > 0, 3000)
   }
