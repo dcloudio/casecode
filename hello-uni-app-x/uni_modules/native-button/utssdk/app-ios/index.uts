@@ -38,7 +38,10 @@ export class NativeButton {
 	 */
 	@objc buttonClickAction() {
     //构建自定义 UniNativeViewEvent 对象
-		let event = new UniNativeViewEvent("customClick")
+    const detail = {
+      value: "CustomValue"
+    }
+		let event = new UniNativeViewEvent("customClick", detail)
     //触发自定义事件
 		this.element.dispatchEvent(event)
 	}

@@ -6,7 +6,7 @@ const isMP = platformInfo.startsWith('mp')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 
-describe("payment", () => {
+describe("pull-down-refresh", () => {
   if (isAppWebView || isMP) {
     it('not support', () => {
       expect(1).toBe(1)
@@ -54,7 +54,7 @@ describe("payment", () => {
       },
       endPoint: {
         x: 100,
-        y: 800
+        y: 600
       },
       duration: 1000
     })
