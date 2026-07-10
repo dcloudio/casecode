@@ -62,9 +62,11 @@
         <view class="preview-toolbar-item" @tap="blurEditor">
           <text class="preview-toolbar-icon iconfont">{{"&#xe69a;"}}</text>
         </view>
+        <!-- #ifndef MP -->
         <view class="preview-toolbar-item" @tap="insertMention">
           <text class="preview-toolbar-icon iconfont">@</text>
         </view>
+        <!-- #endif -->
       </view>
     </view>
 
@@ -282,6 +284,7 @@ function rebuildEditor() {
 }
 
 function updateEditorRect() {
+  // #ifndef MP
   const editorElement = uni.getElementById('editor-props-demo')
   const editorRect = editorElement?.getBoundingClientRect()
   if (editorRect != null) {
@@ -294,6 +297,18 @@ function updateEditorRect() {
     data.editorY += systemInfo.safeAreaInsets.top + 44
     // #endif
   }
+  // #endif
+  // #ifdef MP
+  wx.createSelectorQuery().select('#editor-props-demo').boundingClientRect(function(editorRect){
+    data.editorX = editorRect.top
+    data.editorY = editorRect.left
+    data.editorWidth = editorRect.width
+    data.editorHeight = editorRect.height
+
+    const windowInfo = uni.getWindowInfo()
+    data.editorY += windowInfo.safeAreaInsets.top + 44
+  }).exec()
+  // #endif
 }
 
 function onEditorReady() {

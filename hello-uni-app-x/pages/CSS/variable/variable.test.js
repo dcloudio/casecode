@@ -24,7 +24,7 @@ describe('css-variable', () => {
     return
   }
 
-  if (!isApp) {
+  if (isApp) {
     it('css test', async () => {
       const page = await program.reLaunch('/pages/CSS/variable/variable');
       await page.waitFor('view');
