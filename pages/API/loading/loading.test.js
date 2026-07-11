@@ -73,18 +73,27 @@ describe('API-loading', () => {
     await page.waitFor(2000)
   })
 
-  it('showLoading with different titles', async () => {
-    const radios = await page.$$('.radio')
-    for (let i = 0; i < radios.length; i++) {
-      await radios[i].tap()
-      await page.waitFor(100)
-      await page.callMethod('showLoading')
-      await page.waitFor(300)
-      const radioText = await radios[i].text()
-      await toScreenshot(`loading-title-${radioText}`)
-      // 等待 loading 关闭
-      await page.waitFor(3000)
-    }
+  async function showLoadingWithTitle(index) {
+    const items = await getData('items')
+    await page.callMethod('selectTitle', index)
+    await page.waitFor(100)
+    await page.callMethod('showLoading')
+    await page.waitFor(300)
+    await toScreenshot(`loading-title-${items[index].name}`)
+    // 等待 loading 关闭
+    await page.waitFor(3000)
+  }
+
+  it('showLoading with empty title', async () => {
+    await showLoadingWithTitle(0)
+  })
+
+  it('showLoading with normal title', async () => {
+    await showLoadingWithTitle(1)
+  })
+
+  it('showLoading with long title', async () => {
+    await showLoadingWithTitle(2)
   })
 
   it('hideLoading', async () => {

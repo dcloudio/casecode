@@ -576,9 +576,7 @@ describe('dialog page', () => {
           androidThreeButtonNavigationTranslucent: false
         });
         await page.waitFor(2000);
-        const image = await program.screenshot({
-          deviceShot: true
-        });
+        const image = await program.screenshot(deviceShotOptions);
         expect(image).toSaveImageSnapshot();
         await page.waitFor(2000);
         await page.callMethod('closeDialogSimple');
