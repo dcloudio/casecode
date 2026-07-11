@@ -83,7 +83,7 @@ describe('API-toast', () => {
     for (let i = 0; i < icons.length; i++) {
       await icons[i].tap()
       await page.callMethod('toast1Tap')
-      await page.waitFor(100);
+      await page.waitFor(150);
       const iconText = await icons[i].text()
       const iconValue = await icons[i].attribute('value')
       const isLoadingIcon = iconValue == 'loading' || iconText.includes('加载')

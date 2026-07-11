@@ -53,8 +53,8 @@ describe('tab bar api screenshot', () => {
     await page.waitFor(500)
   }
 
-  async function openPage() {
-    page = await program.reLaunch(PAGE_PATH)
+  async function openPage(path = PAGE_PATH) {
+    page = await program.reLaunch(path)
     await page.waitFor('view')
     await resetTabBar()
   }

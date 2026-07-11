@@ -8,13 +8,13 @@ describe('PagesJson-backgroundColorContent', () => {
   });
 
   it('screenShot', async () => {
-    const image = await program.screenshot({fullPage: true});
+    const image = await program.screenshot();
     expect(image).toSaveImageSnapshot()
   })
   it('background color content size', async () => {
     await program.pageScrollTo(1000)
     await page.waitFor(2000);
-    const image = await program.screenshot({fullPage: true});
+    const image = await program.screenshot();
     expect(image).toSaveImageSnapshot()
   })
 });
