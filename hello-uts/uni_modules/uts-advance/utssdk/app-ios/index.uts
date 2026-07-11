@@ -233,3 +233,63 @@ export class User {
 		return text
 	}
 }
+
+export class MyPluginClass implements UTSiOSHookProxy {
+	// uts 插件创建时的回调。
+	onCreate() {
+    console.log("onCreate")
+	}
+	// 应用正常启动时 (不包括已在后台转到前台的情况)的回调函数。
+	applicationDidFinishLaunchingWithOptions(application: UIApplication | null, launchOptions: Map<UIApplication.LaunchOptionsKey, any> | null = null): boolean {
+	    console.log("applicationDidFinishLaunchingWithOptions")
+	    return false
+	}
+	// 远程通知注册成功时的回调函数。（打自定义基座时需要勾选 push 模块）
+	didRegisterForRemoteNotifications(deviceToken: Data | null) {
+      console.log("didRegisterForRemoteNotifications")
+	}
+	// 远程通知注册失败时的回调函数。（打自定义基座时需要勾选 push 模块）
+	didFailToRegisterForRemoteNotifications(error: NSError | null) {
+      console.log("didFailToRegisterForRemoteNotifications")
+	}
+	// 应用收到远程通知时的回调函数。（打自定义基座时需要勾选 push 模块）
+	didReceiveRemoteNotification(userInfo: Map<AnyHashable, any> | null) {
+     console.log("didReceiveRemoteNotification")
+	}
+	// 应用收到本地通知时的回调函数。（打自定义基座时需要勾选 push 模块）
+	didReceiveLocalNotification(notification: UILocalNotification | null) {
+     console.log("didReceiveLocalNotification")
+	}
+	// 通过 url scheme 方式唤起 app 时的回调函数。(iOS9 之前的系统回调此方法，iOS9 之后的系统请使用 applicationOpenURLOptions)
+	applicationHandleOpenURL(application: UIApplication | null, url: URL | null) : boolean {
+	    return true
+	}
+	// 通过 url scheme 方式唤起 app 时的回调函数。
+	applicationOpenURLOptions(app: UIApplication | null, url: URL, options: Map<UIApplication.OpenURLOptionsKey, any> | null = null) : boolean {
+	    return true
+	}
+	// 当应用从活动状态主动变为非活动状态的时的回调函数。
+	applicationWillResignActive(application: UIApplication | null) {
+	    console.log("applicationWillResignActive")
+	}
+	// 应用完全激活时的回调函数。
+	applicationDidBecomeActive(application: UIApplication | null) {
+      console.log("applicationDidBecomeActive")
+	}
+	// 应用程序进入后台时的回调函数。
+	applicationDidEnterBackground(application: UIApplication | null) {
+		console.log("did enter background")
+
+	}
+	// 当应用在后台状态，将要进入到前台运行时的回调函数。
+	applicationWillEnterForeground(application: UIApplication | null) {
+	    console.log("applicationWillEnterForeground")
+
+	}
+  
+	// 当应用程序接收到与用户活动相关的数据时调用此方法，例如，当用户使用 Universal Link 唤起应用时。
+	applicationContinueUserActivityRestorationHandler(application: UIApplication | null, userActivity: NSUserActivity | null, restorationHandler: ((res: [any] | null) => void) | null = null) : boolean {
+      console.log("applicationContinueUserActivityRestorationHandler")
+	    return true
+	}
+}
