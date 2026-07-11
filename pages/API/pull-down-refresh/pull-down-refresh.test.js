@@ -54,7 +54,7 @@ describe("pull-down-refresh", () => {
       },
       endPoint: {
         x: 100,
-        y: 600
+        y: 900
       },
       duration: 1000
     })

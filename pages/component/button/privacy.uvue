@@ -107,7 +107,6 @@
     font-size: 15px;
     color: lightgrey;
     text-align: center;
-    line-height: 40px;
   }
 
   .button-hover1 {
