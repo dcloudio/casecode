@@ -3,6 +3,21 @@ const isWeb = platformInfo.startsWith('web')
 
 const PAGE_PATH = '/pages/template/chat-textarea/chat-textarea'
 
+async function getEmojiPanelHeight(page) {
+  const panel = await page.$('.emoji-panel')
+  return await panel.style('height')
+}
+
+function isPanelClosed(height) {
+  return height === '0px' || height === '0' || height === ''
+}
+
+async function getEmojiToggleIconSrc(page) {
+  const toggle = await page.$('.emoji-toggle')
+  const icon = await toggle.$('image')
+  return await icon.attribute('src')
+}
+
 describe('chat-textarea', () => {
   if (!isWeb) {
     it('skip', () => { expect(1).toBe(1) })
@@ -34,32 +49,34 @@ describe('chat-textarea', () => {
   })
 
   it('基础渲染 - 表情面板默认不显示', async () => {
-    const panels = await page.$$('.emoji-panel-show')
-    expect(panels.length).toBe(0)
+    const panelHeight = await getEmojiPanelHeight(page)
+    expect(isPanelClosed(panelHeight)).toBe(true)
   })
 
   it('核心交互 - 点击表情按钮展开表情面板', async () => {
     const toggle = await page.$('.emoji-toggle')
+    const beforeIconSrc = await getEmojiToggleIconSrc(page)
     await toggle.tap()
-    await page.waitFor(400)
+    await page.waitFor(async () => {
+      return !isPanelClosed(await getEmojiPanelHeight(page))
+    })
 
-    const active = await page.$$('.emoji-toggle-active')
-    expect(active.length).toBe(1)
-
-    const panelShow = await page.$$('.emoji-panel-show')
-    expect(panelShow.length).toBe(1)
+    const afterIconSrc = await getEmojiToggleIconSrc(page)
+    expect(afterIconSrc).not.toBe(beforeIconSrc)
+    expect(isPanelClosed(await getEmojiPanelHeight(page))).toBe(false)
   })
 
   it('核心交互 - 再次点击表情按钮收起面板', async () => {
     const toggle = await page.$('.emoji-toggle')
+    const openIconSrc = await getEmojiToggleIconSrc(page)
     await toggle.tap()
-    await page.waitFor(400)
+    await page.waitFor(async () => {
+      return isPanelClosed(await getEmojiPanelHeight(page))
+    })
 
-    const active = await page.$$('.emoji-toggle-active')
-    expect(active.length).toBe(0)
-
-    const panelShow = await page.$$('.emoji-panel-show')
-    expect(panelShow.length).toBe(0)
+    const closedIconSrc = await getEmojiToggleIconSrc(page)
+    expect(closedIconSrc).not.toBe(openIconSrc)
+    expect(isPanelClosed(await getEmojiPanelHeight(page))).toBe(true)
   })
 
   it('核心交互 - 表情列表渲染数量正确', async () => {
