@@ -39,14 +39,7 @@
       uni.getPrivacySetting({
         success(res1){
             if(res1.needAuthorization){
-              // #ifdef VUE3-VAPOR
-              setTimeout(() => {
-                uni.openDialogPage({ url: '/pages/component/button/privacy' })
-              }, 500)
-              // #endif
-              // #ifndef VUE3-VAPOR
               uni.openDialogPage({ url: '/pages/component/button/privacy' })
-              // #endif
             }
         }
       })
