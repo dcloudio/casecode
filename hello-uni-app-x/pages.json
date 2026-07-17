@@ -12,15 +12,6 @@
 		}
 	},
 	"pages": [
-		// #ifdef VUE3-VAPOR && !APP-HARMONY && !APP-IOS
-		{
-			"path": "pages/tabBar/tab-bar",
-			"style": {
-				"disableScroll": true
-			}
-		},
-		// #endif
-		// #ifdef !VUE3-VAPOR || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/tabBar/component",
 			"style": {
@@ -28,7 +19,6 @@
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
 			}
 		},
-		// #endif
 		{
 			"path": "pages/component/view/view",
 			"group": "0,1,0",
@@ -809,7 +799,6 @@
 			}
 		},
 		// #endif
-		// #ifdef !VUE3-VAPOR || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/tabBar/API",
 			"style": {
@@ -817,7 +806,6 @@
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
 			}
 		},
-		// #endif
 		{
 			"path": "pages/API/get-app/get-app",
 			"group": "1,0,0",
@@ -1906,7 +1894,6 @@
 				"navigationBarTitleText": "uni.createWorker | UTS插件示例"
 			}
 		},
-		// #ifdef !VUE3-VAPOR || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/tabBar/CSS",
 			"style": {
@@ -1914,8 +1901,6 @@
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
 			}
 		},
-		// #endif
-		// #ifdef !VUE3-VAPOR || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/tabBar/template",
 			"style": {
@@ -1923,8 +1908,6 @@
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
 			}
 		},
-		// #endif
-		// #ifdef !VUE3-VAPOR || APP-HARMONY || APP-IOS
 		{
 			"path": "pages/tabBar/uni-ui",
 			"style": {
@@ -1932,7 +1915,6 @@
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
 			}
 		},
-		// #endif
 		{
 			"path": "uni_modules/uni-pay-x/pages/success/success",
 			"style": {
