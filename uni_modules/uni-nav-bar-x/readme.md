@@ -2,7 +2,9 @@
 
 在页面pages.json中关闭原生导航栏后，即使用`"style": {"navigationStyle": "custom"}`，可以使用本组件实现自定义导航栏。
 
-本组件自动适配的顶部安全区。用padding-top让出顶部状态栏的高度。除去状态栏高度后，本组件的高度为44px。
+同时注意在pages.json中配置页面style增加属性`disableScroll:true`，即禁止页面滚动。此时只有uni-nav-bar组件的下方才可以滚动。否则页面的回弹bounce效果会把自定义导航栏也拉下来。
+
+本组件自动适配顶部安全区。用padding-top让出顶部状态栏的高度。除去状态栏高度后，本组件的高度为44px。
 
 本组件左右两边默认各让出了6px的边距。也可以在left-class和right-class中自定义边距。
 
@@ -18,3 +20,42 @@
 - navigationBarTextStyle: 返回箭头和属性设置的标题，它们的颜色均由该属性控制，可选 white|black
 
 本组件默认没有背景色，即透明，会透显页面的背景色。开发者可通过组件的class自行设置背景色
+
+在小程序端，如果需要规避右上角胶囊按钮，可以参考下方代码设置 margin-right 让出胶囊按钮的宽度和右侧间距。
+
+```html
+<template>
+	<uni-nav-bar title="标题" right-class="nav-right">
+		<template #right>
+			<view :style="{ transform: 'translateX(-' + rightMargin + 'px)' }">
+				<text class="txt-button">right</text>
+			</view>
+		</template>
+	</uni-nav-bar>
+</template>
+
+<script setup lang="uts">
+	const rightMargin = ref(0)
+	onMounted(() => {
+		// #ifdef MP-WEIXIN
+		const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
+		const windowInfo = uni.getWindowInfo()
+		// 预留胶囊按钮宽度和右侧间距，让右侧插槽显示在胶囊按钮左边
+		rightMargin.value = windowInfo.windowWidth - menuButtonInfo.right + menuButtonInfo.width
+		// #endif
+	})
+</script>
+
+<style>
+	.nav-right {
+		overflow: visible;
+	}
+
+	.txt-button {
+		width: 44px;
+		height: 44px;
+		line-height: 44px;
+		text-align: center;
+	}
+</style>
+```
