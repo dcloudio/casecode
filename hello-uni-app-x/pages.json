@@ -1650,6 +1650,16 @@
 		// #endif
 		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
 		{
+			"path": "pages/API/dialog-page/dialog-navigation-bar-text-style",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom",
+				"backgroundColorContent": "transparent"
+			}
+		},
+		// #endif
+		// #ifdef APP-ANDROID || APP-HARMONY || APP-IOS || WEB
+		{
 			"path": "pages/API/dialog-page/dialog-2",
 			"style": {
 				"navigationBarTitleText": "dialogPage2"
