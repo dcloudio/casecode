@@ -44,11 +44,11 @@
           <text class="uni-subtitle-text">selectable属性（鸿蒙蒸汽暂不支持）</text>
         </view>
         <view class="text-box">
-          <!-- #ifdef APP-ANDROID -->
-          <text :selectable="true">{{ singleLineText }}</text>
-          <!-- #endif -->
-          <!-- #ifndef APP-ANDROID -->
+          <!-- #ifdef APP-HARMONY -->
           <text>{{ singleLineText }}</text>
+          <!-- #endif -->
+          <!-- #ifndef APP-HARMONY -->
+          <text :selectable="true">{{ singleLineText }}</text>
           <!-- #endif -->
         </view>
 
