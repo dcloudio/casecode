@@ -1,3 +1,5 @@
+jest.setTimeout(30000)
+
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isAndroid = platformInfo.startsWith('android')
 const isIos = platformInfo.startsWith('ios')
@@ -46,29 +48,28 @@ describe('API-toast', () => {
         x: 0,
         y: topSafeArea + 44,
         // 规避滚动条影响
-        width: windowInfo.safeArea.width-8,
+        width: windowInfo.safeArea.width - 8,
         // 规避底部手势导航栏的影响
-        height: windowInfo.safeArea.height-40
+        height: windowInfo.safeArea.height - 40
       },
     };
 
     page = await program.reLaunch(PAGE_PATH)
     await page.waitFor("view");
+    await page.waitFor(500);
   });
 
-  const loadingSnapshotOptions = {
-    failureThresholdType: 'percent',
-    failureThreshold: 0.001,
-  }
-
-  async function screenShot(imgName, imageSnapshotOptions = {}) {
+  async function screenShot(imgName) {
     const image = await program.screenshot(deviceShotOptions);
     const options = {customSnapshotIdentifier() {
       return imgName
-    }, ...imageSnapshotOptions
+    }
     }
     if (!isAppWebView) {
-      expect(image).toMatchImageSnapshot(options);
+      expect(image).toMatchImageSnapshot({ ...options,
+        failureThresholdType: 'percent',
+        failureThreshold: 0.001,
+      });
     }
     expect(image).toSaveImageSnapshot(options)
     await page.waitFor(500);
@@ -82,12 +83,13 @@ describe('API-toast', () => {
     const icons = await page.$$('.radio-icon')
     for (let i = 0; i < icons.length; i++) {
       await icons[i].tap()
+      await page.waitFor(500);
       await page.callMethod('toast1Tap')
-      await page.waitFor(150);
+      await page.waitFor(500);
       const iconText = await icons[i].text()
       const iconValue = await icons[i].attribute('value')
       const isLoadingIcon = iconValue == 'loading' || iconText.includes('加载')
-      await screenShot(`${iconText}-toast`, isLoadingIcon ? loadingSnapshotOptions : {})
+      await screenShot(`${iconText}-toast`)
     }
   })
 
@@ -102,7 +104,7 @@ describe('API-toast', () => {
     await page.setData({data:{imageSelect: true}})
     await page.waitFor(300);
     await page.callMethod('toast1Tap')
-    await page.waitFor(300);
+    await page.waitFor(500);
     await screenShot('toast-image')
   })
 

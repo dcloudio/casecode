@@ -9,13 +9,13 @@
       <button size="mini" @click="plusClick('speed')">+</button>
     </view>
     <view class="item">
-      <text class="item-label">Layer</text>
+      <text class="item-label">圈数</text>
       <button size="mini" @click="lessClick('layer')">-</button>
       <text class="item-value">{{ballLayer}}</text>
       <button size="mini" @click="plusClick('layer')">+</button>
     </view>
     <view class="item">
-      <text class="item-label">Inlayer</text>
+      <text class="item-label">球数</text>
       <button size="mini" @click="lessClick('inLayer')">-</button>
       <text class="item-value">{{ballInlayer}}</text>
       <button size="mini" @click="plusClick('inLayer')">+</button>
