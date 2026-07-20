@@ -109,7 +109,8 @@
 
   onMounted(() => {
     uni.showToast({
-      title: 'onMounted 调用示例,2秒后消失'
+      title: 'onMounted 调用示例,2秒后消失',
+      duration: 2000
     })
     setTimeout(function () {
       uni.hideToast()
