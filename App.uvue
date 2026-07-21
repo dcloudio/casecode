@@ -189,6 +189,12 @@
   page {
     background-color: #efeff4;
   }
+  /* 适配暗黑模式 */
+  @media (prefers-color-scheme: dark) {
+    page {
+      background-color: #646464;
+    }
+  }
   /* #endif */
 
   /* #ifdef VUE3-VAPOR || WEB || MP-WEIXIN */
