@@ -50,4 +50,35 @@ describe("css-custom-variable", () => {
     } = await element.size()
     expect(height2 == height1).toBe(false)
   })
+  // 嵌套括号 fallback 测试 - 场景1：应用后是否生效
+  // 场景1 区域 --main-color 已定义(#ff0000)，应显示红色
+  // 场景3 区域 --main-color 未定义，应 fallback 到 rgba(64,158,255,0.8) 蓝色半透明
+  it("test-nested-paren-apply", async () => {
+    await page.waitFor("view")
+    const image = await program.screenshot({ fullPage: true })
+    expect(image).toSaveImageSnapshot()
+  })
+  // 嵌套括号 fallback 测试 - 场景2：修改后是否生效
+  // 点击 #changeNestedParenButton 通过 setProperty 修改 --main-color 为 #00ff00
+  it("test-nested-paren-change", async () => {
+    const button = await page.$("#changeNestedParenButton")
+    await button.tap()
+    await page.waitFor(500)
+    const image = await program.screenshot({ fullPage: true })
+    expect(image).toSaveImageSnapshot()
+  })
+  // 嵌套括号 fallback 测试 - 场景3：fallback 是否生效
+  // 点击 #toggleNestedParenFallbackButton 设置 --main-color 为 #ff0000，应显示红色
+  // 再点击清空 --main-color，应恢复 fallback 到 rgba(64,158,255,0.8) 蓝色半透明
+  it("test-nested-paren-fallback", async () => {
+    const button = await page.$("#toggleNestedParenFallbackButton")
+    await button.tap()
+    await page.waitFor(500)
+    const image1 = await program.screenshot({ fullPage: true })
+    expect(image1).toSaveImageSnapshot()
+    await button.tap()
+    await page.waitFor(500)
+    const image2 = await program.screenshot({ fullPage: true })
+    expect(image2).toSaveImageSnapshot()
+  })
 })

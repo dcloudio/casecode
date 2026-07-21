@@ -48,6 +48,27 @@
         </view>
       </view>
     </view>
+    <view class="nested_paren_suite">
+      <text class="nested_paren_title">嵌套括号 fallback 测试</text>
+      <text class="nested_paren_desc">测试 var(--main-color, rgba(64,158,255,0.8)) 多层括号嵌套解析</text>
+
+      <text class="nested_paren_case_title">场景1：变量已定义，应用后应显示红色</text>
+      <view class="nested_paren_stage nested_paren_defined">
+        <view class="nested_paren_box" style="background-color: var(--main-color, rgba(64,158,255,0.8));"></view>
+      </view>
+
+      <text class="nested_paren_case_title">场景2：点击修改后应从红色变为绿色，再点击恢复红色</text>
+      <view id="nestedParenChangeStage" class="nested_paren_stage nested_paren_defined">
+        <view class="nested_paren_box" style="background-color: var(--main-color, rgba(64,158,255,0.8));"></view>
+      </view>
+      <button id="changeNestedParenButton" @tap="do_change_nested_paren()">修改嵌套括号变量</button>
+
+      <text class="nested_paren_case_title">场景3：变量未定义应 fallback 到 rgba(64,158,255,0.8) 蓝色半透明；点击设置后变红，再点击清空后恢复 fallback</text>
+      <view id="nestedParenFallbackStage" class="nested_paren_stage">
+        <view class="nested_paren_box" style="background-color: var(--main-color, rgba(64,158,255,0.8));"></view>
+      </view>
+      <button id="toggleNestedParenFallbackButton" @tap="do_toggle_nested_paren_fallback()">切换 fallback 状态（当前：{{ nested_paren_fallback_state_text }}）</button>
+    </view>
   </view>
 
   <!-- #ifdef APP && !VUE3-VAPOR -->
@@ -96,6 +117,34 @@
     } else {
       shorthand_var_state_class.value = "shorthand_var_state_1"
       shorthand_var_state_text.value = "state-1"
+    }
+  }
+
+  const nested_paren_change_on = ref(false)
+  const nested_paren_fallback_on = ref(false)
+  const nested_paren_fallback_state_text = ref("fallback 生效")
+
+  const do_change_nested_paren = () => {
+    const stage = uni.getElementById("nestedParenChangeStage")
+    if (nested_paren_change_on.value) {
+      stage?.style?.setProperty("--main-color", "#ff0000")
+      nested_paren_change_on.value = false
+    } else {
+      stage?.style?.setProperty("--main-color", "#00ff00")
+      nested_paren_change_on.value = true
+    }
+  }
+
+  const do_toggle_nested_paren_fallback = () => {
+    const stage = uni.getElementById("nestedParenFallbackStage")
+    if (nested_paren_fallback_on.value) {
+      stage?.style?.setProperty("--main-color", "")
+      nested_paren_fallback_on.value = false
+      nested_paren_fallback_state_text.value = "fallback 生效：蓝色"
+    } else {
+      stage?.style?.setProperty("--main-color", "#ff0000")
+      nested_paren_fallback_on.value = true
+      nested_paren_fallback_state_text.value = "变量生效：红色"
     }
   }
 </script>
@@ -258,5 +307,49 @@
   .shorthand_composite_item_tail {
     width: 40px;
     background-color: #c4b5fd;
+  }
+
+  .nested_paren_suite {
+    margin-top: 24px;
+    padding: 12px;
+    border: 1px solid #d0d7de;
+    background-color: #f6f8fa;
+  }
+
+  .nested_paren_title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .nested_paren_desc {
+    margin-top: 6px;
+    margin-bottom: 8px;
+    color: #57606a;
+    font-size: 13px;
+  }
+
+  .nested_paren_case_title {
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-size: 13px;
+    color: #24292f;
+  }
+
+  .nested_paren_stage {
+    height: 60px;
+    padding: 8px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .nested_paren_defined {
+    --main-color: #ff0000;
+  }
+
+  .nested_paren_box {
+    width: 100px;
+    height: 40px;
   }
 </style>

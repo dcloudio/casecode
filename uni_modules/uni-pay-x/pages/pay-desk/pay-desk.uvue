@@ -8,7 +8,7 @@
 			</view>
 			<view class="mobile-pay-popup-provider-list">
 				<view class="uni-list">
-					<!-- #ifdef MP-WEIXIN || H5 || APP -->
+					<!-- #ifdef MP-WEIXIN || WEB || APP -->
 					<view class="uni-list-item" v-if="checkProvider('wxpay')" @click="createOrderByProvider('wxpay')">
 						<view class="uni-list-item__container uni-list-item__container--right">
 							<view class="uni-list-item__header">
@@ -21,7 +21,7 @@
 						<view class="uni-list-item-arrowright"></view>
 					</view>
 					<!-- #endif -->
-					<!-- #ifdef MP-ALIPAY || H5 || APP -->
+					<!-- #ifdef MP-ALIPAY || WEB || APP -->
 					<view class="uni-list-item" v-if="checkProvider('alipay')" @click="createOrderByProvider('alipay')">
 						<view class="uni-list-item__container uni-list-item__container--right">
 							<view class="uni-list-item__header">
@@ -192,7 +192,7 @@
     background-color: #fff;
     flex-direction: row;
     border-bottom: 1px solid #f8f8f8;
-    /* #ifdef H5 */
+    /* #ifdef WEB */
     cursor: pointer;
     /* #endif */
   }

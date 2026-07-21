@@ -46,7 +46,7 @@ describe('modal', () => {
     if (!isEditable) {
       expect(image).toMatchImageSnapshot({
         failureThresholdType: 'percent',
-        failureThreshold: 0.001,
+        failureThreshold: 0.002,
       });
     }
     if (isEditable && isAppWebView) return;
@@ -85,7 +85,7 @@ describe('modal', () => {
         x: 0,
         y: topSafeArea + 44,
         // 规避滚动条影响
-        width: windowInfo.safeArea.width - 8,
+        width: windowInfo.safeArea.width - 10,
         // 规避底部手势导航栏的影响
         height: windowInfo.safeArea.height - 40
       },

@@ -15,7 +15,7 @@
       <button size="mini" @click="plusClick('layer')">+</button>
     </view>
     <view class="item">
-      <text class="item-label">球数</text>
+      <text class="item-label">每圈球数</text>
       <button size="mini" @click="lessClick('inLayer')">-</button>
       <text class="item-value">{{ballInlayer}}</text>
       <button size="mini" @click="plusClick('inLayer')">+</button>
@@ -96,10 +96,11 @@
     private initBall() {
       const canvasWidth = this.ctx.canvas.offsetWidth;
       const canvasHeight = this.ctx.canvas.offsetHeight;
+      const twoPI = 2 * Math.PI;
       for (let i = 0; i < this._layer; i++) {
         let radius = this.getDistance(canvasWidth / 2, canvasHeight / 2) / this._layer * i
         for (let j = 0; j < this._ballInlayer; j++) {
-          let deg = j * 2 * Math.PI / this._ballInlayer,
+          let deg = j * twoPI / this._ballInlayer,
             sin = Math.sin(deg),
             cos = Math.cos(deg),
             x = radius * cos + canvasWidth / 2,
