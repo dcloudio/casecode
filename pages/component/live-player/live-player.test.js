@@ -1,11 +1,12 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isWeb = platformInfo.startsWith('web')
 const isMP = platformInfo.startsWith('mp')
+const isHarmony = platformInfo.startsWith('harmony')
 const PAGE_PATH = '/pages/component/live-player/live-player'
 const NAV_BAR_HEIGHT = 44
 
 describe('component-live-player', () => {
-  if (isWeb || isMP) {
+  if (isWeb || isMP || isHarmony) {
     // 不支持program.swipe
     it('skip', () => {
       expect(1).toBe(1)

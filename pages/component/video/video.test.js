@@ -27,6 +27,7 @@ describe('component-native-video', () => {
   }
   let page;
   let start = 0;
+  let deviceShotOptions = {};
 
   // 辅助函数：简化页面数据设置
   async function setPageData(newData) {
@@ -39,6 +40,18 @@ describe('component-native-video', () => {
       await setPageData({
         muted: true
       });
+    } else {
+      const windowInfo = await program.callUniMethod('getWindowInfo');
+      deviceShotOptions = {
+        deviceShot: true,
+        area: {
+          x: 0,
+          y: windowInfo.safeAreaInsets.top + 44,
+          width: windowInfo.safeArea.width - 8,
+          // 规避底部手势导航栏的影响
+          height: windowInfo.safeArea.height - 40
+        },
+      };
     }
     await page.$('.video');
   });
@@ -349,13 +362,13 @@ describe('component-native-video', () => {
         expect(await page.callMethod('hasSubComponent')).toBe(true);
         await page.callMethod('requestFullScreen');
         await page.waitFor(2000);
-        const image = await program.screenshot({ deviceShot: true });
+        const image = await program.screenshot(deviceShotOptions);
         expect(image).toSaveImageSnapshot();
         await page.callMethod('exitFullScreen');
         await page.waitFor(2000);
         await page.callMethod('requestVerticalFullScreen');
         await page.waitFor(2000);
-        const image2 = await program.screenshot({ deviceShot: true });
+        const image2 = await program.screenshot(deviceShotOptions);
         expect(image2).toSaveImageSnapshot();
         await page.callMethod('exitFullScreen');
         await setPageData({
@@ -402,29 +415,27 @@ describe('component-native-video', () => {
     });
   }
 
-  it('test dialog video', async () => {
-    if (isAppWebView || isMP || isWeb) {
-      expect(1).toBe(1)
-      return
-    }
-    await page.callMethod('openDialogPageVideo')
-    await page.waitFor(500);
-    await page.callMethod('closeDialogPageVideo')
-    await page.waitFor(500);
-    await page.callMethod('openDialogPageVideo')
-    const rect = await page.callMethod('getDialogPageVideoFullscreenBtnRect')
-    expect(rect).not.toBeNull();
-    /* const windowInfo = await program.callUniMethod('getWindowInfo');
-    expect(windowInfo).not.toBeNull(); */
-    await page.waitFor(3000);
-    const x = rect.left + rect.width / 2
-    // 加了 windowInfo.statusBarHeight + 44 反而点不到按钮
-    const y = rect.top + rect.height / 2
-    await program.tap({x, y, duration: 300});
-    const image = await program.screenshot({ deviceShot: true });
-    expect(image).toSaveImageSnapshot();
-    await page.callMethod('closeDialogPageVideo')
-  });
+  if (isApp && !isAppWebView) {
+    it('test dialog video', async () => {
+      await page.callMethod('openDialogPageVideo')
+      await page.waitFor(500);
+      await page.callMethod('closeDialogPageVideo')
+      await page.waitFor(500);
+      await page.callMethod('openDialogPageVideo')
+      const rect = await page.callMethod('getDialogPageVideoFullscreenBtnRect')
+      expect(rect).not.toBeNull();
+      /* const windowInfo = await program.callUniMethod('getWindowInfo');
+      expect(windowInfo).not.toBeNull(); */
+      await page.waitFor(3000);
+      const x = rect.left + rect.width / 2
+      // 加了 windowInfo.statusBarHeight + 44 反而点不到按钮
+      const y = rect.top + rect.height / 2
+      await program.tap({x, y, duration: 300});
+      const image = await program.screenshot(deviceShotOptions);
+      expect(image).toSaveImageSnapshot();
+      await page.callMethod('closeDialogPageVideo')
+    });
+  }
 
   it('test format', async () => {
     page = await program.navigateTo('/pages/component/video/video-format');
