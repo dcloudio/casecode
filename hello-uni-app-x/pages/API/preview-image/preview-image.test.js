@@ -1,6 +1,10 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isWeb = platformInfo.startsWith('web')
 const isMP = platformInfo.startsWith('mp')
+const isAndroid = platformInfo.startsWith('android')
+const isIos = platformInfo.startsWith('ios')
+const isHarmony = platformInfo.startsWith('harmony')
+const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 
 describe('preview-image', () => {
   if ( isMP) {
@@ -11,28 +15,61 @@ describe('preview-image', () => {
   }
 
   let page;
+  let screenShotOptions = { fullPage: true };
+
+  async function screenshot() {
+    const image = await program.screenshot(screenShotOptions);
+    expect(image).toSaveImageSnapshot()
+  }
 
   beforeAll(async () => {
     page = await program.reLaunch('/pages/API/preview-image/preview-image');
     await page.waitFor('view');
     await page.waitFor(isWeb ? 4000 : 100);
+
+    if (!isWeb) {
+      const windowInfo = await program.callUniMethod('getWindowInfo');
+      let topSafeArea = windowInfo.safeAreaInsets.top;
+      if (isAppWebView) {
+        if (isIos) {
+          topSafeArea = 59
+        } else if (isAndroid) {
+          topSafeArea = 24
+          if (platformInfo.startsWith('android 5')) {
+            topSafeArea = 25
+          } else if (platformInfo.startsWith('android 11')) {
+            topSafeArea = 52
+          } else if (platformInfo.startsWith('android 13') || platformInfo.startsWith('android 15')) {
+            topSafeArea = 49
+          }
+        } else if (isHarmony) {
+          // mate 60
+          // topSafeArea = 33
+          // mate 60 pro
+          topSafeArea = 38
+        }
+      }
+      screenShotOptions = {
+        area: {
+          x: 0,
+          y: topSafeArea + 44,
+          width: windowInfo.safeArea.width - 10,
+          // 规避底部手势导航栏的影响
+          height: windowInfo.safeArea.height - 40
+        },
+      }
+    }
   });
 
-  if (isWeb || isMP) {
+  if (isWeb) {
     it('screenshot', async () => {
-      const image = await program.screenshot({
-        fullPage: true
-      });
-      expect(image).toSaveImageSnapshot()
+      await screenshot()
     });
   } else {
     it('previewImage_default', async () => {
       await page.callMethod('previewImage')
       await page.waitFor(1000)
-      const image = await program.screenshot({
-        deviceShot: true,
-      });
-      expect(image).toSaveImageSnapshot()
+      await screenshot()
       await page.callMethod('closePreviewImage')
       await page.waitFor(300)
     })
@@ -41,10 +78,7 @@ describe('preview-image', () => {
       await page.waitFor(300)
       await page.callMethod('previewImage')
       await page.waitFor(3000)
-      const image = await program.screenshot({
-        deviceShot: true,
-      });
-      expect(image).toSaveImageSnapshot()
+      await screenshot()
       await page.callMethod('closePreviewImage')
       await page.waitFor(300)
     })
@@ -53,10 +87,7 @@ describe('preview-image', () => {
       await page.waitFor(300)
       await page.callMethod('previewImage')
       await page.waitFor(3000)
-      const image = await program.screenshot({
-        deviceShot: true,
-      });
-      expect(image).toSaveImageSnapshot()
+      await screenshot()
       await page.callMethod('closePreviewImage')
       await page.waitFor(300)
     })
@@ -72,10 +103,7 @@ describe('preview-image', () => {
         duration: 1000,
       })
       await page.waitFor(500)
-      const image = await program.screenshot({
-        deviceShot: true,
-      });
-      expect(image).toSaveImageSnapshot()
+      await screenshot()
       await page.callMethod('closePreviewImage')
       await page.waitFor(300)
     })

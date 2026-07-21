@@ -2,8 +2,9 @@
   <view class="page-body">
     <canvas id="canvas" class="canvas"></canvas>
     <text class="fps">FPS: {{fpsString}}</text>
+    <text class="ball-count">总球数: {{ballCount}}</text>
     <view class="item">
-      <text class="item-label">Speed</text>
+      <text class="item-label">速度</text>
       <button size="mini" @click="lessClick('speed')">-</button>
       <text class="item-value">{{ballSpeed}}</text>
       <button size="mini" @click="plusClick('speed')">+</button>
@@ -28,6 +29,7 @@
   let ballSpeed = ref(3)
   let ballLayer = ref(3)
   let ballInlayer = ref(20)
+  let ballCount = ref(60)
 
   class Ball {
     private width : number
@@ -213,6 +215,8 @@
       animation!.inLayer -= 5;
       ballInlayer.value = animation!.inLayer
     }
+
+    ballCount.value = ballLayer.value * ballInlayer.value
   }
 
   let plusClick = (type : string) => {
@@ -226,6 +230,8 @@
       animation!.inLayer += 5;
       ballInlayer.value = animation!.inLayer
     }
+
+    ballCount.value = ballLayer.value * ballInlayer.value
   }
 
   onUnload(() => {
@@ -260,6 +266,10 @@
 
   .fps {
     margin-top: 30px;
+  }
+
+  .ball-count {
+    margin-top: 10px;
     margin-bottom: 20px;
   }
 
