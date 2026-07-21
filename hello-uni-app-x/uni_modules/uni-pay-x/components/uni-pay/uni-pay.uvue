@@ -50,7 +50,7 @@
 				</view>
 				<view class="mobile-pay-popup-provider-list">
 					<view class="uni-list">
-						<!-- #ifdef MP-WEIXIN || H5 || APP -->
+						<!-- #ifdef MP-WEIXIN || WEB || APP -->
 						<view class="uni-list-item" v-if="currentProviders.indexOf('wxpay') > -1" @click="createOrderByProvider('wxpay')">
 							<view class="uni-list-item__container uni-list-item__container--right">
 								<view class="uni-list-item__header">
@@ -63,7 +63,7 @@
 							<view class="uni-list-item-arrowright"></view>
 						</view>
 						<!-- #endif -->
-						<!-- #ifdef MP-ALIPAY || H5 || APP -->
+						<!-- #ifdef MP-ALIPAY || WEB || APP -->
 						<view class="uni-list-item" v-if="currentProviders.indexOf('alipay') > -1" @click="createOrderByProvider('alipay')">
 							<view class="uni-list-item__container uni-list-item__container--right">
 								<view class="uni-list-item__header">
@@ -304,7 +304,7 @@
 		if (res['qr_code'] != null && res['qr_code'] != "") {
 			emit("qrcode", res)
 		}
-		// #ifdef H5
+		// #ifdef WEB
 		let order = res.get('order') as UTSJSONObject
 		if (res['provider_pay_type'] == "jsapi") {
 			// 微信公众号支付
@@ -331,7 +331,7 @@
 			}, 200)
 		}
 		// #endif
-		// #ifndef H5
+		// #ifndef WEB
 		let _order = res.get('order')
 		let orderStr = typeof _order == "string" ? _order as string : JSON.stringify(_order) as string
 		console.log('orderStr: ', orderStr)
@@ -399,7 +399,7 @@
 		}
 		// #endif
 
-		// #ifdef H5
+		// #ifdef WEB
 		// 判断如果是pc访问，则强制扫码模式
 		if (checkPlatform() == "pc") {
 			options['qr_code'] = true
@@ -417,7 +417,7 @@
 			other: options.getJSON('other'),
 			wxpay_virtual: options.getJSON('wxpay_virtual'), // 微信小程序虚拟支付需要
 		} as UTSJSONObject
-		// #ifdef H5
+		// #ifdef WEB
 		if (options['openid'] != "" && options['provider'] == "wxpay") {
 			createOrderData['openid'] = options['openid']
 		}
@@ -957,7 +957,7 @@
 		background-color: #fff;
 		flex-direction: row;
 		border-bottom: 1px solid #f8f8f8;
-		/* #ifdef H5 */
+		/* #ifdef WEB */
 		cursor: pointer;
 		/* #endif */
 	}
@@ -1114,7 +1114,7 @@
 	/* #ifndef VUE3-VAPOR */
 	.pc-pay-popup-provider-item:hover {
 		background-color: #ffffff;
-		/* #ifdef H5 */
+		/* #ifdef WEB */
 		cursor: pointer;
 		/* #endif */
 	}
@@ -1223,7 +1223,7 @@
 
 	/* 二维码支付弹窗结束 */
 
-	/* 外部浏览器H5支付弹窗确认开始 */
+	/* 外部浏览器WEB支付弹窗确认开始 */
 	.pay-confirm-popup-content {
 		width: 275px;
 		background-color: #ffffff;

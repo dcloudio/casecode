@@ -14,18 +14,18 @@
       <view class="margin"><text>支付金额（单位分，100=1元）：</text></view>
       <view><input class="input" v-model="total_fee" /></view>
     </view>
-    <!-- #ifdef APP || H5 -->
+    <!-- #ifdef APP || WEB -->
     <button class="button" @click="open()">打开收银台（弹窗模式）</button>
     <view v-if="!isPcCom">
       <button class="button" @click="toPayDesk">打开收银台（新页面模式）</button>
     </view>
     <!-- #endif -->
 
-    <!-- #ifdef MP-WEIXIN || H5 || APP -->
+    <!-- #ifdef MP-WEIXIN || WEB || APP -->
     <button class="button" @click="createOrder('wxpay')">发起支付（微信）</button>
     <!-- #endif -->
 
-    <!-- #ifdef MP-ALIPAY || H5 || APP -->
+    <!-- #ifdef MP-ALIPAY || WEB || APP -->
     <button class="button" @click="createOrder('alipay')">发起支付（支付宝）</button>
     <!-- #endif -->
 
@@ -97,7 +97,7 @@
 		<button class="button" @click="getRefund">查询退款状态</button>
 		<button class="button" @click="closeOrder">关闭订单</button> -->
 
-    <!-- #ifdef H5 -->
+    <!-- #ifdef WEB -->
     <button class="button" v-if="h5Env === 'h5-weixin'" @click="getWeiXinJsCode('snsapi_base')">公众号获取openid示例</button>
     <!-- #endif -->
     <!-- 统一支付组件，注意：vue3下ref不可以等于组件名，因此这里ref="pay" 而不能是 ref="uniPay" -->
@@ -130,9 +130,9 @@
   const getOrderPopupRef = ref<UniPayPopupComponentPublicInstance | null>(null)
 
   // 计算属性
-  // 计算当前H5环境
+  // 计算当前WEB环境
   const h5Env = computed(() => {
-    // #ifdef H5
+    // #ifdef WEB
     const ua = window.navigator.userAgent.toLowerCase();
     const isWeixin = /micromessenger/i.test(ua);
     const isAlipay = /alipay/i.test(ua);
@@ -343,7 +343,7 @@
     }
   }
 
-  // #ifdef H5
+  // #ifdef WEB
   // 获取公众号code
   const getWeiXinJsCode = async (scope = "snsapi_base") : Promise<void> => {
     const payInstance = payRef.value as UniPayComponentPublicInstance;
@@ -465,7 +465,7 @@
   onLoad((options) => {
     console.log('onLoad: ', options);
     useUniCloud.value = checkUniCloud();
-    // #ifdef H5
+    // #ifdef WEB
     // 微信公众号特殊逻辑开始-----------------------------------------------------------
     // 以下代码仅为获取openid，正常你自己项目应该是登录后才能支付，登录后已经拿到openid，无需编写下面的代码
     if (h5Env.value == 'h5-weixin') {

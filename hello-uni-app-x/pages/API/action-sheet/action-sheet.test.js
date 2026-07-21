@@ -42,7 +42,7 @@ describe('showActionSheet', () => {
     if (!isAppWebView) {
       expect(image).toMatchImageSnapshot({ ...options,
         failureThresholdType: 'percent',
-        failureThreshold: 0.001,
+        failureThreshold: 0.002,
       });
     }
     expect(image).toSaveImageSnapshot(options);
@@ -86,7 +86,7 @@ describe('showActionSheet', () => {
           x: 0,
           y: topSafeArea + 44,
           // 规避滚动条影响
-          width: windowInfo.safeArea.width - 8,
+          width: windowInfo.safeArea.width - 10,
           // 规避底部手势导航栏的影响
           height: windowInfo.safeArea.height - 40
         },

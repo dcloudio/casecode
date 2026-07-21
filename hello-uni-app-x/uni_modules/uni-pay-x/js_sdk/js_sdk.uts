@@ -1,5 +1,5 @@
 function checkPlatform() {
-  // #ifdef H5
+  // #ifdef WEB
   type SystemInfo = {
     win : boolean,
     mac : boolean,
@@ -30,10 +30,10 @@ function checkPlatform() {
 }
 
 /**
- * 获取当前H5所在的环境
+ * 获取当前WEB所在的环境
  */
 function getH5Env() {
-  // #ifdef H5
+  // #ifdef WEB
   const ua = window.navigator.userAgent.toLowerCase();
   const isWeixin = /micromessenger/i.test(ua);
   const isAlipay = /alipay/i.test(ua);
