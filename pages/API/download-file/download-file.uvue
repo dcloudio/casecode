@@ -80,6 +80,9 @@
       },
       fail: (err) => {
         console.log('downloadFile fail, err is:', err)
+      },
+      complete: () => {
+        data.task = null
       }
     })
   }
@@ -98,6 +101,9 @@
       fail: () => {
         data.jest_result = false
         data.jest_callback_triggred = true
+      },
+      complete: () => {
+        data.task = null
       }
     });
   }
@@ -113,6 +119,9 @@
       fail: () => {
         data.jest_result = false
         data.jest_callback_triggred = true
+      },
+      complete: () => {
+        data.task = null
       }
     });
   }
@@ -126,6 +135,9 @@
       },
       fail: () => {
         data.jest_result = needCookie ? false : true;
+      },
+      complete: () => {
+        data.task = null
       }
     });
   }
@@ -191,6 +203,9 @@
       fail: () => {
         data.jest_result = false;
         data.jest_callback_triggred = true
+      },
+      complete: () => {
+        data.task = null
       }
     });
   }
@@ -201,6 +216,9 @@
       timeout: 3000,
       fail: () => {
         data.jest_result = false;
+      },
+      complete: () => {
+        data.task = null
       }
     })
     setTimeout(() => {
@@ -218,6 +236,9 @@
       fail: () => {
         data.jest_result = false;
         data.jest_callback_triggred = true
+      },
+      complete: () => {
+        data.task = null
       }
     });
   }
