@@ -1,0 +1,6 @@
+# 文本统一 LF
+* text=auto eol=lf
+
+# 脚本换行规范
+*.sh eol=lf
+*.{bat,cmd} eol=crlf
