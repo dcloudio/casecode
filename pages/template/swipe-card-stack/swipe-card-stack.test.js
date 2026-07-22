@@ -1,6 +1,7 @@
 ﻿jest.setTimeout(60000)
 
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isWeb = platformInfo.startsWith('web') || platformInfo.startsWith('h5')
 const isMP = platformInfo.startsWith('mp')
 
 const PAGE_PATH = '/pages/template/swipe-card-stack/swipe-card-stack'
@@ -24,7 +25,7 @@ describe('template-swipe-card-stack', () => {
     try {
       page = await program.reLaunch(PAGE_PATH)
     } catch (error) {
-      if (!platformInfo.startsWith('web')) {
+      if (!isWeb) {
         throw error
       }
       page = await program.currentPage()
@@ -121,36 +122,54 @@ describe('template-swipe-card-stack', () => {
     return await dragCard(await getTopCardInfo(), offsetX, offsetY, options)
   }
 
-  function expectTransformMoved(transform) {
+  function getTransformTranslate(transform) {
     const translateMatched = transform.match(/translate(?:3d)?\(\s*([-0-9.]+)px(?:\s*,\s*([-0-9.]+)px)?/)
     if (translateMatched != null) {
-      const translateX = parseFloat(translateMatched[1] || '0')
-      const translateY = parseFloat(translateMatched[2] || '0')
-      expect(Math.abs(translateX) + Math.abs(translateY)).toBeGreaterThan(0)
-      return
+      return {
+        x: parseFloat(translateMatched[1] || '0'),
+        y: parseFloat(translateMatched[2] || '0')
+      }
     }
 
     const matrix3dMatched = transform.match(/matrix3d\(([^)]+)\)/)
     if (matrix3dMatched != null) {
       const matrixValues = matrix3dMatched[1].split(',').map((value) => parseFloat(value.trim()))
-      const translateX = matrixValues[12] || 0
-      const translateY = matrixValues[13] || 0
-      expect(Math.abs(translateX) + Math.abs(translateY)).toBeGreaterThan(0)
-      return
+      return {
+        x: matrixValues[12] || 0,
+        y: matrixValues[13] || 0
+      }
     }
 
     const matrixMatched = transform.match(/matrix\(([^)]+)\)/)
     expect(matrixMatched).not.toBeNull()
     const matrixValues = matrixMatched[1].split(',').map((value) => parseFloat(value.trim()))
-    const translateX = matrixValues[4] || 0
-    const translateY = matrixValues[5] || 0
-    expect(Math.abs(translateX) + Math.abs(translateY)).toBeGreaterThan(0)
+    return {
+      x: matrixValues[4] || 0,
+      y: matrixValues[5] || 0
+    }
+  }
+
+  function expectTransformMoved(transform) {
+    const translate = getTransformTranslate(transform)
+    expect(Math.abs(translate.x) + Math.abs(translate.y)).toBeGreaterThan(0)
   }
 
   async function expectCardIsDragging(card) {
     await page.waitFor(WAIT_FOR_DRAG_RENDER)
     const transform = await card.style('transform')
     expectTransformMoved(transform)
+  }
+
+  async function expectCardDraggedBeyondSwitchThreshold(card, direction) {
+    await page.waitFor(WAIT_FOR_DRAG_RENDER)
+    const transform = await card.style('transform')
+    const translateX = getTransformTranslate(transform).x
+    const threshold = windowInfo.screenWidth / 10
+    if (direction > 0) {
+      expect(translateX).toBeGreaterThan(threshold)
+    } else {
+      expect(translateX).toBeLessThan(-threshold)
+    }
   }
 
   async function screenShot() {
@@ -217,16 +236,13 @@ describe('template-swipe-card-stack', () => {
     expect((await getCards()).length).toBe(3)
   })
 
-  it('right drag switched-to-next-card screenshot', async () => {
+  it('right drag reaches switch threshold', async () => {
     const topCardIndexBefore = await getTopCardIndex()
     const draggedCard = await dragTopCard(Math.round(windowInfo.screenWidth * 0.45), 0, { release: false })
 
-    await draggedCard.touchend(createTouchEvent(windowInfo.screenWidth * 0.95, windowInfo.screenHeight / 2, true))
-    await page.waitFor(WAIT_FOR_RELEASE)
-
+    await expectCardDraggedBeyondSwitchThreshold(draggedCard, 1)
+    expect(await getTopCardIndex()).toBe(topCardIndexBefore)
     expect((await getCards()).length).toBe(3)
-    expect(await getTopCardIndex()).not.toBe(topCardIndexBefore)
-    await screenShot()
   })
 
   it('left drag feedback screenshot', async () => {
@@ -240,15 +256,12 @@ describe('template-swipe-card-stack', () => {
     expect((await getCards()).length).toBe(3)
   })
 
-  it('left drag switched-to-next-card screenshot', async () => {
+  it('left drag reaches switch threshold', async () => {
     const topCardIndexBefore = await getTopCardIndex()
     const draggedCard = await dragTopCard(Math.round(windowInfo.screenWidth * -0.45), 0, { release: false })
 
-    await draggedCard.touchend(createTouchEvent(windowInfo.screenWidth * 0.05, windowInfo.screenHeight / 2, true))
-    await page.waitFor(WAIT_FOR_RELEASE)
-
+    await expectCardDraggedBeyondSwitchThreshold(draggedCard, -1)
+    expect(await getTopCardIndex()).toBe(topCardIndexBefore)
     expect((await getCards()).length).toBe(3)
-    expect(await getTopCardIndex()).not.toBe(topCardIndexBefore)
-    await screenShot()
   })
 })

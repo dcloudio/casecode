@@ -28,7 +28,7 @@
     "navigationBarBackgroundColor": "#1F1F1F",
     "backgroundColor": "#1F1F1F",
     "backgroundColorContent": "#646464",
-    "tabBarPagebackgroundColorContent": "#646464",
+    "tabBarPagebackgroundColorContent": "#1F1F1F",
     "backgroundTextStyle": "light",
 
     "tabBarColor": "#cacaca",
