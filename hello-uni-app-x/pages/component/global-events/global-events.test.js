@@ -30,7 +30,8 @@ describe('event trigger', () => {
   }
   beforeAll(async () => {
     page = await program.navigateTo(PAGE_PATH)
-    await page.waitFor('view')
+    // await page.waitFor('view')
+    await page.waitFor(1000)
     const windowInfo = await program.callUniMethod('getWindowInfo');
     topSafeArea = windowInfo.safeAreaInsets.top;
     const longPressTargetRect = await page.data('longPressTargetRect')
