@@ -20,9 +20,10 @@
         :custom-style="alignContainerStyle"
         @clickoverlay="closePoster"
         @afterleave="onPosterAfterLeave">
-        <scroll-view class="poster-scroll" :style="posterScrollStyle">
+        <scroll-view class="poster-scroll" :style="posterScrollStyle" @click="closePoster">
           <view class="poster-dialog" :style="posterDialogStyle">
-            <view class="poster-card">
+            <!-- 阻止海报内部点击冒泡到透明区域，避免误触关闭弹层 -->
+            <view class="poster-card" @click.stop>
               <view class="poster-top-strip"></view>
 
               <view class="poster-head">
@@ -55,7 +56,7 @@
               </view>
             </view>
 
-            <view class="poster-close-wrap" @click="closePoster">
+            <view class="poster-close-wrap" @click.stop="closePoster">
               <view class="poster-close-circle">
                 <view class="poster-close-line poster-close-line-a"></view>
                 <view class="poster-close-line poster-close-line-b"></view>

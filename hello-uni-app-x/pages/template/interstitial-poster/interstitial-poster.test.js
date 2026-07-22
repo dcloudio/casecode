@@ -95,20 +95,22 @@ describe('template-interstitial-poster', () => {
       expect(posterCard).not.toBeNull()
       expect(closeCircle).not.toBeNull()
       const windowInfo = await program.callUniMethod('getWindowInfo')
+      const posterCardRect = await posterCard.offset()
       const posterCardSize = await posterCard.size()
       const closeRect = await closeCircle.offset()
       const closeSize = await closeCircle.size()
       const closeCenterX = closeRect.left + closeSize.width / 2
       const dialogHeight = posterCardSize.height + 18 + closeSize.height
       const dialogTop = (windowInfo.windowHeight - dialogHeight) / 2
-      const closeCenterY = closeRect.top + closeSize.height / 2
-      const overlayTapY = isWeb
-        ? closeCenterY
-        : dialogTop + posterCardSize.height + 18 + closeSize.height / 2
-      const tapPoint = {
-        x: Math.round(closeCenterX - 50),
-        y: Math.round(overlayTapY)
-      }
+      const tapPoint = isWeb
+        ? {
+          x: Math.round(windowInfo.windowWidth / 2),
+          y: Math.round(posterCardRect.top + posterCardSize.height + 9)
+        }
+        : {
+          x: Math.round(closeCenterX - 50),
+          y: Math.round(dialogTop + posterCardSize.height + 18 + closeSize.height / 2)
+        }
       await program.tap(tapPoint)
       await waitForPosterRendered(false)
     })

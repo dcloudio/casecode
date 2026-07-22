@@ -15,8 +15,11 @@
 		{
 			"path": "pages/tabBar/component",
 			"style": {
-				"navigationBarTitleText": "内置组件",
+				"navigationBarTitleText": "内置组件"
+        // #ifndef MP-WEIXIN
+        ,
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
+        // #endif
 			}
 		},
 		{
@@ -802,29 +805,41 @@
 		{
 			"path": "pages/tabBar/API",
 			"style": {
-				"navigationBarTitleText": "接口",
+				"navigationBarTitleText": "接口"
+        // #ifndef MP-WEIXIN
+        ,
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
+        // #endif
 			}
 		},
 		{
 			"path": "pages/tabBar/CSS",
 			"style": {
-				"navigationBarTitleText": "CSS",
+				"navigationBarTitleText": "CSS"
+        // #ifndef MP-WEIXIN
+        ,
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
+        // #endif
 			}
 		},
 		{
 			"path": "pages/tabBar/template",
 			"style": {
-				"navigationBarTitleText": "模板",
+				"navigationBarTitleText": "模板"
+        // #ifndef MP-WEIXIN
+        ,
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
+        // #endif
 			}
 		},
 		{
 			"path": "pages/tabBar/uni-ui",
 			"style": {
-				"navigationBarTitleText": "uni-ui",
+				"navigationBarTitleText": "uni-ui"
+        // #ifndef MP-WEIXIN
+        ,
 				"backgroundColorContent": "@tabBarPagebackgroundColorContent"
+        // #endif
 			}
 		},
 		{
@@ -3308,7 +3323,9 @@
 		"navigationBarTitleText": "Hello uniapp x",
 		"navigationBarTextStyle": "@navigationBarTextStyle",
 		"navigationBarBackgroundColor": "@navigationBarBackgroundColor",
+		// #ifndef MP-WEIXIN
 		"backgroundColorContent": "@backgroundColorContent",
+		// #endif
 		"backgroundColor": "@backgroundColor",
 		"backgroundTextStyle": "@backgroundTextStyle"
 		// #ifdef VUE3-VAPOR
