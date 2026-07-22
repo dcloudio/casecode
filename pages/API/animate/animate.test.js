@@ -17,7 +17,7 @@ describe('test title', () => {
   let page;
   beforeAll(async () => {
     page = await program.reLaunch('/pages/API/animate/animate');
-    await page.waitFor(3000);
+    await page.waitFor('view');
   });
 
   if (isApp) {

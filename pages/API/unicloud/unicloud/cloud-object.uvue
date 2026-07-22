@@ -131,7 +131,7 @@
       notify(res['showMessage'] as string, '提示')
     }).catch((err : any | null) => {
       const error = err as UniCloudError
-      console.error(error)
+      console.log(error)
     })
   }
 
@@ -150,7 +150,7 @@
       if (detail != null && detail['tips'] != null) {
         data.failErrDetailTips = detail['tips'] as string
       }
-      console.error(error)
+      console.log(error)
     })
   }
 
@@ -164,7 +164,7 @@
     }).catch((err : any | null) => {
       const error = err as UniCloudError
       data.failNumberErrCode = error.errCode as number
-      console.error(error)
+      console.log(error)
     })
   }
 
