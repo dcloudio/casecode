@@ -9,6 +9,7 @@ const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
 const platformInfos = platformInfo.split(' ');
 const version = parseInt(platformInfos[platformInfos.length - 1]);
+const isApp = isAndroid || isIOS || isHarmony
 
 describe('component-native-video', () => {
   if (isMP) {
