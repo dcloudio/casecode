@@ -91,7 +91,6 @@
       text_style_var_1_on.value = false
       view_container?.style?.setProperty("--var_flex_direction", "row")
       view_container?.style?.setProperty("--var_justify_content", "flex-end")
-      view_container?.style?.setProperty("--var_margin", "")
       // 与 style 中的写法表现不一致，且可能与非简写属性存在冲突
       // view_container?.style?.setProperty("border", "var(--var_border)")
       view_container?.style?.setProperty("background-color", "var(--background-color)")
