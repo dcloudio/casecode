@@ -5,7 +5,7 @@
     <page-head title="rich-text-highlight"></page-head>
     <page-intro content="本页用于测试 rich-text 手动选择文本时，高亮背景色、操作手柄色与文字颜色、文字背景色相同或交叉组合时的显示效果。"></page-intro>
     <!-- #ifdef APP-ANDROID || (APP-HARMONY && VUE3-VAPOR) || (APP-IOS && VUE3-VAPOR) -->
-    <enum-data title="设置mode（仅Android和鸿蒙蒸汽模式支持，默认值为web）" :items="modeItemTypes" @change="onModeChange"></enum-data>
+    <enum-data title="设置mode（iOS和鸿蒙平台仅蒸汽模式支持，默认值为web）" :items="modeItemTypes" @change="onModeChange"></enum-data>
     <!-- #endif -->
     <view class="uni-padding-wrap uni-common-mt">
       <view class="toolbar">

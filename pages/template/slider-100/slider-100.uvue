@@ -1,5 +1,5 @@
 <template>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   <scroll-view class="page">
   <!-- #endif -->
     <!-- #ifndef MP -->
@@ -10,7 +10,7 @@
       <slider ref="sliderRef" class="slider" v-for="(_, index) in 100" :key="index" @changing="sliderChanging"
         @change="sliderChange" :value="sliderValue" :block-size="20"  thumb-class="thumbclass"/>
     </view>
-  <!-- #ifdef APP -->
+  <!-- #ifdef APP && !VUE3-VAPOR -->
   </scroll-view>
   <!-- #endif -->
 </template>
