@@ -1,0 +1,38 @@
+# 依赖目录
+node_modules/
+
+# 构建产物
+unpackage/
+dist/
+
+# uni-app 插件市场模块（第三方模块不格式化）
+uni_modules/
+
+# 编辑器配置
+.vscode/
+.hbuilderx/
+.idea/
+.prettierignore
+.editorconfig
+.gitattributes
+.gitignore
+
+# 缓存文件
+.vite/
+.eslintcache
+
+# Mac系统文件
+.DS_Store
+
+# 锁文件
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 其他
+*.min.js
+*.min.css
+manifest.json
+static/
+changelog.md
+changelog.new.md
