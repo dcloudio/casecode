@@ -3,7 +3,6 @@ const isAndroid = platformInfo.startsWith('android')
 const isIos = platformInfo.startsWith('ios')
 const isHarmony = platformInfo.startsWith('harmony')
 const isApp = isAndroid || isIos || isHarmony
-const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 
 const PAGE_PATH = '/pages/tabBar/API'
 const COMPONENT_PAGE_PATH = '/pages/tabBar/component'

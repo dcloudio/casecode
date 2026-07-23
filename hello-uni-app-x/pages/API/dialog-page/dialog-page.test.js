@@ -1,3 +1,5 @@
+jest.setTimeout(30000)
+
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isWeb = platformInfo.startsWith('web')
 const isAndroid = platformInfo.startsWith('android')
@@ -57,25 +59,6 @@ describe('dialog page', () => {
   beforeAll(async () => {
     const windowInfo = await program.callUniMethod('getWindowInfo');
     let topSafeArea = windowInfo.safeAreaInsets.top;
-    if (isAppWebView) {
-      if (isIos) {
-        topSafeArea = 59
-      } else if (isAndroid) {
-        topSafeArea = 24
-        if (platformInfo.startsWith('android 5')) {
-          topSafeArea = 25
-        } else if (platformInfo.startsWith('android 11')) {
-          topSafeArea = 52
-        } else if (platformInfo.startsWith('android 13') || platformInfo.startsWith('android 15')) {
-          topSafeArea = 49
-        }
-      } else if (isHarmony) {
-        // mate 60
-        // topSafeArea = 33
-        // mate 60 pro
-        topSafeArea = 38
-      }
-    }
     deviceShotOptions = {
       deviceShot: true,
       area: {

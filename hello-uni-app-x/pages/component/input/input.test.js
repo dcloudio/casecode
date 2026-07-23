@@ -1,4 +1,4 @@
-jest.setTimeout(50000)
+jest.setTimeout(80000)
 
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')

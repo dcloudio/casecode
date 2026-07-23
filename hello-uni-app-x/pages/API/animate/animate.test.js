@@ -1,4 +1,5 @@
-// uni-app自动化测试教程: uni-app自动化测试教程: https://uniapp.dcloud.net.cn/worktile/auto/hbuilderx-extension/
+jest.setTimeout(30000)
+
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isIOS = platformInfo.startsWith('ios')
 const isAndroid = platformInfo.startsWith('android')

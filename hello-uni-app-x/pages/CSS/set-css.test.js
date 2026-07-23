@@ -755,6 +755,17 @@ describe('set css', () => {
               backgroundColorActualTextFlat: "#00f8",
               backgroundColorActualImageFlat: "#00f8"
           }
+        },
+        web: {
+          expectedValue: {
+              backgroundColor: "#00f8",
+              backgroundColorActual: "rgba(0, 0, 255, 0.533)",
+              backgroundColorActualText: "rgba(0, 0, 255, 0.533)",
+              backgroundColorActualImage: "rgba(0, 0, 255, 0.533)",
+              backgroundColorActualFlat: "rgba(0, 0, 255, 0.533)",
+              backgroundColorActualTextFlat: "rgba(0, 0, 255, 0.533)",
+              backgroundColorActualImageFlat: "rgba(0, 0, 255, 0.533)"
+          }
         }
       }
     },
@@ -1058,6 +1069,13 @@ describe('set css', () => {
         },
         harmony: {
           skipAssert: true
+        },
+        web: {
+          expectedValue: {
+            flexFlow: "row wrap",
+            flexFlowActual: "wrap",
+            flexFlowActualFlat: "wrap"
+          }
         }
       }
     },

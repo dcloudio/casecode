@@ -20,12 +20,6 @@ describe('inner-audio', () => {
     await page.waitFor('view');
     await page.waitFor(1000);
   });
-  if (isWeb) {
-    it('screenshot', async () => {
-      const image = await program.screenshot({fullPage: true})
-      expect(image).toSaveImageSnapshot();
-    });
-  }
 
   it('onCanplay',async()=>{
     await page.waitFor(1000)

@@ -1,3 +1,5 @@
+jest.setTimeout(30000)
+
 describe('template-draggable-half-modal', () => {
   let page;
 

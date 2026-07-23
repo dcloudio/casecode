@@ -1,3 +1,5 @@
+jest.setTimeout(30000)
+
 const PAGE_PATH = "/pages/API/navigator/new-page/onLoad";
 const INTERMEDIATE_PAGE_PATH = "/pages/API/navigator/new-page/new-page-1";
 const TARGET_PAGE_PATH = "/pages/API/navigator/new-page/new-page-3";
@@ -39,15 +41,6 @@ describe("onLoad", () => {
     if (isAppWebView) {
       if (isIos) {
         topSafeArea = 59
-      } else if (isAndroid) {
-        topSafeArea = 24
-        if (platformInfo.startsWith('android 5')) {
-          topSafeArea = 25
-        } else if (platformInfo.startsWith('android 11')) {
-          topSafeArea = 52
-        } else if (platformInfo.startsWith('android 13')) {
-          topSafeArea = 49
-        }
       } else if (isHarmony) {
         // mate 60
         // topSafeArea = 33

@@ -26,15 +26,6 @@ describe('API-toast', () => {
     if (isAppWebView) {
       if (isIos) {
         topSafeArea = 59
-      } else if (isAndroid) {
-        topSafeArea = 24
-        if (platformInfo.startsWith('android 5')) {
-          topSafeArea = 25
-        } else if (platformInfo.startsWith('android 11')) {
-          topSafeArea = 52
-        } else if (platformInfo.startsWith('android 13') || platformInfo.startsWith('android 15')) {
-          topSafeArea = 49
-        }
       } else if (isHarmony) {
         // mate 60
         // topSafeArea = 33
@@ -56,7 +47,7 @@ describe('API-toast', () => {
 
     page = await program.reLaunch(PAGE_PATH)
     await page.waitFor("view");
-    await page.waitFor(500);
+    await page.waitFor(1000);
   });
 
   async function screenShot(imgName) {
