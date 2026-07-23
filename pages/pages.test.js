@@ -480,6 +480,7 @@ pageBatches.forEach((batch, batchIndex) => {
       const currentPagePath = batch[localPageIndex];
       page = await program.reLaunch(currentPagePath);
       await page.waitFor(getWaitForTagName(currentPagePath));
+      await page.waitFor(500)
       console.log("Taking screenshot: ", pageIndex, currentPagePath);
       let fullPage = true;
 
