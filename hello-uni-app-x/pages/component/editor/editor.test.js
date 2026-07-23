@@ -22,6 +22,14 @@ describe('editor.uvue', () => {
 
   let page
 
+  const deviceShotOptions = {
+    deviceShot: true,
+    area: {
+      x: 0,
+      y: 0
+    }
+  }
+
   async function loadPage() {
     page = await program.reLaunch(PAGE_PATH)
     await page.waitFor('view')
@@ -104,7 +112,8 @@ describe('editor.uvue', () => {
   }
 
   async function screenshot(name, deviceShot = false) {
-    const image = await program.screenshot({ deviceShot, fullPage: true })
+    const options = deviceShot ? {fullPage: true} : deviceShotOptions
+    const image = await program.screenshot(options)
     expect(image).toSaveImageSnapshot({
       customSnapshotIdentifier() {
         return name
@@ -127,6 +136,8 @@ describe('editor.uvue', () => {
 
   beforeAll(async () => {
     await loadPage()
+    const windowInfo = await program.callUniMethod('getWindowInfo');
+    deviceShotOptions.area.y =  windowInfo.safeAreaInsets.top + 44
   })
 
   beforeEach(async () => {
