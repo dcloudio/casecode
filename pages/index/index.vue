@@ -94,6 +94,7 @@
           </view>
         </view>
       </view>
+      <app-tabbar current="index"></app-tabbar>
     </view>
   </view>
 </template>
@@ -138,6 +139,11 @@
 
       // 随机打乱谜语顺序，增加趣味性
       this.shuffleRiddles();
+    },
+    onShow() {
+      uni.hideTabBar({
+        animation: false,
+      });
     },
     methods: {
       // 随机打乱谜语顺序
@@ -289,7 +295,7 @@
     background-repeat: no-repeat;
     background-position: center top;
     background-size: 100% auto;
-    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    padding-bottom: 0;
   }
 
   .hero-image {

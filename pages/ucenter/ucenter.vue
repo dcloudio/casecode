@@ -96,6 +96,7 @@
 				<!-- #endif -->
 			</view>
 		</view>
+		<app-tabbar current="mine"></app-tabbar>
 	</view>
 </template>
 
@@ -122,7 +123,11 @@
 			return {}
 		},
 		onLoad() {},
-		onShow() {},
+		onShow() {
+			uni.hideTabBar({
+				animation: false
+			})
+		},
 		computed: {
 			userInfo() {
 				return store.userInfo
@@ -206,7 +211,7 @@ view {
 .ucenter {
 	min-height: 100vh;
 	background: #F7FAFC;
-	padding-bottom: 32px;
+	padding-bottom: 0;
 }
 
 /* 用户信息卡片 */
