@@ -101,6 +101,7 @@
 				</view>
 			</view>
 		</view>
+		<app-tabbar current="team"></app-tabbar>
 	</view>
 </template>
 
@@ -156,6 +157,11 @@ export default {
 	onLoad() {
 		this.loadTeamData()
 		this.loadStatsData()
+	},
+	onShow() {
+		uni.hideTabBar({
+			animation: false
+		})
 	},
 	onReachBottom() {
 		if (this.loadMoreStatus === 'more') {
@@ -345,7 +351,7 @@ view {
 .my-team {
 	min-height: 100vh;
 	background: #FAFAFA;
-	padding-bottom: 32px;
+	padding-bottom: 0;
 }
 
 /* 收益统计 */

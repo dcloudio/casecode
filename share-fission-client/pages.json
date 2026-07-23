@@ -242,10 +242,10 @@
 		"current": 1
 	},
 	"tabBar": {
-		"color": "#7A7E83",
-		"selectedColor": "#007AFF",
-		"borderStyle": "black",
-		"backgroundColor": "#FFFFFF",
+		"color": "#5A2C18",
+		"selectedColor": "#ED4B20",
+		"borderStyle": "white",
+		"backgroundColor": "#FFF8E7",
 		"list": [{
 			"pagePath": "pages/index/index",
 			"iconPath": "static/tabbar/index.png",

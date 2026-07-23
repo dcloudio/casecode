@@ -9,6 +9,12 @@
         "usingComponents" : true,
         "nvueStyleCompiler" : "uni-app",
         "compilerVersion" : 3,
+        "safearea" : {
+            "background" : "#FFF8E7",
+            "bottom" : {
+                "offset" : "none"
+            }
+        },
         "splashscreen" : {
             "alwaysShowBeforeRender" : true,
             "waiting" : true,

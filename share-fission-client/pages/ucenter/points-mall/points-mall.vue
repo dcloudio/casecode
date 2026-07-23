@@ -106,8 +106,7 @@
 				</view>
 			</view>
 		</scroll-view>
-
-
+		<app-tabbar current="mall"></app-tabbar>
 	</view>
 </template>
 
@@ -167,6 +166,9 @@ export default {
 		this.loadCategoriesAndProducts()
 	},
 	onShow() {
+		uni.hideTabBar({
+			animation: false
+		})
 		if (getApp().globalData.pointsNeedRefresh) {
 			getApp().globalData.pointsNeedRefresh = false
 			this.loadUserPoints()
@@ -540,7 +542,7 @@ page {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
 			grid-gap: 16px;
-			padding: 0 16px;
+			padding: 0 16px 16px;
 
 			.product-item {
 				background: #FFFFFF;
