@@ -27,9 +27,9 @@ describe('dialog page', () => {
   let lifecycleNum;
 
   const screenShotArea = {
-    x: 342,
+    x: 355,
     y:18,
-    width: 40,
+    width: 25,
     height: 20
   };
   if (isIos) {
