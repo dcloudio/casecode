@@ -68,6 +68,7 @@ describe('API-toast', () => {
 
   it("onload-toast-test", async () => {
     await screenShot('toast-onload')
+    await page.waitFor(2000);
   })
 
   it("icon-toast-test", async () => {
