@@ -76,11 +76,10 @@ describe('showActionSheet', () => {
 
     page = await program.navigateTo(PAGE_PATH)
     await page.waitFor('view');
-    if (isApp && !isAppWebView) {
-      if(isAndroid || isIos){
+    if (isApp) {
+      if((isAndroid || isIos) && !isAppWebView){
         await page.callMethod('setThemeAuto')
       }
-
       screenShotOptions = {
         area: {
           x: 0,

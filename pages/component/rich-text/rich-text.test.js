@@ -1,7 +1,6 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
-const isAndroid = platformInfo.startsWith('android')
 const isIos = platformInfo.startsWith('ios')
 const isHarmony = platformInfo.startsWith('harmony')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
@@ -28,15 +27,6 @@ describe('rich-text-test', () => {
       if (isAppWebView) {
         if (isIos) {
           topSafeArea = 59
-        } else if (isAndroid) {
-          topSafeArea = 24
-          if (platformInfo.startsWith('android 5')) {
-            topSafeArea = 25
-          } else if (platformInfo.startsWith('android 11')) {
-            topSafeArea = 52
-          } else if (platformInfo.startsWith('android 13') || platformInfo.startsWith('android 15')) {
-            topSafeArea = 49
-          }
         } else if (isHarmony) {
           // mate 60
           // topSafeArea = 33

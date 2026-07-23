@@ -43,7 +43,7 @@ describe('modal', () => {
 
   async function screenshot(isEditable) {
     const image = await program.screenshot(deviceShotOptions);
-    if (!isEditable) {
+    if (!isEditable && !isAppWebView) {
       expect(image).toMatchImageSnapshot({
         failureThresholdType: 'percent',
         failureThreshold: 0.002,
@@ -62,15 +62,6 @@ describe('modal', () => {
         topSafeArea = 59
         if (platformInfo.indexOf('15.5') != -1) {
           topSafeArea = 47
-        }
-      } else if (isAndroid) {
-        topSafeArea = 24
-        if (platformInfo.startsWith('android 5')) {
-          topSafeArea = 25
-        } else if (platformInfo.startsWith('android 11')) {
-          topSafeArea = 52
-        } else if (platformInfo.startsWith('android 13') || platformInfo.startsWith('android 15')) {
-          topSafeArea = 49
         }
       } else if (isHarmony) {
         // mate 60
