@@ -1,12 +1,12 @@
 <template>
   <view class="page">
     <!-- #ifndef MP -->
-    <fps :interval="50" @updateFps="onFpsUpdate" />
+    <fps :interval="50" />
     <!-- #endif -->
     <view class="header">
       <text class="header-info">{{ listData.length }}行 | 每行40+元素 | 共近20万元素 | 10+层嵌套 | 圆角边框阴影 | 视频</text>
     </view>
-    <list-view ref="listViewRef" style="flex: 1;" :scroll-with-animation="true" @scroll="onScroll" @scrollend="onScrollEnd">
+    <list-view ref="listViewRef" style="flex: 1;" :scroll-with-animation="true" @scrollend="onScrollEnd">
       <list-item v-for="(item, index) in listData" :key="item.id" :type="item.type">
 
         <!-- ========== Type 1: 单图配文 ========== -->
@@ -302,53 +302,59 @@
     })
   }
 
-  const fpsArr : number[] = []
-  const fpsTimeArr : number[] = []
-  let _startFpsCounter = false
   let startFpsCounter = false
-  function onFpsUpdate(fps : number) {
-    if (startFpsCounter) {
-      fpsArr.push(fps)
-      fpsTimeArr.push(Date.now())
+  type FpsMonitorResult = {
+    frameCount: number
+    duration: number
+    fpsArr: number[]
+  }
+  function startFpsMonitor(startTime: number, callback: (result: FpsMonitorResult) => void) {
+    let lastTime = startTime
+    let frameCount = 0
+    const fpsArr: number[] = []
+    function updateFPS(currentTime: number) {
+      frameCount++
+      const delta = currentTime - lastTime
+      lastTime = currentTime
+      const currentFps = Math.round(1000 / delta)
+      fpsArr.push(currentFps)
+      if (startFpsCounter) {
+        requestAnimationFrame((currentTime) => {
+          updateFPS(currentTime)
+        })
+      } else {
+        const duration = currentTime - startTime
+        callback({
+          frameCount,
+          duration,
+          fpsArr
+        })
+      }
     }
+    requestAnimationFrame((currentTime) => {
+      updateFPS(currentTime)
+    })
   }
   function scrollToTop() {
     if (listViewRef.value) {
-      fpsArr.length = 0
-      fpsTimeArr.length = 0
-      _startFpsCounter = true
-      listViewRef.value.scrollTop = 0
-    }
-  }
-  function onScroll() {
-    if(_startFpsCounter) {
-      startFpsCounter = true
-      _startFpsCounter = false
+      if(!startFpsCounter) {
+        startFpsCounter = true
+        requestAnimationFrame((currentTime) => {
+          startFpsMonitor(currentTime, (result) => {
+            const avgFps = result.frameCount / (result.duration / 1000)
+            const maxFps = Math.max(...result.fpsArr)
+            const minFps = Math.min(...result.fpsArr)
+            console.log(`平均FPS: ${avgFps.toFixed(2)}, 最高FPS: ${maxFps}, 最低FPS: ${minFps}`)
+          })
+          listViewRef.value!.scrollTop = 0
+        })
+      } else {
+        listViewRef.value!.scrollTop = 0
+      }
     }
   }
   function onScrollEnd() {
-    if (fpsArr.length === 0) {
-      return
-    }
-    // 使用fpsTimeArr计算时间加权平均fps
-    let avgFps = 0
-    if (fpsTimeArr.length > 1) {
-      const totalTime = fpsTimeArr[fpsTimeArr.length - 1] - fpsTimeArr[0]
-      let weightedSum = 0
-      for (let i = 1; i < fpsArr.length; i++) {
-        const duration = fpsTimeArr[i] - fpsTimeArr[i - 1]
-        weightedSum += fpsArr[i] * duration
-      }
-      avgFps = totalTime > 0 ? weightedSum / totalTime : 0
-    } else if (fpsArr.length > 0) {
-      avgFps = fpsArr[0]
-    }
-    const minFps = Math.min(...fpsArr)
-    const maxFps = Math.max(...fpsArr)
-    console.log(`平均FPS: ${avgFps.toFixed(2)}, 最高FPS: ${maxFps}, 最低FPS: ${minFps}`)
     startFpsCounter = false
-    fpsArr.length = 0
-    fpsTimeArr.length = 0
   }
 </script>
 
