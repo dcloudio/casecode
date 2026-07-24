@@ -15,7 +15,7 @@ describe('API-getImageInfo', () => {
 
   let page;
   beforeAll(async () => {
-    page = await program.reLaunch('/pages/API/get-image-info/get-image-info');
+    page = await program.reLaunch('/pages/API/get-image-info/get-image-info?autoTest=true');
     await page.waitFor('view');
     await page.waitFor(6000);
   });
