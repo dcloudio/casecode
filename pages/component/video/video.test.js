@@ -245,6 +245,9 @@ describe('component-native-video', () => {
     }
 
     it('test event fullscreenchange fullscreenclick controlstoggle', async () => {
+      if (isAndroid) {
+        await program.adbCommand('settings put secure immersive_mode_confirmations confirmed');
+      }
       await page.callMethod('requestFullScreen');
       start = Date.now();
       await page.waitFor(async () => {
@@ -257,23 +260,22 @@ describe('component-native-video', () => {
         direction: 'horizontal'
       });
       if (isAndroid) {
-        await program.adbCommand('settings put secure immersive_mode_confirmations confirmed');
         await page.waitFor(5000);
-        await program.adbCommand('input tap 10 10');
+        const res = await program.adbCommand('wm size');
+        const width = res.data.split(' ').at(-1).split('x')[0];
+        const height = res.data.split(' ').at(-1).split('x')[1];
+        await program.adbCommand(`input tap ${height / 2} ${width / 2}`);
         start = Date.now();
         await page.waitFor(async () => {
           return (await page.data('data.eventFullscreenclick')) || (Date.now() - start > 1000);
         });
-        const res = await program.adbCommand('wm size');
-        const width = res.data.split(' ').at(-1).split('x')[0];
-        const height = res.data.split(' ').at(-1).split('x')[1];
         const res2 = await program.adbCommand('wm density');
         const scale = res2.data.split(' ').at(-1) / 160;
         expect(await page.data('data.eventFullscreenclick')).toEqual({
           tagName: 'VIDEO',
           type: 'fullscreenclick',
-          screenX: parseInt(10 / scale),
-          screenY: parseInt(10 / scale),
+          screenX: parseInt(height / 2 / scale),
+          screenY: parseInt(width / 2 / scale),
           screenWidth: parseInt(height / scale),
           screenHeight: parseInt(width / scale)
         });
