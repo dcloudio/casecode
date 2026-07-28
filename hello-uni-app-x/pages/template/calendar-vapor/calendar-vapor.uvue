@@ -25,13 +25,15 @@
 
 		<!-- 日历主体 - Swiper -->
 		<swiper
+			:key="'calendar-swiper-' + calendarResizeKey"
 			class="calendar-swiper"
 			:circular="true"
 			:current="swiperCurrent"
+			:style="calendarSizeStyle"
 			@change="onSwiperChange"
 		>
-			<swiper-item v-for="(item, index) in swiperItems" :key="`${item.year}-${item.month}`">
-				<view class="calendar-grid" @click="onCalendarClick">
+			<swiper-item v-for="(item, index) in swiperItems" :key="`${item.year}-${item.month}`" class="calendar-swiper-item" :style="calendarSizeStyle">
+				<view class="calendar-grid" :style="calendarSizeStyle" @click="onCalendarClick">
 					<text flatten
 						v-for="(day, dayIndex) in item.days"
 						:key="dayIndex"
@@ -87,22 +89,26 @@
 		selectedWeekday: string
 		swiperCurrent: number
 		swiperItemCount: number
+		calendarWidth: number
+		calendarHeight: number
+		calendarResizeKey: number
 		visibleDayCount: number
 		selectedDayCount: number
 	}
 
 	const weekdays = ['一', '二', '三', '四', '五', '六', '日']
 
-	// 中国法定节假日（2025年示例。实际使用需自行装载节假日数据）
+	// 中国法定节假日（2026年，依据国务院办公厅放假安排）（实际使用需自行装载节假日数据）
 	const holidays = [
-		'2025-01-01',
-		'2025-01-28', '2025-01-29', '2025-01-30', '2025-01-31',
-		'2025-02-01', '2025-02-02', '2025-02-03', '2025-02-04',
-		'2025-04-04', '2025-04-05', '2025-04-06',
-		'2025-05-01', '2025-05-02', '2025-05-03',
-		'2025-05-31', '2025-06-01', '2025-06-02',
-		'2025-10-01', '2025-10-02', '2025-10-03',
-		'2025-10-04', '2025-10-05', '2025-10-06', '2025-10-07',
+		'2026-01-01', '2026-01-02', '2026-01-03',
+		'2026-02-15', '2026-02-16', '2026-02-17', '2026-02-18',
+		'2026-02-19', '2026-02-20', '2026-02-21', '2026-02-22', '2026-02-23',
+		'2026-04-04', '2026-04-05', '2026-04-06',
+		'2026-05-01', '2026-05-02', '2026-05-03', '2026-05-04', '2026-05-05',
+		'2026-06-19', '2026-06-20', '2026-06-21',
+		'2026-09-25', '2026-09-26', '2026-09-27',
+		'2026-10-01', '2026-10-02', '2026-10-03', '2026-10-04',
+		'2026-10-05', '2026-10-06', '2026-10-07',
 	]
 
 	const today = new Date()
@@ -112,8 +118,25 @@
 
 	const swiperCurrent = ref(1)
 	const swiperItems = ref([] as SwiperItem[])
+	const calendarCellHeight = 60
+	const calendarHeight = 420
+	const calendarWidth = ref(uni.getWindowInfo().windowWidth)
+	const calendarResizeKey = ref(0)
 
 	let lastItemIndex = 1;  // 初始显示的是 index 1
+
+	const calendarSizeStyle = computed(() : string => {
+		return `width: ${calendarWidth.value}px; height: ${calendarHeight}px;`
+	})
+
+	function updateCalendarSize(width : number) {
+		const nextWidth = Math.floor(width)
+		if (nextWidth <= 0 || nextWidth == calendarWidth.value) {
+			return
+		}
+		calendarWidth.value = nextWidth
+		calendarResizeKey.value++
+	}
 
 	// Picker的值
 	const pickerValue = computed(() : string => {
@@ -323,6 +346,7 @@
 		const targetYear = currentItem.year
 		const targetMonth = currentItem.month
 
+		swiperCurrent.value = current
 		switchToMonth(targetYear, targetMonth, current)
 	}
 
@@ -356,7 +380,7 @@
 		const cellWidth = rect.width / 7
     // console.log(cellWidth2);
     // console.log(cellWidth);
-		const cellHeight = 60 //高度60在css中有重复定义，如需修改请同步修改。在不需要显示农历、假日名称等更多信息时，可以减少高度
+		const cellHeight = calendarCellHeight //高度60在css中有重复定义，如需修改请同步修改。在不需要显示农历、假日名称等更多信息时，可以减少高度
 
 		// 计算点击的列（0-6）
     const col = Math.floor((e.clientX - rect.left) / cellWidth)
@@ -455,6 +479,14 @@
 	selectedDate.value = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`
 	initSwiperItems()
 
+	onReady(() => {
+		updateCalendarSize(uni.getWindowInfo().windowWidth)
+	})
+
+	onResize((options : OnResizeOptions) => {
+		updateCalendarSize(options.size.windowWidth)
+	})
+
   // 自动化测试
 	function jest_getState() : CalendarVaporState {
 		const currentItem = swiperItems.value[lastItemIndex]
@@ -484,6 +516,9 @@
 			selectedWeekday: selectedWeekday.value,
 			swiperCurrent: swiperCurrent.value,
 			swiperItemCount: swiperItems.value.length,
+			calendarWidth: calendarWidth.value,
+			calendarHeight: calendarHeight,
+			calendarResizeKey: calendarResizeKey.value,
 			visibleDayCount: visibleDayCount,
 			selectedDayCount: selectedDayCount
 		}
@@ -592,9 +627,14 @@
 		background-color: #ffffff;
 	}
 
+	.calendar-swiper-item {
+		height: 420px;
+	}
+
 	.calendar-grid {
 		flex-direction: row;
 		flex-wrap: wrap;
+		height: 420px;
 	}
 
 	.day-text {
