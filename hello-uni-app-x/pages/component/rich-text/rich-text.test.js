@@ -27,21 +27,32 @@ describe('rich-text-test', () => {
       if (isAppWebView) {
         if (isIos) {
           topSafeArea = 59
+        } else if (isAndroid) {
+          topSafeArea = 24
+          if (platformInfo.startsWith('android 5')) {
+            topSafeArea = 25
+          } else if (platformInfo.startsWith('android 11')) {
+            topSafeArea = 52
+          } else if (platformInfo.startsWith('android 12')) {
+            topSafeArea = 24
+          } else if (platformInfo.startsWith('android 13') || platformInfo.startsWith('android 15')) {
+            topSafeArea = 49
+          }
         } else if (isHarmony) {
-          // mate 60
-          // topSafeArea = 33
-          // mate 60 pro
           topSafeArea = 38
         }
       }
+      const top = topSafeArea + 44
+      const bottom = Math.min(top + windowInfo.windowHeight, windowInfo.safeArea.bottom)
+      const left = windowInfo.safeArea.left
+      const right = windowInfo.safeArea.right - 10
       deviceShotOptions = {
         deviceShot: true,
         area: {
-          x: 0,
-          y: topSafeArea + 44,
-          width: windowInfo.safeArea.width - 8,
-          // 规避底部手势导航栏的影响
-          height: windowInfo.safeArea.height - 40
+          x: left,
+          y: top,
+          width: right - left,
+          height: bottom - top
         },
       }
     }
@@ -49,6 +60,62 @@ describe('rich-text-test', () => {
 
   async function setPageData(newData) {
     return await page.setData({ data: newData });
+  }
+
+  if (isApp && !isAppWebView) {
+    it('rich-text user-select true', async () => {
+      await setPageData({ userSelect: true })
+      await page.waitFor(300)
+      await program.pageScrollTo(99999)
+      await page.waitFor(500)
+      await page.callMethod('queryUserSelectRect')
+      await page.waitFor(500)
+      const rectX = await page.data('data.userSelectRectX')
+      const rectY = await page.data('data.userSelectRectY')
+      const rectWidth = await page.data('data.userSelectRectWidth')
+      const rectHeight = await page.data('data.userSelectRectHeight')
+      console.log('user-select true rect:', { rectX, rectY, rectWidth, rectHeight })
+      const tapPoint = {
+        x: Math.round(rectX + 20),
+        y: Math.round(rectY + 10)
+      }
+      console.log('user-select true tap point:', tapPoint)
+      await program.tap({
+        x: tapPoint.x,
+        y: tapPoint.y,
+        duration: 3000,
+      })
+      await page.waitFor(500)
+      const image = await program.screenshot({ fullPage: true })
+      expect(image).toSaveImageSnapshot()
+    })
+
+    it('rich-text user-select false', async () => {
+      await setPageData({ userSelect: false })
+      await page.waitFor(300)
+      await program.pageScrollTo(99999)
+      await page.waitFor(500)
+      await page.callMethod('queryUserSelectRect')
+      await page.waitFor(500)
+      const rectX = await page.data('data.userSelectRectX')
+      const rectY = await page.data('data.userSelectRectY')
+      const rectWidth = await page.data('data.userSelectRectWidth')
+      const rectHeight = await page.data('data.userSelectRectHeight')
+      console.log('user-select false rect:', { rectX, rectY, rectWidth, rectHeight })
+      const tapPoint = {
+        x: Math.round(rectX + 20),
+        y: Math.round(rectY + 10)
+      }
+      console.log('user-select false tap point:', tapPoint)
+      await program.tap({
+        x: tapPoint.x,
+        y: tapPoint.y,
+        duration: 3000,
+      })
+      await page.waitFor(500)
+      const image = await program.screenshot({ fullPage: true })
+      expect(image).toSaveImageSnapshot()
+    })
   }
 
   it('richt-text-height', async () => {

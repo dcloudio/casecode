@@ -57,18 +57,29 @@ describe('dialog page', () => {
   }
 
   beforeAll(async () => {
+    page = await program.reLaunch(FIRST_PAGE_PATH)
+    await page.waitFor('view');
+
+    if (isAndroid) {
+      await program.adbCommand('settings put secure immersive_mode_confirmations confirmed')
+    }
+
     const windowInfo = await program.callUniMethod('getWindowInfo');
     let topSafeArea = windowInfo.safeAreaInsets.top;
+    const top = topSafeArea + 44
+    const bottom = windowInfo.safeArea.bottom
+    const left = windowInfo.safeArea.left
+    const right = windowInfo.safeArea.right
     deviceShotOptions = {
       deviceShot: true,
       area: {
-        x: 0,
-        y: topSafeArea + 44,
+        x: left,
+        y: top,
+        width: right - left,
+        height: bottom - top
       },
     };
 
-    page = await program.reLaunch(FIRST_PAGE_PATH)
-    await page.waitFor('view');
     initLifeCycleNum = await page.callMethod('getLifeCycleNum');
     await page.callMethod('setLifeCycleNum', 0)
     lifecycleNum = await page.callMethod('getLifeCycleNum')

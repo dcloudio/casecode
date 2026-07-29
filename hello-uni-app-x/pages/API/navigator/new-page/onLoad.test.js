@@ -36,35 +36,47 @@ describe("onLoad", () => {
 
   let deviceShotOptions = {}
   beforeAll(async () => {
+    page = await program.reLaunch(INTERMEDIATE_PAGE_PATH);
+    await page.waitFor('view');
     const windowInfo = await program.callUniMethod('getWindowInfo');
     let topSafeArea = windowInfo.safeAreaInsets.top;
     if (isAppWebView) {
       if (isIos) {
         topSafeArea = 59
+      } else if (isAndroid) {
+        topSafeArea = 24
+        if (platformInfo.startsWith('android 5')) {
+          topSafeArea = 25
+        } else if (platformInfo.startsWith('android 11')) {
+          topSafeArea = 52
+        } else if (platformInfo.startsWith('android 12')) {
+          topSafeArea = 24
+        } else if (platformInfo.startsWith('android 13') || platformInfo.startsWith('android 15')) {
+          topSafeArea = 49
+        }
       } else if (isHarmony) {
-        // mate 60
-        // topSafeArea = 33
-        // mate 60 pro
         topSafeArea = 38
       }
     }
+    const top = topSafeArea + 44
+    const bottom = Math.min(top + windowInfo.windowHeight, windowInfo.safeArea.bottom)
+    const left = windowInfo.safeArea.left
+    const right = windowInfo.safeArea.right
     deviceShotOptions = {
       deviceShot: true,
       area: {
-        x: 0,
-        y: topSafeArea + 44,
+        x: left,
+        y: top,
+        width: right - left,
+        height: bottom - top
       },
-    };
+    }
   })
 
   it("adjustData", async () => {
-    page = await program.reLaunch(INTERMEDIATE_PAGE_PATH);
-    await page.waitFor('view');
     await page.callMethod("navigateToOnLoadWithType", "adjustData");
     await page.waitFor(1000);
-    const image = await program.screenshot({
-      fullPage: true
-    });
+    const image = await program.screenshot(deviceShotOptions);
     expect(image).toSaveImageSnapshot();
   });
   it("navigateTo", async () => {

@@ -41,23 +41,27 @@ describe('preview-image', () => {
             topSafeArea = 25
           } else if (platformInfo.startsWith('android 11')) {
             topSafeArea = 52
+          } else if (platformInfo.startsWith('android 12')) {
+            topSafeArea = 24
           } else if (platformInfo.startsWith('android 13') || platformInfo.startsWith('android 15')) {
             topSafeArea = 49
           }
         } else if (isHarmony) {
-          // mate 60
-          // topSafeArea = 33
-          // mate 60 pro
           topSafeArea = 38
         }
       }
+      // previewImage is a full-screen overlay without the page navigation bar.
+      const top = topSafeArea
+      const bottom = windowInfo.safeArea.bottom
+      const left = windowInfo.safeArea.left
+      const right = windowInfo.safeArea.right - 10
       screenShotOptions = {
+        deviceShot: true,
         area: {
-          x: 0,
-          y: topSafeArea + 44,
-          width: windowInfo.safeArea.width - 10,
-          // 规避底部手势导航栏的影响
-          height: windowInfo.safeArea.height - 40
+          x: left,
+          y: top,
+          width: right - left,
+          height: bottom - top
         },
       }
     }
