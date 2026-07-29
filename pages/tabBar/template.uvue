@@ -79,7 +79,16 @@
       url: '4050',
       name: 'view和text性能测试',
       open: false,
-      pages: [] as Page[],
+      pages: [
+        {
+          name: '拍平示例',
+          url: '4050/4050'
+        },
+        {
+          name: '非拍平示例',
+          url: '4050/4050-no-flatten'
+        }
+      ] as Page[],
     },
     {
       id: '2000-image',
@@ -354,6 +363,9 @@
   function resolvePageUrl(url : string) : string {
     if (url.indexOf('platform') > -1 || url.indexOf('/pages/') == 0) {
       return url
+    }
+    if (url.indexOf('/') > -1) {
+      return `/pages/template/${url}`
     }
     return `/pages/template/${url}/${url}`
   }
