@@ -1,9 +1,19 @@
-jest.setTimeout(30000)
-
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
 const isAndroid = platformInfo.startsWith('android');
+const isHarmony = platformInfo.startsWith('harmony')
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
+
+async function screenshot(name) {
+  const image = await program.screenshot({
+    fullPage: true
+  })
+  expect(image).toSaveImageSnapshot({
+    customSnapshotIdentifier() {
+      return name
+    }
+  })
+}
 
 describe("rich-text-tags", () => {
   if (isMP || isAppWebView) {
@@ -17,9 +27,8 @@ describe("rich-text-tags", () => {
   it("screenshot", async () => {
     page = await program.reLaunch('/pages/component/rich-text/rich-text-tags');
     await page.waitFor('view');
-    await page.waitFor(1000)
-    const image = await program.screenshot({ fullPage: true });
-    expect(image).toSaveImageSnapshot();
+    await page.waitFor(4000)
+    await screenshot('rich-text-tags-web')
   })
 
   if (isAndroid) {
@@ -30,8 +39,7 @@ describe("rich-text-tags", () => {
         }
       });
       await page.waitFor(1000);
-      const image = await program.screenshot({ fullPage: true });
-      expect(image).toSaveImageSnapshot();
+    await screenshot('rich-text-tags-native')
     });
   }
 });
