@@ -1,5 +1,9 @@
 <template>
-  <view class="app-tabbar-space" :style="safeAreaStyle">
+  <view
+    class="app-tabbar-space"
+    :class="{ 'app-tabbar-space-compact': compact }"
+    :style="safeAreaStyle"
+  >
     <view class="app-tabbar" role="tablist" aria-label="主导航">
       <view class="tabbar-frame">
         <view class="tabbar-cloud tabbar-cloud-left" aria-hidden="true">
@@ -25,7 +29,7 @@
             :hover-class="item.key === current ? 'none' : 'tabbar-item-pressed'"
             @click="switchTo(item)"
           >
-            <image class="tabbar-icon" :src="item.key === current ? item.selectedIconPath : item.iconPath" mode="aspectFit" draggable="false"></image>
+            <image class="tabbar-icon" :src="item.key === current ? item.selectedIconPath : item.iconPath" mode="aspectFit" :draggable="false"></image>
             <text class="tabbar-label">{{ item.text }}</text>
           </view>
         </view>
@@ -44,6 +48,10 @@
         validator(value) {
           return ['index', 'mall', 'team', 'mine'].includes(value);
         },
+      },
+      compact: {
+        type: Boolean,
+        default: false,
       },
     },
     data() {
@@ -143,6 +151,10 @@
     flex: 0 0 auto;
   }
 
+  .app-tabbar-space-compact {
+    height: calc(68px + var(--tabbar-safe-area-bottom, 0px));
+  }
+
   .app-tabbar {
     position: fixed;
     right: 0;
@@ -154,6 +166,11 @@
     margin: 0 auto;
   }
 
+  .app-tabbar-space-compact .app-tabbar {
+    width: calc(100% - 32px);
+    max-width: 398px;
+  }
+
   .tabbar-frame {
     position: relative;
     height: calc(72px + var(--tabbar-safe-area-bottom, 0px));
@@ -163,6 +180,11 @@
     border-radius: 27px 27px 24px 24px;
     background: linear-gradient(180deg, rgba(255, 253, 245, 0.98) 0%, rgba(255, 246, 224, 0.98) 100%);
     box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.96), inset 0 0 0 3px rgba(221, 158, 72, 0.24), 0 -4px 14px rgba(125, 66, 19, 0.11), 0 5px 12px rgba(125, 66, 19, 0.2);
+  }
+
+  .app-tabbar-space-compact .tabbar-frame {
+    height: calc(64px + var(--tabbar-safe-area-bottom, 0px));
+    border-radius: 25px 25px 22px 22px;
   }
 
   .tabbar-frame::after {
@@ -187,6 +209,10 @@
     align-items: stretch;
   }
 
+  .app-tabbar-space-compact .tabbar-items {
+    height: 54px;
+  }
+
   .tabbar-item {
     position: relative;
     display: flex;
@@ -199,6 +225,10 @@
     border: 1px solid transparent;
     border-radius: 20px;
     transition: background-color 120ms ease, border-color 120ms ease, opacity 120ms ease, transform 120ms ease;
+  }
+
+  .app-tabbar-space-compact .tabbar-item {
+    border-radius: 18px;
   }
 
   .tabbar-item-active {
@@ -220,6 +250,11 @@
     filter: brightness(0) saturate(100%) invert(16%) sepia(42%) saturate(1323%) hue-rotate(346deg) brightness(88%) contrast(96%);
   }
 
+  .app-tabbar-space-compact .tabbar-icon {
+    width: 27px;
+    height: 27px;
+  }
+
   .tabbar-item-active .tabbar-icon {
     filter: brightness(0) saturate(100%) invert(37%) sepia(96%) saturate(2593%) hue-rotate(353deg) brightness(99%) contrast(93%);
   }
@@ -237,6 +272,12 @@
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .app-tabbar-space-compact .tabbar-label {
+    margin-top: 1px;
+    font-size: 12px;
+    line-height: 16px;
   }
 
   .tabbar-item-active .tabbar-label {
