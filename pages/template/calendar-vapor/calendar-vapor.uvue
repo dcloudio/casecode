@@ -25,7 +25,6 @@
 
 		<!-- 日历主体 - Swiper -->
 		<swiper
-			:key="'calendar-swiper-' + calendarResizeKey"
 			class="calendar-swiper"
 			:circular="true"
 			:current="swiperCurrent"
@@ -91,14 +90,13 @@
 		swiperItemCount: number
 		calendarWidth: number
 		calendarHeight: number
-		calendarResizeKey: number
 		visibleDayCount: number
 		selectedDayCount: number
 	}
 
 	const weekdays = ['一', '二', '三', '四', '五', '六', '日']
 
-	// 中国法定节假日（2026年，依据国务院办公厅放假安排）（实际使用需自行装载节假日数据）
+	// 中国法定节假日（2026年示例。实际使用需自行装载节假日数据）
 	const holidays = [
 		'2026-01-01', '2026-01-02', '2026-01-03',
 		'2026-02-15', '2026-02-16', '2026-02-17', '2026-02-18',
@@ -121,7 +119,6 @@
 	const calendarCellHeight = 60
 	const calendarHeight = 420
 	const calendarWidth = ref(uni.getWindowInfo().windowWidth)
-	const calendarResizeKey = ref(0)
 
 	let lastItemIndex = 1;  // 初始显示的是 index 1
 
@@ -135,7 +132,6 @@
 			return
 		}
 		calendarWidth.value = nextWidth
-		calendarResizeKey.value++
 	}
 
 	// Picker的值
@@ -518,7 +514,6 @@
 			swiperItemCount: swiperItems.value.length,
 			calendarWidth: calendarWidth.value,
 			calendarHeight: calendarHeight,
-			calendarResizeKey: calendarResizeKey.value,
 			visibleDayCount: visibleDayCount,
 			selectedDayCount: selectedDayCount
 		}

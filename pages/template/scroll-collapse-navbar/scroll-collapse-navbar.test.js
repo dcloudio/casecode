@@ -8,13 +8,7 @@ const PAGE_PATH = '/pages/template/scroll-collapse-navbar/scroll-collapse-navbar
 
 describe('scroll-collapse-navbar', () => {
   let page
-  let deviceShotOptions = {
-      deviceShot: true,
-      area: {
-        x: 0,
-        y: 0,
-      },
-    };
+  let screenShotOptions = {};
   beforeAll(async () => {
     page = await program.reLaunch(PAGE_PATH)
     await page.waitFor('view')
@@ -24,17 +18,39 @@ describe('scroll-collapse-navbar', () => {
     if (isAppWebView) {
       if (isIos) {
         topSafeArea = 59
+      } else if (isAndroid) {
+        topSafeArea = 24
+        if (platformInfo.startsWith('android 5')) {
+          topSafeArea = 25
+        } else if (platformInfo.startsWith('android 11')) {
+          topSafeArea = 52
+        } else if (platformInfo.startsWith('android 12')) {
+          topSafeArea = 24
+        } else if (platformInfo.startsWith('android 13') || platformInfo.startsWith('android 15')) {
+          topSafeArea = 49
+        }
       } else if (isHarmony) {
-        // mate 60
-        // topSafeArea = 33
-        // mate 60 pro
         topSafeArea = 38
       }
     }
-    deviceShotOptions.area.y = topSafeArea
+    // navigationStyle is custom, so only exclude the system status bar.
+    // The collapsing navbar itself is page content covered by this test.
+    const top = topSafeArea
+    const bottom = windowInfo.safeArea.bottom
+    const left = windowInfo.safeArea.left
+    const right = windowInfo.safeArea.right
+    screenShotOptions = {
+      deviceShot: true,
+      area: {
+        x: left,
+        y: top,
+        width: right - left,
+        height: bottom - top
+      },
+    }
   })
   it('screenshot before scroll', async () => {
-    const image = await program.screenshot(deviceShotOptions);
+    const image = await program.screenshot(screenShotOptions);
     expect(image).toSaveImageSnapshot();
   });
   it('screenshot after scroll', async () => {
@@ -43,7 +59,7 @@ describe('scroll-collapse-navbar', () => {
     const currentScrollTop = await page.callMethod('jest_getScrollTop')
     expect(currentScrollTop).toBeGreaterThan(399)
 
-    const image = await program.screenshot(deviceShotOptions);
+    const image = await program.screenshot(screenShotOptions);
     expect(image).toSaveImageSnapshot();
   });
 })

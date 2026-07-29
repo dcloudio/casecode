@@ -812,8 +812,8 @@
 
   .target {
     width: 100%;
-    height: 200rpx;
-    border-radius: 10rpx;
+    height: 200px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
