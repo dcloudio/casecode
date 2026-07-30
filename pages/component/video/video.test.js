@@ -276,8 +276,8 @@ describe('component-native-video', () => {
           type: 'fullscreenclick',
           screenX: parseInt(height / 2 / scale),
           screenY: parseInt(width / 2 / scale),
-          screenWidth: parseInt(width / scale),
-          screenHeight: 200
+          screenWidth: parseInt(height / scale),
+          screenHeight: parseInt(width / scale)
         });
         start = Date.now();
         await page.waitFor(async () => {
