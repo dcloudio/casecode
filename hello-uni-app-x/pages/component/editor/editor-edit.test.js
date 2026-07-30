@@ -70,7 +70,6 @@ describe('editor-edit.uvue', () => {
       blurTest: false,
       clearTest: false,
       getContentDeltaTest: null,
-      formatPainterActive: false,
       activeSheet: ''
     })
     await setEditorContents([
