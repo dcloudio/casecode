@@ -2652,6 +2652,7 @@
 						"navigationBarBackgroundColor": "#0f172a",
 						"navigationBarTextStyle": "white",
 						"backgroundColorContent": "#0f172a",
+						"backgroundColorBottom": "#0f172a",
 						"disableScroll": true
 					}
 				},
@@ -2688,7 +2689,8 @@
 				{
 					"path": "index-bar/index-bar",
 					"style": {
-						"navigationBarTitleText": "uni-index-bar"
+						"navigationBarTitleText": "uni-index-bar",
+						"backgroundColorContent": "#ffffff"
 					}
 				}
 			]
