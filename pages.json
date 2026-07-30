@@ -644,25 +644,6 @@
 			}
 		},
 		{
-			"path": "pages/component/editor/editor",
-			"group": "0,3,4",
-			"style": {
-				"navigationBarTitleText": "editor | 富文本编辑器"
-			}
-		},
-		{
-			"path": "pages/component/editor/editor-edit",
-			"style": {
-				"navigationBarTitleText": "editor | 编辑模板"
-			}
-		},
-		{
-			"path": "pages/component/editor/editor-preview",
-			"style": {
-				"navigationBarTitleText": "editor | 预览"
-			}
-		},
-		{
 			"path": "pages/component/canvas/canvas",
 			"group": "0,7",
 			"style": {
@@ -962,6 +943,30 @@
 		}
 	],
 	"subPackages": [
+		{
+			"root": "pages/component/editor",
+			"pages": [
+				{
+					"path": "editor",
+					"group": "0,3,4",
+					"style": {
+						"navigationBarTitleText": "editor | 富文本编辑器"
+					}
+				},
+				{
+					"path": "editor-edit",
+					"style": {
+						"navigationBarTitleText": "editor | 编辑模板"
+					}
+				},
+				{
+					"path": "editor-preview",
+					"style": {
+						"navigationBarTitleText": "editor | 预览"
+					}
+				}
+			]
+		},
 		{
 			"root": "pages/API",
 			"pages": [
