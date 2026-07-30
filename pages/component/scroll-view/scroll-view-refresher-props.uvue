@@ -4,7 +4,7 @@
   <!-- #endif -->
     <page-head title="下拉刷新的scroll-view属性示例"></page-head>
     <view class="uni-margin-wrap">
-      <scroll-view direction="vertical" :refresher-enabled="refresherEnabled" :refresher-threshold="refresherThreshold"
+      <scroll-view id="refresher-scroll-view" direction="vertical" :bounces="bounces" :refresher-enabled="refresherEnabled" :refresher-threshold="refresherThreshold"
         :refresher-default-style="refresherDefaultStyle" :refresher-background="refresherBackground"
         <!-- #ifdef APP-ANDROID && VUE3-VAPOR -->
         :android-overscroll="androidOverscroll"
@@ -32,9 +32,14 @@
           @change="refresherTriggered=!refresherTriggered"></switch>
       </view>
 
+      <view class="uni-list-cell uni-list-cell-padding">
+        <text>是否开启回弹效果</text>
+        <switch :checked="bounces" @change="handleBouncesChange"></switch>
+      </view>
+
       <!-- #ifdef APP-ANDROID && VUE3-VAPOR -->
       <view class="uni-list-cell uni-list-cell-padding">
-        <text>是否开启下拉刷新回弹效果</text>
+        <text>是否开启弹簧回弹效果</text>
         <switch :checked="androidOverscroll" @change="handleAndroidOverscrollChange"></switch>
       </view>
       <!-- #endif -->
@@ -87,9 +92,11 @@
   }
 
   const items = ref<Item[]>([])
+  const bounces = ref(true)
   const refresherEnabled = ref(true)
   const refresherTriggered = ref(false)
   const androidOverscroll = ref(false)
+  const refresherRefreshCount = ref(0)
   const refresherThreshold = ref(45)
   const refresherDefaultStyle = ref("black")
   const refresherBackground = ref("transparent")
@@ -157,6 +164,10 @@
     androidOverscroll.value = !androidOverscroll.value;
   }
 
+  function handleBouncesChange() {
+    bounces.value = !bounces.value
+  }
+
   function handleRefresherBackgroundChange(event : UniRadioGroupChangeEvent) {
     refresherBackground.value = event.detail.value;
   }
@@ -172,6 +183,7 @@
 
   function refresherrefresh() {
     console.log("下拉刷新被触发");
+    refresherRefreshCount.value += 1
     refresherTriggered.value = true;
     //不能同时关闭下拉状态和关闭下拉刷新。
     setTimeout(() => {
@@ -186,6 +198,55 @@
   function refresherabort() {
     console.log("下拉刷新被中止");
   }
+
+  // 自动化测试专用
+  function toggleAndroidOverscrollForTest() {
+    handleAndroidOverscrollChange()
+  }
+
+  // 自动化测试专用
+  function setAndroidOverscrollForTest(value : boolean) {
+    androidOverscroll.value = value
+  }
+
+  // 自动化测试专用
+  function setRefresherEnabledForTest(value : boolean) {
+    refresherTriggered.value = false
+    refresherEnabled.value = value
+  }
+
+  // 自动化测试专用
+  function getAndroidOverscrollForTest() : boolean {
+    return androidOverscroll.value
+  }
+
+  // 自动化测试专用
+  function getRefresherRefreshCountForTest() : number {
+    return refresherRefreshCount.value
+  }
+
+  // 自动化测试专用
+  function getBoundingClientRectForTest() : DOMRect {
+    return uni.getElementById('refresher-scroll-view')?.getBoundingClientRect()!
+  }
+
+  // 自动化测试专用
+  function resetAndroidOverscrollForTest() {
+    androidOverscroll.value = false
+    refresherEnabled.value = true
+    refresherTriggered.value = false
+    refresherRefreshCount.value = 0
+  }
+
+  defineExpose({
+    getBoundingClientRectForTest,
+    getAndroidOverscrollForTest,
+    getRefresherRefreshCountForTest,
+    resetAndroidOverscrollForTest,
+    setAndroidOverscrollForTest,
+    setRefresherEnabledForTest,
+    toggleAndroidOverscrollForTest,
+  })
 </script>
 
 <style>
