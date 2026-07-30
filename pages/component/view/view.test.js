@@ -70,7 +70,8 @@ describe('view-test', () => {
       const viewChild1 = await page.$('#view-child1')
       const bgColor = await viewChild1.style('background-color')
       if (isDom2) {
-        expect(['#179B16FF', 'rgb(23,155,22)']).toContain(bgColor)
+        const normalizedBgColor = bgColor.toLowerCase().replace(/\s/g, '')
+        expect(['#179b16ff', 'rgb(23,155,22)']).toContain(normalizedBgColor)
       } else {
         expect(bgColor).toBe('#179b16')
       }

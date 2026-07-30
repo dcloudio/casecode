@@ -98,6 +98,9 @@
       timeout: 600000,
       method: method,
       enableChunked: true,
+      // #ifndef APP-ANDROID && UNI-APP-X && !VUE3-VAPOR
+      dataType: 'text',
+      // #endif
       success: (response) => {
         console.log('request success', JSON.stringify(response.data))
         console.log('request success header is :', JSON.stringify(response.header))
