@@ -85,7 +85,6 @@
       })
       .then(res => {
         uni.hideLoading()
-        console.log(res)
         data.addId = res.id
         notify(`新增成功，id: ${res.id}`, '提示')
       })
@@ -111,8 +110,6 @@
       }])
       .then((res) => {
         uni.hideLoading()
-        console.log(res)
-        console.log('JSON.stringify(res.inserted)', JSON.stringify(res.inserted))
         data.batchAddIds = res.ids
         data.batchAddinserted = res.inserted
         notify(`新增成功条数${res.inserted}, id列表: ${res.ids.join(',')}`, '提示')
@@ -140,7 +137,6 @@
       .get()
       .then(res => {
         uni.hideLoading()
-        console.log(res)
         data.getData = res.data
         notify(`获取成功，取到了${res.data.length}条数据`, '提示')
       })
@@ -168,7 +164,6 @@
       .get()
       .then(res => {
         uni.hideLoading()
-        console.log(res)
         data.getWithCommandData = res.data
         notify(`获取成功，取到了${res.data.length}条数据`, '提示')
       })
@@ -193,7 +188,6 @@
       })
       .then(res => {
         uni.hideLoading()
-        console.log(res)
         data.updateUpdated = res.updated
         notify(`更新成功，更新了${res.updated}条数据`, '提示')
       })
@@ -216,7 +210,6 @@
       .remove()
       .then(res => {
         uni.hideLoading()
-        console.log(res)
         data.removeDeleted = res.deleted
         notify(`删除成功，删掉了${res.deleted}条数据`, '提示')
       })
@@ -293,7 +286,6 @@
       .get()
       .then(res => {
         uni.hideLoading()
-        console.log(res)
         data.lookupData = res.data
         notify(`联表查询成功，取到了${res.data.length}条数据`, '提示')
       })

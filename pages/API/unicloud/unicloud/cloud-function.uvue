@@ -98,7 +98,6 @@ async function callFunction(): Promise<void> {
     const detail = result.get('detail') as UTSJSONObject
     data.callFunctionResult_Detail_functionName = detail.get('functionName') as string
     console.log('callFunctionResult_Detail_functionName: ' + data.callFunctionResult_Detail_functionName)
-    console.log(JSON.stringify(result))
     uni.hideLoading()
     notify(result['showMessage'] as string, '提示')
   }).catch((err : any | null) => {

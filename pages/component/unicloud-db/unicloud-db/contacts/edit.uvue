@@ -26,7 +26,7 @@
           <text class="form-item-label">性别</text>
           <radio-group class="radio-list" name="gender">
             <view class="radio-item" v-for="(item, _) in genderList" :key="item.value">
-              <radio :value="item.value" :checked="item.value == data[0].getNumber('gender')" />
+              <radio :value="item.value.toString()" :checked="item.value == data[0].getNumber('gender')" />
               <text>{{item.text}}</text>
             </view>
           </radio-group>

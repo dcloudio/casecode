@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="uts">
-  
+
 
   // Data
   const title = ref('云存储')
@@ -37,7 +37,6 @@
         })
           .then(function (res) {
             uni.hideLoading()
-            console.log(res)
             uni.showModal({
               content: '上传成功',
               showCancel: false
@@ -66,7 +65,6 @@
       type: 'image'
     }).then(function (res) {
       uni.hideLoading()
-      console.log(res)
       uni.showModal({
         content: '上传成功',
         showCancel: false

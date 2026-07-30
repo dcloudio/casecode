@@ -54,7 +54,6 @@ async function receiveMessage() {
       sseChannel
     }
   } as UniCloudCallFunctionOptions)
-  console.log(res)
 }
 
 defineExpose({

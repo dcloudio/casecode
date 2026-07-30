@@ -9,9 +9,14 @@
         <switch @change="onChange"></switch>
         <view class="uni-title">是否启用共享元素动画</view>
       </view>
+      <!-- #ifndef (APP-ANDROID || APP-IOS) && !VUE3-VAPOR -->
+      <image style="width: 250px; height: 176px;" src="/static/shuijiao.jpg" mode="scaleToFill"></image>
+      <!-- #endif -->
+      <!-- #ifdef (APP-ANDROID || APP-IOS) && !VUE3-VAPOR -->
       <share-element :share-key="data.shareElementKey">
         <image style="width: 250px; height: 176px;" src="/static/shuijiao.jpg" mode="scaleToFill"></image>
       </share-element>
+      <!-- #endif -->
       <text style="font-size: 13px;" >注意：开启共享元素动画后仅支持slide-in-right和fade-in动画效果</text>
       <view class="uni-padding-wrap uni-common-mt uni-common-mb">
         <view class="direction-row">

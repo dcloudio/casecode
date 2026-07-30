@@ -22,7 +22,7 @@
         <text class="form-item-label">性别</text>
         <radio-group class="radio-list" name="gender">
           <view class="radio-item" v-for="(item, _) in genderList" :key="item.value">
-            <radio :value="item.value" />
+            <radio :value="item.value.toString()" />
             <text>{{item.text}}</text>
           </view>
         </radio-group>
