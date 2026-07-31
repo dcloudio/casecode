@@ -45,3 +45,11 @@ if (!msg.body?.updateData) return ""
 **强制规则：**
 - ✅ 所有 `font-size` 必须使用 px
 - ❌ 禁止使用 `font-size: 28rpx`
+
+## uni-app H5 自动化测试
+
+### 自定义组件应按渲染后的 DOM 验收
+
+uni-app 的自定义组件在 H5 中会编译为 `uni-view`、`uni-image` 等标签，Playwright 不应依赖源码标签名。优先选择稳定的业务类名；需要测量组件内部尺寸时，先检查渲染后的 DOM，并区分父容器的边框盒与子元素的内容盒。
+
+验证方式：使用 Playwright 在 320px、375px、430px 视口检查个人中心页，并覆盖长昵称、头像渲染、横向溢出和设置入口跳转。

@@ -219,11 +219,11 @@ export default {
 	computed: {
 		heroLayoutStyle() {
 			const safeAreaOffset = Math.max(0, this.statusBarHeight - 42)
-			const heroHeight = 170 + safeAreaOffset
+			const heroHeight = 178 + safeAreaOffset
 
 			return {
 				'--mall-status-bar-height': `${this.statusBarHeight}px`,
-				'--mall-balance-top': `${103 + safeAreaOffset}px`,
+				'--mall-balance-top': `${105 + safeAreaOffset}px`,
 				height: `${heroHeight}px`,
 				flexBasis: `${heroHeight}px`
 			}
@@ -499,9 +499,9 @@ page {
 	position: relative;
 	z-index: 1;
 	width: 100%;
-	height: 170px;
+	height: 178px;
 	overflow: hidden;
-	flex: 0 0 170px;
+	flex: 0 0 178px;
 }
 
 .hero-background {
@@ -582,7 +582,7 @@ page {
 
 .lantern-word {
 	position: absolute;
-	top: 97px;
+	top: 101px;
 	left: 31px;
 	z-index: 2;
 	display: block;
@@ -598,7 +598,7 @@ page {
 
 .balance-strip {
 	position: absolute;
-	top: var(--mall-balance-top, 103px);
+	top: var(--mall-balance-top, 105px);
 	right: 68px;
 	left: 68px;
 	z-index: 3;
@@ -712,7 +712,7 @@ page {
 	min-height: 0;
 	flex: 1;
 	flex-direction: column;
-	margin: -25px 16px 0;
+	margin: -31px 16px 0;
 	overflow: hidden;
 	border: 2px solid #dfa153;
 	border-radius: 25px 25px 0 0;
