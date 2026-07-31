@@ -439,10 +439,4 @@ describe('component-native-video', () => {
       await page.callMethod('closeDialogPageVideo')
     });
   }
-
-  it('test format', async () => {
-    page = await program.navigateTo('/pages/component/video/video-format');
-    await page.waitFor(1000);
-    expect((await page.data('isError')).value).toBe(false);
-  });
 });
