@@ -1,5 +1,3 @@
-jest.setTimeout(30000)
-
 const PAGE_PATH = "/pages/API/navigator/new-page/onLoad";
 const INTERMEDIATE_PAGE_PATH = "/pages/API/navigator/new-page/new-page-1";
 const TARGET_PAGE_PATH = "/pages/API/navigator/new-page/new-page-3";

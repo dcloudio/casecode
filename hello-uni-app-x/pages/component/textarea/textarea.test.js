@@ -1,5 +1,3 @@
-jest.setTimeout(30000)
-
 describe('component-native-textarea', () => {
   const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
   const isAndroid = platformInfo.startsWith('android')

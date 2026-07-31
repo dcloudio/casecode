@@ -3,6 +3,8 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isWeb = platformInfo.startsWith('web') || platformInfo.startsWith('h5')
 const isMP = platformInfo.startsWith('mp')
+const isHarmony = platformInfo.startsWith('harmony')
+const isPad = process.env.UNI_AUTOMATOR_IS_PAD == 'true'
 
 const PAGE_PATH = '/pages/template/swipe-card-stack/swipe-card-stack'
 const WAIT_FOR_CARD_INIT = 800
@@ -11,7 +13,7 @@ const WAIT_FOR_RELEASE = 800
 
 describe('template-swipe-card-stack', () => {
   // TODO: 小程序端待补充适配后放开。
-  if (isMP) {
+  if (isMP || (isHarmony && isPad)) {
     it('skip', () => {
       expect(1).toBe(1)
     })

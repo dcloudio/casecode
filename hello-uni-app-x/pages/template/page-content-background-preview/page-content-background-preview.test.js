@@ -1,5 +1,3 @@
-jest.setTimeout(30000)
-
 describe('PagesJson-backgroundColorContent', () => {
   let page;
   beforeAll(async () => {

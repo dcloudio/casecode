@@ -1,5 +1,3 @@
-jest.setTimeout(30000)
-
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isHarmony = platformInfo.startsWith('harmony')
 const isMP = platformInfo.startsWith('mp')

@@ -1,5 +1,3 @@
-jest.setTimeout(30000)
-
 describe('match-media', () => {
   let page;
   beforeAll(async () => {

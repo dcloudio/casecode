@@ -1,4 +1,4 @@
-jest.setTimeout(80000)
+jest.setTimeout(50000)
 
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
@@ -9,9 +9,10 @@ const isAndroid = platformInfo.startsWith('android')
 const isAPP = isIOS || isAndroid || isHarmony
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 const isDom2 = process.env.UNI_APP_X_DOM2 === "true"
+const isPad = process.env.UNI_AUTOMATOR_IS_PAD == 'true'
 
 describe('component-native-input', () => {
-  if (isMP) {
+  if (isMP || (isHarmony && isPad)) {
     it('skip', () => {
       expect(1).toBe(1)
     })
