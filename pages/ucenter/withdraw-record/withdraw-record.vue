@@ -9,7 +9,7 @@
 			<view class="divider"></view>
 			<view class="stat-item">
 				<text class="stat-label">待审核</text>
-				<text class="stat-value pending">{{ pendingCount }}</text>
+				<text class="stat-value">{{ pendingCount }}</text>
 			</view>
 		</view>
 
@@ -226,13 +226,17 @@ view {
 .withdraw-record {
 	min-height: 100vh;
 	background: #f5f5f5;
+	padding: 20rpx;
 	padding-bottom: 40rpx;
 }
 
 /* 统计卡片 */
 .stats-card {
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	padding: 40rpx;
+	background: linear-gradient(135deg, #5B8FF9 0%, #3D6FD8 100%);
+	border-radius: 12px;
+	padding: 24px;
+	margin-bottom: 16px;
+	box-shadow: 0 4px 16px rgba(91, 143, 249, 0.2);
 	flex-direction: row;
 	align-items: center;
 }
@@ -249,7 +253,7 @@ view {
 }
 
 .stat-label {
-	font-size: 26rpx;
+	font-size: 28rpx;
 	color: rgba(255, 255, 255, 0.9);
 	margin-bottom: 12rpx;
 }
@@ -260,43 +264,42 @@ view {
 	color: #FFFFFF;
 }
 
-.stat-value.pending {
-	color: #FFD700;
-}
-
 /* 筛选标签 */
 .filter-tabs {
 	background: #FFFFFF;
 	flex-direction: row;
-	padding: 20rpx;
+	padding: 10rpx;
 	margin-bottom: 20rpx;
+	border-radius: 20rpx;
 }
 
 .tab-item {
 	flex: 1;
-	height: 60rpx;
+	height: 68rpx;
 	align-items: center;
 	justify-content: center;
-	border-radius: 30rpx;
+	border: 2rpx solid transparent;
+	border-radius: 12rpx;
 }
 
 .tab-item.active {
-	background: rgba(102, 126, 234, 0.1);
+	background: rgba(0, 122, 255, 0.05);
+	border-color: #007AFF;
 }
 
 .tab-text {
-	font-size: 28rpx;
+	font-size: 26rpx;
 	color: #666666;
 }
 
 .tab-item.active .tab-text {
-	color: #667eea;
-	font-weight: 600;
+	color: #007AFF;
+	font-weight: 500;
 }
 
 /* 记录列表 */
 .record-list {
-	padding: 0 20rpx;
+	width: 100%;
 }
 
 .empty-state {
@@ -354,6 +357,10 @@ view {
 	background: rgba(52, 199, 89, 0.1);
 }
 
+.status-tag.approved {
+	background: rgba(0, 122, 255, 0.08);
+}
+
 .status-tag.rejected {
 	background: rgba(255, 59, 48, 0.1);
 }
@@ -368,6 +375,10 @@ view {
 
 .status-tag.completed .status-text {
 	color: #34C759;
+}
+
+.status-tag.approved .status-text {
+	color: #007AFF;
 }
 
 .status-tag.rejected .status-text {
@@ -405,7 +416,7 @@ view {
 }
 
 .content-value.amount {
-	font-size: 32rpx;
+	font-size: 36rpx;
 	color: #007AFF;
 	font-weight: bold;
 }
