@@ -49,6 +49,7 @@
 		{
 			"path": "pages/ucenter/points-record/points-record",
 			"style": {
+				"navigationStyle": "custom",
 				"navigationBarTitleText": "积分记录",
 				"enablePullDownRefresh": false
 			}
