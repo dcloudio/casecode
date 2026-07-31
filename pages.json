@@ -22,6 +22,7 @@
 		}, {
 			"path": "pages/ucenter/settings/settings",
 			"style": {
+				"navigationStyle": "custom",
 				"navigationBarTitleText": "设置"
 			}
 		},
@@ -112,6 +113,7 @@
 			"pages": [{
 				"path": "pages/opendb-feedback/opendb-feedback",
 				"style": {
+					"navigationStyle": "custom",
 					"navigationBarTitleText": "意见反馈",
 					"enablePullDownRefresh": false
 				}
