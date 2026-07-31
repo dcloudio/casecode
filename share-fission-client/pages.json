@@ -271,6 +271,8 @@
 	"uniIdRouter": {
 		"loginPage": "uni_modules/uni-id-pages/pages/login/login-withpwd",
 		"needLogin": [
+      "/pages/ucenter/my-team/my-team",
+      "/pages/ucenter/ucenter",
 			"/uni_modules/uni-id-pages/pages/userinfo/userinfo"
 		],
 		"resToLogin": true
