@@ -44,19 +44,34 @@ describe('API-loading', () => {
     if (isAppWebView) {
       if (isIos) {
         topSafeArea = 59
+        if (platformInfo.includes('26')) {
+          topSafeArea = 62
+        }
       } else if (isAndroid) {
         topSafeArea = 24
+        windowInfo.safeArea.bottom = 867
         if (platformInfo.startsWith('android 5')) {
           topSafeArea = 25
+        }if (platformInfo.startsWith('android 6')) {
+          windowInfo.safeArea.bottom = 592
+        }if (platformInfo.startsWith('android 8')) {
+          windowInfo.safeArea.bottom = 534
         } else if (platformInfo.startsWith('android 11')) {
           topSafeArea = 52
         } else if (platformInfo.startsWith('android 12')) {
           topSafeArea = 24
+          windowInfo.safeArea.bottom = 716
         } else if (platformInfo.startsWith('android 13') || platformInfo.startsWith('android 15')) {
           topSafeArea = 49
+          windowInfo.safeArea.bottom = 891
+        } else if (platformInfo.startsWith('android 14')) {
+          windowInfo.safeArea.bottom = 891
         }
       } else if (isHarmony) {
-        topSafeArea = 38
+        topSafeArea = 39
+        if (platformInfo.includes('nova_12')) {
+          topSafeArea = 35
+        }
       }
     }
     const top = topSafeArea + 44

@@ -54,6 +54,9 @@ describe('showActionSheet', () => {
     if (isAppWebView) {
       if (isIos) {
         topSafeArea = 59
+        if (platformInfo.includes('26')) {
+          topSafeArea = 62
+        }
       } else if (isAndroid) {
         topSafeArea = 24
         windowInfo.safeArea.bottom = 867
@@ -75,7 +78,10 @@ describe('showActionSheet', () => {
           windowInfo.safeArea.bottom = 891
         }
       } else if (isHarmony) {
-        topSafeArea = 38
+        topSafeArea = 39
+        if (platformInfo.includes('nova_12')) {
+          topSafeArea = 35
+        }
       }
     }
 
