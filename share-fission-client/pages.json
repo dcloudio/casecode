@@ -29,6 +29,7 @@
 		{
 			"path": "pages/ucenter/distribution-invite/distribution-invite",
 			"style": {
+				"navigationStyle": "custom",
 				"navigationBarTitleText": "分销推荐"
 			}
 		},
@@ -124,6 +125,7 @@
 			"pages": [{
 					"path": "userinfo/userinfo",
 					"style": {
+						"navigationStyle": "custom",
 						"navigationBarTitleText": "个人资料"
 					}
 				},
