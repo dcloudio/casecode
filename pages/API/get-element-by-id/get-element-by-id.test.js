@@ -1,5 +1,3 @@
-jest.setTimeout(30000)
-
 describe("getElementById", () => {
   const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
   const isMP = platformInfo.startsWith('mp')

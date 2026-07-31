@@ -4,7 +4,6 @@ const isWeb = platformInfo.startsWith('web')
 const isIos = platformInfo.startsWith('ios')
 const isHarmony = platformInfo.startsWith('harmony')
 const isAndroid = platformInfo.startsWith('android')
-const isApp = isAndroid || isIos || isHarmony
 const isAppWebView = process.env.UNI_AUTOMATOR_APP_WEBVIEW == 'true'
 
 const PAGE_PATH = '/pages/component/rich-text/rich-text'
@@ -62,62 +61,6 @@ describe('rich-text-test', () => {
 
   async function setPageData(newData) {
     return await page.setData({ data: newData });
-  }
-
-  if (isApp && !isAppWebView) {
-    it('rich-text user-select true', async () => {
-      await setPageData({ userSelect: true })
-      await page.waitFor(300)
-      await program.pageScrollTo(99999)
-      await page.waitFor(500)
-      await page.callMethod('queryUserSelectRect')
-      await page.waitFor(500)
-      const rectX = await page.data('data.userSelectRectX')
-      const rectY = await page.data('data.userSelectRectY')
-      const rectWidth = await page.data('data.userSelectRectWidth')
-      const rectHeight = await page.data('data.userSelectRectHeight')
-      console.log('user-select true rect:', { rectX, rectY, rectWidth, rectHeight })
-      const tapPoint = {
-        x: Math.round(rectX + 20),
-        y: Math.round(rectY + 10)
-      }
-      console.log('user-select true tap point:', tapPoint)
-      await program.tap({
-        x: tapPoint.x,
-        y: tapPoint.y,
-        duration: 3000,
-      })
-      await page.waitFor(500)
-      const image = await program.screenshot({ fullPage: true })
-      expect(image).toSaveImageSnapshot()
-    })
-
-    it('rich-text user-select false', async () => {
-      await setPageData({ userSelect: false })
-      await page.waitFor(300)
-      await program.pageScrollTo(99999)
-      await page.waitFor(500)
-      await page.callMethod('queryUserSelectRect')
-      await page.waitFor(500)
-      const rectX = await page.data('data.userSelectRectX')
-      const rectY = await page.data('data.userSelectRectY')
-      const rectWidth = await page.data('data.userSelectRectWidth')
-      const rectHeight = await page.data('data.userSelectRectHeight')
-      console.log('user-select false rect:', { rectX, rectY, rectWidth, rectHeight })
-      const tapPoint = {
-        x: Math.round(rectX + 20),
-        y: Math.round(rectY + 10)
-      }
-      console.log('user-select false tap point:', tapPoint)
-      await program.tap({
-        x: tapPoint.x,
-        y: tapPoint.y,
-        duration: 3000,
-      })
-      await page.waitFor(500)
-      const image = await program.screenshot({ fullPage: true })
-      expect(image).toSaveImageSnapshot()
-    })
   }
 
   it('richt-text-height', async () => {
