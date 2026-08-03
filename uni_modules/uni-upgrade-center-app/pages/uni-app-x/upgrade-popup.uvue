@@ -23,7 +23,7 @@
         </view>
         <view class="footer flex-center">
           <template v-if="isiOS || isHarmony">
-            <button class="content-button" style="border: none;color: #fff;" type="primary" plain
+            <button class="content-button" style="border: none;" type="primary"
               @click="jumpToAppStore">
               {{downLoadBtnTextiOS}}
             </button>
