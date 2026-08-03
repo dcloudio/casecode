@@ -36,6 +36,8 @@
           <text class="send-text">发送</text>
         </view>
       </view>
+      <!-- 当前 uni-app x 框架在 iOS、Android 上报的键盘高度均已包含底部安全区，键盘弹出时隐藏额外占位 -->
+      <view v-if="keyboardHeight == 0" class="safe-area-inset-bottom"></view>
     </view>
   </view>
 </template>
@@ -361,6 +363,12 @@ initComments()
     transition-property: transform;
     transition-duration: 0.1s;
     transition-timing-function: ease-out;
+  }
+
+  .safe-area-inset-bottom {
+    height: env(safe-area-inset-bottom);
+    flex-shrink: 0;
+    background-color: #1a1a1a;
   }
 
   .comment-input {

@@ -2533,10 +2533,11 @@
         	}
         },
         {
-        	"path": "long-rich-text/long-rich-text",
-        	"style": {
-        		"navigationBarTitleText": "5万字rich-text性能测试"
-        	}
+          "path": "long-rich-text/long-rich-text",
+          "style": {
+            "navigationBarTitleText": "5万字rich-text性能测试",
+            "backgroundColorContent": "@richTextPageBackgroundColorContent"
+          }
         },
         {
         	"path": "checkbox-200/checkbox-200",
