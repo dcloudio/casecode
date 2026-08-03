@@ -456,13 +456,21 @@
 
   /* #ifdef WEB */
   @media (prefers-color-scheme: dark) {
-    .uni-input {
-      background-color: #2d2d2d;
+    .uni-title,
+    .uni-list-cell-left,
+    .uni-input,
+    .uni-picker-text {
       color: #ffffff;
     }
 
+    .uni-input,
+    .uni-picker-text,
     .uni-list {
       background-color: #2d2d2d;
+    }
+
+    .uni-picker-tips {
+      color: #b0b0b0;
     }
   }
   /* #endif */
