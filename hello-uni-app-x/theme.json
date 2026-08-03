@@ -3,7 +3,8 @@
     "navigationBarTextStyle": "white",
     "navigationBarBackgroundColor": "#007AFF",
     "backgroundColorContent": "#efeff4",
-    "tabBarPagebackgroundColorContent": "#efeff4",
+    "tabBarPagebackgroundColorContent": "#f8f8f8",
+    "richTextPageBackgroundColorContent": "#ffffff",
     "backgroundColor": "#efeff4",
     "backgroundTextStyle": "dark",
 
@@ -28,7 +29,8 @@
     "navigationBarBackgroundColor": "#1F1F1F",
     "backgroundColor": "#1F1F1F",
     "backgroundColorContent": "#646464",
-    "tabBarPagebackgroundColorContent": "#1F1F1F",
+    "tabBarPagebackgroundColorContent": "#1a1a1a",
+    "richTextPageBackgroundColorContent": "#000000",
     "backgroundTextStyle": "light",
 
     "tabBarColor": "#cacaca",

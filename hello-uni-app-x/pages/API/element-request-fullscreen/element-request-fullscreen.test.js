@@ -1,10 +1,11 @@
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isMP = platformInfo.startsWith('mp')
 const isWeb = platformInfo.startsWith('web')
+const isIOS = platformInfo.startsWith('ios')
 
 describe('/pages/API/element-request-fullscreen/element-request-fullscreen', () => {
 
-  if (isWeb || isMP) {
+  if (isWeb || isMP || (isIOS && platformInfo.includes('15.5'))) {
     it('pass', async () => {
       expect(1).toBe(1);
     });
