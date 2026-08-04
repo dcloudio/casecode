@@ -319,9 +319,6 @@
   padding: 12px;
   border-radius: 10px;
   background-color: #f5f7fa;
-}
-
-.detail-item + .detail-item {
   margin-top: 8px;
 }
 
