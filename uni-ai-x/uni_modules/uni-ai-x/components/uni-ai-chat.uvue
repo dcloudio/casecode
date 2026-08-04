@@ -1,0 +1,633 @@
+<template>
+	<view class="chat-box" :class="[`ui-theme-${uiTheme}`]">
+		<view class="chat-box-nav-bar">
+			<uni-ai-icon @click="changeMenu" code="e622" color="var(--text-primary)" size="20"></uni-ai-icon>
+			<text class="chat-box-chat-title">{{chatTitle}}</text>
+			<!-- #ifndef MP-WEIXIN -->
+			<addChat></addChat>
+			<!-- #endif -->
+			<!-- #ifdef MP-WEIXIN -->
+			<view></view>
+			<!-- #endif -->
+		</view>
+		<view class="chat-box-chat" :class="showMenu ? 'chat-box-chat-showMenu' : ''" ref="chat">
+			<view class="chat-box-scroll-view-box">
+				<scroll-view direction="vertical" class="chat-box-msg-list" :scroll-into-view="scrollIntoView" id="msg-list"
+					:scroll-with-animation="scrollWithAnimation" @scroll="onScroll" @touchstart="setTouchState(true)" @touchend="setTouchState(false)"
+				>
+					<template v-for="item in msgList" :key="item._id">
+						<uni-ai-x-msg v-if="item.from_uid == 'uni-ai'" :msg="item" @longpress="onlongTapMsg(item)" @changeThinkContent="changeThinkContent" :id="'msg-item-' + item._id"></uni-ai-x-msg>
+						<view class="chat-box-user-msg" v-else>
+							<text class="chat-box-user-msg-text" @longpress="onlongTapMsg(item)">{{item.body}}</text>
+							<view class="chat-box-img-group" v-if="item.img_url_list != null">
+								<image class="chat-box-img" v-for="(img, index) in item.img_url_list" @click="previewImage(item.img_url_list!, index)" :key="index" :src="img" mode="aspectFill"></image>
+							</view>
+						</view>
+					</template>
+					<view class="chat-box-welcome-msg-box" v-if="msgList.length == 0">
+						<image class="chat-box-welcome-logo" src="@/uni_modules/uni-ai-x/static/uni-chat-logo.png"/>
+						<text class="chat-box-welcome-title">嗨！我是 UNI-AI</text>
+						<text class="chat-box-welcome-text">我可以帮你回答问题、写代码、翻译、写诗等。</text>
+					</view>
+					<view style="height: 35px;" id="last-msg"></view>
+				</scroll-view>
+				<add-chat-btn :style="{visibility: scrollInBottom && state != 'processing' ? 'visible' : 'hidden', position: 'absolute', bottom: '5px', left: '50%', transform: 'translateX(-50%)'}"/>
+				<view :style="{visibility: scrollInBottom || scrolling ? 'hidden' : 'visible'}" class="chat-box-scroll-to-bottom" @click="scrollToLastMsg(true)">
+					<uni-icons type="down" size="15" color="var(--text-secondary)"></uni-icons>
+				</view>
+			</view>
+			<view class="chat-box-bottom" @click="markQA">
+				<scroll-view class="chat-box-bottom-img-group" direction="horizontal" v-show="uniAi.imgList.length > 0">
+					<view class="chat-box-bottom-item" v-for="(img, index) in uniAi.imgList" :key="img.path">
+						<view class="chat-box-bottom-content">
+							<image class="chat-box-bottom-img" :src="img.path" mode="aspectFill"></image>
+							<view class="chat-box-bottom-info">
+								<text class="chat-box-bottom-name">{{img.name}}</text>
+								<text class="chat-box-bottom-uploadPercent" v-if="img.uploadPercent < 100">上传中：{{img.uploadPercent}}%</text>
+								<template v-else>
+									<text class="chat-box-bottom-type">{{img.type}}</text>
+									<text class="chat-box-bottom-size">{{img.size}}</text>
+								</template>
+							</view>
+						</view>
+						<view class="chat-box-close-btn">
+							<uni-icons type="closeempty" size="8" color="#FFF" @click="removeImg(index)"></uni-icons>
+						</view>
+					</view>
+				</scroll-view>
+				<textarea class="chat-box-chat-input" v-model="chatInputContent" placeholder="给 uni-ai-x 发送消息"
+					:adjust-position="false" @keyboardheightchange="onKeyboardheightchange" placeholder-class="chat-box-chat-input-placeholder"
+					@focus="scrollToLastMsg(true)" :auto-height="true" :disabled="isDemo"
+				></textarea>
+				<input-tool-bar @scrollToLastMsg="scrollToLastMsg(true)" @click.stop />
+				<view class="chat-box-keyboard-cover" :style="{height: keyboardHeight + 'px'}"></view>
+			</view>
+			<text class="chat-box-tip">内容由ai生成，仅供参考</text>
+		</view>
+		<view class="chat-box-mask" v-if="translateX != -260" @click="closeMenu" :style="{
+			opacity: (translateX + 260) / 260,
+			backgroundColor: `rgba(0,0,0,${0.3 * (translateX + 260) / 260})`
+		}"></view>
+	</view>
+</template>
+
+<script lang="uts" setup>
+	import {uniAi, MsgItem, uiTheme, testMarkdownText, isCustomProvider} from '@/uni_modules/uni-ai-x/sdk/'
+	import addChat from '@/uni_modules/uni-ai-x/components/add-chat.uvue'
+	import addChatBtn from '@/uni_modules/uni-ai-x/components/add-chat-btn.uvue'
+	import inputToolBar from '@/uni_modules/uni-ai-x/components/input-tool-bar.uvue'
+	
+	type UniAiChatProps = {
+		showMenu?: boolean
+		translateX?: number
+	}
+	
+	const props = withDefaults(defineProps<UniAiChatProps>(), {
+		showMenu: false,
+		translateX: -260
+	})
+	
+	const emit = defineEmits<{
+		'change-menu': []
+		'close-menu': []
+	}>()
+	
+	const keyboardHeight = ref<number>(0)
+	const scrollIntoView = ref<string>('')
+	const scrollInBottom = ref<boolean>(true)
+	const scrollWithAnimation = ref<boolean>(false)
+	const scrollTouch = ref<boolean>(false)
+	const scrolling = ref<boolean>(false)
+	let autoToLastMsg = false
+	let scrollingT = 0
+	let mouseScroll = false
+	let needSetLockAutoToLastMsg = true
+	
+	const state = computed<string>(() => {
+		return uniAi.currentChat?.state ?? 'none'
+	})
+	
+	const msgList = computed<MsgItem[]>(() => {
+		return uniAi.currentChat?.msgList ?? []
+	})
+	
+	const chatInputContent = ref<string>(uniAi.currentChat?.inputContent ?? '')
+	
+	watch(chatInputContent, (newValue: string) => {
+		if (uniAi.currentChat != null) {
+			uniAi.currentChat!.inputContent = newValue
+		}
+	})
+	
+	watch((): string | null => {
+		return uniAi.currentChat?.inputContent ?? null
+	}, (newValue: string | null) => {
+		if (newValue != null) {
+			chatInputContent.value = newValue
+		}
+	})
+	
+	const lastMsg = computed<MsgItem | null>(() => {
+		return uniAi.lastAiMsg
+	})
+	
+	const chatActiveId = computed<string>(() => {
+		return uniAi.chat.activeId
+	})
+	
+	const chatTitle = computed<string>(() => {
+		if (isCustomProvider(uniAi.llm.provider)) {
+			return '与 ' + uniAi.llm.provider + ' 对话'
+		}
+		const title = uniAi.currentChat?.title ?? ''
+		if (title.length > 0) {
+			return title.length > 10 ? title.slice(0, 10) + '...' : title
+		}
+		return '新对话'
+	})
+	function scrollToLastMsg(userClick: boolean){
+		autoToLastMsg = true
+		scrollIntoView.value = ""
+		scrollWithAnimation.value = userClick
+		nextTick(() => {
+			scrollIntoView.value = "last-msg"
+			scrollInBottom.value = true
+		})
+	}
+	
+	const isDemo = ref(testMarkdownText.length > 0)
+	
+	// #ifdef WEB
+	setTimeout(() => {
+		if (isDemo.value) {
+			document.querySelector('.chat-input textarea')?.setAttribute('style', 'pointer-events: none;')
+		}
+	}, 0);
+	// #endif
+	
+	function markQA() {
+		if (isDemo.value) {
+			chatInputContent.value = "给我 markdown 的各级标题，列表（含有序无序任务列表），简单的表格，引用，简单的 js 代码示例，链接，分割线，常见 LaTeX 数学公式，简单的流程图。注意：不要包裹在代码块里面"
+			uni.showModal({
+				content: '已生成演示专用问题，且无法修改。\n 请点击右下角的发送按钮体验效果',
+				showCancel: false
+			});
+		}
+	}
+	
+	const setIsInScrollBottom = () => {
+		// #ifndef MP-WEIXIN
+		nextTick(() => {
+			const scrollList = uni.getElementById('msg-list')
+			if (scrollList != null) {
+				const diff: number = scrollList.scrollHeight - scrollList.scrollTop - scrollList.offsetHeight
+				scrollInBottom.value = diff < 30
+				if (scrollTouch.value || mouseScroll) {
+					autoToLastMsg = !(diff > 3)
+				}
+			}
+		})
+		// #endif
+	}
+	
+	watch(chatActiveId, () => {
+		scrollToLastMsg(false)
+		nextTick(() => {
+			if (lastMsg.value != null) lastMsg.value.rendered = true
+		})
+	}, { deep: true, immediate: true })
+	
+	const lockAutoToLastMsg = () => {
+		if (!needSetLockAutoToLastMsg) return
+		const lastMsgEl: UniElement | null = uni.getElementById('msg-item-' + lastMsg.value?._id)
+		const scrollList: UniElement | null = uni.getElementById('msg-list')
+		if (lastMsgEl == null || scrollList == null) return 
+		if (msgList.value.length < 3 || scrollList.offsetHeight < lastMsgEl.offsetHeight) {
+			autoToLastMsg = false
+			needSetLockAutoToLastMsg = false
+		}
+	}
+	
+	watch(lastMsg, async () => {
+		setIsInScrollBottom()
+		lockAutoToLastMsg()
+		if (!scrollTouch.value && autoToLastMsg) {
+			await nextTick()
+			scrollToLastMsg(false)
+		}
+	}, { deep: true })
+	
+	const changeThinkContent = (hideThinkContent: boolean) => {
+		setIsInScrollBottom()
+	}
+	
+	const onlongTapMsg = (item: MsgItem) => {
+		// console.log('onlongTapMsg', item)
+		if (scrolling.value) {
+			return
+		}
+		const itemList = ['复制'] as string[]
+		const isAiMsg = item.from_uid == 'uni-ai'
+		itemList.push(isAiMsg ? '选择' : '修改')
+		uni.showActionSheet({
+			itemList,
+			success: (res: ShowActionSheetSuccess) => {
+				if (res.tapIndex == 0) {
+					uni.setClipboardData({
+						data: item.body,
+						success: () => {
+							nextTick(()=>{
+								uni.showToast({
+									title: '复制成功',
+									icon: 'success'
+								})
+							})
+						}
+					})
+				} else if (res.tapIndex == 1) {
+					if (isAiMsg) {
+						console.log('选择')
+						uni.navigateTo({
+							url: '/uni_modules/uni-ai-x/pages/select-text/select-text?msgId=' + item._id,
+							fail(err){
+								console.error('err', err)
+							}
+						})
+					} else {
+						console.log('修改')
+						chatInputContent.value = item.body
+					}
+				}
+			},
+			fail(err){
+			}
+		})
+	}
+	
+	const onKeyboardheightchange = (res: UniInputKeyboardHeightChangeEvent) => {
+		keyboardHeight.value = res.detail.height
+	}
+
+	const menuIsChangeIng = ref<boolean>(false)
+	let menuIsChangeIngT = 0
+	function setMenuIsChangeIng() {
+		if (menuIsChangeIngT != 0) {
+			clearTimeout(menuIsChangeIngT)
+		}
+		menuIsChangeIng.value = true
+		menuIsChangeIngT = setTimeout(() => {
+			menuIsChangeIng.value = false
+		}, 1000)
+	}
+
+	watchEffect(() => {
+		uniAi.canRender = !scrollTouch.value && !scrolling.value && !menuIsChangeIng.value
+	})
+	
+	const changeMenu = () => {
+		setMenuIsChangeIng()
+		emit('change-menu')
+	}
+	
+	const closeMenu = () => {
+		setMenuIsChangeIng()
+		emit('close-menu')
+	}
+	
+	const onScroll = (e: UniScrollEvent) => {
+		setIsInScrollBottom()
+		scrolling.value = true
+		if (scrollingT != 0) {
+			clearTimeout(scrollingT)
+		}
+		scrollingT = setTimeout(() => {
+			scrolling.value = false
+		}, 500)
+	}
+
+	function removeImg(index: number) {
+		uniAi.imgList.splice(index, 1)
+	}
+
+	function previewImage(urls: string[], index: number) {
+		uni.previewImage({
+			urls,
+			current: index
+		})
+	}
+
+	let touchClearTimer: number = 0
+	function setTouchState(state: boolean) {
+		if (touchClearTimer != 0) {
+			clearTimeout(touchClearTimer)
+			touchClearTimer = 0
+		}
+		if (state) {
+			scrollTouch.value = true
+		} else {
+			touchClearTimer = setTimeout(() => {
+				scrollTouch.value = false
+				touchClearTimer = 0
+			}, 2000)
+		}
+	}
+	
+	onMounted(() => {
+		uniAi.onBeforeRequestAi(() => {
+			autoToLastMsg = true
+			needSetLockAutoToLastMsg = true
+			scrollToLastMsg(false)
+		})
+		// #ifdef H5
+		window.addEventListener('wheel', (e: WheelEvent) => {
+			mouseScroll = true
+			let clear: number = 0
+			clear = setTimeout(() => {
+				mouseScroll = false
+				clearTimeout(clear)
+			}, 1000)
+		})
+		// #endif
+
+		// #ifdef MP-WEIXIN
+		const observer = uni.createIntersectionObserver(getCurrentInstance().proxy,{});
+		observer.relativeTo('#msg-list').observe('#last-msg', (result: any) => {
+			scrollInBottom.value = result.intersectionRatio > 0
+		})
+		// #endif
+	})
+</script>
+
+<style lang="scss">
+@import '@/uni_modules/uni-ai-x/static/css/variables.scss';
+.ui-theme-light {
+	--mask-overlay: rgba(0, 0, 0, 0.05);
+  	--user-msg-bg: #f9fbff;
+}
+.ui-theme-dark {
+	--mask-overlay: rgba(0, 0, 0, 0.2);
+	--user-msg-bg: #414158;
+}
+
+.chat-box {
+	width: 750rpx;
+	padding-top: env(safe-area-inset-top);
+}
+
+.chat-box-nav-bar {
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+	background-color: var(--bg-primary);
+}
+
+.chat-box-chat-title {
+	font-size: 16px;
+	color: var(--text-primary);
+}
+
+.chat-box-mask {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--mask-overlay);
+}
+
+.chat-box-chat {
+	flex: 1;
+	background-color: var(--bg-primary);
+}
+
+.chat-box-scroll-view-box {
+	flex: 1;
+	position: relative;
+}
+
+.chat-box-msg-list {
+	flex: 1;
+}
+
+.chat-box-user-msg {
+	align-items: flex-end;
+	padding: 10px;
+}
+
+.chat-box-user-msg-text {
+	font-size: 16px;
+	max-width: 600rpx;
+	padding: 12px;
+	border-radius: 15px 15px 0 15px;
+	background-color: var(--user-msg-bg);
+	color: var(--text-primary);
+	/* #ifdef WEB */
+	user-select: text;
+	/* #endif */
+}
+
+.chat-box-img-group {
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin: 5px;
+}
+
+.chat-box-img {
+	width: 20px;
+	height: 20px;
+	margin: 5px;
+	border-radius: 3px;
+}
+
+.chat-box-welcome-msg-box {
+	margin: auto 20px;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.chat-box-welcome-logo {
+	width: 50px;
+	height: 50px;
+	margin-bottom: 20px;
+}
+
+.chat-box-welcome-title {
+	font-size: 24px;
+	font-weight: bold;
+	color: var(--text-primary);
+	margin-bottom: 10px;
+}
+
+.chat-box-welcome-text {
+	font-size: 16px;
+	color: var(--text-secondary);
+	text-align: center;
+	line-height: 24px;
+	margin: 0 30px;
+}
+
+.chat-box-scroll-to-bottom {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	width: 35px;
+	height: 35px;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--bg-primary);
+	border-radius: 50px;
+	padding: 5px;
+	box-shadow: 0 0 10px 0 var(--shadow);
+	z-index: 10;
+}
+
+.chat-box-bottom {
+	flex-direction: column;
+	background-color: var(--bg-primary);
+	padding: 15px 15px 5px 15px;
+	border-radius: 15px 15px 0 0;
+	border: 1px solid var(--border-secondary);
+}
+
+.chat-box-bottom-img-group {
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	overflow: visible;
+	margin: -15px -15px 0 -15px;
+	padding: 5px;
+	padding-top: 0;
+}
+
+.chat-box-bottom-item {
+	position: relative;
+	overflow: visible;
+}
+
+.chat-box-bottom-content {
+	margin-top: 5px;
+	margin-right: 10px;
+	border: 1px solid var(--border-secondary);
+	border-radius: 10px;
+	padding: 5px;
+	flex-direction: row;
+	align-items: center;
+}
+
+.chat-box-bottom-img {
+	width: 25px;
+	height: 25px;
+	border-radius: 10px;
+}
+
+.chat-box-bottom-info {
+	padding-left: 5px;
+	width: 100px;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.chat-box-bottom-name,
+.chat-box-bottom-size,
+.chat-box-bottom-type,
+.chat-box-bottom-uploadPercent {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 10px;
+	color: var(--text-secondary);
+}
+
+.chat-box-bottom-name {
+	font-size: 12px;
+	color: var(--text-primary);
+	width: 100%;
+}
+
+.chat-box-bottom-size,
+.chat-box-bottom-uploadPercent {
+	margin-left: 5px;
+}
+
+.chat-box-close-btn {
+	position: absolute;
+	top: 3px;
+	right: 5px;
+	background-color: #ff5555;
+	justify-content: center;
+	align-items: center;
+	border-radius: 100px;
+	width: 12px;
+	height: 12px;
+}
+
+.chat-box-chat-input {
+	min-height: 50px;
+	max-height: 200px;
+	width: 100%;
+}
+
+.chat-box-chat-input-placeholder {
+	color: var(--text-disabled);
+}
+
+.chat-box-keyboard-cover {
+	/* #ifdef APP-ANDROID */
+	margin-bottom: env(safe-area-inset-bottom);
+	/* #endif */
+	/* #ifndef APP-ANDROID */
+	padding-bottom: env(safe-area-inset-bottom);
+	/* #endif */
+}
+
+.chat-box-tip {
+	display: none;
+}
+
+/* #ifdef MP-WEIXIN */
+.chat-box-nav-bar {
+	padding-top: calc(var(--status-bar-height) + 35px);
+}
+/* #endif */
+
+/* #ifdef APP-HARMONY */
+.chat-box-scroll-to-bottom {
+	border: 1px solid var(--border-secondary);
+}
+/* #endif */
+
+/* #ifdef H5 */
+@media screen and (min-device-width:960px){
+	.chat-box {
+		flex: 1;
+	}
+	.chat-box-chat {
+		width: 100%;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+	.chat-box-user-msg {
+		max-width: 90%;
+	}
+	.chat-box-bottom {
+		border-radius: 15px;
+		margin: 10px;
+		margin-top: 0;
+	}
+	.chat-box-tip {
+		display: block;
+		width: 100%;
+		font-size: 12px;
+		text-align: center;
+		color: var(--text-tertiary);
+		margin-bottom: 10px;
+	}
+	.chat-box-mask {
+		display: none;
+	}
+}
+/* #endif */
+</style> 

@@ -1,0 +1,139 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["type","type_name"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"type":{
+			"bsonType":"int",
+			"title": "主体",
+			"enum": [
+				{
+					"text": "个人",
+					"value": 0
+				},
+				{
+					"text": "企业",
+					"value": 1
+				}
+			],
+			"component": {
+				"name": "uni-data-checkbox",
+				"props": {
+					"multiple": false //true为多选 false 为单选
+				}
+			}
+		},
+		"type_name":{
+			"title": "主体名称",
+			"description": "企业输入公司名称，个人输入姓名",
+			"bsonType":"string",
+			"validateFunction":"type_name_check"
+		},
+		"comment": {
+			"bsonType": "string",
+			"title": "备注",
+			"component": {
+				"name": "textarea",
+				"props":{
+					"placeholder":"有敏感词过滤功能。你可以尝试输入含test的文本内容将会被拦截"
+				}
+			},
+			"validateFunction":"word_filter"
+		},
+		"username":{
+			"bsonType":"string",
+			"title":"负责人姓名",
+			"description":"正则，限输入中文",
+			"pattern":"[\u4e00-\u9fa5]",
+			"errorMessage":"只能输入中文"
+		},
+		"email": {
+			"bsonType": "string",
+			"description": "邮箱",
+			"title": "邮箱",
+			"format": "email"
+		},
+		"dowload_url": {
+			"bsonType": "string",
+			"title": "下载地址",
+			"description":"如：https://uniapp.dcloud.io",
+			"format": "url"
+		},
+		"weight": {
+			"bsonType": "int",
+			"title": "体重",
+			"exclusiveMinimum":true, //是否排除最小值
+			"exclusiveMaximum":false, //是否排除最大值
+			"minimum":50,
+			"maximum":500,
+			"description":"限输入 >50 && <=500"
+		},
+		"favorite_book": {
+			"bsonType": "string",
+			"title": "喜欢的书",
+			"description":"选项来源book表",
+			"enum": {
+				"collection": "book", // 表名，这里使用 uni-id-roles表举例，在uniCloud控制台使用 opendb 创建此表
+				"field": "title as text, _id as value", //字段筛选，需要 as 成前端组件支持的字段名 text、value。text、value是datacom组件规范的标准
+				//"where": "'type' != formData.organization", // 查询条件
+				"orderby": "desc" // 排序字段及正序倒叙设置
+			}
+		},
+		"party_member": {
+			"bsonType": "bool",
+			"description": "字段类型为bool时，默认使用switch组件",
+			"title": "是否为党员"
+		},
+		"hobby": {
+			"bsonType": "array",
+			"description": "字段类型为Array时，默认使用uni-data-checkbox组件",
+			"title": "业余爱好",
+			"enum": [{
+					"text": "唱歌",
+					"value": "Sing"
+				},
+				{
+					"text": "跳舞",
+					"value": "dance"
+				},
+				{
+					"text": "画画",
+					"value": "draw"
+				}
+			],
+			"component": {
+				"name": "uni-data-checkbox",
+				"props": {
+					"multiple": true
+				}
+			}
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"address": {
+		  "bsonType": "string",
+		  "title": "地址",
+		  "description": "",
+		  "enumType": "tree",
+		  "enum": {
+		    "collection": "opendb-city-china",
+		    "orderby": "value asc",
+		    "field": "code as value, name as text"
+		  }
+		}
+	}
+}

@@ -1,0 +1,71 @@
+{
+	"bsonType": "object",
+	"required": ["user_id"],
+	"permission": {
+		"read": "'READ_UNI_ID_LOG' in auth.permission"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"device_uuid": {
+			"bsonType": "string",
+			"description": "设备唯一标识"
+		},
+		"ip": {
+			"bsonType": "string",
+			"description": "ip地址"
+		},
+		"state": {
+			"bsonType": "int",
+			"description": "结果：0 失败、1 成功"
+		},
+		"type": {
+			"bsonType": "string",
+			"description": "操作类型",
+			"enum": [
+				"logout",
+				"login",
+				"register",
+				"reset-pwd",
+				"bind-mobile",
+				"bind-weixin",
+				"bind-qq",
+				"bind-apple",
+				"bind-alipay"
+			]
+		},
+		"ua": {
+			"bsonType": "string",
+			"description": "userAgent"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"foreignKey": "uni-id-users._id",
+			"description": "用户id，参考uni-id-users表"
+		},
+		"username": {
+			"bsonType": "string",
+			"description": "用户名"
+		},
+		"email": {
+			"bsonType": "string",
+			"description": "邮箱"
+		},
+		"mobile": {
+			"bsonType": "string",
+			"description": "手机号"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "客户端DCloud AppId"
+		}
+	}
+}

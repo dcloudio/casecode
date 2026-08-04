@@ -1,0 +1,64 @@
+[
+	{
+		"IndexName": "order_no",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "order_no", "Direction": "1" }],
+			"MgoIsUnique": true
+		}
+	},
+	{
+		"IndexName": "user_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "user_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "user_id_create_time",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "user_id", "Direction": "1" },
+				{ "Name": "create_time", "Direction": "-1", "Type": "long" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "status",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "status", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "status_create_time",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "status", "Direction": "1" },
+				{ "Name": "create_time", "Direction": "-1", "Type": "long" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "card_key_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "card_key_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "create_time",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "create_time", "Direction": "-1", "Type": "long" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "score_cost",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "score_cost", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	}
+]

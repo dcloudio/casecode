@@ -1,0 +1,238 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./libs/katex.min.css">
+    <title></title>
+    <!-- KaTeX 全量字体 base64 内联，消除 WebView 慢速网络/CORS 警告 -->
+    <script src="./libs/katex-fonts-inline.js"></script>
+  </head>
+  <body>
+    <div id="markImgContainer"></div>
+    <script type="text/javascript" src="./libs/uni.webview.1.5.5.js"></script>
+
+    <!-- 引入 katex 数学公式渲染库 -->
+    <script type="text/javascript" src="./libs/katex.min.js"></script>
+    <!-- 引入 mhchem 扩展 -->
+    <script defer src="./libs/mhchem.min.js"></script>
+
+    <script type="text/javascript" src="./libs/html2canvas1.4.1.js"></script>
+    <script type="text/javascript" src="./libs/mermaid.min.js"></script>
+
+    <script type="text/javascript">
+        let parentIsWeb = false;
+        let setting = null;
+        uni.getEnv(envObj=>{
+          parentIsWeb = envObj.h5
+        })
+
+        // const isInHarmonyWeb = window.arkWeb != undefined
+
+			
+        class ProxyWebHandler {
+          setting = {}
+          constructor() {
+            // window.addEventListener('storage', (e) => {
+            //   console.log('storage change', e);
+            // });
+            // this.mermaidText = `
+            //   graph TD
+            //     A[员工提交请假申请] --> B{经理审批}
+            //     B -->|通过| C[HR备案]
+            //     B -->|拒绝| D[通知员工修改]
+            //     C --> E[流程结束]
+            //     D --> A
+            // `;
+            // document.addEventListener('DOMContentLoaded', () => {
+            //   this.renderMermaid({
+            //     mermaidText: this.mermaidText,
+            //     uniqueId: 'mermaid' + Date.now() + Math.random().toString(36).substring(2, 15)
+            //   });
+            // });
+						
+            // 监听当前 web 初始化完成
+            document.addEventListener('DOMContentLoaded', () => {
+              this.postMessage({
+                action: 'DOMContentLoaded_callback',
+                param: {}
+              });
+            });
+          }
+          setSetting(e) {
+            this.setting = e.data;
+          }
+
+          async renderMermaid({ mermaidText, requestId }) {
+            const mermaidId = 'fixed-mermaid' // 复用一个元素，传固定的 id 值
+            let mermaidRenderResult = null;
+            try {
+              mermaidRenderResult = await mermaid.render(mermaidId, mermaidText)
+            } catch (error) {
+              this.postMessage({
+                action: "renderMermaid_callback_" + requestId,
+                param: {
+                  imageDataURL: ''
+                }
+              });
+              // console.error('mermaid render error', error);
+              return;
+            }
+            let { svg, bindFunctions } = mermaidRenderResult;
+            let imageDataURL = ""
+            if (parentIsWeb) {
+              // 修改不规范的 svg ，把 svg 中的 <br/> 替换为 <br/>
+              svg = svg.replace(/<br>/g, '<br/>')
+              // 加个白色背景
+              svg = svg.replace(`<style>
+#fixed-mermaid{font-family:`, `<style>#fixed-mermaid{background-color: #FFFFFF;font-family:`)
+              imageDataURL = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+            } else {
+              imageDataURL = await this.html2Base64(svg);
+            }
+            // console.log('imageDataURL', imageDataURL);
+            this.postMessage({
+              action: "renderMermaid_callback_" + requestId,
+              param: {
+                imageDataURL
+              }
+            });
+            return { svg, bindFunctions, imageDataURL };
+          }
+
+          postMessage({ action, param }) {
+            // console.log('web 内部执行了 postMessage', action, param)
+            const arg = { action, param }
+            // if (isInHarmonyWeb) {
+            //   // TODO:解决在鸿蒙端套娃使用 webview 套 webview 时，无法使用 uni.webView.postMessage 的问题
+            //   window.parent.postMessage({ data: { arg, name: 'postMessage' }}, '*');
+            // } else {
+              uni.webView.postMessage({data: arg});
+            // }
+          }
+
+          onMessage(param) {
+            // console.log('web.onMessage收到', param);
+            try {
+              param = JSON.parse(decodeURIComponent(param));
+            } catch (error) {
+              console.log('error', error, decodeURIComponent(param));
+            }
+            // console.log('web 内部执行了 onMessage', param);
+            const { action } = param;
+
+            if (typeof this[action] !== 'function') {
+              console.error('不支持的 e.action', action);
+              throw new Error('不支持的 e.action: ' + action);
+            }
+
+            try {
+              this[action](param);
+            } catch (error) {
+              this.postMessage({
+                action: `${action}_callback_${param.requestId}`,
+                param: {
+                  imageDataURL: '',
+                  error: error.message
+                }
+              });
+              console.log(action + '方法执行失败', error);
+            }
+          }
+          async html2Base64(htmlString, scale = 3, setTheme = false) {
+            const markImgContainer = document.getElementById('markImgContainer');
+            markImgContainer.innerHTML = htmlString;
+            if (setTheme) {
+              markImgContainer.style.color = this.setting.theme == 'light' ? '#25282c' : '#ffffff';
+            }
+            return new Promise((resolve, reject) => {
+              document.fonts.ready.then(() => {
+								  // 转化为PNG格式图片
+                  html2canvas(markImgContainer, {
+                    allowTaint: true,
+                    scale: window.devicePixelRatio * scale,
+                    imageTimeout: 300,
+                    logging: false, // 关闭日志减少内存占用
+                    foreignObjectRendering: false, // 减少内存占用
+                    removeContainer: true,
+                    useCORS: true,
+                    backgroundColor: setTheme ? (this.setting.theme == 'light' ? '#ffffff' : '#25282c') : '#FFFFFF'
+                  }).then(canvas => {
+                    // 清理容器内容
+                    markImgContainer.innerHTML = '';
+                    // blob 刷新后会丢失，所以不使用
+                    // if(parentIsWeb) {
+                    //   canvas.toBlob((blob) => {
+                    //     resolve(URL.createObjectURL(blob))
+                    //   })
+                    // } else {
+                      resolve(canvas.toDataURL('image/webp'));
+                    // }
+                  }).catch(error => {
+                    console.log('html2canvas error', error)
+                    resolve('')
+                  })
+							});
+            });
+          }
+
+          async katexRender({ pureMathText, requestId }) {
+            // 把 \\ 替换为 \
+            pureMathText = pureMathText.replace(/\\\\/g, '\\');
+            const resultHtml = katex.renderToString(pureMathText, {
+                throwOnError: false,
+                displayMode: true, // true 为块级公式 \[ \]，false 为行内公式 \( \)
+                output: 'html',
+                trust: true, // 允许一些不安全的命令
+                strict: 'ignore' // 是否严格模式
+            });
+            // parentIsWeb = false 时，才需要转换为图片
+            const imageDataURL = parentIsWeb ? null : await this.html2Base64(resultHtml, 3, true);
+            const param = {
+              imageDataURL,
+              width: null,
+              height: null,
+              resultHtml: parentIsWeb ? resultHtml : ''
+            }
+            // 非 web 平台，则返回图片的宽高
+            if (!parentIsWeb) {
+              const tmpImg = document.createElement('img');
+              tmpImg.src = imageDataURL;
+              document.body.appendChild(tmpImg);
+              await new Promise(resolve => {
+                tmpImg.addEventListener('load', () => {
+                  resolve();
+                });
+              });
+              param.width = tmpImg.offsetWidth;
+              param.height = tmpImg.offsetHeight;
+              // console.log('katexRender width', param.width, 'height', param.height)
+              document.body.removeChild(tmpImg);
+            }
+            this.postMessage({
+              action: "katexRender_callback_" + requestId,
+              param
+            });
+          }
+        }
+
+        // 实例化并挂载到 window，方便外部调用 onMessage 等
+        window.proxyWebHandler = new ProxyWebHandler();
+        // 兼容原有全局 onMessage 调用方式
+        window.onMessage = (...args) => window.proxyWebHandler.onMessage(...args);
+    </script>
+    <style>
+      #markImgContainer {
+        padding: 1px;
+        display: flex;
+        justify-content: center;
+        min-width: 100%;
+      }
+      @media (min-width: 960px) {
+        #markImgContainer {
+          min-width: 400px;
+        }
+      }
+    </style>
+  </body>
+</html>

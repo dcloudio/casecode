@@ -1,0 +1,26 @@
+{
+  "uni-forms": {
+    "include": ["uni-forms-item", "uni-dateformat"]
+  },
+  "uni-list": {
+    "include": ["uni-list-item", "uni-badge", "uni-icons"]
+  },
+  "uni-data-picker": {
+    "include": ["uni-data-pickerview", "uni-load-more"]
+  },
+  "uni-datetime-picker": {
+    "include": []
+  },
+  "uni-data-checkbox": {
+    "include": ["uni-load-more"]
+  },
+  "uni-easyinput": {
+    "include": ["uni-load-more"]
+  },
+  "uni-group": {
+    "include": []
+  },
+  "uni-fab": {
+    "include": []
+  }
+}

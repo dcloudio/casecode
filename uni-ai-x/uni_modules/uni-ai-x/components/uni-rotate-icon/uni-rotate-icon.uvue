@@ -1,0 +1,35 @@
+<template>
+	<view class="rotate-icon" id="rotate-icon" @transitionend="updateRotate"
+		:style="{
+			transform: `rotate(${times * 360}deg)`
+		}"
+	></view>
+</template>
+<script lang="uts" setup>
+	const times = ref<number>(0)
+	
+	const updateRotate = () => {
+		times.value++
+	}
+	
+	onMounted(() => {
+		setTimeout(() => {
+			updateRotate()
+		}, 300)
+	})
+</script>
+<style lang="scss">
+	.rotate-icon {
+		width: 16px;
+		height: 16px;
+		border-radius: 100px;
+		border-top: solid 1px #AAA;
+		border-right: solid 1px #AAA;
+		margin:0 5px;
+		/* 旋转动画 */
+		transition-property: transform;
+		transition-timing-function: linear;
+		transform: rotate(0deg);
+		transition-duration: 1000ms;
+	}
+</style>

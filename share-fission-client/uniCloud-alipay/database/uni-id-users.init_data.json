@@ -1,0 +1,10 @@
+[
+  {
+    "_id": "_uni_starter_test_user_id",
+    "username": "uni-starter预置用户名",
+    "nickname": "测试用户昵称",
+    "avatar": "https://unicloud.dcloud.net.cn/assets/logo.dca09351.png",
+    "mobile": "18888888888",
+    "mobile_confirmed": 1
+  }
+]

@@ -1,0 +1,50 @@
+{
+	"bsonType": "object",
+	"required": ["role_id", "role_name"],
+	"permission": {
+		"read": "'READ_UNI_ID_ROLES' in auth.permission",
+		"create": "'CREATE_UNI_ID_ROLES' in auth.permission",
+		"update": "'UPDATE_UNI_ID_ROLES' in auth.permission",
+		"delete": "'DELETE_UNI_ID_ROLES' in auth.permission"
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID，系统自动生成"
+		},
+		"comment": {
+			"title": "备注",
+			"bsonType": "string",
+			"description": "备注",
+			"trim": "both"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"permission": {
+			"title": "权限",
+			"bsonType": "array",
+			"foreignKey": "uni-id-permissions.permission_id",
+			"description": "角色拥有的权限列表",
+			"enum": {
+				"collection": "uni-id-permissions",
+				"field": "permission_name as text, permission_id as value"
+			}
+		},
+		"role_id": {
+			"title": "唯一ID",
+			"bsonType": "string",
+			"description": "角色唯一标识，不可修改，不允许重复",
+			"trim": "both"
+		},
+		"role_name": {
+			"title": "名称",
+			"bsonType": "string",
+			"description": "角色名称",
+			"trim": "both"
+		}
+	}
+}

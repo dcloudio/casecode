@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>36氪 | 关注互联网创业</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/app.css" />
+
+		<style>
+			html,
+			body {
+				min-height: 100%;
+				background-color: #efeff4;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="position: static;">
+			<h1 id="title" class="mui-title kr-title"><span class="kr-logo">36Kr</span></h1>
+			<a id="setting" class="mui-icon mui-icon-gear mui-pull-right"></a>
+		</header>
+		<div class="mui-content"></div>
+		<script type="text/javascript" charset="UTF-8" src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="js/app.js"></script>
+		<script>
+			 //预加载
+			mui.init({
+				preloadPages: [{
+					"id": "setting",
+					"url": "/setting.html",
+					"styles": {
+						"popGesture": "hide"
+					}
+				}, {
+					"id": "about",
+					"url": "/about.html",
+					"styles": {
+						"popGesture": "hide"
+					}
+				}, { //内置浏览器
+					"id": "browser_main",
+					"url": "/browser.html",
+					"styles": {
+						"popGesture": "hide"
+					},
+					"subpages": [{
+						"id": "browser",
+						"url": "",
+						"styles": {
+							"top": "0px",
+							"bottom": "44px"
+						}
+					}]
+				}, {
+					"id": "detail_main",
+					"url": "/detail_main.html",
+					"styles": {
+						"popGesture": "hide"
+					},
+					"subpages": [{
+						"id": "detail",
+						"url": "/detail.html",
+						"styles": {
+							"popGesture": "hide"
+						}
+					}]
+				}]
+			});
+			mui.plusReady(function() {
+				//关闭splash界面
+				//plus.navigator.closeSplashscreen();
+				//创建子窗口
+				plus.webview.currentWebview().append(plus.webview.create('list.html', 'list', {
+					top: "44px",
+					bottom: "0px"
+				}));
+				if (mui.os.stream) {
+					//创建桌面快捷方式
+					if (mui.isFunction(plus.navigator.createShortcut)) {
+						var shortcut = plus.storage.getItem("SHORTCUT");
+						if (!shortcut) {
+							plus.navigator.createShortcut({
+								name: "36氪资讯",
+								icon: "img/icon.png"
+							});
+							plus.storage.setItem("SHORTCUT", "true");
+						}
+					}
+					//向服务器发送激活请求，后续可删除
+					plus.runtime.getProperty(plus.runtime.appid, function(info) {
+						mui.get('http://stream.dcloud.net.cn/collect/data', {
+							appid: plus.runtime.appid,
+							version: info.version,
+							logtype: 2,
+							imei: plus.device.imei
+						});
+					});
+				}
+			});
+			 //右上角设置按钮点击事件
+			var setting_view = null;
+			document.getElementById("setting").addEventListener('tap', function() {
+				if (!setting_view) {
+					setting_view = plus.webview.getWebviewById('setting');
+				}
+				setting_view.show('slide-in-bottom', 200);
+			});
+			 //首页退出事件
+			mui.back = function() {
+				mui.confirm('确定退出应用？', '提示', ['确定', '取消'], function(e) {
+					if (e.index === 0) {
+						plus.runtime.quit();
+					}
+				});
+			};
+		</script>
+	</body>
+
+</html>

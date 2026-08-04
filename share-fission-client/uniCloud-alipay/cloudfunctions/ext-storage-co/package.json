@@ -1,0 +1,11 @@
+{
+    "name": "ext-storage-co",
+    "dependencies": {},
+    "extensions": {
+        "uni-cloud-ext-storage": {}
+    },
+    "origin-plugin-dev-name": "uni-template-admin",
+    "origin-plugin-version": "2.5.13",
+    "plugin-dev-name": "uni-template-admin",
+    "plugin-version": "2.5.13"
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>36氪 - 设置</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/app.css" />
+	</head>
+
+	<body class="kr-setting">
+		<header class="mui-bar mui-bar-nav">
+			<h1 id="title" class="mui-title kr-title">设置</h1>
+			<a id="back" class="mui-action-back mui-btn-link mui-pull-right">完成</a>
+		</header>
+		<div class="mui-content mui-fullscreen">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					仅在Wi-Fi下载图片
+					<div id="switch" class="mui-switch">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="clear">
+								清除缓存
+							</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="about" class="mui-navigate-right">
+								关于36Kr
+							</a>
+				</li>
+			</ul>
+
+		</div>
+		<script type="text/javascript" charset="UTF-8" src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="js/html5sql.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="js/app.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="js/news.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				html5sql.openDatabase("kr", "36Kr", 5 * 1024 * 1024);
+				document.getElementById("clear").addEventListener('tap', function() {
+					plus.nativeUI.confirm("确认删除缓存?", function(e) {
+						if (e.index == 0) {
+							kr.clearCache();
+						}
+					}, "提醒", ["确认", "取消"]);
+				});
+				document.getElementById("about").addEventListener('tap', function() {
+					plus.webview.show('about', 'slide-in-right', 200);
+				});
+				var switchEl = document.getElementById("switch");
+				switchEl.addEventListener('toggle', function(event) {
+					kr.toggleDownloadWhenWifi(event.detail.isActive);
+				});
+				if (kr.isDownloadWhenWifi()) {
+					switchEl.classList.add('mui-active');
+				} else {
+					switchEl.classList.remove('mui-active');
+				}
+			});
+		</script>
+	</body>
+
+</html>

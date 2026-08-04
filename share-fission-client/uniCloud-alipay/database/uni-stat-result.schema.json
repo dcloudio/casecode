@@ -1,0 +1,156 @@
+// 应用统计结果表
+{
+	"bsonType": "object",
+	"description": "存储统计汇总的会话数据包括不限于设备\/用户的数量、访问量、活跃度（日活、周活、月活）、留存率（日留存、周留存、月留存）、跳出率、访问时长等数据",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_RESULT' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "应用ID，对应opendb-app-list.appid",
+			"foreignKey": "opendb-app-list.appid"
+		},
+		"platform_id": {
+			"bsonType": "string",
+			"description": "应用平台ID，对应uni-stat-app-platforms._id",
+			"foreignKey": "uni-stat-app-platforms._id"
+		},
+		"channel_id": {
+			"bsonType": "string",
+			"description": "渠道\/场景值ID，对应uni-stat-app-channels._id",
+			"foreignKey": "uni-stat-app-channels._id"
+		},
+		"version_id": {
+			"bsonType": "string",
+			"description": "应用版本ID，对应opendb-app-versions._id",
+			"foreignKey": "opendb-app-versions._id"
+		},
+		"total_users": {
+			"bsonType": "int",
+			"description": "历史累计总用户数"
+		},
+		"new_user_count": {
+			"bsonType": "int",
+			"description": "本时间段新增用户数"
+		},
+		"active_user_count": {
+			"bsonType": "int",
+			"description": "本时间段活跃用户数"
+		},
+		"total_devices": {
+			"bsonType": "int",
+			"description": "历史累计总设备数"
+		},
+		"new_device_count": {
+			"bsonType": "int",
+			"description": "本时间段新增设备数"
+		},
+		"user_session_times": {
+			"bsonType": "int",
+			"description": "本时间段用户的会话次数"
+		},
+		"active_device_count": {
+			"bsonType": "int",
+			"description": "本时间段活跃设备数"
+		},
+		"app_launch_count": {
+			"bsonType": "int",
+			"description": "本时间段App启动或从后台切到前台的次数"
+		},
+		"error_count": {
+			"bsonType": "int",
+			"description": "本时间段报错次数"
+		},
+		"duration": {
+			"bsonType": "int",
+			"description": "时间段内，所有会话访问总时长，单位秒"
+		},
+		"user_duration": {
+			"bsonType": "int",
+			"description": "本次登录用户的会话总时长，单位为秒"
+		},
+		"avg_device_session_time": {
+			"bsonType": "int",
+			"description": "设备的次均停留时长,单位秒"
+		},
+		"avg_device_time": {
+			"bsonType": "int",
+			"defaultValue": "设均停留时长(平均每台设备的停留时长),单位秒"
+		},
+		"avg_user_session_time": {
+			"bsonType": "int",
+			"description": "用户的次均停留时长,单位秒"
+		},
+		"avg_user_time": {
+			"bsonType": "int",
+			"defaultValue": "人均停留时长(平均每个登录用户的停留时长),单位秒"
+		},
+		"bounce_times": {
+			"bsonType": "int",
+			"description": "跳出次数"
+		},
+		"bounce_rate": {
+			"bsonType": "double",
+			"description": "跳出率"
+		},
+		"retention": {
+			"bsonType": "object",
+			"description": "留存信息",
+			"properties": {
+				"active_user": {
+					"bsonType": "object",
+					"description": "活跃用户留存信息"
+				},
+				"new_user": {
+					"bsonType": "object",
+					"description": "新增用户留存信息"
+				},
+				"active_device": {
+					"bsonType": "object",
+					"description": "活跃设备留存信息"
+				},
+				"new_device": {
+					"bsonType": "object",
+					"description": "新增设备留存信息"
+				}
+			}
+		},
+		"dimension": {
+			"bsonType": "string",
+			"description": "统计范围 day:按天统计，hour:按小时统计",
+			"enum": [{
+				"text": "月",
+				"value": "month"
+			}, {
+				"text": "周",
+				"value": "week"
+			}, {
+				"text": "天",
+				"value": "day"
+			}, {
+				"text": "小时",
+				"value": "hour"
+			}]
+		},
+		"stat_date": {
+			"bsonType": "int",
+			"description": "统计日期，格式yyyymmdd，例:20211201"
+		},
+		"start_time": {
+			"bsonType": "timestamp",
+			"description": "开始时间"
+		},
+		"end_time": {
+			"bsonType": "timestamp",
+			"description": "结束时间"
+		}
+	}
+}

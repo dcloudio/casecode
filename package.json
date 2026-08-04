@@ -1,91 +1,28 @@
 {
-    "id": "hello-uniapp-x-alpha",
-    "name": "hello-uniapp-x-alpha",
-    "displayName": "hello-uniapp-x-alpha",
-    "version": "1.0.78",
-    "description": "演示 uni-app x 框架的组件、接口、模板",
-    "scripts": {
-        "check-commit": "node ./git-hooks/check-commit.cjs"
-    },
-    "repository": "https://gitcode.net/dcloud/hello-uni-app-x",
-    "keywords": [
-        "uni-app-x",
-        "uni-app2.0",
-        "示例工程"
-    ],
-    "author": "",
-    "license": "MIT",
-    "dependencies": {},
-    "engines": {
-        "HBuilderX": "^3.99"
-    },
-    "dcloudext": {
-        "sale": {
-            "regular": {
-                "price": "0.00"
-            },
-            "sourcecode": {
-                "price": "0.00"
-            }
-        },
-        "contact": {
-            "qq": ""
-        },
-        "declaration": {
-            "ads": "无",
-            "data": "不采集任何数据",
-            "permissions": "- android.permission.INTERNET  \n- android.permission.READ_EXTERNAL_STORAGE  \n- android.permission.WRITE_EXTERNAL_STORAGE  \n- android.permission.ACCESS_FINE_LOCATION  \n- android.permission.ACCESS_COARSE_LOCATION  \n- android.permission.ACCESS_NETWORK_STATE  \n- android.permission.READ_MEDIA_IMAGES  \n- android.permission.READ_MEDIA_VIDEO  \n- android.permission.READ_MEDIA_VISUAL_USER_SELECTED  \n- android.permission.CAMERA  \n- android.permission.READ_PHONE_STATE  \n- android.permission.REQUEST_INSTALL_PACKAGES"
-        },
-        "npmurl": "",
-        "type": "uniapp-template-project"
-    },
-    "uni_modules": {
-        "dependencies": [],
-        "encrypt": [],
-        "platforms": {
-            "cloud": {
-                "tcb": "y",
-                "aliyun": "y"
-            },
-            "client": {
-                "App": {
-                    "app-vue": "n",
-                    "app-nvue": "n",
-                    "app-uvue": "y"
-                },
-                "H5-mobile": {
-                    "Safari": "n",
-                    "Android Browser": "n",
-                    "微信浏览器(Android)": "n",
-                    "QQ浏览器(Android)": "n"
-                },
-                "H5-pc": {
-                    "Chrome": "n",
-                    "IE": "n",
-                    "Edge": "n",
-                    "Firefox": "n",
-                    "Safari": "n"
-                },
-                "小程序": {
-                    "微信": "n",
-                    "阿里": "n",
-                    "百度": "n",
-                    "字节跳动": "n",
-                    "QQ": "n",
-                    "京东": "n",
-                    "钉钉": "n",
-                    "快手": "n",
-                    "飞书": "n"
-                },
-                "快应用": {
-                    "华为": "n",
-                    "联盟": "n"
-                },
-                "Vue": {
-                    "vue2": "n",
-                    "vue3": "y"
-                }
-            }
-        }
-    }
+  "name": "casecode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "subtree:pull:hello-uni-app-x": "git subtree pull --prefix=hello-uni-app-x hello-uni-app-x alpha --squash -m \"chore: update hello-uni-app-x\"",
+    "subtree:pull:hello-uni-id-pages-x": "git subtree pull --prefix=hello-uni-id-pages-x hello-uni-id-pages-x dev --squash -m \"chore: update hello-uni-id-pages-x\"",
+    "subtree:pull:hello-uts": "git subtree pull --prefix=hello-uts hello-uts alpha --squash -m \"chore: update hello-uts\"",
+    "subtree:pull:hello-uvue": "git subtree pull --prefix=hello-uvue hello-uvue alpha --squash -m \"chore: update hello-uvue\"",
+    "subtree:pull:hellounicloud": "git subtree pull --prefix=hellounicloud hellounicloud main --squash -m \"chore: update hellounicloud\"",
+    "subtree:pull:uni-ai-x": "git subtree pull --prefix=uni-ai-x uni-ai-x master --squash -m \"chore: update uni-ai-x\"",
+    "subtree:pull:share-fission-client": "git subtree pull --prefix=share-fission-client share-fission-client main --squash -m \"chore: update share-fission-client\"",
+    "subtree:pull:share-fission-admin": "git subtree pull --prefix=share-fission-admin share-fission-admin master --squash -m \"chore: update share-fission-admin\"",
+    "subtree:pull": "npm run subtree:pull:hello-uni-app-x && npm run subtree:pull:hello-uni-id-pages-x && npm run subtree:pull:hello-uts && npm run subtree:pull:hello-uvue && npm run subtree:pull:hellounicloud && npm run subtree:pull:uni-ai-x && npm run subtree:pull:share-fission-client && npm run subtree:pull:share-fission-admin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcloudio/casecode.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dcloudio/casecode/issues"
+  },
+  "homepage": "https://github.com/dcloudio/casecode#readme"
 }

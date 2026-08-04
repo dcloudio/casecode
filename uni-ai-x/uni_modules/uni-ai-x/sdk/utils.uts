@@ -1,0 +1,33 @@
+import { MarkdownToken } from '@/uni_modules/uni-cmark'
+class Utils {
+	async measureTextWidth(text: string, fontSize: number) : Promise<number> {
+		return new Promise((resolve) => {
+			// 空实现，在页面中覆盖本方法的实现
+			resolve(0)
+		})
+	}
+	getTokensText(tokens?: MarkdownToken[]){
+		if (tokens == null) return ''
+		let text = ''
+		tokens.forEach((token: MarkdownToken)=>{
+			if(token.text != null){
+				text += token.text
+			}else if(token.tokens != null && token.tokens.length > 0){
+				text += this.getTokensText(token.tokens)
+			}
+		})
+		return text
+	}
+	// 把 UTSAndroid.getDispatcher("io").async((_) => 封装成一个函数
+	uniGetDispatcher(taskName : string, fn : () => void) {
+		// #ifdef APP-ANDROID
+		UTSAndroid.getDispatcher(taskName).async((_) => {
+			fn()
+		})
+		// #endif
+		// #ifndef APP-ANDROID
+		fn()
+		// #endif
+	}
+}
+export default new Utils()

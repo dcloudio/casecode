@@ -1,0 +1,81 @@
+{
+	"bsonType": "object",
+	"required": ["name", "images", "category", "score_cost", "stock", "sort_order", "status"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "商品名称",
+			"title": "商品名称",
+			"trim": "both"
+		},
+		"description": {
+			"bsonType": "string",
+			"description": "商品描述",
+			"title": "商品描述"
+		},
+		"images": {
+			"bsonType": "array",
+			"description": "商品图片URL列表（轮播图）",
+			"title": "商品图片",
+			"arrayType": "string"
+		},
+		"detail_images": {
+			"bsonType": "array",
+			"description": "详情图URL列表",
+			"title": "详情图",
+			"arrayType": "string"
+		},
+		"category": {
+			"bsonType": "string",
+			"description": "商品分类",
+			"title": "商品分类"
+		},
+		"score_cost": {
+			"bsonType": "int",
+			"description": "兑换所需积分",
+			"title": "所需积分"
+		},
+		"stock": {
+			"bsonType": "int",
+			"description": "库存数量",
+			"title": "库存"
+		},
+		"sort_order": {
+			"bsonType": "int",
+			"description": "排序权重（越大越靠前）",
+			"title": "排序"
+		},
+		"status": {
+			"bsonType": "int",
+			"description": "状态：1=上架，0=下架",
+			"title": "状态",
+			"enum": [0, 1],
+			"defaultValue": 1
+		},
+		"is_deleted": {
+			"bsonType": "bool",
+			"description": "是否删除（软删除）",
+			"defaultValue": false
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间"
+		}
+	}
+}

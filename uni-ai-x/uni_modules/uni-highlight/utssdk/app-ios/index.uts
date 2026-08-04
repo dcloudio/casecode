@@ -1,0 +1,109 @@
+
+import { HighLighterOptions, ILineTokens, IToken } from '../interface.uts'
+import { ScopeparserBridge } from "scopeparser4ios"
+
+type ktToken = {
+	start : number; // byte offset
+	end : number;   // byte offset
+	token : string;
+}
+
+type ITokenMap = Map<string, number | string | string[]>
+type ILineTokensMap = Map<string, ITokenMap[]>
+type tokenizeFullTextMap = ILineTokensMap[]
+
+
+export class CreateHighLighter {
+	public langMap: Map<string, string>
+	public handleMap: Map<string, any>
+	public grammar: ScopeparserBridge
+	constructor(options : HighLighterOptions) {
+			const languages = options.languages!;
+			const langMap : Map<string, string> = new Map();
+			for (let id in languages) {
+			
+				try {
+					let jsonStr = JSON.stringify(languages[id])
+					langMap.set(id, jsonStr!)
+				} catch {
+			
+				}
+			}
+			this.langMap = langMap
+			this.handleMap = new Map()
+			this.grammar = new ScopeparserBridge()
+	}
+	async tokenizeLine(langId : string, lineText : string, state : any): Promise<ILineTokens | null> {
+
+		let res : ILineTokens | null = null
+		let tmlStr = this.langMap.get(langId)
+		if (tmlStr === null) return null
+		let handle  = this.handleMap.get(langId)
+		if (handle === null) {
+			handle = this.grammar.addGrammar(withLangId = langId, jsonText = tmlStr!)
+			this.handleMap.set(langId, handle)
+		}
+		const lineTokens : string | null = await this.grammar.tokenizeLine(withHandle = handle, langId = langId, text = lineText);
+		
+		if (lineTokens === null) return null
+
+		const tokens : IToken[] = []
+		
+
+		let lineTokensJson: ktToken[] = JSON.parseArray<ktToken>(lineTokens)!
+		
+		for (let j = 0; j < lineTokensJson.length; j++) {
+			const token: ktToken = (lineTokensJson[j]) as ktToken
+			const iToken = new IToken(token.start, token.end, token.token.split(" "))
+			tokens.push(iToken)
+		}
+		let nTokens : ILineTokens = new ILineTokens(tokens)
+		// console.log(19191, nTokens)
+		res = nTokens
+		
+		return res
+		
+	}
+	async tokenizeFullText(langId : string, fullCodeText : string): Promise<tokenizeFullTextMap> {
+	
+		let res :tokenizeFullTextMap = []
+		// let res : Map<string ,ILineTokens[]>[] = []
+		
+		let tmlStr = this.langMap.get(langId)
+		if (tmlStr === null) return []
+		let handle  = this.handleMap.get(langId)
+		if (handle === null) {
+			handle = this.grammar.addGrammar(withLangId = langId, jsonText = tmlStr!)
+			this.handleMap.set(langId, handle)
+		}
+		
+		const textN = fullCodeText.split(/\r\n|\r|\n/);
+		let ITokenM: ITokenMap = new Map()
+		
+		for (let i = 0; i < textN.length; i++) {
+			const line = textN[i] + "\n";
+			const lineTokens : string | null = await this.grammar.tokenizeLine(withHandle = handle, langId = langId, text = line);
+			
+			if (lineTokens === null) return []
+			const tokens : ITokenMap[] = []
+			
+			let lineTokensJson: ktToken[] = JSON.parseArray<ktToken>(lineTokens)!
+			for (let j = 0; j < lineTokensJson.length; j++) {
+				const token: ktToken = (lineTokensJson[j]) as ktToken
+				
+				// const iToken = new IToken(token.start, token.end, token.token.split(" "))
+				ITokenM.set('startIndex', token.start)
+				ITokenM.set('endIndex', token.end)
+				ITokenM.set('scopes', token.token.split(" "))
+				tokens.push(ITokenM)
+			}
+			
+			let nTokensM: ILineTokensMap = new Map()
+			nTokensM.set("tokens", tokens)
+			
+			res.push(nTokensM)
+		}
+		return res
+		
+	}
+}

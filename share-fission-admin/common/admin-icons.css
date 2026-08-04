@@ -1,0 +1,199 @@
+@font-face {
+	font-family: admin-icons;
+	src: url('~@/static/admin-icons.ttf') format('truetype');
+	font-weight: 400;
+	font-display: "auto";
+	font-style: normal
+}
+
+
+[class*="admin-icons-"],
+[class^=admin-icons-] {
+	font-family: admin-icons !important;
+	speak: none;
+	font-style: normal;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	vertical-align: baseline;
+	display: inline-block;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale
+}
+
+
+
+.admin-icons-stat:before {
+	content: "\e64a";
+}
+
+.admin-icons-fl-xitong:before {
+  content: "\e623";
+}
+
+.admin-icons-tongji:before {
+  content: "\e64a";
+}
+
+.admin-icons-yonghutongji:before {
+  content: "\e661";
+}
+
+.admin-icons-dashboard:before {
+  content: "\e78b";
+}
+
+.admin-icons-qudaofenxi:before {
+  content: "\e6c6";
+}
+
+.admin-icons-shebeitongji:before {
+  content: "\e6fd";
+}
+
+.admin-icons-xitongguanli:before {
+  content: "\e671";
+}
+
+.admin-icons-kaifashili:before {
+  content: "\e614";
+}
+
+.admin-icons-yonghutongji1:before {
+  content: "\e769";
+}
+
+.admin-icons-shijianfenxi:before {
+  content: "\e604";
+}
+
+.admin-icons-ziyuan:before {
+  content: "\e619";
+}
+
+.admin-icons-cuowutongji:before {
+  content: "\e51f";
+}
+
+.admin-icons-shijianfenxi1:before {
+  content: "\e629";
+}
+
+
+.admin-icons-tongjishouye:before {
+  content: "\e679";
+}
+
+.admin-icons-yemiantongji:before {
+  content: "\e684";
+}
+
+
+.admin-icons-manager-user:before {
+  content: "\e610";
+}
+
+.admin-icons-manager-role:before {
+  content: "\e61a";
+}
+
+.admin-icons-manager-permission:before {
+  content: "\e637";
+}
+
+.admin-icons-manager-app:before {
+  content: "\e65b";
+}
+
+.admin-icons-manager-tag:before {
+  content: "\e83c";
+}
+
+.admin-icons-manager-menu:before {
+  content: "\e629";
+}
+
+.admin-icons-overview:before {
+  content: "\e609";
+}
+
+.admin-icons-activity:before {
+  content: "\e70e";
+}
+
+.admin-icons-trend:before {
+  content: "\e63c";
+}
+
+.admin-icons-retention:before {
+  content: "\e697";
+}
+
+.admin-icons-comparison:before {
+  content: "\e955";
+}
+
+.admin-icons-stickiness:before {
+  content: "\e770";
+}
+
+.admin-icons-page-ent:before {
+  content: "\e767";
+}
+
+.admin-icons-page-res:before {
+  content: "\e69b";
+}
+
+.admin-icons-scene:before {
+  content: "\e601";
+}
+
+.admin-icons-channel:before {
+  content: "\e603";
+}
+
+.admin-icons-error-js:before {
+  content: "\ec0c";
+}
+
+.admin-icons-error-app:before {
+  content: "\e617";
+}
+
+.admin-icons-help:before {
+  content: "\e65c";
+}
+
+.admin-icons-icon:before {
+  content: "\e503";
+}
+
+.admin-icons-table:before {
+  content: "\e639";
+}
+
+.admin-icons-eco:before {
+  content: "\e698";
+}
+
+.admin-icons-doc:before {
+  content: "\e656";
+}
+
+.admin-icons-pulgin:before {
+  content: "\e648";
+}
+
+.admin-icons-lang:before {
+  content: "\e618";
+}
+
+.admin-icons-user:before {
+  content: "\e68d";
+}
+
+.admin-icons-safety:before {
+  content: "\e769";
+}

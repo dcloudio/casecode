@@ -1,0 +1,68 @@
+{
+	"bsonType": "object",
+	"required": ["order_no", "user_id", "goods_info", "score_cost", "status"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"order_no": {
+			"bsonType": "string",
+			"description": "订单编号（展示用，纯数字订单号25位）"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "用户ID"
+		},
+		"goods_info": {
+			"bsonType": "object",
+			"description": "商品信息快照",
+			"properties": {
+				"goods_id": {
+					"bsonType": "string",
+					"description": "商品ID"
+				},
+				"name": {
+					"bsonType": "string",
+					"description": "商品名称"
+				},
+				"image": {
+					"bsonType": "string",
+					"description": "商品图片"
+				},
+				"score_cost": {
+					"bsonType": "int",
+					"description": "兑换所需积分"
+				}
+			}
+		},
+		"score_cost": {
+			"bsonType": "int",
+			"description": "消耗积分数"
+		},
+		"card_key_id": {
+			"bsonType": "string",
+			"description": "关联卡密ID"
+		},
+		"status": {
+			"bsonType": "string",
+			"description": "状态：complete=已完成，cancel=已取消"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "下单时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"complete_time": {
+			"bsonType": "timestamp",
+			"description": "完成时间"
+		}
+	}
+}

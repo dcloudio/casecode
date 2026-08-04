@@ -1,0 +1,34 @@
+// 小程序场景值对照表
+{
+	"bsonType": "object",
+	"description": "提供应用渠道和小程序场景值的数据字典",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"platform": {
+			"bsonType": "string",
+			"description": "应用平台，对应uni-stat-app-platforms.code",
+			"foreignKey": "uni-stat-app-platforms.code"
+		},
+		"scene_code": {
+			"bsonType": "string",
+			"description": "场景代码"
+		},
+		"scene_name": {
+			"bsonType": "string",
+			"description": "场景名称"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		}
+	}
+}

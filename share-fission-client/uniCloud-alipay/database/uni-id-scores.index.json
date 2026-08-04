@@ -1,0 +1,65 @@
+[
+	{
+		"IndexName": "user_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "user_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "user_id_create_date",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "user_id", "Direction": "1" },
+				{ "Name": "create_date", "Direction": "-1", "Type": "long" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "user_id_source_create_date",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "user_id", "Direction": "1" },
+				{ "Name": "source", "Direction": "1" },
+				{ "Name": "create_date", "Direction": "-1", "Type": "long" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "source_user_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "source_user_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "order_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "order_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "withdrawal_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "withdrawal_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "type",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "type", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "relation_level",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "relation_level", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	}
+]

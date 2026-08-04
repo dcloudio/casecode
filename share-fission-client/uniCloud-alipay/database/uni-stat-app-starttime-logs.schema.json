@@ -1,0 +1,44 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"description": "存储客户端上报的，应用在单位时间内的启动次数的数据",
+	"permission": {
+		"read": "'READ_UNI_STAT_EVENT_RESULT' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "用户端上报的应用ID"
+		},
+		"platform": {
+			"bsonType": "string",
+			"description": "用户端上报的平台code"
+		},
+		"date": {
+			"bsonType": "date",
+			"description": "日期"
+		},
+		"st3": {
+			"bsonType": "int",
+			"description": "3秒内的启动次数"
+		},
+		"st5": {
+			"bsonType": "int",
+			"description": "3-5秒内的启动次数"
+		},
+		"st7": {
+			"bsonType": "int",
+			"description": "5-7秒内的启动次数"
+		},
+		"st7m": {
+			"bsonType": "int",
+			"description": "7秒以上的启动次数"
+		}
+	}
+}

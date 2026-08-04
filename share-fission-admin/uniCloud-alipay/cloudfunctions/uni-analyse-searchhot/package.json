@@ -1,0 +1,20 @@
+{
+    "name": "uni-analyse-searchhot",
+    "version": "1.0.0",
+    "description": "定时归纳热搜",
+    "main": "index.js",
+    "dependencies": {},
+    "cloudfunction-config": {
+        "triggers": [
+            {
+                "name": "analyse-searchHot",
+                "type": "timer",
+                "config": "0 0 *\/2 * * * *"
+            }
+        ]
+    },
+    "origin-plugin-dev-name": "uni-template-admin",
+    "origin-plugin-version": "2.5.13",
+    "plugin-dev-name": "uni-template-admin",
+    "plugin-version": "2.5.13"
+}

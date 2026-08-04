@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Edit",
+      "Write",
+      "Read"
+    ]
+  },
+  "permission-mode": "bypassPermissions",
+  "full-throttle": true,
+  "capabilities": {
+    "terminal": {
+      "policy": "allow"
+    },
+    "file_edit": {
+      "policy": "allow"
+    },
+    "file_create": {
+      "policy": "allow"
+    },
+    "file_delete": {
+      "policy": "allow"
+    }
+  }
+}

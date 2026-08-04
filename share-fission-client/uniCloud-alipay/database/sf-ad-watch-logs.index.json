@@ -1,0 +1,50 @@
+[
+	{
+		"IndexName": "user_id",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "user_id", "Direction": "1" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "user_id_watch_time",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "user_id", "Direction": "1" },
+				{ "Name": "watch_time", "Direction": "-1", "Type": "long" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "user_id_create_time",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [
+				{ "Name": "user_id", "Direction": "1" },
+				{ "Name": "create_time", "Direction": "-1", "Type": "long" }
+			],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "watch_time",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "watch_time", "Direction": "-1", "Type": "long" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "is_realtime",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "is_realtime", "Direction": "1", "Type": "bool" }],
+			"MgoIsUnique": false
+		}
+	},
+	{
+		"IndexName": "score",
+		"MgoKeySchema": {
+			"MgoIndexKeys": [{ "Name": "score", "Direction": "1", "Type": "int" }],
+			"MgoIsUnique": false
+		}
+	}
+]

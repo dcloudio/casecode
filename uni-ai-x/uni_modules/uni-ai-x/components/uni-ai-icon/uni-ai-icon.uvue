@@ -1,0 +1,76 @@
+<template>
+	<text :style="{ color: color, 'font-size': iconSize }" @click="_onClick" class="uni-ai-icon">{{unicode}}</text>
+</template>
+
+<script lang="uts" setup>
+	// #ifdef APP
+	function decodeUnicode(code: string): string {
+	  // 将字符串分割成 Unicode 编码的字符
+	  let codes = code.split('%u');
+	  // 遍历字符数组
+	  let chars = codes.map(code => {
+	    // 转换为十六进制
+	    let hexCode = parseInt(code, 16);
+	    // 将 UTF-16 编码转换为字符
+	    return String.fromCharCode(hexCode);
+	  });
+	  // 将字符数组转换成字符串
+	  return chars.join('');
+	}
+	// #endif
+	const getVal = (val: string) :string => {
+		const reg = /^[0-9]*$/g
+		return (typeof val == 'number' ||　reg.test(val) )? val + 'px' : val;
+	}
+	
+	type UniAiIconProps = {
+		code?: string
+		color?: string
+		size?: string
+	}
+	
+	const props = withDefaults(defineProps<UniAiIconProps>(), {
+		code: '',
+		color: '#333333',
+		size: '16'
+	})
+	
+	const emit = defineEmits<{
+		'click': [e: UniEvent]
+	}>()
+	
+	const unicode = computed<string>(() => {
+		// #ifdef APP
+		return decodeUnicode(props.code)
+		// #endif
+		// #ifndef APP
+		return unescape(`%u${props.code}`) as string
+		// #endif
+	})
+	
+	const iconSize = computed<string>(() => {
+		return getVal(props.size)
+	})
+	
+	const _onClick = (e: UniEvent) => {
+		emit('click', e)
+	}
+</script>
+
+<style>
+@font-face {
+  // #ifdef WEB
+  font-display: swap;
+  // #endif
+  font-family: "uni-ai-icon";
+  src: url('/uni_modules/uni-ai-x/static/font/iconfont.ttf');
+}
+.uni-ai-icon {
+  font-family: uni-ai-icon !important;
+  font-size: 16px;
+  font-style: normal;
+  /* #ifdef H5 */
+  cursor: pointer;
+  /* #endif */
+}
+</style>

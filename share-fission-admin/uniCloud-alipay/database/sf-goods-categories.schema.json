@@ -1,0 +1,50 @@
+{
+	"bsonType": "object",
+	"required": ["name", "sort", "status"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"parent_id": {
+			"bsonType": "string",
+			"description": "父分类ID，为空表示顶级分类"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "分类名称"
+		},
+		"level": {
+			"bsonType": "int",
+			"description": "分类层级：1=一级分类，2=二级分类，以此类推",
+			"minimum": 1
+		},
+		"sort": {
+			"bsonType": "int",
+			"description": "排序值，数值越小越靠前",
+			"defaultValue": 0
+		},
+		"status": {
+			"bsonType": "int",
+			"description": "状态：0=禁用，1=启用",
+			"enum": [0, 1],
+			"defaultValue": 1
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间"
+		}
+	}
+}

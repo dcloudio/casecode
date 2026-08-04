@@ -1,0 +1,38 @@
+{
+	"bsonType": "object",
+	"description": "提供应用的版本号字典",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"appid": {
+			"bsonType": "string",
+			"description": "统计应用ID，对应opendb-app-list.appid",
+			"foreignKey": "opendb-app-list.appid"
+		},
+		"platform_id": {
+			"bsonType": "string",
+			"description": "应用平台，对应uni-stat-app-platforms._id",
+			"foreignKey": "uni-stat-app-platforms._id"
+		},
+		"version": {
+			"bsonType": "string",
+			"description": "应用版本"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		},
+		"last_modify_time": {
+			"bsonType": "timestamp",
+			"description": "最后修改时间"
+		}
+	}
+}

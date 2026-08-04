@@ -1,0 +1,54 @@
+{
+	"bsonType": "object",
+	"required": ["bannerfile"],
+	"permission": {
+		"read": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"bannerfile": {
+			"bsonType": "file",
+			"fileMediaType": "image",
+			"title": "图片文件",
+			"description": "图片文件信息，包括文件名、url等"
+		},
+		"open_url": {
+			"bsonType": "string",
+			"description": "点击跳转目标地址。如果是web地址则使用内置web-view打开；如果是本地页面则跳转本地页面；如果是schema地址则打开本地的app",
+			"title": "点击目标地址",
+			"format": "url",
+			"pattern": "^(http:\/\/|https:\/\/|\/|.\/|@\/)\\S",
+			"trim": "both"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "注意标题文字颜色和背景图靠色导致看不清的问题",
+			"maxLength": 20,
+			"title": "标题",
+			"trim": "both"
+		},
+		"sort": {
+			"bsonType": "int",
+			"description": "数字越小，排序越前",
+			"title": "排序"
+		},
+		"category_id": {
+			"bsonType": "string",
+			"description": "多个栏目的banner都存在一个表里时可用这个字段区分",
+			"title": "分类id"
+		},
+		"status": {
+			"bsonType": "bool",
+			"defaultValue": true,
+			"title": "生效状态"
+		},
+		"description": {
+			"bsonType": "string",
+			"description": "维护者自用描述",
+			"title": "备注",
+			"trim": "both"
+		}
+	}
+}

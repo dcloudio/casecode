@@ -1,0 +1,57 @@
+<script lang="uts">
+	import { installOpenClaw } from '@/uni_modules/uni-ai-x-openClaw/install.uts'
+	let firstBackTime = 0
+	export default {
+		onLaunch: function () {
+			console.log('App Launch')
+			installOpenClaw()
+		},
+		onShow: function () {
+			console.log('App Show')
+			// #ifdef WEB
+			// 解决在 web-pc 端，通过 chrome 模拟移动端打开时。长按会弹出系统菜单的问题
+			window.addEventListener('contextmenu', (e) => {
+				// 判断是否是移动端
+				if (window.navigator.userAgent.match(/Android/i) || window.navigator.userAgent.match(/iPhone/i) || window.navigator.userAgent.match(/iPad/i) || window.navigator.userAgent.match(/iPod/i)) {
+					e.preventDefault()
+				}
+			})
+			// #endif
+		},
+		onHide: function () {
+			console.log('App Hide')
+		},
+		// #ifdef APP-ANDROID
+		onLastPageBackPress: function () {
+			console.log('App LastPageBackPress')
+			if (firstBackTime == 0) {
+				uni.showToast({
+					title: '再按一次退出应用',
+					position: 'bottom',
+				})
+				firstBackTime = Date.now()
+				setTimeout(() => {
+					firstBackTime = 0
+				}, 2000)
+			} else if (Date.now() - firstBackTime < 2000) {
+				firstBackTime = Date.now()
+				uni.exit()
+			}
+		},
+		// #endif
+		onExit: function () {
+			console.log('App Exit')
+		},
+	}
+</script>
+
+<style>
+	/*每个页面公共css */
+	.uni-row {
+		flex-direction: row;
+	}
+
+	.uni-column {
+		flex-direction: column;
+	}
+</style>

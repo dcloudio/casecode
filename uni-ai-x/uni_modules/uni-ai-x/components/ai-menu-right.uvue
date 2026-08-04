@@ -1,0 +1,13 @@
+<template>
+	<view>
+		<addChat></addChat>
+	</view>
+</template>
+
+<script lang="uts" setup>
+	import addChat from './add-chat.uvue'
+</script>
+
+<style lang="scss">
+
+</style>

@@ -1,0 +1,107 @@
+{
+	"login": {
+		"text": {
+			"title": "系統登錄",
+			"prompt": "如無管理員賬號，請先創建管理員..."
+		},
+		"field": {
+			"username": "賬號",
+			"password": "密碼",
+			"captcha": "驗證碼"
+		},
+		"button": {
+			"login": "登錄"
+		}
+	},
+	"topwindow": {
+		"text": {
+			"doc": "Admin 框架文檔",
+			"plugin": "瀏覽更多 Admin 插件",
+			"changeLanguage": "切换语言",
+			"changePwd": "修改密碼",
+			"signOut": "退出"
+		}
+	},
+	"index": {
+		"text": {
+			"prompt": "內容主體，可自定義內容及樣式",
+			"vesion": "可在控制台和 package.json 中查看當前的版本"
+		}
+	},
+	"updatePwd": {
+		"text": {
+			"title": "修改密碼"
+		},
+		"field": {
+			"oldPassword": "舊密碼",
+			"newPassword": "新密碼",
+			"passwordConfirmation": "確認新密碼"
+		},
+		"button": {
+			"save": "保存",
+			"back": "返回"
+		}
+	},
+	"common": {
+		"placeholder": {
+			"query": "請輸入搜索內容"
+		},
+		"button": {
+			"search": "檢索",
+			"add": "新增",
+			"edit": "修改",
+			"delete": "刪除",
+			"batchDelete": "批量刪除",
+			"exportExcel": "導出 Excel",
+			"submit": "提交",
+			"back": "返回",
+			"tagManager": "標簽管理",
+			"publish": "發布頁管理",
+			"version": "版本管理",
+			"sendSMS": "群發短信"
+		},
+		"empty": "沒有更多數據",
+		"piecePerPage": "條/頁"
+	},
+	"user": {
+		"text": {
+			"userManager": "用戶管理"
+		}
+	},
+	"role": {
+		"text": {
+			"roleManager": "角色管理"
+		}
+	},
+	"permission": {
+		"text": {
+			"permissionManager": "權限管理"
+		}
+	},
+	"app": {
+		"text": {
+			"appManager": "應用管理",
+			"describle": "管理用戶可登錄的應用"
+		}
+	},
+	"menu": {
+		"text": {
+			"menuManager": "菜單列表",
+			"additiveMenu": "待添加菜單"
+		},
+		"button": {
+			"addFirstLevelMenu": "新增一級菜單",
+			"addChildMenu": "子菜單",
+			"updateBuiltInMenu": "更新內寘選單"
+		}
+	},
+	"demo": {
+		"icons": {
+			"title": "圖標",
+			"describle": "點擊圖標即可複製圖標代碼"
+		},
+		"table": {
+			"title": "表格"
+		}
+	}
+}

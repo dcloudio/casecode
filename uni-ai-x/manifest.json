@@ -1,0 +1,82 @@
+{
+	"name": "uni-ai-x",
+	"appid": "__UNI__C50103A",
+	"description": "",
+	"versionName": "2.1.0",
+	"versionCode": "26020501",
+	"uni-app-x": {},
+	/* 快应用特有相关 */
+	"quickapp": {},
+	/* 小程序特有相关 */
+	"mp-weixin": {
+		"appid": "",
+		"setting": {
+			"urlCheck": false
+		},
+		"usingComponents": true
+	},
+	"mp-alipay": {
+		"usingComponents": true
+	},
+	"mp-baidu": {
+		"usingComponents": true
+	},
+	"mp-toutiao": {
+		"usingComponents": true
+	},
+	"uniStatistics": {
+		"enable": false
+	},
+	"vueVersion": "3",
+	"app": {
+		"distribute": {
+			"icons": {
+				"android": {
+					"hdpi": "",
+					"xhdpi": "",
+					"xxhdpi": "",
+					"xxxhdpi": ""
+				}
+			}
+		}
+	},
+	"app-android": {
+		"distribute": {
+			"modules": {},
+			"icons": {
+				"hdpi": "",
+				"xhdpi": "",
+				"xxhdpi": "",
+				"xxxhdpi": ""
+			},
+			"splashScreens": {
+				"default": {}
+			},
+			"abiFilters": [
+				"armeabi-v7a",
+				"arm64-v8a"
+			]
+		}
+	},
+	"app-ios": {
+		"distribute": {
+			"modules": {},
+			"icons": {},
+			"splashScreens": {}
+		}
+	},
+	"web": {
+		"router": {
+			"mode": "",
+			"base": "./"
+		}
+	},
+	"app-harmony": {
+		"distribute": {
+			"bundleName": "",
+			"deviceTypes": [
+				"phone"
+			]
+		}
+	}
+}

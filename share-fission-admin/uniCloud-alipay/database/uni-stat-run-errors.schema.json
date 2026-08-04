@@ -1,0 +1,33 @@
+// 运行错误日志表
+{
+	"bsonType": "object",
+	"description": "记录数据统计时运行出错的日志",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"mod": {
+			"bsonType": "string",
+			"description": "运行模块"
+		},
+		"params": {
+			"bsonType": "object",
+			"description": "运行参数"
+		},
+		"error": {
+			"bsonType": "string",
+			"description": "错误信息"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		}
+	}
+}

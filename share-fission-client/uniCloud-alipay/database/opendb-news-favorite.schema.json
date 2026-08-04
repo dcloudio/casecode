@@ -1,0 +1,46 @@
+{
+	"bsonType": "object",
+	"required": ["user_id", "article_id"],
+	"permission": {
+		"read": "doc.user_id == auth.uid",
+		"create": "auth.uid != null",
+		"update": "doc.user_id == auth.uid",
+		"delete": "doc.user_id == auth.uid"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"article_id": {
+			"bsonType": "string",
+			"description": "文章id，参考opendb-news-articles表",
+			"foreignKey": "opendb-news-articles._id"
+		},
+		"article_title": {
+			"bsonType": "string",
+			"description": "文章标题"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "收藏者id，参考uni-id-users表",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "收藏时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"update_date": {
+			"bsonType": "timestamp",
+			"description": "更新\/修改时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

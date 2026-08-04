@@ -1,0 +1,63 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+    "task_id": {
+      "bsonType": "string",
+      "description": "任务ID",
+      "foreignKey": "batch-sms-task._id"
+    },
+    "uid": {
+      "bsonType": "string",
+      "description": "用户ID",
+      "foreignKey": "uni-id-users._id"
+    },
+    "mobile": {
+      "bsonType": "int",
+      "description": "手机号"
+    },
+    "var_data": {
+        "bsonType": "object",
+        "description": "变量数据"
+    },
+    "status": {
+      "bsonType": "int",
+      "description": "发送状态",
+      "defaultValue": 0,
+      "enum": [{
+      	"text": "未发送",
+      	"value": 0
+      }, {
+      	"text": "已发送",
+      	"value": 1
+      }, {
+      	"text": "发送失败",
+      	"value": 2
+      }]
+    },
+    "reason": {
+      "bsonType": "string",
+      "description": "发送失败原因"
+    },
+    "send_date": {
+      "bsonType": "timestamp",
+      "description": "发送时间"
+    },
+    "ccreate_date": {
+      "bsonType": "timestamp",
+      "description": "创建时间",
+      "forceDefaultValue": {
+      	"$env": "now"
+      }
+    }
+	}
+}

@@ -1,0 +1,47 @@
+/**
+ * interface.uts
+ * uts插件接口定义文件，按规范定义接口文件可以在HBuilderX中更好的做到语法提示
+ */
+export class IToken {
+  readonly startIndex: number;
+  readonly endIndex: number;
+  readonly scopes?: string[];
+
+  constructor(startIndex: number, endIndex: number, scopes: string[]) {
+    this.startIndex = startIndex;
+    this.endIndex = endIndex;
+    this.scopes = scopes;
+  }
+}
+
+
+export type AndroidToken = {
+	start: number,
+	end: number,
+	token: string
+}
+
+
+// export interface ILineTokens{
+// 	readonly tokens: IToken[],
+// 	state:any
+// }
+
+export class ILineTokens {
+  constructor(readonly tokens: IToken[]) {}
+}
+
+export type HighLighterOptions = {
+	languages: UTSJSONObject
+}
+
+
+export type HighLighter = (options: HighLighterOptions) => CreateHighLighterRes
+
+
+export type CreateHighLighterRes = {
+	tokenizeFullText(langId: string, fullCodeText:string): Promise<ILineTokens[]>
+	tokenizeLine(langId: string, lineText: string, state: any): Promise<ILineTokens | null>
+}
+
+

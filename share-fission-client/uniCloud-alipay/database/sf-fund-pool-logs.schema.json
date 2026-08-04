@@ -1,0 +1,54 @@
+{
+	"bsonType": "object",
+	"required": ["type", "cash_change", "score_change", "cash_balance", "score_balance", "exchange_rate"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"type": {
+			"bsonType": "string",
+			"description": "类型：ad_income/withdrawal/fee_return"
+		},
+		"cash_change": {
+			"bsonType": "number",
+			"description": "现金变动（元）"
+		},
+		"score_change": {
+			"bsonType": "int",
+			"description": "积分变动"
+		},
+		"cash_balance": {
+			"bsonType": "number",
+			"description": "变动后现金余额"
+		},
+		"score_balance": {
+			"bsonType": "int",
+			"description": "变动后积分余额"
+		},
+		"exchange_rate": {
+			"bsonType": "number",
+			"description": "变动后汇率"
+		},
+		"related_id": {
+			"bsonType": "string",
+			"description": "关联记录ID"
+		},
+		"remark": {
+			"bsonType": "string",
+			"description": "备注"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	}
+}

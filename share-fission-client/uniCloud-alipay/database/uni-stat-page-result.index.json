@@ -1,0 +1,101 @@
+[
+    {
+        "IndexName": "start_time",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "start_time",
+                    "Direction": "1",
+										"Type": "long"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "appid",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "appid",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "version_id",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "version_id",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "platform_id",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "platform_id",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "channel_id",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "channel_id",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+    {
+        "IndexName": "dimension",
+        "MgoKeySchema": {
+            "MgoIndexKeys": [
+                {
+                    "Name": "dimension",
+                    "Direction": "1"
+                }
+            ],
+            "MgoIsUnique": false
+        }
+    },
+		{
+		    "IndexName": "entry_count",
+		    "MgoKeySchema": {
+		        "MgoIndexKeys": [
+		            {
+		                "Name": "entry_count",
+		                "Direction": "1",
+										"Type": "int"
+		            }
+		        ],
+		        "MgoIsUnique": false
+		    }
+		},
+		{
+		    "IndexName": "visit_times",
+		    "MgoKeySchema": {
+		        "MgoIndexKeys": [
+		            {
+		                "Name": "visit_times",
+		                "Direction": "1",
+										"Type": "int"
+		            }
+		        ],
+		        "MgoIsUnique": false
+		    }
+		}
+]

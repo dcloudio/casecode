@@ -1,0 +1,12 @@
+import App from './App.uvue'
+
+import { createSSRApp } from 'vue'
+export function createApp() {
+  const app = createSSRApp(App)
+  app.config.errorHandler = (err, vm, info) => {
+    console.log(err, vm, info)
+  }
+  return {
+    app
+  }
+}

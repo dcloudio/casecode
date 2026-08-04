@@ -1,0 +1,185 @@
+import {MarkdownToken} from '@/uni_modules/uni-cmark'
+
+export type LLMModel = {
+	name: string,
+	thinking?: boolean,
+	webSearch?: boolean,
+	image?: boolean,
+	video?: boolean,
+	audio?: boolean
+}
+
+export type Provider = {
+	models: LLMModel[],
+	description?: string,
+	baseURL?: string,
+	getToken?: () => Promise<string>,
+}
+
+export type DefaultLLM = {
+	provider: string,
+	model: string
+}
+
+export type LLmTokenInfo = {
+	token: string,
+	expireTime: number
+}
+
+
+export type Llm = {
+	provider: string
+	model: string
+	webSearch: boolean
+}
+
+// 对话
+export type Chat = {
+	datas: ChatItem[],
+	activeId: string
+}
+
+// 对话
+export type ChatItem = {
+	id: string,
+	title: string,
+	state: string,
+	inputContent: string,
+	msgList: MsgItem[],
+	update_time: number
+}
+
+// 流式响应分块
+export type ChunkChoiceDelta = {
+	content: string,
+	reasoning_content?: string
+}
+export type ChunkMessage = {
+	content: string
+}
+export type ChunkChoice = {
+	delta?: ChunkChoiceDelta
+	message?: ChunkMessage
+}
+type Output = {
+	text: string
+}
+export type Chunk = {
+	choices?: ChunkChoice[],
+	output?: Output,
+	DONE?: boolean,
+}
+
+export type MarkdownElItem = {
+	uniqueId: string,
+	type: string,
+	datasList: MarkdownToken[][]
+}
+// 消息
+export type MsgItem = {
+	_id: string
+	body: string
+	img_url_list?: string[]
+	thinkContent?: string
+	from_uid: string
+	state: number
+	create_time: number
+	// 如果是ai回复的，则需要关联的msg_id
+	about_msg_id?: string
+	// 所属对话id
+	chat_id: string,
+	markdownElList: MarkdownElItem[]
+	error_msg?: string
+	rendered: boolean
+}
+export type BaseMsgItem = {
+	body: string
+	from_uid: string
+	about_msg_id?: string
+	img_url_list?: string[]
+}
+
+// 消息对象，含：消息列表、是否还有更多消息、是否正在加载更多消息、加载更多消息方法
+export type Msg = {
+	dataList: MsgItem[],
+	hasMore: boolean,
+	loading: boolean,
+	loadMore: () => void
+}
+
+export type TextParse = {
+	type: 'text',
+	text: string
+}
+
+export type ImageUrl = {
+	url: string
+}
+export type ImgParse = {
+	type: 'image_url',
+	image_url: ImageUrl
+}
+
+// 多模态内容
+export type MultiModalContent = (TextParse | ImgParse)[]
+// 请求ai对话消息
+export type RequestAiCoMessage = {
+	// 来自谁：用户或ai
+	role : "user" | "assistant"
+	// 内容
+	content : string | MultiModalContent
+}
+
+// 用户
+export type Userinfo = {
+	_id?: string
+	nickname?: string
+	avatar_file?: AvatarFile
+}
+
+export type AvatarFile = {
+	url?: string
+	file_id?: string
+	// 略...
+}
+
+// 用户
+export type Theme =  "auto" | "dark" | "light"
+export type Setting = {
+	// 主题
+	theme: Theme
+	// 语言
+	language: "zh-CN" | "en-US"
+	// 大模型
+	llm: Llm
+}
+
+// 图片
+export type ImgItem = {
+	path: string
+	name: string
+	size: string
+	type: string
+	uploadPercent: number
+}
+
+// 自定义提供商适配器回调
+export type CustomProviderCallbacks = {
+	onChunk ?: (chunkObj : Chunk) => void,
+	onError ?: (err : UTSJSONObject) => void,
+	onDone ?: (data : UTSJSONObject) => void
+}
+
+// 自定义提供商适配器基类
+// 继承此类并通过 registerCustomProvider 注册，即可接入自定义 AI 提供商
+export class CustomProviderAdapter {
+	constructor() {}
+	// 初始化（可选，模块加载时调用）
+	init() : void {}
+	// 发起请求（子类必须重写）
+	async request(messages : RequestAiCoMessage[], model : string, chat_id : string, callbacks : CustomProviderCallbacks) : Promise<boolean> {
+		return false
+	}
+	// 是否支持会话标题更新（不支持则跳过）
+	supportsTitleUpdate : boolean = false
+}

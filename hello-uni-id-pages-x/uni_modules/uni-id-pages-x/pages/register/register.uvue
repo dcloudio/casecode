@@ -1,0 +1,242 @@
+<template>
+	<view class="page">
+		<view class="form">
+			<view class="item">
+				<text class="required">*</text>
+				<uni-id-pages-x-input class="my-input" title="用户名" placeholder="请输入用户名（不能是纯数字）" v-model="username"
+					ref="username"></uni-id-pages-x-input>
+			</view>
+			<view class="item">
+				<uni-id-pages-x-input class="my-input" title="昵称" placeholder="请输入昵称（字母、数字、中文组成3-20位字符串）"
+					v-model="nickname" ref="nickname"></uni-id-pages-x-input>
+			</view>
+			<view class="item">
+				<text class="required">*</text>
+				<uni-id-pages-x-input class="my-input" title="设置密码" placeholder="请输入6位数密码" v-model="password"
+					:password="true" ref="password"></uni-id-pages-x-input>
+			</view>
+			<view class="item">
+				<text class="required">*</text>
+				<uni-id-pages-x-input class="my-input" title="重复密码" placeholder="请重新输入密码" v-model="password2" :password="true"
+					ref="password2"></uni-id-pages-x-input>
+			</view>
+			<view class="item mt">
+				<uni-captcha ref="captcha" scene="register" v-model="captcha" />
+			</view>
+			<!-- 隐私政策协议授权申请框 -->
+
+			<uni-id-pages-x-agreements class="agreements-box" ref="agreements" />
+
+			<button @click="registerBefore" type="primary">注册并登录</button>
+		</view>
+	</view>
+</template>
+
+<script>
+	import { loginSuccess, checkPassword } from '@/uni_modules/uni-id-pages-x/common/common.uts';
+	import { state } from '@/uni_modules/uni-id-pages-x/store.uts';
+	export default {
+		data() {
+			return {
+				username: "",
+				nickname: "",
+				password: "",
+				password2: "",
+				captcha: ""
+			}
+		},
+		methods: {
+			showPopupCaptcha(callback : () => void) {
+				(this.$refs["agreements"] as UniIdPagesXAgreementsComponentPublicInstance).showPopupAgreements(callback)
+			},
+			registerBefore() {
+				// TODO 为了自动化测试构建一个对象
+				let myForm:UTSJSONObject = {
+					username:this.username,
+					password:this.password,
+					password2: this.password2,
+					captcha:this.captcha
+				};
+
+				// 校验是否为空，并聚焦 (注意：这里使用数组格式，以确保校验按顺序执行)
+				[
+					["username", "用户名",],
+					["password", "密码",],
+					["captcha", "验证码"]
+				].forEach((item) => {
+					let key = item[0];
+					let errMsg = item[1] + "不能为空";
+					if (myForm.get(key) == "") {
+						// 给出错的项聚焦
+						(this.$refs[key] as ComponentPublicInstance).$callMethod('setFocus',true);
+						uni.showToast({
+							title: errMsg,
+							icon: "none",
+							duration: 3000
+						});
+						throw new Error(errMsg)
+					}
+				});
+
+				const digitRegExp = new RegExp("^\\d+$");
+				if (digitRegExp.test(this.username)) {
+					// 给出错的项聚焦
+					(this.$refs['username'] as UniIdPagesXInputComponentPublicInstance).setFocus(true);
+					uni.showModal({
+						content: "用户名不能为纯数字",
+						showCancel: false,
+						confirmText: "知道了"
+					});
+				  return
+				}
+
+        const usernameRegExp2 = new RegExp("^[a-zA-Z0-9_-]+$");
+        if (!usernameRegExp2.test(this.username)) {
+        	// 给出错的项聚焦
+        	(this.$refs['username'] as UniIdPagesXInputComponentPublicInstance).setFocus(true);
+        	uni.showModal({
+        		content: "用户名仅能使用数字、字母、“_”及“-”",
+        		showCancel: false,
+        		confirmText: "知道了"
+        	});
+          return
+        }
+
+				// 校验昵称规则
+        if (digitRegExp.test(this.nickname)) {
+        	// 给出错的项聚焦
+        	(this.$refs['nickname'] as UniIdPagesXInputComponentPublicInstance).setFocus(true);
+        	uni.showModal({
+        		content: "昵称不能为纯数字",
+        		showCancel: false,
+        		confirmText: "知道了"
+        	});
+          return
+        }
+
+				if (this.nickname.length > 0) {
+					const nicknameRegExp = new RegExp("^[\u4e00-\u9fa5a-z0-9]{3,20}$");
+					if (!nicknameRegExp.test(this.nickname)) {
+						// 给出错的项聚焦
+						(this.$refs['nickname'] as UniIdPagesXInputComponentPublicInstance).setFocus(true);
+						uni.showModal({
+							content: "昵称由小写字母、数字、中文组成的3-20位字符串",
+							showCancel: false,
+							confirmText: "知道了"
+						});
+            return
+					}
+				}
+
+				let checkPasswordRes = checkPassword(this.password);
+				let isPass = checkPasswordRes.getBoolean("pass") as Boolean
+				if (!isPass) {
+					const errMsg = checkPasswordRes.getString("errMsg")
+					uni.showModal({
+						content: errMsg,
+						showCancel: false,
+						confirmText: "知道了",
+						complete() {
+							(this.$refs['password'] as UniIdPagesXInputComponentPublicInstance).setFocus(true);
+						}
+					});
+          return
+				}
+
+				if (this.password != this.password2) {
+					uni.showModal({
+						content: "两次输入的密码不一致",
+						showCancel: false,
+						confirmText: "知道了",
+						complete() {
+							(this.$refs["password2"] as UniIdPagesXInputComponentPublicInstance).setFocus(true);
+						}
+					});
+          return
+				}
+
+				if (this.captcha.length != 4) {
+					uni.showModal({
+						content: "请输入验证码",
+						showCancel: false,
+						confirmText: "知道了",
+						complete() {
+							(this.$refs["captcha"] as UniCaptchaComponentPublicInstance).setFocus(true);
+						}
+					});
+          return
+				}
+
+				if (state.pendingAgreements) {
+					this.showPopupCaptcha(() => {
+						// console.log('state.pendingAgreements', state.pendingAgreements);
+						if (!state.pendingAgreements) {
+							this.registerBefore()
+						}
+					})
+					return
+				}
+				this.register()
+			},
+			register() {
+				const data: UTSJSONObject = {
+					"username": this.username,
+					"nickname": this.nickname,
+					"password": this.password,
+					"password2": this.password2,
+					"captcha": this.captcha
+				}
+				const uniIdCo = uniCloud.importObject("uni-id-co", { customUI: true });
+				uni.showLoading({ "title": "请求中" })
+
+				uniIdCo.registerUser(data)
+					.finally(() => uni.hideLoading())
+					.then(e => {
+						// console.log('e: ',e);
+						uni.showToast({
+							title: '注册成功',
+							icon: 'none'
+						});
+						loginSuccess(e)
+					})
+					.catch((err : any | null) : void => {
+						const error = err as UniCloudError
+						console.error(error)
+						console.error(error.code)
+						if (error.code == 'uni-captcha-verify-fail') {
+							(this.$refs["captcha"] as UniCaptchaComponentPublicInstance).getImageCaptcha(true);
+						}
+						uni.showToast({
+							title: error.message,
+							icon: 'none'
+						});
+					})
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	@import url("/uni_modules/uni-id-pages-x/common/common.scss");
+
+	.form {
+		padding-left: 15px;
+	}
+
+	.item {
+		margin-top: 8px;
+		position: relative;
+		padding-left: 15px;
+		margin-left: -15px;
+	}
+	.mt{
+		margin-top: 16px;
+	}
+
+	.required {
+		position: absolute;
+		color: red;
+		left: 0px;
+		top: 15px;
+	}
+</style>

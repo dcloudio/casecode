@@ -1,0 +1,11 @@
+<li id="news_<%= this.id %>" class="mui-table-view-cell mui-media">
+	<a href="detail.html?guid=<%= this.guid %>" data-guid="<%= this.guid %>">
+		<div class="mui-media-object mui-pull-left">
+			<img src="<%= this.image %>" />
+		</div>
+		<div class="mui-media-body">
+			<%= this.title %>
+		</div>
+		<p class='kr-time'><%= this.humanize %></p>
+	</a>
+</li>

@@ -1,0 +1,50 @@
+{
+	"bsonType": "object",
+	"required": [
+		"name"
+	],
+	"permission": {
+		"read": true,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"parent_id": {
+			"bsonType": "string",
+			"description": "父级部门ID",
+			"parentKey": "_id"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "部门名称",
+			"title": "部门名称",
+			"trim": "both"
+		},
+		"level": {
+			"bsonType": "int",
+			"description": "部门层级，为提升检索效率而作的冗余设计"
+		},
+		"sort": {
+			"bsonType": "int",
+			"description": "部门在当前层级下的顺序，由小到大",
+			"title": "显示顺序"
+		},
+		"manager_uid": {
+			"bsonType": "string",
+			"description": "部门主管的userid， 参考`uni-id-users` 表",
+			"foreignKey": "uni-id-users._id"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "部门创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		}
+	},
+	"version": "0.1.0"
+}

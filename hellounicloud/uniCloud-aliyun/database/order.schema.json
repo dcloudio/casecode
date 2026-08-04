@@ -1,0 +1,25 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create":true,
+		"delete":true,
+		"update":true
+	},
+	"properties": {
+		"book_id": {
+			"bsonType": "string",
+			"foreignKey": "book._id" // 使用foreignKey表示，此字段关联book表的_id。
+		},
+		"quantity": {
+			"bsonType": "int"
+		},
+		"create_date":{
+			"defaultValue":{
+				"$env":"now"
+			}
+		}
+	}
+}

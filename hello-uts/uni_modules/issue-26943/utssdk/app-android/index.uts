@@ -1,0 +1,9 @@
+type TestOptions = {
+  success : (messages : Array<string>) => void
+}
+
+export function testGenericCallback(
+  options : TestOptions
+) {
+  options.success(["a", "b"])
+}

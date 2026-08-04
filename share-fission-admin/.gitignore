@@ -1,0 +1,17 @@
+# Mac
+.DS_Store
+**/.DS_Store
+
+# vim/vi
+*.swp
+
+# JavaScript
+node_modules/
+.node_modules/
+.eslintcache
+unpackage/
+.DS_Storer
+.vscode
+.hbuilderx
+.vite
+package-lock.json

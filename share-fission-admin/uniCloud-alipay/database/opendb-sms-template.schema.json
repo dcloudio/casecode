@@ -1,0 +1,32 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "模板ID"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "模板名称"
+		},
+		"content": {
+			"bsonType": "string",
+			"description": "模板内容"
+		},
+		"type": {
+			"bsonType": "int",
+			"description": "模板类型"
+		},
+		"sign": {
+			"bsonType": "string",
+			"description": "模板签名"
+		}
+	}
+}

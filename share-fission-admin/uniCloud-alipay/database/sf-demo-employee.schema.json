@@ -1,0 +1,73 @@
+{
+  "bsonType": "object",
+  "required": ["name"],
+  "permission": {
+    "read": true,
+    "create": true,
+    "update": true,
+    "delete": true
+  },
+  "properties": {
+    "_id": {
+      "description": "存储文档 ID，系统自动生成"
+    },
+    "name": {
+      "bsonType": "string",
+      "description": "姓名",
+      "trim": "both"
+    },
+    "age": {
+      "bsonType": "int",
+      "description": "年龄",
+      "minimum": 18,
+      "maximum": 65
+    },
+    "department": {
+      "bsonType": "string",
+      "description": "部门",
+      "trim": "both"
+    },
+    "city": {
+      "bsonType": "string",
+      "description": "城市",
+      "trim": "both"
+    },
+    "email": {
+      "bsonType": "string",
+      "description": "邮箱",
+      "format": "email",
+      "trim": "both"
+    },
+    "phone": {
+      "bsonType": "string",
+      "description": "电话",
+      "trim": "both"
+    },
+    "address": {
+      "bsonType": "string",
+      "description": "地址",
+      "trim": "both"
+    },
+    "salary": {
+      "bsonType": "number",
+      "description": "薪资"
+    },
+    "joinDate": {
+      "bsonType": "string",
+      "description": "入职日期"
+    },
+    "status": {
+      "bsonType": "string",
+      "description": "状态",
+      "enum": ["在职", "离职", "休假", "试用期"]
+    },
+    "create_time": {
+      "bsonType": "timestamp",
+      "description": "创建时间"
+    },
+    "update_time": {
+      "bsonType": "timestamp",
+      "description": "更新时间"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+// 应用平台表
+{
+	"bsonType": "object",
+	"description": "提供应用的平台字典",
+	"required": [],
+	"permission": {
+		"read": "'READ_UNI_STAT_APP_PLATFORMS' in auth.permission",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"code": {
+			"bsonType": "string",
+			"description": "平台代码，前端上报"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "平台名称，管理端显示"
+		},
+		"order": {
+			"bsonType": "int",
+			"description": "序号，前端页面排序使用",
+			"defaultValue": 0
+		},
+		"enable": {
+			"bsonType": "bool",
+			"description": "是否启动",
+			"defaultValue": true,
+			"enum": [{
+				"text": "否",
+				"value": false
+			}, {
+				"text": "是",
+				"value": true
+			}]
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间"
+		}
+	}
+}

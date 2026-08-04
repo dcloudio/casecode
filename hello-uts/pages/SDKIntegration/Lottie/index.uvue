@@ -1,0 +1,78 @@
+<template>
+    <div>
+        <button @tap="changeUrl">播放本地动画资源</button>
+        <button @tap="changeServerUrl">播放远程动画资源</button>
+		
+        <button @tap="changeAutoPlay">测试AutoPlay</button>
+        <button @tap="changeLoop">测试Loop</button>
+        <button @tap="changeAction(1)">测试action play</button>
+        <button @tap="changeAction(2)">测试action pause</button>
+        <button @tap="changeAction(3)">测试action stop</button>
+        <uts-animation-view ref="animView" :path="animUrl" :autoplay="autoplay" :loop="loop" :action="action"
+            :hidden="hidden" @bindended="testAnimEnd" @click="lottieClickTest" @longpress="lottieLongpressTest"
+            :style="{width:widthNum+'rpx',height:heightNum+'px',background:yanse}">
+        </uts-animation-view>
+        
+    </div>
+</template>
+
+<script setup lang="uts">
+const hidden = ref(false)
+const autoplay = ref(false)
+const action = ref("play")
+const loop = ref(false)
+const yanse = ref("red")
+const widthNum = ref(750)
+const heightNum = ref(200)
+const comShow = ref(true)
+const animUrl = ref("/static/anim_a.json")
+const animView = ref(null as UtsAnimationViewElement | null)
+
+function changeAutoPlay() {
+  autoplay.value = !autoplay.value
+}
+
+function changeUrl() {
+  if (animUrl.value == "/static/anim_a.json") {
+    animUrl.value = "/static/anim_b.json"
+  } else {
+    animUrl.value = "/static/anim_a.json"
+  }
+}
+
+function changeServerUrl() {
+  animUrl.value = "https://b.bdstatic.com/miniapp/images/lottie_example_one.json"
+}
+
+function changeAction(type: number) {
+  if (type == 1) {
+    action.value = "play"
+  } else if (type == 2) {
+    action.value = "pause"
+  } else if (type == 3) {
+    action.value = "stop"
+  }
+}
+
+function changeLoop() {
+  loop.value = !loop.value
+}
+
+function testAnimEnd() {
+  console.log("testAnimEnd")
+}
+
+function changeRepeat() {
+  if (animView.value != null) {
+    animView.value!.setRepeatMode("RESTART")
+  }
+}
+
+function lottieClickTest() {
+  console.log("lottieClickTest")
+}
+
+function lottieLongpressTest() {
+  console.log("lottieClickTest")
+}
+</script>
