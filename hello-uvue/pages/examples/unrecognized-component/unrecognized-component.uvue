@@ -1,3 +1,0 @@
-<template>
-	<Abc><text>text in unrecognized component</text></Abc>
-</template>

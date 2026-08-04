@@ -1,6 +1,0 @@
-{
-	"dependencies": {
-		"scopeparser": "./libs/scopeparser.har"
-	}
-	
-}

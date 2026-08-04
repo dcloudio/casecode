@@ -1,4 +1,0 @@
-export function testBuildinNative() {
-  TestNumber.testAll()
-  TestUTSJSONObject.testAll()
-}
