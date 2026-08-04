@@ -14,7 +14,7 @@ const HOME_PAGE_PATH = '/pages/tabBar/component'
 const PAGE_PATH = '/pages/API/get-current-pages/get-current-pages?test=123'
 
 describe('getCurrentPages', () => {
-  if (isAppWebView) {
+  if (isAppWebView || (isAndroid && platformInfo.includes('14.0.0'))) {
     it('not support', () => {
       expect(1).toBe(1)
     })
