@@ -470,7 +470,7 @@
 
   .uni-picker-container-wrap {
     height: 41px;
-    /* #ifndef ANDROID && VUE3_VAPOR */
+    /* #ifndef APP-ANDROID && !VUE3-VAPOR */
     line-height: 41px;
     /* #endif */
   }
@@ -487,7 +487,9 @@
   .picker-city-wrap {
     min-height: 41px;
     height: auto;
+    /* #ifndef APP-ANDROID && !VUE3-VAPOR */
     line-height: 25px;
+    /* #endif */
   }
 
   .picker-city-text {
