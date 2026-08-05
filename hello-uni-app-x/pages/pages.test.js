@@ -457,6 +457,21 @@ function getWaitForTagName(pagePath) {
   return 'view'
 }
 
+async function preparePageForScreenshot(pagePath, page) {
+  if (pagePath === '/pages/component/picker/picker') {
+    await page.setData({
+      data: {
+        dayDate: '2026-08-05',
+        monthDate: '2026-08',
+        yearDate: '2026',
+        startDate: '1936-08-05',
+        endDate: '2036-08-05',
+      }
+    })
+    await page.waitFor(100)
+  }
+}
+
 // 将页面数组分组
 const BATCH_SIZE = 20;
 const pageBatches = [];
@@ -489,6 +504,7 @@ pageBatches.forEach((batch, batchIndex) => {
       page = await program.reLaunch(currentPagePath);
       await page.waitFor(getWaitForTagName(currentPagePath));
       await page.waitFor(500)
+      await preparePageForScreenshot(currentPagePath, page)
       console.log("Taking screenshot: ", pageIndex, currentPagePath);
       let fullPage = true;
 
