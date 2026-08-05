@@ -6,7 +6,7 @@
     <view class="header">
       <text class="header-info">{{ listData.length }}行 | 每行40+元素 | 共近20万元素 | 10+层嵌套 | 圆角边框阴影 | 视频</text>
     </view>
-    <list-view ref="listViewRef" style="flex: 1;" :scroll-with-animation="true" @scrollend="onScrollEnd">
+    <list-view ref="listViewRef" style="flex: 1;" :scroll-with-animation="true" @scrollend="onScrollEnd" android-fast-scroll>
       <list-item v-for="(item, index) in listData" :key="item.id" :type="item.type">
 
         <!-- ========== Type 1: 单图配文 ========== -->
