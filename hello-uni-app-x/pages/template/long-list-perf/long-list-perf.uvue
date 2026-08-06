@@ -1,6 +1,6 @@
 <template>
   <view class="page">
-    <!-- #ifndef MP -->
+    <!-- #ifndef MP || (APP-ANDROID && VUE3-VAPOR) -->
     <fps :interval="50" />
     <!-- #endif -->
     <view class="header">
