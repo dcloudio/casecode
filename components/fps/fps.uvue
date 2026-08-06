@@ -27,7 +27,7 @@
     frameCount++
     const delta = currentTime - fpsUpdateTime
     if (delta >= props.interval) {
-      const value = Math.round(frameCount * 1000 / delta)
+      const value = Math.floor(frameCount * 1000 / delta)
       fps.value = value
       frameCount = 0
       fpsUpdateTime = currentTime
