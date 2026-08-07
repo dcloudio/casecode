@@ -42,7 +42,7 @@
         </view>
         <view class="uni-form-item">
           <text class="title">备注</text>
-          <textarea name="comment" :value="data.comment" placeholder="请输入备注" style="background: #FFF;" />
+          <textarea name="comment" :value="data.comment" placeholder="请输入备注" style="padding: 10px;background: #FFF;" />
           <!-- <textarea class="uni-input" name="comment" :value="comment" placeholder="这个class的写法，导致iOS和Android产生了高度差异"/> -->
         </view>
         <!-- picker -->

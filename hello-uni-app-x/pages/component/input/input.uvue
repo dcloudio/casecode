@@ -415,7 +415,7 @@
           <text class="uni-title-text">font-size:30px</text>
         </view>
         <view class="input-wrapper">
-          <input style="border: 1px solid #ccc;border-radius: 4px;font-size:30px" placeholder="请输入..." value="font-size 超出默认高度" />
+          <input style="width: 100%;border: 1px solid #ccc;border-radius: 4px;font-size:30px" placeholder="请输入..." value="font-size 超出默认高度" />
         </view>
       </view>
 
@@ -424,7 +424,7 @@
           <text class="uni-title-text">color: green</text>
         </view>
         <view class="input-wrapper">
-          <input style="border: 1px solid #ccc;border-radius: 4px;color: green;" placeholder="请输入..." value="字体颜色为绿色" />
+          <input style="width: 100%;border: 1px solid #ccc;border-radius: 4px;color: green;" placeholder="请输入..." value="字体颜色为绿色" />
         </view>
       </view>
 
@@ -664,6 +664,7 @@
 <style scoped>
   .input-wrapper {
     display: flex;
+    flex-direction: row;
     padding: 8px 13px;
     margin: 5px 0;
     background-color: #ffffff;
