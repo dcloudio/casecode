@@ -2,7 +2,15 @@
 
 ## 说明
 
-本项目是基于uni-ad的社交裂变项目模板（client端），必须绑定 [share-fission-admin](https://ext.dcloud.net.cn/plugin?name=share-fission-admin) 项目运行
+本项目是基于uni-ad的社交裂变项目模板（client端）
+
+必须绑定 [share-fission-admin](https://ext.dcloud.net.cn/plugin?name=share-fission-admin) 项目运行
+
+必须绑定 [share-fission-admin](https://ext.dcloud.net.cn/plugin?name=share-fission-admin) 项目运行
+
+必须绑定 [share-fission-admin](https://ext.dcloud.net.cn/plugin?name=share-fission-admin) 项目运行
+
+重要的事情说三遍
 
 如下图所示
 
@@ -12,3 +20,17 @@
 
 - [share-fission-client](https://ext.dcloud.net.cn/plugin?name=share-fission-client)
 - [share-fission-admin](https://ext.dcloud.net.cn/plugin?name=share-fission-admin)
+
+## 运行效果图
+
+![](https://web-ext-storage.dcloud.net.cn/doc/unicloud/share-fission/1.png)
+
+![](https://web-ext-storage.dcloud.net.cn/doc/unicloud/share-fission/2.png)
+
+![](https://web-ext-storage.dcloud.net.cn/doc/unicloud/share-fission/3.png)
+
+![](https://web-ext-storage.dcloud.net.cn/doc/unicloud/share-fission/4.png)
+
+![](https://web-ext-storage.dcloud.net.cn/doc/unicloud/share-fission/5.png)
+
+![](https://web-ext-storage.dcloud.net.cn/doc/unicloud/share-fission/6.png)

@@ -2,7 +2,7 @@
   "id": "share-fission-client",
   "displayName": "基于uni-ad的社交裂变项目模板（client端）",
   "description": "看广告或分享好友看广告赚积分，积分兑换奖励或提现，此项目必须绑定admin端运行",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "keywords": [
     "uni-ad",
     "看广告赚佣金",
@@ -63,8 +63,7 @@
             "nvue": "x",
             "android": "√",
             "ios": "√",
-            "harmony": {
-            }
+            "harmony": "√"
           },
           "mp": {
             "weixin": "x",
@@ -75,7 +74,8 @@
             "jd": "x",
             "harmony": "x",
             "qq": "x",
-            "lark": "x"
+            "lark": "x",
+            "xhs": "-"
           },
           "quickapp": {
             "huawei": "x",
