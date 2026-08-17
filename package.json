@@ -2,7 +2,7 @@
   "id": "share-fission-admin",
   "displayName": "基于uni-ad的社交裂变项目模板（admin端）",
   "description": "看广告或分享好友看广告赚积分，积分兑换奖励或提现",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "uni-ad",
     "看广告赚佣金",
@@ -82,7 +82,8 @@
             "jd": "x",
             "harmony": "x",
             "qq": "x",
-            "lark": "x"
+            "lark": "x",
+            "xhs": "-"
           },
           "quickapp": {
             "huawei": "x",
