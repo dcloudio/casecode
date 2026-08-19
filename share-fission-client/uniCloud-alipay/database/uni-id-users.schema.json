@@ -350,7 +350,7 @@
 		"status": {
 			"bsonType": "int",
 			"defaultValue": 0,
-			"description": "用户状态：0 正常 1 禁用 2 审核中 3 审核拒绝",
+			"description": "用户状态：0 正常 1 禁用 2 审核中 3 审核拒绝 4 已注销",
 			"permission": {
 				"read": "doc._id == auth.uid || 'READ_UNI_ID_USERS' in auth.permission",
 				"write": "'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
@@ -370,6 +370,10 @@
 				{
 					"text": "审核拒绝",
 					"value": 3
+				},
+				{
+					"text": "已注销",
+					"value": 4
 				}
 			],
 			"title": "用户状态"
@@ -447,22 +451,6 @@
 		"qq_unionid": {
 			"bsonType": "string",
 			"description": "QQ unionid",
-			"permission": {
-				"read": "'READ_UNI_ID_USERS' in auth.permission",
-				"write": "'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
-			}
-		},
-		"huawei_openid": {
-			"bsonType": "string",
-			"description": "Huawei openid",
-			"permission": {
-				"read": "'READ_UNI_ID_USERS' in auth.permission",
-				"write": "'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
-			}
-		},
-		"huawei_unionid": {
-			"bsonType": "string",
-			"description": "Huawei unionid",
 			"permission": {
 				"read": "'READ_UNI_ID_USERS' in auth.permission",
 				"write": "'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"

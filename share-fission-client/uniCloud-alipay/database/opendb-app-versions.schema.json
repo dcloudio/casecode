@@ -9,10 +9,10 @@
 		"create_env"
 	],
 	"permission": {
-		"read": "'READ_OPENDB_APP_VERSIONS' in auth.permission",
-		"create": "'CREATE_OPENDB_APP_VERSIONS' in auth.permission",
-		"update": "'UPDATE_OPENDB_APP_VERSIONS' in auth.permission",
-		"delete": "'DELETE_OPENDB_APP_VERSIONS' in auth.permission"
+		"read": "'base-admin' in auth.permission",
+		"create": "'base-admin' in auth.permission",
+		"update": "'base-admin' in auth.permission",
+		"delete": "'base-admin' in auth.permission"
 	},
 	"properties": {
 		"_id": {

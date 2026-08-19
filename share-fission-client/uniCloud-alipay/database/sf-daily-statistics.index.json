@@ -1,0 +1,19 @@
+[{
+    "IndexName": "statement_date",
+    "MgoKeySchema": {
+      "MgoIndexKeys": [
+        { "Name": "statement_date", "Direction": "-1" }
+      ],
+      "MgoIsUnique": true
+    }
+  },
+  {
+    "IndexName": "is_settled",
+    "MgoKeySchema": {
+      "MgoIndexKeys": [
+        { "Name": "is_settled", "Direction": "-1", "Type": "bool" }
+      ],
+      "MgoIsUnique": false
+    }
+  }
+]

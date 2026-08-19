@@ -1,64 +1,89 @@
 {
-	"bsonType": "object",
-	"required": [],
-	"permission": {
-		"read": false,
-		"create": false,
-		"update": false,
-		"delete": false
-	},
-	"properties": {
-		"_id": {
-			"description": "日期（YYYY-MM-DD）"
-		},
-		"ad_revenue": {
-			"bsonType": "number",
-			"description": "广告收益（元）",
-			"defaultValue": 0
-		},
-		"score_added": {
-			"bsonType": "int",
-			"description": "新增积分",
-			"defaultValue": 0
-		},
-		"score_consumed": {
-			"bsonType": "int",
-			"description": "消耗积分（兑换商品）",
-			"defaultValue": 0
-		},
-		"score_withdrawn": {
-			"bsonType": "int",
-			"description": "提现积分",
-			"defaultValue": 0
-		},
-		"new_users": {
-			"bsonType": "int",
-			"description": "新增用户数",
-			"defaultValue": 0
-		},
-		"active_users": {
-			"bsonType": "int",
-			"description": "活跃用户数（当日登录）",
-			"defaultValue": 0
-		},
-		"total_cash": {
-			"bsonType": "number",
-			"description": "当日资金池总现金（元）",
-			"defaultValue": 0
-		},
-		"total_score": {
-			"bsonType": "int",
-			"description": "当日资金池总积分",
-			"defaultValue": 0
-		},
-		"exchange_rate": {
-			"bsonType": "number",
-			"description": "当日汇率（元/积分）",
-			"defaultValue": 0.01
-		},
-		"update_time": {
-			"bsonType": "timestamp",
-			"description": "更新时间"
-		}
-	}
+  "bsonType": "object",
+  "required": [],
+  "permission": {
+    "read": false,
+    "create": false,
+    "update": false,
+    "delete": false
+  },
+  "properties": {
+    "_id": {
+      "description": "ID"
+    },
+    "statement_date": {
+      "bsonType": "string",
+      "description": "结算日期",
+      "trim": "both"
+    },
+    "ad_revenue": {
+      "bsonType": "number",
+      "description": "广告收益（元）",
+      "defaultValue": 0
+    },
+    "score_added": {
+      "bsonType": "int",
+      "description": "新增积分",
+      "defaultValue": 0
+    },
+    "score_consumed": {
+      "bsonType": "int",
+      "description": "消耗积分（兑换商品）",
+      "defaultValue": 0
+    },
+    "score_withdrawn": {
+      "bsonType": "int",
+      "description": "提现积分",
+      "defaultValue": 0
+    },
+    "new_users": {
+      "bsonType": "int",
+      "description": "新增用户数",
+      "defaultValue": 0
+    },
+    "active_users": {
+      "bsonType": "int",
+      "description": "活跃用户数（当日登录）",
+      "defaultValue": 0
+    },
+    "viewers_count": {
+      "bsonType": "int",
+      "description": "观看人数",
+      "defaultValue": 0
+    },
+    "views_count": {
+      "bsonType": "int",
+      "description": "观看次数",
+      "defaultValue": 0
+    },
+    "total_cash": {
+      "bsonType": "number",
+      "description": "当日资金池总现金（元）",
+      "defaultValue": 0
+    },
+    "total_score": {
+      "bsonType": "int",
+      "description": "当日资金池总积分",
+      "defaultValue": 0
+    },
+    "exchange_rate": {
+      "bsonType": "number",
+      "description": "当日汇率（元/积分）",
+      "defaultValue": 0.01
+    },
+    "update_time": {
+      "bsonType": "timestamp",
+      "description": "更新时间"
+    },
+    "is_settled": {
+      "bsonType": "bool",
+      "description": "是否已结算",
+      "defaultValue": false
+    },
+    "remark": {
+      "bsonType": "string",
+      "description": "备注",
+      "trim": "both"
+    }
+  }
 }

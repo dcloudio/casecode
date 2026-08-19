@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": ["name", "images", "category", "score_cost", "stock", "sort_order", "status"],
+	"required": ["name", "images", "category_id", "score_cost", "stock", "sort_order", "status"],
 	"permission": {
 		"read": false,
 		"create": false,
@@ -34,10 +34,11 @@
 			"title": "详情图",
 			"arrayType": "string"
 		},
-		"category": {
+		"category_id": {
 			"bsonType": "string",
-			"description": "商品分类",
-			"title": "商品分类"
+			"description": "商品分类ID，关联 sf-goods-categories 表",
+			"title": "商品分类",
+			"foreignKey": "sf-goods-categories._id"
 		},
 		"score_cost": {
 			"bsonType": "int",

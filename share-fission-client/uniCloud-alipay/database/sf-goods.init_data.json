@@ -1,0 +1,80 @@
+[
+  {
+    "name": "爱奇艺VIP月卡",
+    "description": "爱奇艺视频会员月卡，兑换后24小时内发放到账",
+    "images": [],
+    "detail_images": [],
+    "category_id": "category_membership",
+    "score_cost": 1000,
+    "stock": 100,
+    "sort_order": 100,
+    "status": 1,
+    "is_deleted": false,
+    "create_time": 1737878400000
+  },
+  {
+    "name": "网易云音乐黑胶会员月卡",
+    "description": "网易云音乐黑胶VIP会员月卡，畅听无损音质",
+    "images": [],
+    "detail_images": [],
+    "category_id": "category_membership",
+    "score_cost": 800,
+    "stock": 50,
+    "sort_order": 90,
+    "status": 1,
+    "is_deleted": false,
+    "create_time": 1737878400000
+  },
+  {
+    "name": "10元话费充值",
+    "description": "全国三网通用，充值后1-24小时到账",
+    "images": [],
+    "detail_images": [],
+    "category_id": "category_recharge",
+    "score_cost": 1200,
+    "stock": 200,
+    "sort_order": 80,
+    "status": 1,
+    "is_deleted": false,
+    "create_time": 1737878400000
+  },
+  {
+    "name": "50元话费充值",
+    "description": "全国三网通用，充值后1-24小时到账",
+    "images": [],
+    "detail_images": [],
+    "category_id": "category_recharge",
+    "score_cost": 5500,
+    "stock": 100,
+    "sort_order": 70,
+    "status": 1,
+    "is_deleted": false,
+    "create_time": 1737878400000
+  },
+  {
+    "name": "Steam 50元钱包充值码",
+    "description": "Steam平台50元钱包充值码，兑换后发放卡密",
+    "images": [],
+    "detail_images": [],
+    "category_id": "category_cdkey",
+    "score_cost": 5800,
+    "stock": 30,
+    "sort_order": 60,
+    "status": 1,
+    "is_deleted": false,
+    "create_time": 1737878400000
+  },
+  {
+    "name": "京东E卡100元",
+    "description": "京东自营商品通用，兑换后发放卡密",
+    "images": [],
+    "detail_images": [],
+    "category_id": "category_cdkey",
+    "score_cost": 11000,
+    "stock": 20,
+    "sort_order": 50,
+    "status": 1,
+    "is_deleted": false,
+    "create_time": 1737878400000
+  }
+]

@@ -30,7 +30,7 @@
 		},
 		"source": {
 			"bsonType": "string",
-			"description": "来源：ad_watch/sign_in/team_reward/exchange/withdraw/withdraw_fee_return/admin_adjust"
+			"description": "来源：ad_watch/sign_in/team_reward/exchange/withdraw/withdraw_fee_return/admin_adjust/withdraw_refund"
 		},
 		"source_user_id": {
 			"bsonType": "string",
