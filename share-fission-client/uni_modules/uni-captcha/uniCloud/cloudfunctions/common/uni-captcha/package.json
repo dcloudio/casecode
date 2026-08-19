@@ -13,8 +13,8 @@
     "dependencies": {
         "uni-config-center": "file:..\/..\/..\/..\/..\/uni-config-center\/uniCloud\/cloudfunctions\/common\/uni-config-center"
     },
-    "origin-plugin-dev-name": "uni-captcha",
-    "origin-plugin-version": "0.7.5",
-    "plugin-dev-name": "uni-starter",
-    "plugin-version": "2.2.14"
+    "origin-plugin-dev-name": "uni-template-admin",
+    "origin-plugin-version": "2.5.13",
+    "plugin-dev-name": "uni-template-admin",
+    "plugin-version": "2.5.13"
 }
