@@ -1,9 +1,26 @@
 [
   {
+    "_id": "admin",
     "role_id": "admin",
-    "role_name": "超级管理员",
     "permission": [],
+    "role_name": "超级管理员",
     "comment": "超级管理员拥有所有权限",
     "create_date": 0
+  },
+  {
+    "_id": "base-admin",
+    "role_id": "base-admin",
+    "permission": ["base-admin"],
+    "role_name": "基础管理员",
+    "comment": "部分重要权限外的所有权限",
+    "create_date": 1770452195063
+  },
+  {
+    "_id": "uni-stat-admin",
+    "role_id": "uni-stat-admin",
+    "permission": ["uni-stat-admin"],
+    "role_name": "uni统计管理",
+    "comment": "uni统计相关",
+    "create_date": 1770452195063
   }
 ]

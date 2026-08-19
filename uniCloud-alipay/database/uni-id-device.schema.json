@@ -43,10 +43,6 @@
 			"bsonType": "string",
 			"description": "推送设备客户端标识"
 		},
-		"device_id": {
-			"bsonType": "string",
-			"description": "设备id"
-		},
 		"imei": {
 			"bsonType": "string",
 			"description": "国际移动设备识别码IMEI(International Mobile Equipment Identity)"

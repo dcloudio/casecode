@@ -4,7 +4,7 @@
 	"description": "记录原生应用的崩溃日志",
 	"required": [],
 	"permission": {
-		"read": "'READ_UNI_STAT_APP_CRASH_LOGS' in auth.permission",
+		"read": "'uni-stat-admin' in auth.permission",
 		"create": false,
 		"update": false,
 		"delete": false

@@ -1,0 +1,37 @@
+[
+  {
+    "user_id": "_uni_starter_test_user_id",
+    "score": 1000,
+    "exchange_rate": 0.01,
+    "amount": 1,
+    "fee_rate": 0.2,
+    "fee": 0.2,
+    "actual_amount": 0.8,
+    "method": "alipay",
+    "account_info": {
+      "type": "alipay",
+      "name": "测试用户",
+      "account": "测试账号"
+    },
+    "status": 0,
+    "create_time": 1737878400000
+  },
+  {
+    "user_id": "_uni_starter_test_user_id",
+    "score": 1000,
+    "exchange_rate": 0.01,
+    "amount": 1,
+    "fee_rate": 0.2,
+    "fee": 0.2,
+    "actual_amount": 0.8,
+    "method": "bank_card",
+    "account_info": {
+      "type": "bank_card",
+      "name": "测试用户",
+      "account": "测试账号",
+      "bank_name": "测试银行"
+    },
+    "status": 0,
+    "create_time": 1737878400000
+  }
+]

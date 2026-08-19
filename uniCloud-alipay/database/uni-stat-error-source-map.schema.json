@@ -3,10 +3,10 @@
 	"description": "存储sourceMap文件资源地址",
 	"required": [],
 	"permission": {
-		"read": "'READ_UNI_STAT_ERROR_RESULT' in auth.permission",
-		"create": "'READ_UNI_STAT_ERROR_RESULT' in auth.permission",
-		"update": "'READ_UNI_STAT_ERROR_RESULT' in auth.permission",
-		"delete": "'READ_UNI_STAT_ERROR_RESULT' in auth.permission"
+		"read": "'uni-stat-admin' in auth.permission",
+		"create": "'uni-stat-admin' in auth.permission",
+		"update": "'uni-stat-admin' in auth.permission",
+		"delete": "'uni-stat-admin' in auth.permission"
 	},
 	"properties": {
 		"_id": {

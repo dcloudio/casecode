@@ -1,0 +1,29 @@
+[
+  {
+    "_id": "category_membership",
+    "parent_id": "",
+    "name": "会员服务",
+    "level": 1,
+    "sort": 1,
+    "status": 1,
+    "create_time": 1737878400000
+  },
+  {
+    "_id": "category_recharge",
+    "parent_id": "",
+    "name": "充值服务",
+    "level": 1,
+    "sort": 2,
+    "status": 1,
+    "create_time": 1737878400000
+  },
+  {
+    "_id": "category_cdkey",
+    "parent_id": "",
+    "name": "卡密兑换",
+    "level": 1,
+    "sort": 3,
+    "status": 1,
+    "create_time": 1737878400000
+  }
+]

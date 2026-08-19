@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "_id": "base-admin",
+    "create_date": 1770452195063,
+    "permission_id": "base-admin",
+    "permission_name": "基础管理权限",
+    "comment": "部分重要权限外的所有权限"
+  },
+  {
+    "_id": "uni-stat-admin",
+    "create_date": 1770452195063,
+    "permission_id": "uni-stat-admin",
+    "permission_name": "uni统计管理",
+    "comment": ""
+  }
+]

@@ -4,7 +4,7 @@
 	"description": "存储汇总的页面内容访问数据",
 	"required": [],
 	"permission": {
-		"read": "'READ_UNI_STAT_PAGE_RESULT' in auth.permission",
+		"read": "'uni-stat-admin' in auth.permission",
 		"create": false,
 		"update": false,
 		"delete": false

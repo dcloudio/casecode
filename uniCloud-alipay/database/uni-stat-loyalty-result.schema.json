@@ -4,7 +4,7 @@
 	"description": "存储汇总的设备/用户的粘性数据",
 	"required": [],
 	"permission": {
-		"read": "'READ_UNI_STAT_LOYALTY_RESULT' in auth.permission",
+		"read": "'uni-stat-admin' in auth.permission",
 		"create": false,
 		"update": false,
 		"delete": false

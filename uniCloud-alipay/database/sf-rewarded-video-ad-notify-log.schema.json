@@ -1,0 +1,23 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "与激励视频广告回调的trans_id值一致"
+		},
+    "create_time": {
+      "description": "创建时间",
+      "defaultValue": {
+        "$env": "now"
+      },
+      "bsonType": "timestamp"
+    }
+	}
+}
