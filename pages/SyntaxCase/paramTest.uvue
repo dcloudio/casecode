@@ -5,6 +5,12 @@
 	<button @click="returnParamTest">返回复杂对象参数</button>
 	<button @click="callbackArrayTest">异步返回数组</button>
 	<button @click="callbackParamTest">异步返回复杂对象</button>
+	<!-- #ifdef APP-ANDROID && VUE3-VAPOR -->
+	<button @click="sharedArraySyncTest">gen_bridge 同步返回共享数组</button>
+	<text>同步返回：{{ sharedArraySyncStatus }}</text>
+	<button @click="sharedArrayCallbackTest">gen_bridge callback 返回共享数组</button>
+	<text>callback 返回：{{ sharedArrayCallbackStatus }}</text>
+	<!-- #endif -->
 </template>
 
 <script setup lang="uts">
@@ -17,6 +23,13 @@ import {
   callbackParam,
   ParamOptions
 } from '@/uni_modules/uts-advance'
+// #ifdef APP-ANDROID && VUE3-VAPOR
+import {
+  callbackSharedArrayResult,
+  returnSharedArrayResult,
+  SharedArrayResult
+} from '@/uni_modules/uts-advance'
+// #endif
 
 function inputArrayTest() {
   const ret = inputArray(['a', 'b', 'c'])
@@ -76,6 +89,56 @@ function callbackParamTest() {
     }
   })
 }
+
+// #ifdef APP-ANDROID && VUE3-VAPOR
+const sharedArraySyncStatus = ref('未测试')
+const sharedArrayCallbackStatus = ref('未测试')
+
+function isSharedArrayResultValid(result : SharedArrayResult) : boolean {
+  return result.deniedList.length == 1 &&
+    result.deniedList[0] == 'android.permission.CAMERA' &&
+    result.doNotAskAgainList.length == 1 &&
+    result.doNotAskAgainList[0] == 'android.permission.CAMERA'
+}
+
+function showSharedArrayTestResult(passed : boolean) {
+  uni.showToast({
+    title: passed ? '测试通过' : '测试失败'
+  })
+}
+
+function sharedArraySyncTest() : boolean {
+  const passed = isSharedArrayResultValid(returnSharedArrayResult())
+  sharedArraySyncStatus.value = passed ? '通过' : '失败'
+  showSharedArrayTestResult(passed)
+  return passed
+}
+
+function sharedArrayCallbackTest() {
+  callbackSharedArrayResult((result : SharedArrayResult) => {
+    const passed = isSharedArrayResultValid(result)
+    sharedArrayCallbackStatus.value = passed ? '通过' : '失败'
+    showSharedArrayTestResult(passed)
+  })
+}
+
+function jest_testSharedArraySync() : boolean {
+  return isSharedArrayResultValid(returnSharedArrayResult())
+}
+
+function jest_testSharedArrayCallback() : Promise<boolean> {
+  return new Promise<boolean>((resolve : (value : boolean) => void) => {
+    callbackSharedArrayResult((result : SharedArrayResult) => {
+      resolve(isSharedArrayResultValid(result))
+    })
+  })
+}
+
+defineExpose({
+  jest_testSharedArraySync,
+  jest_testSharedArrayCallback
+})
+// #endif
 </script>
 
 <style>

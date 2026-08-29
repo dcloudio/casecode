@@ -436,6 +436,31 @@ export function callbackParam(callback : ParamCallback) {
 	callback(ret)
 }
 
+export class SharedArrayResult {
+	deniedList : Array<string>
+	doNotAskAgainList : Array<string>
+
+	constructor(sharedList : Array<string>) {
+		this.deniedList = sharedList
+		this.doNotAskAgainList = sharedList
+	}
+}
+
+export type SharedArrayResultCallback = (res : SharedArrayResult) => void
+
+function createSharedArrayResult() : SharedArrayResult {
+	const sharedList = ['android.permission.CAMERA']
+	return new SharedArrayResult(sharedList)
+}
+
+export function returnSharedArrayResult() : SharedArrayResult {
+	return createSharedArrayResult()
+}
+
+export function callbackSharedArrayResult(callback : SharedArrayResultCallback) : void {
+	callback(createSharedArrayResult())
+}
+
 
 /**
  * 

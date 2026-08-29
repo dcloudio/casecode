@@ -24,9 +24,9 @@ export function testNumber(): Result {
       let num1: number = -1.1 / 0.1
       let num2: number = -1.1 / 0.1
       let num3: number = -1.1 / -0.1
-      console.warn(num1)
-      console.warn(num2)
-      console.warn(num3)
+      console.log(num1)
+      console.log(num2)
+      console.log(num3)
       let obj = { "id": "3be2c600-894c-4231-aa56-82fd989cc961", "result": { "result": [num1, num2, num3] } }
       console.log(JSON.stringify(obj))
 
