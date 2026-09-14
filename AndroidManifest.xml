@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
   package="io.dcloud.hellouts">
   <uses-permission android:name="android.permission.APP_OPS_STR_PICTURE_IN_PICTURE" />
-  <application android:networkSecurityConfig="@xml/custom_network_security_config">
+  <application>
     <!--meta-data-->
     <meta-data android:name="TencentMapSDK" android:value="您申请的腾讯定位App Key" />
     <!--需要替换成开发者自己的包名-->
