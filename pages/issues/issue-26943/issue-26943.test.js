@@ -9,6 +9,12 @@ beforeAll(async () => {
 
 
 describe('issue-26943', () => {
+  if(!isAndroid) {
+    it('skip',() => {
+      expect(1).toBe(1)
+    })
+    return
+  }
   it('issue-26943', async () => {
     const testStatus26943 = await page.data('data.testStatus26943')
     expect(testStatus26943).toBe('测试通过')

@@ -22,70 +22,73 @@
 </template>
 
 <script setup lang="uts">
-// import {
-// 	checkHasIntegration,
-// 	requestPremission,
-// 	getLocation,
-// 	watchPosition,
-// 	clearWatch
-// } from "../../../uni_modules/uts-tencentgeolocation";
+  // #ifndef APP-IOS
+  // import {
+  // 	checkHasIntegration,
+  // 	requestPremission,
+  // 	getLocation,
+  // 	watchPosition,
+  // 	clearWatch
+  // } from "../../../uni_modules/uts-tencentgeolocation";
+  
+  const title = '腾讯定位SDK集成示例'
+  
+  function checkLocationPermission() {
+    // requestPremission();
+  }
+  
+  function testGetlocation() {
+    // let startRet = getLocation({
+    // 	geocode: true,
+    // 	success: function(response) {
+    // 		console.log(response);
+    // 		var addressDesc = response.name + '-' + response.address
+    // 		uni.showToast({
+    // 			title: '执行结果:' + addressDesc,
+    // 			icon: 'none'
+    // 		});
+    // 	},
+    // 	fail: function(msg) {
+    // 		uni.showToast({
+    // 			title: msg,
+    // 			icon: "none"
+    // 		})
+    // 	}
+    // })
+  
+    // if (!startRet) {
+    // 	uni.showToast({
+    // 		title: '定位启动失败，请检查配置',
+    // 		icon: 'none'
+    // 	});
+    // }
+  }
+  
+  function testWatchPosition() {
+    // watchPosition({
+    // 	geocode: true,
+    // 	success: function(response) {
+    // 		console.log(response);
+    // 		var addressDesc = response.name + '-' + response.address
+    // 		uni.showToast({
+    // 			title: '执行结果:' + addressDesc,
+    // 			icon: 'none'
+    // 		});
+    // 	},
+    // 	fail: function(msg) {
+    // 		uni.showToast({
+    // 			title: msg,
+    // 			icon: "none"
+    // 		})
+    // 	}
+    // })
+  }
+  
+  function testClearWatch() {
+    // clearWatch()
+  }
+  // #endif
 
-const title = '腾讯定位SDK集成示例'
-
-function checkLocationPermission() {
-  // requestPremission();
-}
-
-function testGetlocation() {
-  // let startRet = getLocation({
-  // 	geocode: true,
-  // 	success: function(response) {
-  // 		console.log(response);
-  // 		var addressDesc = response.name + '-' + response.address
-  // 		uni.showToast({
-  // 			title: '执行结果:' + addressDesc,
-  // 			icon: 'none'
-  // 		});
-  // 	},
-  // 	fail: function(msg) {
-  // 		uni.showToast({
-  // 			title: msg,
-  // 			icon: "none"
-  // 		})
-  // 	}
-  // })
-
-  // if (!startRet) {
-  // 	uni.showToast({
-  // 		title: '定位启动失败，请检查配置',
-  // 		icon: 'none'
-  // 	});
-  // }
-}
-
-function testWatchPosition() {
-  // watchPosition({
-  // 	geocode: true,
-  // 	success: function(response) {
-  // 		console.log(response);
-  // 		var addressDesc = response.name + '-' + response.address
-  // 		uni.showToast({
-  // 			title: '执行结果:' + addressDesc,
-  // 			icon: 'none'
-  // 		});
-  // 	},
-  // 	fail: function(msg) {
-  // 		uni.showToast({
-  // 			title: msg,
-  // 			icon: "none"
-  // 		})
-  // 	}
-  // })
-}
-
-function testClearWatch() {
-  // clearWatch()
-}
 </script>
 
 <style>

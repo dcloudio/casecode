@@ -22,77 +22,80 @@
 </template>
 
 <script>
-	import {
-		checkHasIntegration,
-		requestPremission,
-		getLocation,
-		watchPosition,
-		clearWatch
-	} from "@/uni_modules/uts-tencentgeolocation";
+  // #ifndef APP-IOS
+  import {
+  	checkHasIntegration,
+  	requestPremission,
+  	getLocation,
+  	watchPosition,
+  	clearWatch
+  } from "@/uni_modules/uts-tencentgeolocation";
   
-	export default {
-		data() {
-			return {
-				title: '腾讯定位SDK集成示例',
-			}
-		},
-		methods: {
+  export default {
+  	data() {
+  		return {
+  			title: '腾讯定位SDK集成示例',
+  		}
+  	},
+  	methods: {
+  
+  		checkLocationPermission: function(e) {
+  			requestPremission();
+  		},
+  		testGetlocation: function(e) {
+  
+  			let startRet = getLocation({
+  				geocode: true,
+  				success: function(response) {
+  					console.log(response);
+  					var addressDesc = response.name + '-' + response.address
+  					uni.showToast({
+  						title: '执行结果:' + addressDesc,
+  						icon: 'none'
+  					});
+  				},
+  				fail: function(msg) {
+  					uni.showToast({
+  						title: msg,
+  						icon: "none"
+  					})
+  				}
+  			})
+  
+  			if (!startRet) {
+  				uni.showToast({
+  					title: '定位启动失败，请检查配置',
+  					icon: 'none'
+  				});
+  			}
+  
+  		},
+  		testWatchPosition() {
+  			watchPosition({
+  				geocode: true,
+  				success: function(response) {
+  					console.log(response);
+  					var addressDesc = response.name + '-' + response.address
+  					uni.showToast({
+  						title: '执行结果:' + addressDesc,
+  						icon: 'none'
+  					});
+  				},
+  				fail: function(msg) {
+  					uni.showToast({
+  						title: msg,
+  						icon: "none"
+  					})
+  				}
+  			})
+  		},
+  		testClearWatch() {
+  			clearWatch()
+  		}
+  	}
+  }
+  // #endif
 
-			checkLocationPermission: function(e) {
-				requestPremission();
-			},
-			testGetlocation: function(e) {
-
-				let startRet = getLocation({
-					geocode: true,
-					success: function(response) {
-						console.log(response);
-						var addressDesc = response.name + '-' + response.address
-						uni.showToast({
-							title: '执行结果:' + addressDesc,
-							icon: 'none'
-						});
-					},
-					fail: function(msg) {
-						uni.showToast({
-							title: msg,
-							icon: "none"
-						})
-					}
-				})
-
-				if (!startRet) {
-					uni.showToast({
-						title: '定位启动失败，请检查配置',
-						icon: 'none'
-					});
-				}
-
-			},
-			testWatchPosition() {
-				watchPosition({
-					geocode: true,
-					success: function(response) {
-						console.log(response);
-						var addressDesc = response.name + '-' + response.address
-						uni.showToast({
-							title: '执行结果:' + addressDesc,
-							icon: 'none'
-						});
-					},
-					fail: function(msg) {
-						uni.showToast({
-							title: msg,
-							icon: "none"
-						})
-					}
-				})
-			},
-			testClearWatch() {
-				clearWatch()
-			}
-		}
-	}
 </script>
 
 <style>
