@@ -60,6 +60,7 @@
         "navigationBarTitleText": ""
       }
     }
+    // #ifdef APP-ANDROID
     ,{
       "path": "pages/SDKIntegration/TencentLocation/TencentLocation",
       "style": {
@@ -74,6 +75,8 @@
         "enablePullDownRefresh": false
       }
     }
+    // #endif 
+
     // #ifndef VUE3-VAPOR
     ,{
       "path": "pages/component/helloView",
@@ -239,10 +242,13 @@
         "pagePath": "pages/SystemAPI/SystemAPI",
         "text": "系统API"
       },
+      // #ifndef APP-IOS
       {
         "pagePath": "pages/SDKIntegration/SDKIntegration",
         "text": "三方SDK"
       }
+      // #endif 
+
     ]
   },
   // #endif

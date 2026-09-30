@@ -21,7 +21,16 @@
   const title = 'SDK集成示例'
 
 // #ifdef APP-ANDROID || APP-IOS
+  // #ifdef APP-ANDROID
   import { checkHasIntegration } from "@/uni_modules/uts-tencentgeolocation"
+  // #endif
+  
+  // #ifdef APP-IOS
+  function checkHasIntegration(): boolean {
+    return false
+  };
+  // #endif
+  
   // #ifndef VUE3-VAPOR
   import { checkHasLottieIntegration } from "@/uni_modules/uts-animation-view"
   // #endif
@@ -33,14 +42,17 @@
     url ?: string
   }
 
-  const list = [{
-    name: "腾讯定位sdk集成示例",
-    function: "gotoTencentLocation",
-  },
-  {
-    name: "Toast示例",
-    url: "SDKIntegration/Toast/Toast"
-  },
+  const list = [
+    // #ifdef APP-ANDROID
+    {
+      name: "腾讯定位sdk集成示例",
+      function: "gotoTencentLocation",
+    },
+    {
+      name: "Toast示例",
+      url: "SDKIntegration/Toast/Toast"
+    },
+    // #endif
   // #ifndef VUE3-VAPOR
   {
     name: "Lottie动画示例",
