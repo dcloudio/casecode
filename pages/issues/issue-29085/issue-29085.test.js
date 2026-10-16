@@ -1,4 +1,5 @@
-
+const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isAndroid = platformInfo.startsWith('android')
 let page
 
 beforeAll(async () => {
