@@ -32,6 +32,8 @@
   		<text v-for="item in dataConvertResult" :style="resultStyle(item.passed)"> {{item.key}}: {{item.value}} -- {{formatResult(item.passed)}}</text>
   	</view>
   	<button @click="testAll">test all</button>
+    <button @click="a2b">atob测试</button>
+    <button @click="b2a">btoa测试</button>
     <!-- #ifdef APP -->
   </scroll-view>
   <!-- #endif -->
@@ -62,6 +64,26 @@ const appInfoResult = ref([] as UTSJSONObject[])
 const systemSettingResult = ref({} as UTSJSONObject)
 const typeofResult = ref([] as UTSJSONObject[])
 const dataConvertResult = ref([] as UTSJSONObject[])
+
+	function a2b() {
+	  const r1 = atob("aGVsbG8gd29ybGQ=")
+	  console.log("atob(\"aGVsbG8gd29ybGQ=\") 测试 ===>" , r1, r1 == 'hello world')
+	  
+	  const str1 = "QC0xMjM0NTY3ODkwcXdlcnR5dWlvcGFzZGZnaGprbHp4Y3Zibm0tUVdFUlRZVUlPUEFTREZHSEpLTFpYQ1ZCTk1ALTEyMzQ1Njc4OTBxd2VydHl1aW9wYXNkZmdoamtsenhjdmJubS1RV0VSVFlVSU9QQVNERkdISktMWlhDVkJOTUAtMTIzNDU2Nzg5MHF3ZXJ0eXVpb3Bhc2RmZ2hqa2x6eGN2Ym5tLVFXRVJUWVVJT1BBU0RGR0hKS0xaWENWQk5NQC0xMjM0NTY3ODkwcXdlcnR5dWlvcGFzZGZnaGprbHp4Y3Zibm0tUVdFUlRZVUlPUEFTREZHSEpLTFpYQ1ZCTk1ALTEyMzQ1Njc4OTBxd2VydHl1aW9wYXNkZmdoamtsenhjdmJubS1RV0VSVFlVSU9QQVNERkdISktMWlhDVkJOTQ=="
+	  const str2 = '@-1234567890qwertyuiopasdfghjklzxcvbnm-QWERTYUIOPASDFGHJKLZXCVBNM@-1234567890qwertyuiopasdfghjklzxcvbnm-QWERTYUIOPASDFGHJKLZXCVBNM@-1234567890qwertyuiopasdfghjklzxcvbnm-QWERTYUIOPASDFGHJKLZXCVBNM@-1234567890qwertyuiopasdfghjklzxcvbnm-QWERTYUIOPASDFGHJKLZXCVBNM@-1234567890qwertyuiopasdfghjklzxcvbnm-QWERTYUIOPASDFGHJKLZXCVBNM'
+	  const r2 = atob(str1)
+	  console.log(`atob(${str1}) 测试 ====>`, r2, r2 == str2)
+	}
+	
+	function b2a() {
+		const r1 = btoa("hello world")
+		console.log("btoa(\"hello world\") 测试 ===>" , r1, r1 == 'aGVsbG8gd29ybGQ=')
+		
+		const str1 = "@-1234567890qwertyuiopasdfghjklzxcvbnm-QWERTYUIOPASDFGHJKLZXCVBNM@-1234567890qwertyuiopasdfghjklzxcvbnm-QWERTYUIOPASDFGHJKLZXCVBNM@-1234567890qwertyuiopasdfghjklzxcvbnm-QWERTYUIOPASDFGHJKLZXCVBNM@-1234567890qwertyuiopasdfghjklzxcvbnm-QWERTYUIOPASDFGHJKLZXCVBNM@-1234567890qwertyuiopasdfghjklzxcvbnm-QWERTYUIOPASDFGHJKLZXCVBNM"
+		const str2 = 'QC0xMjM0NTY3ODkwcXdlcnR5dWlvcGFzZGZnaGprbHp4Y3Zibm0tUVdFUlRZVUlPUEFTREZHSEpLTFpYQ1ZCTk1ALTEyMzQ1Njc4OTBxd2VydHl1aW9wYXNkZmdoamtsenhjdmJubS1RV0VSVFlVSU9QQVNERkdISktMWlhDVkJOTUAtMTIzNDU2Nzg5MHF3ZXJ0eXVpb3Bhc2RmZ2hqa2x6eGN2Ym5tLVFXRVJUWVVJT1BBU0RGR0hKS0xaWENWQk5NQC0xMjM0NTY3ODkwcXdlcnR5dWlvcGFzZGZnaGprbHp4Y3Zibm0tUVdFUlRZVUlPUEFTREZHSEpLTFpYQ1ZCTk1ALTEyMzQ1Njc4OTBxd2VydHl1aW9wYXNkZmdoamtsenhjdmJubS1RV0VSVFlVSU9QQVNERkdISktMWlhDVkJOTQ=='
+		const r2 = btoa(str1)
+		console.log(`btoa(${str1}) 测试 ====>`, r2, r2 == str2)
+	}
 
 function formatResult(res: any) {
   if (res == null) {
